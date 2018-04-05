@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class MyGdxGame extends Game {
 
-    int nMat = 4;
+    int nColonne = 4;
     SpriteBatch batch;
     public mattoncino mattoncino;
     public ArrayList<mattoncino> mattoncini = new ArrayList<mattoncino>();
@@ -29,7 +29,7 @@ public class MyGdxGame extends Game {
 		palla = new ball();
 		mattonella  = new mattonella();
 
-        for(int i = 0; i< nMat; i++){ //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
+        for(int i = 0; i< nColonne; i++){ //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
             mattoncino = new mattoncino(shift , 700  );
             mattoncini.add(mattoncino);
             shift -= 150; //ogni mattoncino è distante dall'altro di uno shift
