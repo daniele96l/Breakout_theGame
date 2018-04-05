@@ -39,7 +39,7 @@ public class mattonella extends Sprite {
     }
 
     public boolean collides (Rectangle boundsBall){
-        if(boundsBall.y < 30) //ovvero se la palla scende sotto il bordo superiose e colpisce il lato della mattonella  non rimalza ma va dritta giu
+        if(boundsBall.y < 20) //ovvero se la palla scende sotto il bordo superiose e colpisce il lato della mattonella  non rimalza ma va dritta giu
             return false;  //dato che ha mancato la parte superiore piana è impossibile che venga rimbalzata su
                             //serve anche ad evitare un bug che faceva entrare la pallina dentro la mattonella
         return boundsBall.overlaps(bounds); //la funzione che controllerà se la pallina tocca la mattonella

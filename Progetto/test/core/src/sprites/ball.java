@@ -10,51 +10,80 @@ import com.mygdx.game.Info;
 public class ball  extends Sprite{
 
     private Texture palla;
-    private Vector2 position;
-    private Vector2 speed;
-    private Rectangle bounsBall;
+    private Vector2 positionBall;
+    private Vector2 speedBall;
+    private Rectangle boundsBall;
 
     public ball(){
         super(new Texture("pallone-1.png"));
-        position = new Vector2(700, 580);
-        speed = new Vector2(3,3);
-        bounsBall = new Rectangle(position.x, position.y, 20,20);
+        positionBall = new Vector2(700, 580);
+        speedBall = new Vector2(3,3);
+        boundsBall = new Rectangle(positionBall.x, positionBall.y, 20,20);
     }
 
     public void update (float dt, mattonella mattonella, mattoncino mattoncino){
         Boolean topCollide = false;
-        position.add(speed.x *dt,speed.y*dt);
-        bounsBall.setPosition(position.x, position.y);
+        positionBall.add(speedBall.x *dt, speedBall.y*dt);
+        boundsBall.setPosition(positionBall.x, positionBall.y);
 
-        if(position.x > Info.larghezza- 30) //controllo che rimbalzi a destra
-            speed.set(-3,speed.y);
-        if(position.y > Info.altezza -30) //controllo che rimbalzi su
-            speed.set(speed.x,-3);
-        if(position.x < 0)
-            speed.set(3, speed.y); //controllo che rimbalzi a sinistra
+        if(positionBall.x > Info.larghezza- 30) //controllo che rimbalzi a destra
+            speedBall.set(-3, speedBall.y);
+        if(positionBall.y > Info.altezza -30) //controllo che rimbalzi su
+            speedBall.set(speedBall.x,-3);
+        if(positionBall.x < 0)
+            speedBall.set(3, speedBall.y); //controllo che rimbalzi a sinistra
 
-        if(mattonella.collides(bounsBall)) //controllo che collida con la mattonella
-            speed.set(speed.x, -speed.y);
+        if(mattonella.collides(boundsBall)) //controllo che collida con la mattonella
+            speedBall.set(speedBall.x, -speedBall.y);
 
         ///////////////////////////////////////////////////////////////////
         //è necessario capire se sta sbattendo con i lati (sinistra e destra), o con il top e bottom del mattoncino
         //Dato che a seconda di dove sbatte si comporta diversamente
         ///////////////////////////////////////////////////////////////////////////////
 
-        if(mattoncino.collidesSide(bounsBall)){
+        /*if(mattoncino.collidesSide(boundsBall)){
             mattoncino.delete();
-            speed.set(-speed.x, speed.y);
+            speedBall.set(-speedBall.x, speedBall.y);
             topCollide = true;
         }
 
         if(!topCollide)
-        if(mattoncino.collidesTopBottom(bounsBall)){ //controllo che collida col mattoncino
+        if(mattoncino.collidesTopBottom(boundsBall)){ //controllo che collida col mattoncino
             mattoncino.delete();            //quando abbiamo tanti mattoncini bisogna utilizzare un ciclo con un Arraylist
-            speed.set(speed.x, -speed.y );
-        }
+            speedBall.set(speedBall.x, -speedBall.y );
+        } */
     }
 
-    public Vector2 getPosition() {
-        return position;
+
+
+
+    public Texture getPalla() { return palla; }
+
+    public Vector2 getSpeedBall() {
+        return speedBall;
+    }
+
+    public Rectangle getBoundsBall() {
+        return boundsBall;
+    }
+
+    public void setPalla(Texture palla) {
+        this.palla = palla;
+    }
+
+    public void setPositionBall(Vector2 positionBall) {
+        this.positionBall = positionBall;
+    }
+
+    public void setSpeedBall(Vector2 speedBall) {
+        this.speedBall = speedBall;
+    }
+
+    public void setBoundsBall(Rectangle boundsBall) {
+        this.boundsBall = boundsBall;
+    }
+
+    public Vector2 getPositionBall() {
+        return positionBall;
     }
 }

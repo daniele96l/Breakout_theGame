@@ -10,14 +10,14 @@ import com.badlogic.gdx.math.Vector2;
 
 public class mattoncino  extends Sprite{
 
-    private Vector2 positionB;
+    private Vector2 positionBrick;
     private Vector2 speed;
     private Rectangle boundsBrick;
     public  boolean eliminato;
 
     public mattoncino(int posX, int posY){
         super(new Texture("brick.jpg"));
-        positionB = new Vector2(posX, posY);
+        positionBrick = new Vector2(posX, posY);
         speed = new Vector2(0,0);
         boundsBrick = new Rectangle(posX, posY, mattoncino.this.getWidth(), mattoncino.this.getHeight() );
         //il boundBrick si riferiscono al rettangolo invisibile che costruirò intorno alla texture
@@ -25,14 +25,14 @@ public class mattoncino  extends Sprite{
     }
 
     public void update (float dt){
-        if(eliminato == true){
+        if(!eliminato){
             //per eliminare il mattoncino dallo schermo lo sposto semplicemente molto lontano
             boundsBrick.setPosition(10000,10000); //sposto il mattoncino (fisico) verso infinito
-            positionB.set(1000, 1000);  //sposto il mattoncino (texture)verso infinito
+            positionBrick.set(1000, 1000);  //sposto il mattoncino (texture)verso infinito
         }
     }
 
-    public boolean collidesTopBottom (Rectangle boundBall){
+    /*public boolean collidesTopBottom (Rectangle boundBall){
         /////Controllo dove avviene l'impatto
         if(boundBall.overlaps(boundsBrick)) {
 
@@ -59,13 +59,45 @@ public class mattoncino  extends Sprite{
             }
         }
         return false;
-    }
+    } */
 
-    public Vector2 getPosition() {
-        return positionB;
+
+    public Vector2 getPositionBrick() {
+        return positionBrick;
     }
 
     public void delete(){
-      eliminato = true;
+        eliminato = true;
     }
+
+    public void setPositionBrick(Vector2 positionBrick) {
+        this.positionBrick = positionBrick;
+    }
+
+    public void setSpeed(Vector2 speed) {
+        this.speed = speed;
+    }
+
+    public void setBoundsBrick(Rectangle boundsBrick) {
+        this.boundsBrick = boundsBrick;
+    }
+
+    public void setEliminato(boolean eliminato) {
+        this.eliminato = eliminato;
+    }
+
+
+    public Vector2 getSpeed() {
+        return speed;
+    }
+
+    public Rectangle getBoundsBrick() {
+        return boundsBrick;
+    }
+
+    public boolean isEliminato() {
+        return eliminato;
+    }
+
+
 }

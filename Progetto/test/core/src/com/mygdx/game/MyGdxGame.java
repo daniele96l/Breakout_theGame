@@ -13,8 +13,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MyGdxGame extends Game {
-
     int nColonne = 4;
+    private Collision col;
     SpriteBatch batch;
     public mattoncino mattoncino;
     public ArrayList<mattoncino> mattoncini = new ArrayList<mattoncino>();
@@ -43,20 +43,29 @@ public class MyGdxGame extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(bg, 0,0);
-
+        batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y);
         for(mattoncino mattoncino: mattoncini){
-            batch.draw(mattoncino, mattoncino.getPosition().x, mattoncino.getPosition().y);
+            batch.draw(mattoncino, mattoncino.getPositionBrick().x, mattoncino.getPositionBrick().y);
+
+
             //disegno i mattoncini
         }
-		batch.draw(palla, palla.getPosition().x, palla.getPosition().y);
+
 		batch.draw(mattonella, mattonella.getPosition().x,mattonella.getPosition().y);
 		mattonella.update(1);
-
+        int index = -1;
         for(mattoncino mattoncino: mattoncini){
             //dato che ho un arraylist devo aggiornare le condizioni dei mattoncini dentro un ciclo for
-            mattoncino.update((float) 0.5);
-            palla.update((float) 0.5, mattonella, mattoncino);
+            col = new Collision(mattoncino,palla);
+            if(col.check()){
+                index = mattoncini.indexOf(mattoncino);
+            }
+
             //ovviamente anche l'aggiornamento del
+        }
+        palla.update((float) 2, mattonella, mattoncino);
+        if(index != -1) {
+            mattoncini.remove(mattoncini.get(index));
         }
 		batch.end();
 	}
