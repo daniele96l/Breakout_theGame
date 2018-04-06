@@ -25,7 +25,7 @@ public class MyGdxGame extends Game {
     private Texture start;
     private Texture gameOver;
     private GameState gameState;
-    public  int shift = 600;
+    private  int shift;
 	
 	@Override
 	public void create () {
@@ -33,6 +33,7 @@ public class MyGdxGame extends Game {
 		palla = new ball();
 		mattonella  = new mattonella();
 
+		shift=600;
         for(int i = 0; i< nColonne; i++){ //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
             mattoncino = new mattoncino(shift , 700  );
             mattoncini.add(mattoncino);
@@ -51,11 +52,11 @@ public class MyGdxGame extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
-		        create();   //Soluzione TEMPORANEA, in attesa dell'implementazione dei livelli
 		        gameState=GameState.ACTION;
             }
             if(gameState.equals(GameState.GAME_OVER)) {
-		        gameState=GameState.INIT;
+                create();   //Soluzione TEMPORANEA, in attesa dell'implementazione dei livelli
+                gameState=GameState.INIT;
             }
         }
         batch.begin();
