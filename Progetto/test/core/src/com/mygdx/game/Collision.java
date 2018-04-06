@@ -10,6 +10,7 @@ public class Collision {
     private ball palla;
     private boolean topCollide;
 
+
     public Collision(mattoncino mat, ball palla){
         this.mat = mat;
         this.palla = palla;
@@ -64,6 +65,6 @@ public class Collision {
         return false;
     }
 
-    
+
 
 }

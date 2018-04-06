@@ -22,6 +22,9 @@ public class MyGdxGame extends Game {
     public mattonella mattonella;
     public Texture bg;
     public  int shift = 600;
+    Livello livello = new Livello();
+    int nDeleted = 0;
+    int nLv = 1;
 	
 	@Override
 	public void create () {
@@ -29,12 +32,10 @@ public class MyGdxGame extends Game {
 		palla = new ball();
 		mattonella  = new mattonella();
 
-        for(int i = 0; i< nColonne; i++){ //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
-            mattoncino = new mattoncino(shift , 700  );
-            mattoncini.add(mattoncino);
-            shift -= 150; //ogni mattoncino è distante dall'altro di uno shift
-        }
-        bg = new Texture("bg.jpg");
+        mattoncini = livello.selectLv(nLv);
+
+        bg = livello.getBg();
+
 	}
 
 	@Override
@@ -44,28 +45,32 @@ public class MyGdxGame extends Game {
 		batch.begin();
 		batch.draw(bg, 0,0);
         batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y);
+
         for(mattoncino mattoncino: mattoncini){
             batch.draw(mattoncino, mattoncino.getPositionBrick().x, mattoncino.getPositionBrick().y);
-
-
             //disegno i mattoncini
         }
-
 		batch.draw(mattonella, mattonella.getPosition().x,mattonella.getPosition().y);
 		mattonella.update(1);
+
         int index = -1;
+
         for(mattoncino mattoncino: mattoncini){
             //dato che ho un arraylist devo aggiornare le condizioni dei mattoncini dentro un ciclo for
             col = new Collision(mattoncino,palla);
             if(col.check()){
                 index = mattoncini.indexOf(mattoncino);
             }
-
-            //ovviamente anche l'aggiornamento del
         }
         palla.update((float) 2, mattonella, mattoncino);
+
         if(index != -1) {
             mattoncini.remove(mattoncini.get(index));
+            nDeleted ++;
+        }
+        if(nDeleted == 3){
+            nLv = 2;
+            livello.selectLv(nLv);
         }
 		batch.end();
 	}
