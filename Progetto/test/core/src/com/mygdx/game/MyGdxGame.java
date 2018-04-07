@@ -24,10 +24,8 @@ public class MyGdxGame extends Game {
     private Texture start;
     private Texture gameOver;
     private GameState gameState;
-    private  int shift;
     private CommandPlayer player1;
     private  Livello livello = new Livello(mattoncino, palla);
-
 
 	
 	@Override
@@ -36,20 +34,11 @@ public class MyGdxGame extends Game {
 		palla = new ball();
 		mattonella  = new mattonella();
         player1 = new CommandPlayer(mattonella);     //istanzio un Commandplayer( posso averne diversi per ogni player
-		shift=600;
-
-
         mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
-
         bg = new Texture("bg.jpg");
-        System.out.println("eseguo");
-
         start=new Texture("start.jpg");
         gameOver=new Texture("gameover.jpeg");
-
-        /*Immagini ovviamente temporanee (fanno cagare)*/
         gameState=GameState.INIT;
-
 	}
 
 	@Override
@@ -63,7 +52,6 @@ public class MyGdxGame extends Game {
             mattoncini = livello.selectLv();  //ritorno l'array adatto al nuovo livello
             bg = livello.getBg(); //reimposto il bg
             ball.reposition(); //palla al centro
-
         }
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
@@ -80,19 +68,11 @@ public class MyGdxGame extends Game {
         if(gameState.equals(GameState.ACTION)) {
             batch.draw(bg, 0, 0);
             batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y);
-
-            for (mattoncino mattoncino : mattoncini) {
-                batch.draw(mattoncino, mattoncino.getPositionBrick().x, mattoncino.getPositionBrick().y);
-
-                //disegno i mattoncini
-            }
-
             batch.draw(mattonella, mattonella.getPosition().x, mattonella.getPosition().y);
-
             player1.Move();     //mi permette di muovere il giocatore
 
             for (mattoncino mattoncino : mattoncini) {
-                //dato che ho un arraylist devo aggiornare le condizioni dei mattoncini dentro un ciclo for
+                batch.draw(mattoncino, mattoncino.getPositionBrick().x, mattoncino.getPositionBrick().y); //disegno i mattoncini
                 col = new Collision(mattoncino, palla);
                 if (col.check()) {
                     index = mattoncini.indexOf(mattoncino);
@@ -116,9 +96,6 @@ public class MyGdxGame extends Game {
 		        batch.draw(gameOver,0,0);
             }
         }
-
-
-
         batch.end();
     }
 	
