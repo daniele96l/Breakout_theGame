@@ -78,7 +78,7 @@ public class Livello {
 
     }
     public boolean nextLevel (){
-        if ( coll.getEliminati() == 1 ){ //se i mattoncini eliminati sono uguali ai mattoncini del mio livello incremento il mio livello
+        if ( coll.getEliminati() == nMatt ){ //se i mattoncini eliminati sono uguali ai mattoncini del mio livello incremento il mio livello
             lv ++;
             System.out.println("Prossimo livello");
             coll.setEliminati(0);

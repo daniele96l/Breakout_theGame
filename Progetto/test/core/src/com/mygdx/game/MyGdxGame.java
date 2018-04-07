@@ -35,7 +35,7 @@ public class MyGdxGame extends Game {
 		mattonella  = new mattonella();
         player1 = new CommandPlayer(mattonella);     //istanzio un Commandplayer( posso averne diversi per ogni player
         mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
-        bg = new Texture("bg.jpg");
+        bg = livello.getBg();
         start=new Texture("start.jpg");
         gameOver=new Texture("gameover.jpeg");
         gameState=GameState.INIT;
@@ -52,7 +52,6 @@ public class MyGdxGame extends Game {
         if(livello.nextLevel()) {//deve stare dentro render perchè deve essere controllato sempre
             mattoncini = livello.selectLv();  //ritorno l'array adatto al nuovo livello
             bg = livello.getBg(); //reimposto il bg
-
         }
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
