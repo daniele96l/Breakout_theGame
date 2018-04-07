@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 
 public class MyGdxGame extends Game {
-    int nColonne = 4;
+
     private Collision col;
     SpriteBatch batch;
     public mattoncino mattoncino;
@@ -33,12 +33,14 @@ public class MyGdxGame extends Game {
 		batch = new SpriteBatch();
 		palla = new ball();
 		mattonella  = new mattonella();
-        player1 = new CommandPlayer(mattonella);     //istanzio un Commandplayer( posso averne diversi per ogni player
-        mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
-        bg = livello.getBg();
         start=new Texture("start.jpg");
         gameOver=new Texture("gameover.jpeg");
         gameState=GameState.INIT;
+        player1 = new CommandPlayer(mattonella);     //istanzio un Commandplayer( posso averne diversi per ogni player
+
+        mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
+        bg = livello.getBg();
+
 	}
 
 	@Override
@@ -59,7 +61,7 @@ public class MyGdxGame extends Game {
 		        gameState=GameState.ACTION;
             }
             if(gameState.equals(GameState.GAME_OVER)) { ///////////////////////////////////////////
-                create();   //Soluzione TEMPORANEA, in attesa dell'implementazione dei livelli (ch'è sta roba????)
+                create();   //Soluzione TEMPORANEA, in attesa dell'implementazione dei livelli (ch'è sta roba????- dany)
                 gameState=GameState.INIT; ////////////////////////////////////////////////
             }
         }
