@@ -10,7 +10,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MyGdxGame extends Game {
@@ -26,13 +25,14 @@ public class MyGdxGame extends Game {
     private Texture gameOver;
     private GameState gameState;
     private  int shift;
+    private CommandPlayer player1;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		palla = new ball();
 		mattonella  = new mattonella();
-
+        player1 = new CommandPlayer(mattonella);     //istanzio un Commandplayer( posso averne diversi per ogni player
 		shift=600;
         for(int i = 0; i< nColonne; i++){ //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
             mattoncino = new mattoncino(shift , 700  );
@@ -42,6 +42,7 @@ public class MyGdxGame extends Game {
         bg = new Texture("bg.jpg");
         start=new Texture("start.jpg");
         gameOver=new Texture("gameover.jpeg");
+
         /*Immagini ovviamente temporanee (fanno cagare)*/
         gameState=GameState.INIT;
 	}
@@ -66,12 +67,13 @@ public class MyGdxGame extends Game {
             for (mattoncino mattoncino : mattoncini) {
                 batch.draw(mattoncino, mattoncino.getPositionBrick().x, mattoncino.getPositionBrick().y);
 
-
                 //disegno i mattoncini
             }
 
             batch.draw(mattonella, mattonella.getPosition().x, mattonella.getPosition().y);
-            mattonella.update(1);
+
+            player1.Move();     //mi permette di muovere il giocatore
+
             int index = -1;
             for (mattoncino mattoncino : mattoncini) {
                 //dato che ho un arraylist devo aggiornare le condizioni dei mattoncini dentro un ciclo for
@@ -82,7 +84,8 @@ public class MyGdxGame extends Game {
 
                 //ovviamente anche l'aggiornamento del
             }
-            palla.update((float) 2, mattonella, mattoncino);
+            col.checkside((float) 1, mattonella);
+            //palla.update((float) 2, mattonella, mattoncino);
             if (index != -1) {
                 mattoncini.remove(mattoncini.get(index));
             }
