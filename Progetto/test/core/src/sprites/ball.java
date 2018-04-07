@@ -21,40 +21,6 @@ public class ball  extends Sprite{
         boundsBall = new Rectangle(positionBall.x, positionBall.y, 20,20);
     }
 
-    public void update (float dt, mattonella mattonella, mattoncino mattoncino){
-        Boolean topCollide = false;
-        positionBall.add(speedBall.x *dt, speedBall.y*dt);
-        boundsBall.setPosition(positionBall.x, positionBall.y);
-
-        if(positionBall.x > Info.larghezza- 30) //controllo che rimbalzi a destra
-            speedBall.set(-3, speedBall.y);
-        if(positionBall.y > Info.altezza -30) //controllo che rimbalzi su
-            speedBall.set(speedBall.x,-3);
-        if(positionBall.x < 0)
-            speedBall.set(3, speedBall.y); //controllo che rimbalzi a sinistra
-
-        if(mattonella.collides(boundsBall)) //controllo che collida con la mattonella
-            speedBall.set(speedBall.x, -speedBall.y);
-
-        ///////////////////////////////////////////////////////////////////
-        //è necessario capire se sta sbattendo con i lati (sinistra e destra), o con il top e bottom del mattoncino
-        //Dato che a seconda di dove sbatte si comporta diversamente
-        ///////////////////////////////////////////////////////////////////////////////
-
-        /*if(mattoncino.collidesSide(boundsBall)){
-            mattoncino.delete();
-            speedBall.set(-speedBall.x, speedBall.y);
-            topCollide = true;
-        }
-
-        if(!topCollide)
-        if(mattoncino.collidesTopBottom(boundsBall)){ //controllo che collida col mattoncino
-            mattoncino.delete();            //quando abbiamo tanti mattoncini bisogna utilizzare un ciclo con un Arraylist
-            speedBall.set(speedBall.x, -speedBall.y );
-        } */
-    }
-
-
 
 
     public Texture getPalla() { return palla; }

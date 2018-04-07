@@ -22,30 +22,12 @@ public class mattonella extends Sprite {
         // l'altezza e la larghezza sono della texture
     }
 
-    public void update (float dt){ //muovo la mattonella
-
-        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){
-            if(positionM.x > 0) { //controllo il range in cui la mattonella si può muovere
-                positionM.add(-30, 0);
-                bounds.setPosition(positionM.x, positionM.y);
-            }
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
-            if(positionM.x < 800 - getTexture().getWidth()) {
-                positionM.add(30, 0);//controllo il range in cui la mattonella si può muovere
-                bounds.setPosition(positionM.x, positionM.y);
-            }
-        }
-    }
-
-    public boolean collides (Rectangle boundsBall){
-        if(boundsBall.y < 20) //ovvero se la palla scende sotto il bordo superiose e colpisce il lato della mattonella  non rimalza ma va dritta giu
-            return false;  //dato che ha mancato la parte superiore piana è impossibile che venga rimbalzata su
-                            //serve anche ad evitare un bug che faceva entrare la pallina dentro la mattonella
-        return boundsBall.overlaps(bounds); //la funzione che controllerà se la pallina tocca la mattonella
-    }
 
     public Vector2 getPosition() {
         return positionM;
     }
+
+    public Vector2 getSpeed() { return speed; }
+
+    public Rectangle getBounds() { return bounds; }
 }
