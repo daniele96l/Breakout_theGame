@@ -10,8 +10,8 @@ import com.mygdx.game.Info;
 public class ball  extends Sprite{
 
     private Texture palla;
-    private Vector2 positionBall;
-    private Vector2 speedBall;
+    static private Vector2 positionBall;
+    static private Vector2 speedBall;
     private Rectangle boundsBall;
 
     public ball(){
@@ -19,6 +19,11 @@ public class ball  extends Sprite{
         positionBall = new Vector2(320, 400);
         speedBall = new Vector2(3,3);
         boundsBall = new Rectangle(positionBall.x, positionBall.y, 20,20);
+    }
+
+    public static void reposition(){
+        positionBall = new Vector2(320, 400);
+        speedBall = new Vector2(3,3);
     }
 
 

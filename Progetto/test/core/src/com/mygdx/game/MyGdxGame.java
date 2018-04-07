@@ -26,6 +26,9 @@ public class MyGdxGame extends Game {
     private GameState gameState;
     private  int shift;
     private CommandPlayer player1;
+    private  Livello livello = new Livello(mattoncino, palla);
+
+
 	
 	@Override
 	public void create () {
@@ -34,23 +37,35 @@ public class MyGdxGame extends Game {
 		mattonella  = new mattonella();
         player1 = new CommandPlayer(mattonella);     //istanzio un Commandplayer( posso averne diversi per ogni player
 		shift=600;
-        for(int i = 0; i< nColonne; i++){ //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
-            mattoncino = new mattoncino(shift , 700  );
-            mattoncini.add(mattoncino);
-            shift -= 150; //ogni mattoncino è distante dall'altro di uno shift
-        }
+
+
+        mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
+
         bg = new Texture("bg.jpg");
+        System.out.println("eseguo");
+
         start=new Texture("start.jpg");
         gameOver=new Texture("gameover.jpeg");
 
         /*Immagini ovviamente temporanee (fanno cagare)*/
         gameState=GameState.INIT;
+
 	}
 
 	@Override
 	public void render () {
+
+        int index = -1;
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        if(livello.nextLevel()) {//deve stare dentro render perchè deve essere controllato sempre
+            mattoncini = livello.selectLv();  //ritorno l'array adatto al nuovo livello
+            bg = livello.getBg(); //reimposto il bg
+            ball.reposition(); //palla al centro
+
+        }
+
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
 		        gameState=GameState.ACTION;
@@ -61,9 +76,11 @@ public class MyGdxGame extends Game {
             }
         }
         batch.begin();
+
         if(gameState.equals(GameState.ACTION)) {
             batch.draw(bg, 0, 0);
             batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y);
+
             for (mattoncino mattoncino : mattoncini) {
                 batch.draw(mattoncino, mattoncino.getPositionBrick().x, mattoncino.getPositionBrick().y);
 
@@ -74,16 +91,14 @@ public class MyGdxGame extends Game {
 
             player1.Move();     //mi permette di muovere il giocatore
 
-            int index = -1;
             for (mattoncino mattoncino : mattoncini) {
                 //dato che ho un arraylist devo aggiornare le condizioni dei mattoncini dentro un ciclo for
                 col = new Collision(mattoncino, palla);
                 if (col.check()) {
                     index = mattoncini.indexOf(mattoncino);
                 }
-
-                //ovviamente anche l'aggiornamento del
             }
+
             col.checkside((float) 1, mattonella);
             //palla.update((float) 2, mattonella, mattoncino);
             if (index != -1) {
@@ -101,6 +116,9 @@ public class MyGdxGame extends Game {
 		        batch.draw(gameOver,0,0);
             }
         }
+
+
+
         batch.end();
     }
 	

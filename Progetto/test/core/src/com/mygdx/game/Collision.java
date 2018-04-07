@@ -10,6 +10,7 @@ public class Collision {
     public  boolean eliminato;
     private ball palla;
     private boolean topCollide;
+    static int eliminati; //deve rimanere static!
 
     public Collision(mattoncino mat, ball palla){
         this.mat = mat;
@@ -18,7 +19,11 @@ public class Collision {
 
     public void delete(){
         eliminato = true;
+        eliminati ++; //controllo quanti mattoncini ho eliminato, mi serve per controllare se passare al prossimo livello
+
     }
+
+
 
     //questo metodo serve per la collisione con i brick verificando se collidono, nel caso cambio il verso della palla
     public boolean check(){
@@ -92,6 +97,12 @@ public class Collision {
         //serve anche ad evitare un bug che faceva entrare la pallina dentro la mattonella
         return boundsBall.overlaps(mattonella.getBounds()); //la funzione che controllerà se la pallina tocca la mattonella
     }
-    
 
+    public int getEliminati() {
+        return eliminati;
+    }
+
+    public void setEliminati(int eliminati) {
+        Collision.eliminati = 0;
+    }
 }
