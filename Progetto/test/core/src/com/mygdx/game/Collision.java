@@ -80,11 +80,11 @@ public class Collision {
         palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
 
         if(palla.getPositionBall().x > Info.larghezza- 30) //controllo che rimbalzi a destra
-            palla.getSpeedBall().set(-3, palla.getSpeedBall().y);
+            palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y);
         if(palla.getPositionBall().y > Info.altezza -30) //controllo che rimbalzi su
-            palla.getSpeedBall().set(palla.getSpeedBall().x,-3);
+            palla.getSpeedBall().set(palla.getSpeedBall().x,-palla.getSpeedBall().y);
         if(palla.getPositionBall().x < 0)
-            palla.getSpeedBall().set(3, palla.getSpeedBall().y); //controllo che rimbalzi a sinistra
+            palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y); //controllo che rimbalzi a sinistra
 
         if(collides(palla.getBoundsBall(), mattonella)) //controllo che collida con la mattonella
             palla.getSpeedBall().set(palla.getSpeedBall().x, -palla.getSpeedBall().y);
