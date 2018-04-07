@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import Help.Info;
 import com.badlogic.gdx.math.Rectangle;
 import sprites.ball;
 import sprites.mattoncino;
@@ -86,8 +87,10 @@ public class Collision {
         if(palla.getPositionBall().x < 0)
             palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y); //controllo che rimbalzi a sinistra
 
-        if(collides(palla.getBoundsBall(), mattonella)) //controllo che collida con la mattonella
-            palla.getSpeedBall().set(palla.getSpeedBall().x, -palla.getSpeedBall().y);
+        if(collides(palla.getBoundsBall(), mattonella)) //controllo che collida con la mattonella//
+            {
+            palla.getSpeedBall().set( palla.getSpeedBall().x, -palla.getSpeedBall().y);
+        }
 
     }
 

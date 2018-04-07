@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package Help;
 
 public enum GameState {
     INIT, ACTION, GAME_OVER

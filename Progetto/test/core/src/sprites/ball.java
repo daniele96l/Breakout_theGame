@@ -4,7 +4,6 @@ package sprites;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.*;
-import com.mygdx.game.Info;
 
 
 public class ball  extends Sprite{
