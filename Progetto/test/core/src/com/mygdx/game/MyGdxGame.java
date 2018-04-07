@@ -45,25 +45,26 @@ public class MyGdxGame extends Game {
 	public void render () {
 
         int index = -1;
+        batch.begin();
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(livello.nextLevel()) {//deve stare dentro render perchè deve essere controllato sempre
             mattoncini = livello.selectLv();  //ritorno l'array adatto al nuovo livello
             bg = livello.getBg(); //reimposto il bg
-            ball.reposition(); //palla al centro
+
         }
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
 		        gameState=GameState.ACTION;
             }
-            if(gameState.equals(GameState.GAME_OVER)) {
-                create();   //Soluzione TEMPORANEA, in attesa dell'implementazione dei livelli
-                gameState=GameState.INIT;
+            if(gameState.equals(GameState.GAME_OVER)) { ///////////////////////////////////////////
+                create();   //Soluzione TEMPORANEA, in attesa dell'implementazione dei livelli (ch'è sta roba????)
+                gameState=GameState.INIT; ////////////////////////////////////////////////
             }
         }
-        batch.begin();
+
 
         if(gameState.equals(GameState.ACTION)) {
             batch.draw(bg, 0, 0);

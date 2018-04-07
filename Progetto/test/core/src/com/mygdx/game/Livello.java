@@ -5,6 +5,7 @@ import sprites.*;
 import java.util.ArrayList;
 import com.mygdx.game.*;
 
+
 public class Livello {
 
 
@@ -77,10 +78,12 @@ public class Livello {
 
     }
     public boolean nextLevel (){
-        if ( coll.getEliminati() == nMatt ){ //se i mattoncini eliminati sono uguali ai mattoncini del mio livello incremento il mio livello
+        if ( coll.getEliminati() == 1 ){ //se i mattoncini eliminati sono uguali ai mattoncini del mio livello incremento il mio livello
             lv ++;
             System.out.println("Prossimo livello");
             coll.setEliminati(0);
+            ball.reposition();
+
            return true;
         }
 
