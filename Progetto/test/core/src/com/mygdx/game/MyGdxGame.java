@@ -31,7 +31,8 @@ public class MyGdxGame extends Game {
 	
 	@Override
 	public void create () {
-		reset();
+        batch = new SpriteBatch();
+        reset();
         System.out.println("eseguo");
 
         start=new Texture("start.jpg");
@@ -39,6 +40,7 @@ public class MyGdxGame extends Game {
 
         /*Immagini ovviamente temporanee (fanno cagare)*/
         gameState=GameState.INIT;
+        nextLevel=false;
 
 	}
 
@@ -58,7 +60,7 @@ public class MyGdxGame extends Game {
 		        gameState=GameState.INIT;
             }
             if(gameState.equals(GameState.GAME_OVER)) {
-                reset();   //Soluzione TEMPORANEA, in attesa dell'implementazione dei livelli
+                reset();
                 gameState=GameState.INIT;
             }
         }
@@ -66,7 +68,6 @@ public class MyGdxGame extends Game {
         if(nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
             mattoncini = livello.selectLv();  //ritorno l'array adatto al nuovo livello
             bg = livello.getBg(); //reimposto il bg
-            ball.reposition(); //palla al centro
 
         }
 
@@ -133,7 +134,6 @@ public class MyGdxGame extends Game {
 	}
 
 	public void reset() {
-        batch = new SpriteBatch();
         palla = new ball();
         mattonella  = new mattonella();
         player1 = new CommandPlayer(mattonella);     //istanzio un Commandplayer( posso averne diversi per ogni player

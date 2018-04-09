@@ -17,15 +17,9 @@ public class ball  extends Sprite{
     public ball(){
         super(new Texture("pallone-1.png"));
         positionBall = new Vector2(320, 400);
-        speedBall = new Vector2(-3,-3);
+        speedBall = new Vector2(-Info.velBall,-Info.velBall);
         boundsBall = new Rectangle(positionBall.x, positionBall.y, 20,20);
     }
-
-    public static void reposition(){
-        positionBall = new Vector2(320, 400);
-        speedBall = new Vector2(3,3);
-    }
-
 
 
     public Texture getPalla() { return palla; }
