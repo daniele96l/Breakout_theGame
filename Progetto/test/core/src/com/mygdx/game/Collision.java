@@ -10,6 +10,7 @@ public class Collision {
     private boolean eliminato;
     private Ball palla;
     private boolean topCollide;
+    private double MAXBOUNCEANGLE = 0.706858;
 
     public Collision(Brick mat, Ball palla){
         this.mat = mat;
@@ -70,9 +71,7 @@ public class Collision {
     }
 
     // questo metodo serve per controllare quando la palla collide con i bordi o con la Paddle
-    public void checkside(float dt, Paddle Paddle){
-        palla.getPositionBall().add(palla.getSpeedBall().x *dt, palla.getSpeedBall().y*dt);
-        palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
+    public void checkside(Paddle Paddle){
 
         if(palla.getPositionBall().x > Info.larghezza- 30) //controllo che rimbalzi a destra
             palla.getSpeedBall().set(-Info.velBall, palla.getSpeedBall().y);
@@ -81,9 +80,25 @@ public class Collision {
         if(palla.getPositionBall().x < 0)
             palla.getSpeedBall().set(Info.velBall, palla.getSpeedBall().y); //controllo che rimbalzi a sinistra
 
-        if(collides(palla.getBoundsBall(), Paddle)) //controllo che collida con la Paddle
-            palla.getSpeedBall().set(palla.getSpeedBall().x, -palla.getSpeedBall().y);
-
+        if(collides(palla.getBoundsBall(), Paddle)) { //controllo che collida con la Paddle
+            float relativeIntersectX = -((Paddle.getPosition().x + (Paddle.getWidth() / 2)) - (palla.getPositionBall().x));
+            float normalizedRelativeIntersectionX = (relativeIntersectX / (Paddle.getTexture().getWidth() / 2));
+            if(normalizedRelativeIntersectionX > 0){
+                palla.getSpeedBall().set(Math.abs(palla.getSpeedBall().x),-palla.getSpeedBall().y );
+            }
+            else {
+                palla.getSpeedBall().set(-Math.abs(palla.getSpeedBall().x),-palla.getSpeedBall().y );
+            }
+            /*float relativeIntersectX = ((Paddle.getPosition().x + (Paddle.getWidth() / 2)) - (palla.getPositionBall().x));
+            float normalizedRelativeIntersectionX = -(relativeIntersectX / (Paddle.getTexture().getWidth() / 2));
+            float bounceAngle = normalizedRelativeIntersectionX * (float)MAXBOUNCEANGLE;
+            float speedx = -4*(float) (palla.getSpeedBall().x * Math.cos(bounceAngle));
+            float speedy = -4*(float) (palla.getSpeedBall().y * Math.sin(bounceAngle));
+            palla.getSpeedBall().set(speedx,speedy);
+           // palla.getSpeedBall().set(palla.getSpeedBall().x, -palla.getSpeedBall().y);
+            System.out.println(palla.getSpeedBall().x + "  " + palla.getSpeedBall().y);
+            */
+        }
     }
 
     private boolean collides(Rectangle boundsBall, Paddle Paddle){

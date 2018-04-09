@@ -49,7 +49,8 @@ public class MyGdxGame extends Game {
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
+        palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
@@ -79,6 +80,7 @@ public class MyGdxGame extends Game {
         int index = -1;
         batch.begin();
 
+
         if(gameState.equals(GameState.ACTION)) {
             batch.draw(bg, 0, 0);
             batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y);
@@ -101,7 +103,7 @@ public class MyGdxGame extends Game {
                 }
             }
 
-            col.checkside((float) 1, Paddle);
+            col.checkside(Paddle);
             //palla.update((float) 2, Paddle, Brick);
             if (index != -1) {
                 mattoncini.remove(mattoncini.get(index));
