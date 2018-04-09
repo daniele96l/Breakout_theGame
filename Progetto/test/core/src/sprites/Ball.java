@@ -7,14 +7,14 @@ import com.badlogic.gdx.math.*;
 import com.mygdx.game.Info;
 
 
-public class ball  extends Sprite{
+public class Ball extends Sprite{
 
     private Texture palla;
     static private Vector2 positionBall;
     static private Vector2 speedBall;
     private Rectangle boundsBall;
 
-    public ball(){
+    public Ball(){
         super(new Texture("pallone-1.png"));
         positionBall = new Vector2(320, 400);
         speedBall = new Vector2(-Info.velBall,-Info.velBall);

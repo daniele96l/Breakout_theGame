@@ -13,19 +13,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 
 public class MyGdxGame extends Game {
-    int nColonne = 4;
     private Collision col;
-    SpriteBatch batch;
-    public mattoncino mattoncino;
-    public ArrayList<mattoncino> mattoncini = new ArrayList<mattoncino>();
-    public  ball palla;
-    public mattonella mattonella;
+    private SpriteBatch batch;
+    private Brick Brick;
+    private ArrayList<Brick> mattoncini = new ArrayList<Brick>();
+    private Ball palla;
+    private Paddle Paddle;
     private Texture bg;
     private Texture start;
     private Texture gameOver;
+    private Texture youWin;
     private GameState gameState;
     private CommandPlayer player1;
-    private  Livello livello = new Livello(mattoncino, palla);
+    private  Livello livello = new Livello(Brick, palla);
     private boolean nextLevel;
 
 	
@@ -37,6 +37,7 @@ public class MyGdxGame extends Game {
 
         start=new Texture("start.jpg");
         gameOver=new Texture("gameover.jpeg");
+        youWin=new Texture("gameover.jpeg");
 
         /*Immagini ovviamente temporanee (fanno cagare)*/
         gameState=GameState.INIT;
@@ -82,26 +83,26 @@ public class MyGdxGame extends Game {
             batch.draw(bg, 0, 0);
             batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y);
 
-            for (mattoncino mattoncino : mattoncini) {
-                batch.draw(mattoncino, mattoncino.getPositionBrick().x, mattoncino.getPositionBrick().y);
+            for (Brick Brick : mattoncini) {
+                batch.draw(Brick, Brick.getPositionBrick().x, Brick.getPositionBrick().y);
 
                 //disegno i mattoncini
             }
 
-            batch.draw(mattonella, mattonella.getPosition().x, mattonella.getPosition().y);
+            batch.draw(Paddle, Paddle.getPosition().x, Paddle.getPosition().y);
 
             player1.Move();     //mi permette di muovere il giocatore
 
-            for (mattoncino mattoncino : mattoncini) {
+            for (Brick Brick : mattoncini) {
                 //dato che ho un arraylist devo aggiornare le condizioni dei mattoncini dentro un ciclo for
-                col = new Collision(mattoncino, palla);
+                col = new Collision(Brick, palla);
                 if (col.check()) {
-                    index = mattoncini.indexOf(mattoncino);
+                    index = mattoncini.indexOf(Brick);
                 }
             }
 
-            col.checkside((float) 1, mattonella);
-            //palla.update((float) 2, mattonella, mattoncino);
+            col.checkside((float) 1, Paddle);
+            //palla.update((float) 2, Paddle, Brick);
             if (index != -1) {
                 mattoncini.remove(mattoncini.get(index));
             }
@@ -119,7 +120,7 @@ public class MyGdxGame extends Game {
             }
             if(gameState.equals(GameState.YOU_WON)) {
                 nextLevel=true;
-                batch.draw(gameOver,0,0);
+                batch.draw(youWin,0,0);
             }
             if(gameState.equals(GameState.GAME_OVER)) {
                 batch.draw(gameOver,0,0);
@@ -134,9 +135,9 @@ public class MyGdxGame extends Game {
 	}
 
 	public void reset() {
-        palla = new ball();
-        mattonella  = new mattonella();
-        player1 = new CommandPlayer(mattonella);     //istanzio un Commandplayer( posso averne diversi per ogni player
+        palla = new Ball();
+        Paddle = new Paddle();
+        player1 = new CommandPlayer(Paddle);     //istanzio un Commandplayer( posso averne diversi per ogni player
         mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
         bg =livello.getBg();
     }

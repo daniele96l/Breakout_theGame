@@ -1,17 +1,17 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.math.Rectangle;
-import sprites.ball;
-import sprites.mattoncino;
-import sprites.mattonella;
+import sprites.Ball;
+import sprites.Brick;
+import sprites.Paddle;
 
 public class Collision {
-    private mattoncino mat;
-    public  boolean eliminato;
-    private ball palla;
+    private Brick mat;
+    private boolean eliminato;
+    private Ball palla;
     private boolean topCollide;
 
-    public Collision(mattoncino mat, ball palla){
+    public Collision(Brick mat, Ball palla){
         this.mat = mat;
         this.palla = palla;
         }
@@ -19,8 +19,6 @@ public class Collision {
     public void delete(){
         eliminato = true;
     }
-
-
 
     //questo metodo serve per la collisione con i brick verificando se collidono, nel caso cambio il verso della palla
     public boolean check(){
@@ -32,7 +30,7 @@ public class Collision {
         }
 
         if(!topCollide)
-            if(collidesTopBottom(palla.getBoundsBall())){ //controllo che collida col mattoncino
+            if(collidesTopBottom(palla.getBoundsBall())){ //controllo che collida col Brick
                 delete();            //quando abbiamo tanti mattoncini bisogna utilizzare un ciclo con un Arraylist
                 palla.getSpeedBall().set(palla.getSpeedBall().x, -palla.getSpeedBall().y );
                 return true;
@@ -71,8 +69,8 @@ public class Collision {
         return false;
     }
 
-    // questo metodo serve per controllare quando la palla collide con i bordi o con la mattonella
-    public void checkside(float dt, mattonella mattonella){
+    // questo metodo serve per controllare quando la palla collide con i bordi o con la Paddle
+    public void checkside(float dt, Paddle Paddle){
         palla.getPositionBall().add(palla.getSpeedBall().x *dt, palla.getSpeedBall().y*dt);
         palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
 
@@ -83,15 +81,15 @@ public class Collision {
         if(palla.getPositionBall().x < 0)
             palla.getSpeedBall().set(Info.velBall, palla.getSpeedBall().y); //controllo che rimbalzi a sinistra
 
-        if(collides(palla.getBoundsBall(), mattonella)) //controllo che collida con la mattonella
+        if(collides(palla.getBoundsBall(), Paddle)) //controllo che collida con la Paddle
             palla.getSpeedBall().set(palla.getSpeedBall().x, -palla.getSpeedBall().y);
 
     }
 
-    private boolean collides(Rectangle boundsBall, mattonella mattonella){
-        if(boundsBall.y < 20) //ovvero se la palla scende sotto il bordo superiose e colpisce il lato della mattonella  non rimalza ma va dritta giu
+    private boolean collides(Rectangle boundsBall, Paddle Paddle){
+        if(boundsBall.y < 20) //ovvero se la palla scende sotto il bordo superiose e colpisce il lato della Paddle  non rimalza ma va dritta giu
             return false;  //dato che ha mancato la parte superiore piana è impossibile che venga rimbalzata su
-        //serve anche ad evitare un bug che faceva entrare la pallina dentro la mattonella
-        return boundsBall.overlaps(mattonella.getBounds()); //la funzione che controllerà se la pallina tocca la mattonella
+        //serve anche ad evitare un bug che faceva entrare la pallina dentro la Paddle
+        return boundsBall.overlaps(Paddle.getBounds()); //la funzione che controllerà se la pallina tocca la Paddle
     }
 }

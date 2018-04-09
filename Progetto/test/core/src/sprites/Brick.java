@@ -1,25 +1,22 @@
 package sprites;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class mattoncino  extends Sprite{
+public class Brick extends Sprite{
 
     private Vector2 positionBrick;
     private Vector2 speed;
     private Rectangle boundsBrick;
     public  boolean eliminato;
 
-    public mattoncino(int posX, int posY){
+    public Brick(int posX, int posY){
         super(new Texture("brick.jpg"));
         positionBrick = new Vector2(posX, posY);
         speed = new Vector2(0,0);
-        boundsBrick = new Rectangle(posX, posY, mattoncino.this.getWidth(), mattoncino.this.getHeight() );
+        boundsBrick = new Rectangle(posX, posY, Brick.this.getWidth(), Brick.this.getHeight() );
         //il boundBrick si riferiscono al rettangolo invisibile che costruirò intorno alla texture
         //l'altezza e la larghezza sono della texture
     }
