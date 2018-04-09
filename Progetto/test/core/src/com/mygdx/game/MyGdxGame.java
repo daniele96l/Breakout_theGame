@@ -24,24 +24,14 @@ public class MyGdxGame extends Game {
     private Texture start;
     private Texture gameOver;
     private GameState gameState;
-    private  int shift;
     private CommandPlayer player1;
     private  Livello livello = new Livello(mattoncino, palla);
-
+    private boolean nextLevel;
 
 	
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		palla = new ball();
-		mattonella  = new mattonella();
-        player1 = new CommandPlayer(mattonella);     //istanzio un Commandplayer( posso averne diversi per ogni player
-		shift=600;
-
-
-        mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
-
-        bg = new Texture("bg.jpg");
+		reset();
         System.out.println("eseguo");
 
         start=new Texture("start.jpg");
@@ -54,27 +44,37 @@ public class MyGdxGame extends Game {
 
 	@Override
 	public void render () {
-
-        int index = -1;
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(livello.nextLevel()) {//deve stare dentro render perchè deve essere controllato sempre
+
+		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
+		    if(gameState.equals(GameState.INIT)) {
+		        gameState=GameState.ACTION;
+            }
+            if(gameState.equals(GameState.YOU_WON)) {
+		        reset();
+		        nextLevel=false;
+		        gameState=GameState.INIT;
+            }
+            if(gameState.equals(GameState.GAME_OVER)) {
+                reset();   //Soluzione TEMPORANEA, in attesa dell'implementazione dei livelli
+                gameState=GameState.INIT;
+            }
+        }
+
+        if(nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
             mattoncini = livello.selectLv();  //ritorno l'array adatto al nuovo livello
             bg = livello.getBg(); //reimposto il bg
             ball.reposition(); //palla al centro
 
         }
 
-		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
-		    if(gameState.equals(GameState.INIT)) {
-		        gameState=GameState.ACTION;
-            }
-            if(gameState.equals(GameState.GAME_OVER)) {
-                create();   //Soluzione TEMPORANEA, in attesa dell'implementazione dei livelli
-                gameState=GameState.INIT;
-            }
-        }
+        drawScene();
+    }
+
+    public void drawScene() {
+        int index = -1;
         batch.begin();
 
         if(gameState.equals(GameState.ACTION)) {
@@ -104,21 +104,26 @@ public class MyGdxGame extends Game {
             if (index != -1) {
                 mattoncini.remove(mattoncini.get(index));
             }
+            if(mattoncini.isEmpty()) {
+                gameState=GameState.YOU_WON;
+            }
             if(palla.getPositionBall().y<=0) {
                 gameState=GameState.GAME_OVER;
             }
         }
         else {
-		    if(gameState.equals(GameState.INIT)) {
-		        batch.draw(start,0,0);
+            if(gameState.equals(GameState.INIT)) {
+                batch.draw(start,0,0);
+            }
+            if(gameState.equals(GameState.YOU_WON)) {
+                livello.inceaseLv();
+                nextLevel=true;
+                batch.draw(gameOver,0,0);
             }
             if(gameState.equals(GameState.GAME_OVER)) {
-		        batch.draw(gameOver,0,0);
+                batch.draw(gameOver,0,0);
             }
         }
-
-
-
         batch.end();
     }
 	
@@ -126,4 +131,14 @@ public class MyGdxGame extends Game {
 	public void dispose () {
 		batch.dispose();
 	}
+
+	public void reset() {
+        batch = new SpriteBatch();
+        palla = new ball();
+        mattonella  = new mattonella();
+        player1 = new CommandPlayer(mattonella);     //istanzio un Commandplayer( posso averne diversi per ogni player
+
+        mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
+        bg =livello.getBg();
+    }
 }

@@ -9,16 +9,15 @@ public class Livello {
 
 
 
-    int shift = 600;
-    int nColonne;
-    ball ball;
-    int nMatt;
-    public Texture bg;
-    public mattoncino mattoncino;
-    public  Collision coll = new Collision(mattoncino, ball);
+    private int shift = 600;
+    private int nColonne;
+    private ball ball;
+    private int nMatt;
+    private Texture bg;
+    private mattoncino mattoncino;
 
-    public ArrayList<mattoncino> mattoncini = new ArrayList<mattoncino>();
-    int lv = 1;
+    private ArrayList<mattoncino> mattoncini = new ArrayList();
+    private int lv = 1;
 
     public Livello (mattoncino mattoncino, ball ball){
         this.mattoncino = mattoncino;
@@ -72,24 +71,13 @@ public class Livello {
         shift = 600;
         nMatt = nColonne * nRighe;
 
-
         return  mattoncini;
 
     }
-    public boolean nextLevel (){
-        if ( coll.getEliminati() == nMatt ){ //se i mattoncini eliminati sono uguali ai mattoncini del mio livello incremento il mio livello
-            lv ++;
-            System.out.println("Prossimo livello");
-            coll.setEliminati(0);
-           return true;
-        }
 
-        return false;
-
+    public void inceaseLv() {
+        this.lv++;
     }
-
-
-
 
     public int getShift() {
         return shift;
