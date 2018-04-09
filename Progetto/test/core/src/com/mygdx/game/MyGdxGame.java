@@ -107,6 +107,7 @@ public class MyGdxGame extends Game {
             }
             if(mattoncini.isEmpty()) {
                 gameState=GameState.YOU_WON;
+                livello.inceaseLv();
             }
             if(palla.getPositionBall().y<=0) {
                 gameState=GameState.GAME_OVER;
@@ -117,7 +118,6 @@ public class MyGdxGame extends Game {
                 batch.draw(start,0,0);
             }
             if(gameState.equals(GameState.YOU_WON)) {
-                livello.inceaseLv();
                 nextLevel=true;
                 batch.draw(gameOver,0,0);
             }
@@ -137,7 +137,6 @@ public class MyGdxGame extends Game {
         palla = new ball();
         mattonella  = new mattonella();
         player1 = new CommandPlayer(mattonella);     //istanzio un Commandplayer( posso averne diversi per ogni player
-
         mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
         bg =livello.getBg();
     }

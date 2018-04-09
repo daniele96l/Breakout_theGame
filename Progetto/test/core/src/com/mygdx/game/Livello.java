@@ -16,7 +16,7 @@ public class Livello {
     private Texture bg;
     private mattoncino mattoncino;
 
-    private ArrayList<mattoncino> mattoncini = new ArrayList();
+    private ArrayList<mattoncino> mattoncini;
     private int lv = 1;
 
     public Livello (mattoncino mattoncino, ball ball){
@@ -44,6 +44,7 @@ public class Livello {
     }
 
     public ArrayList<mattoncino> creaLv1(){
+        mattoncini=new ArrayList<sprites.mattoncino>();
         int nColonne = 4;
         int nRighe = 1;
         for(int i = 0; i< nColonne; i++){ //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
@@ -60,6 +61,7 @@ public class Livello {
 
     public ArrayList<mattoncino> creaLv2(){
 
+        mattoncini=new ArrayList<sprites.mattoncino>();
         int nColonne = 5;
         int nRighe = 1;
 
@@ -70,7 +72,6 @@ public class Livello {
         }
         shift = 600;
         nMatt = nColonne * nRighe;
-
         return  mattoncini;
 
     }
