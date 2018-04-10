@@ -37,7 +37,7 @@ public class Ball extends Sprite{
         this.palla = palla;
     }
 
-    public void setPositionBall(Vector2 positionBall) {
+    public void setPositionBall() {
         this.positionBall = positionBall;
     }
 

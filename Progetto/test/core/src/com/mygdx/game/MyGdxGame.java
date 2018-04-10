@@ -27,19 +27,19 @@ public class MyGdxGame extends Game {
     private CommandPlayer player1;
     private  Livello livello = new Livello(Brick, palla);
     private boolean nextLevel;
+    private boolean loser;
 
 	
 	@Override
 	public void create () {
         batch = new SpriteBatch();
         reset();
-        System.out.println("eseguo");
+
 
         start=new Texture("start.jpg");
         gameOver=new Texture("gameover.jpeg");
         youWin=new Texture("nextlevel.jpg");
 
-        /*Immagini ovviamente temporanee (fanno cagare)*/
         gameState=GameState.INIT;
         nextLevel=false;
 
@@ -49,8 +49,6 @@ public class MyGdxGame extends Game {
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
-        palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
@@ -59,11 +57,11 @@ public class MyGdxGame extends Game {
             if(gameState.equals(GameState.YOU_WON)) {
 		        reset();
 		        nextLevel=false;
-		        gameState=GameState.INIT;
+		        gameState=GameState.ACTION;
             }
             if(gameState.equals(GameState.GAME_OVER)) {
                 reset();
-                gameState=GameState.INIT;
+                gameState=GameState.ACTION;
             }
         }
 
@@ -81,8 +79,13 @@ public class MyGdxGame extends Game {
         batch.begin();
 
 
-        if(gameState.equals(GameState.ACTION)) {
-            System.out.println(palla.getBoundsBall().x);
+
+        if(gameState.equals(GameState.ACTION) ) {
+
+
+            palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
+            palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
+
             batch.draw(bg, 0, 0);
             batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y,palla.getWidth()* Info.ballresize, palla.getHeight()* Info.ballresize);
 
@@ -115,6 +118,7 @@ public class MyGdxGame extends Game {
             }
             if(palla.getPositionBall().y<=0) {
                 gameState=GameState.GAME_OVER;
+                palla.setPositionBall();
             }
         }
         else {
