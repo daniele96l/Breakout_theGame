@@ -82,6 +82,7 @@ public class MyGdxGame extends Game {
 
 
         if(gameState.equals(GameState.ACTION)) {
+            System.out.println(palla.getBoundsBall().x);
             batch.draw(bg, 0, 0);
             batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y,palla.getWidth()* Info.ballresize, palla.getHeight()* Info.ballresize);
 

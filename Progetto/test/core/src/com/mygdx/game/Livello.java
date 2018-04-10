@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Livello {
 
-    private int shift = 600;
+    private int shift = 700;
     private int shiftAltezza = 700;
     private int nColonne;
     private Ball Ball;
@@ -60,6 +60,7 @@ public class Livello {
     public ArrayList<Brick> drawLine(int nColonne, int nRighe){
 
         mattoncini=new ArrayList<Brick>();
+
         for(int y = 0; y < nRighe; y++ ){
             for ( int i = 0; i < nColonne; i++) { //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
                 Brick = new Brick(shift, shiftAltezza - y*100);
