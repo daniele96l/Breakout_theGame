@@ -67,16 +67,16 @@ public class Collision {
     // questo metodo serve per controllare quando la palla collide con i bordi o con la Paddle
     public void checkside(Paddle paddle){
 
-        if(palla.getPositionBall().x > Info.larghezza- palla.getWidth()) //controllo che rimbalzi a destra
+        if(palla.getPositionBall().x > Info.larghezza- palla.getWidth()* Info.ballresize) //controllo che rimbalzi a destra
             palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y);
-        if(palla.getPositionBall().y > Info.altezza - palla.getHeight()) //controllo che rimbalzi su
+        if(palla.getPositionBall().y > Info.altezza - palla.getHeight() * Info.ballresize) //controllo che rimbalzi su
             palla.getSpeedBall().set(palla.getSpeedBall().x,-palla.getSpeedBall().y);
         if(palla.getPositionBall().x < 0)
             palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y); //controllo che rimbalzi a sinistra
 
         if(collides(palla.getBoundsBall(), paddle)) { //controllo che collida con la Paddle
-            float relativeIntersectX = -((paddle.getPosition().x + (paddle.getWidth() / 2)) - (palla.getPositionBall().x+palla.getWidth()/2));
-            float normalizedRelativeIntersectionX = (relativeIntersectX / ((paddle.getTexture().getWidth() / 2)+palla.getWidth()/2));
+            float relativeIntersectX = -((paddle.getPosition().x + (paddle.getWidth()*Info.paddleresize / 2)) - (palla.getPositionBall().x+palla.getWidth()*Info.paddleresize/2));
+            float normalizedRelativeIntersectionX = (relativeIntersectX / ((paddle.getTexture().getWidth()*Info.paddleresize / 2)+palla.getWidth()/2));
             float bounceAngle = normalizedRelativeIntersectionX * (float)MAXBOUNCEANGLE;
             float speedx = (float) Math.sqrt(2*Info.velBall*Info.velBall)*(float) (Math.sin(bounceAngle));
             float speedy = (float) Math.sqrt(2*Info.velBall*Info.velBall)*(float) (Math.cos(bounceAngle));
@@ -85,7 +85,7 @@ public class Collision {
     }
 
     private boolean collides(Rectangle boundsBall, Paddle paddle){
-        if(boundsBall.y < 3/4*paddle.getHeight()) //ovvero se la palla scende sotto il bordo superiose e colpisce il lato della Paddle  non rimalza ma va dritta giu
+        if(boundsBall.y < 3/4*paddle.getHeight()*Info.paddleresize) //ovvero se la palla scende sotto il bordo superiose e colpisce il lato della Paddle  non rimalza ma va dritta giu
             return false;  //dato che ha mancato la parte superiore piana è impossibile che venga rimbalzata su
         //serve anche ad evitare un bug che faceva entrare la pallina dentro la Paddle
         return boundsBall.overlaps(paddle.getBounds()); //la funzione che controllerà se la pallina tocca la Paddle
