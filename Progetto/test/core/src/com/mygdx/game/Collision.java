@@ -23,36 +23,35 @@ public class Collision {
 
     //questo metodo serve per la collisione con i brick verificando se collidono, nel caso cambio il verso della palla
     public boolean check(){
-        if(collidesSide(palla.getBoundsBall())){
-            delete();
-            palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y);
-            topCollide = true;
-            return true;
-        }
 
-       if(!topCollide)
             if(collidesTopBottom(palla.getBoundsBall())){ //controllo che collida col Brick
                 delete();            //quando abbiamo tanti mattoncini bisogna utilizzare un ciclo con un Arraylist
                 palla.getSpeedBall().set(palla.getSpeedBall().x, -palla.getSpeedBall().y );
                 return true;
             }
-        return false;
+            else {
+                if(collidesSide(palla.getBoundsBall())) {
+                    delete();
+                    palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y);
+                    return true;
+                }
+                return false;
+             }
     }
 
     //metodo usato per il check(quando tocca o sopra o sotto)
     public boolean collidesTopBottom (Rectangle boundBall){
         /////Controllo dove avviene l'impatto
+
         if(boundBall.overlaps(mat.getBoundsBrick())) {
 
-            if ((boundBall.y+boundBall.height >= mat.getBoundsBrick().y)){
-                System.out.println("impact from the bottom");
+            if ((boundBall.y + boundBall.height >= mat.getBoundsBrick().y) && ((boundBall.x + boundBall.width/2 >= mat.getBoundsBrick().x) && (boundBall.x + boundBall.width/2 <= mat.getBoundsBrick().x + mat.getBoundsBrick().width)) ){
                 return true;
             }
-            if(boundBall.y  <= mat.getBoundsBrick().y){
-                System.out.println("impact from the top");
+           /* if((boundBall.y <= mat.getBoundsBrick().y +mat.getBoundsBrick().height) && ((boundBall.x + boundBall.width/2 >= mat.getBoundsBrick().x) && (boundBall.x + boundBall.width/2 <= mat.getBoundsBrick().x + mat.getBoundsBrick().width)) ){
                 //impact from the top
                 return true;
-            }
+            }*/
         }
         return false;
     }
@@ -60,16 +59,8 @@ public class Collision {
     //metodo usato per il check(quando tocca a destra o sinistra)
     public boolean collidesSide(Rectangle boundBall) {
         /////Controllo dove avviene l'impatto
-        if (boundBall.overlaps(mat.getBoundsBrick())) {
-            if (boundBall.x  + boundBall.width <=mat.getBoundsBrick().x + 10) { //impact from the left
-                System.out.println("impact from the left");
-                return true;
-            }
-            if (boundBall.x >= mat.getBoundsBrick().x + mat.getBoundsBrick().width - 10) { //impact from the right
-                System.out.println("impact from the right");
-                return true;
-            }
-        }
+        if (boundBall.overlaps(mat.getBoundsBrick()))
+            return true;
         return false;
     }
 
