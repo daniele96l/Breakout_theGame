@@ -39,7 +39,6 @@ public class MyGdxGame extends Game {
         gameOver=new Texture("gameover.jpeg");
         youWin=new Texture("nextlevel.jpg");
 
-        /*Immagini ovviamente temporanee (fanno cagare)*/
         gameState=GameState.INIT;
         nextLevel=false;
 
@@ -49,8 +48,6 @@ public class MyGdxGame extends Game {
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
-        palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
@@ -82,6 +79,8 @@ public class MyGdxGame extends Game {
 
 
         if(gameState.equals(GameState.ACTION)) {
+            palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
+            palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
             batch.draw(bg, 0, 0);
             batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y,palla.getWidth()* Info.ballresize, palla.getHeight()* Info.ballresize);
 
