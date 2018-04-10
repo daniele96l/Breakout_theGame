@@ -1,6 +1,8 @@
 package com.mygdx.game;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import sprites.*;
 
 
@@ -28,11 +30,18 @@ public class MyGdxGame extends Game {
     private  Livello livello = new Livello(Brick, palla);
     private boolean nextLevel;
     private boolean loser;
-
+    BitmapFont bitmapFont ;
+    int LostLives =0;
 	
 	@Override
 	public void create () {
         batch = new SpriteBatch();
+
+        bitmapFont = new BitmapFont();
+        bitmapFont.setColor(Color.WHITE);
+        bitmapFont.getData().setScale(1.2f);
+
+
         reset();
 
 
@@ -49,6 +58,7 @@ public class MyGdxGame extends Game {
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
@@ -78,22 +88,20 @@ public class MyGdxGame extends Game {
         int index = -1;
         batch.begin();
 
-
-
         if(gameState.equals(GameState.ACTION) ) {
 
 
             palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
             palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
-
             batch.draw(bg, 0, 0);
             batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y,palla.getWidth()* Info.ballresize, palla.getHeight()* Info.ballresize);
-
+            bitmapFont.draw(batch, "You lost: "+String.valueOf(LostLives) + " times", 20, 830);
             for (Brick Brick : mattoncini) {
                 batch.draw(Brick, Brick.getPositionBrick().x, Brick.getPositionBrick().y,Brick.getWidth()* Info.brickresize,Brick.getHeight()* Info.brickresize);
 
                 //disegno i mattoncini
             }
+
 
             batch.draw(Paddle, Paddle.getPosition().x, Paddle.getPosition().y, Paddle.getWidth()* Info.paddleresize , Paddle.getHeight()*Info.paddleresize);
 
@@ -118,19 +126,22 @@ public class MyGdxGame extends Game {
             }
             if(palla.getPositionBall().y<=0) {
                 gameState=GameState.GAME_OVER;
+                LostLives ++;
                 palla.setPositionBall();
             }
         }
         else {
             if(gameState.equals(GameState.INIT)) {
                 batch.draw(start,0,0);
+
             }
             if(gameState.equals(GameState.YOU_WON)) {
                 nextLevel=true;
                 batch.draw(youWin,0,0);
             }
-            if(gameState.equals(GameState.GAME_OVER)) {
+            if(gameState.equals(GameState.GAME_OVER) ) {
                 batch.draw(gameOver,0,0);
+
             }
         }
         batch.end();
