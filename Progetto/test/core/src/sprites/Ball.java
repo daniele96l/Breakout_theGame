@@ -17,7 +17,7 @@ public class Ball extends Sprite{
     public Ball(){
         super(new Texture("pallone-1.png"));
         positionBall = new Vector2(320, 400);
-        speedBall = new Vector2(-Info.velBall,-Info.velBall);
+        speedBall = new Vector2(Info.velBall,Info.velBall);
         palla=new Texture("pallone-1.png");
         boundsBall = new Rectangle(positionBall.x, positionBall.y, palla.getWidth(),palla.getHeight());
     }

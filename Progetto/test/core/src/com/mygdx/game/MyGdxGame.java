@@ -37,7 +37,7 @@ public class MyGdxGame extends Game {
 
         start=new Texture("start.jpg");
         gameOver=new Texture("gameover.jpeg");
-        youWin=new Texture("gameover.jpeg");
+        youWin=new Texture("nextlevel.jpg");
 
         /*Immagini ovviamente temporanee (fanno cagare)*/
         gameState=GameState.INIT;
