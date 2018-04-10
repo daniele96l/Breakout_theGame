@@ -49,6 +49,7 @@ public class Collision {
                 return true;
             }
             if(boundBall.y  <= mat.getBoundsBrick().y){
+                System.out.println("impact from the top");
                 //impact from the top
                 return true;
             }
@@ -61,9 +62,11 @@ public class Collision {
         /////Controllo dove avviene l'impatto
         if (boundBall.overlaps(mat.getBoundsBrick())) {
             if (boundBall.x  + boundBall.width <=mat.getBoundsBrick().x) { //impact from the left
+                System.out.println("impact from the left");
                 return true;
             }
             if (boundBall.x >= mat.getBoundsBrick().x + mat.getBoundsBrick().width - 10) { //impact from the right
+                System.out.println("impact from the right");
                 return true;
             }
         }

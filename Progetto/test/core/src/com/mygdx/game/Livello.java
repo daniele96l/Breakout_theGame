@@ -9,6 +9,7 @@ public class Livello {
 
 
     private int shift = 600;
+    private int shiftAltezza = 700;
     private int nColonne;
     private Ball Ball;
     private int nMatt;
@@ -43,37 +44,46 @@ public class Livello {
     }
 
     public ArrayList<Brick> creaLv1(){
-        mattoncini=new ArrayList<Brick>();
-        int nColonne = 4;
-        int nRighe = 1;
-        for(int i = 0; i< nColonne; i++){ //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
-            Brick = new Brick(shift , 700  );
-            mattoncini.add(Brick);
-            shift -= 150; //ogni Brick è distante dall'altro di uno shift
-        }
-        nMatt = nColonne * nRighe;
-        shift = 600;
 
+        mattoncini = drawLine(1);
         return  mattoncini;
 
     }
+
 
     public ArrayList<Brick> creaLv2(){
 
-        mattoncini=new ArrayList<Brick>();
-        int nColonne = 5;
-        int nRighe = 1;
 
-        for(int i = 0; i< nColonne; i++){ //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
-            Brick = new Brick(shift , 700  );
-            mattoncini.add(Brick);
-            shift -= 150; //ogni Brick è distante dall'altro di uno shift
-        }
-        shift = 600;
-        nMatt = nColonne * nRighe;
+        mattoncini = drawLine(2);
         return  mattoncini;
 
     }
+
+
+    public ArrayList<Brick> drawLine(int nRighe){
+
+        mattoncini=new ArrayList<Brick>();
+        int nColonne = 4;
+
+
+        for(int y = 0; y < nRighe; y++ ){
+
+            for ( int i = 0; i < nColonne; i++) { //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
+                Brick = new Brick(shift, shiftAltezza - y*100);
+                mattoncini.add(Brick);
+                shift -= 150; //ogni Brick è distante dall'altro di uno shift
+
+            }
+            shift = 600;
+
+        }
+
+        nMatt = nColonne * nRighe;
+        shift = 600;
+
+        return mattoncini;
+    }
+
 
     public void inceaseLv() {
         this.lv++;
