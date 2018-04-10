@@ -1,6 +1,7 @@
 package com.mygdx.game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Interpolation;
 import sprites.*;
 
 
@@ -10,6 +11,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import javax.tools.Tool;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class MyGdxGame extends Game {
@@ -42,7 +45,7 @@ public class MyGdxGame extends Game {
         /*Immagini ovviamente temporanee (fanno cagare)*/
         gameState=GameState.INIT;
         nextLevel=false;
-
+        
 	}
 
 	@Override
@@ -51,7 +54,6 @@ public class MyGdxGame extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
         palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
-
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
 		        gameState=GameState.ACTION;
