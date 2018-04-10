@@ -2,13 +2,13 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import sprites.mattonella;
+import sprites.Paddle;
 
 public class CommandPlayer {
 
-    private mattonella mat;
+    private Paddle mat;
 
-    public CommandPlayer(mattonella mat){
+    public CommandPlayer(Paddle mat){
         this.mat = mat;
     }
 
@@ -17,19 +17,16 @@ public class CommandPlayer {
     public void Move()
     {
          if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            if(mat.getPosition().x > 0) { //controllo il range in cui la mattonella si può muovere
+            if(mat.getPosition().x > 0) { //controllo il range in cui la Paddle si può muovere
                 mat.getPosition().add(-10, 0);
                 mat.getBounds().setPosition(mat.getPosition().x, mat.getPosition().y);
             }
         }
             if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             if(mat.getPosition().x < 800 - mat.getWidth()) {
-                mat.getPosition().add(10, 0);//controllo il range in cui la mattonella si può muovere
+                mat.getPosition().add(10, 0);//controllo il range in cui la Paddle si può muovere
                 mat.getBounds().setPosition(mat.getPosition().x, mat.getPosition().y);
             }
         }
     }
-
-
-
 }

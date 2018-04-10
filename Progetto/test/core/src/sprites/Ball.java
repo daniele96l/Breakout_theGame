@@ -4,27 +4,23 @@ package sprites;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.*;
+import com.mygdx.game.Info;
 
 
-public class ball  extends Sprite{
+public class Ball extends Sprite{
 
     private Texture palla;
     static private Vector2 positionBall;
     static private Vector2 speedBall;
     private Rectangle boundsBall;
 
-    public ball(){
+    public Ball(){
         super(new Texture("pallone-1.png"));
         positionBall = new Vector2(320, 400);
-        speedBall = new Vector2(5,5);
-        boundsBall = new Rectangle(positionBall.x, positionBall.y, 20,20);
+        speedBall = new Vector2(-Info.velBall,-Info.velBall);
+        palla=new Texture("pallone-1.png");
+        boundsBall = new Rectangle(positionBall.x, positionBall.y, palla.getWidth(),palla.getHeight());
     }
-
-    public static void reposition(){
-        positionBall = new Vector2(320, 400);
-        speedBall = new Vector2(ball.speedBall.x,ball.speedBall.y);
-    }
-
 
 
     public Texture getPalla() { return palla; }
