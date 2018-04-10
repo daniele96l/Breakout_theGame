@@ -32,7 +32,13 @@ public class Livello {
             bg = new Texture("bgLv2.jpg");
             return creaLv2();
         }
+        if(lv ==3)
+        {
+            bg = new Texture("bgLv2.jpg");
+            return creaLv3();
+        }
         return creaLvVuoto();
+
     }
 
     public ArrayList<Brick> creaLvVuoto(){
@@ -40,13 +46,16 @@ public class Livello {
     }
 
     public ArrayList<Brick> creaLv1(){
-        return  drawLine(4,1);
+        return  drawLine(6,1);
     }
 
     public ArrayList<Brick> creaLv2(){
         return drawLine(5, 2);
     }
 
+    public ArrayList<Brick> creaLv3(){
+        return drawLine(7, 3);
+    }
 
     public ArrayList<Brick> drawLine(int nColonne, int nRighe){
 
@@ -55,9 +64,9 @@ public class Livello {
             for ( int i = 0; i < nColonne; i++) { //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
                 Brick = new Brick(shift, shiftAltezza - y*100);
                 mattoncini.add(Brick);
-                shift -= 150; //ogni Brick è distante dall'altro di uno shift
+                shift -= 130 * Info.brickresize; //ogni Brick è distante dall'altro di uno shift
             }
-            shift = 600;
+            shift = 700;
         }
         nMatt = nColonne * nRighe;
         return mattoncini;

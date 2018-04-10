@@ -1,7 +1,6 @@
 package com.mygdx.game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Interpolation;
 import sprites.*;
 
 
@@ -11,8 +10,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import javax.tools.Tool;
-import java.awt.*;
 import java.util.ArrayList;
 
 public class MyGdxGame extends Game {
@@ -45,7 +42,7 @@ public class MyGdxGame extends Game {
         /*Immagini ovviamente temporanee (fanno cagare)*/
         gameState=GameState.INIT;
         nextLevel=false;
-        
+
 	}
 
 	@Override
@@ -54,6 +51,7 @@ public class MyGdxGame extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
         palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
+
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
 		        gameState=GameState.ACTION;
@@ -85,15 +83,15 @@ public class MyGdxGame extends Game {
 
         if(gameState.equals(GameState.ACTION)) {
             batch.draw(bg, 0, 0);
-            batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y);
+            batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y,palla.getWidth()* Info.ballresize, palla.getHeight()* Info.ballresize);
 
             for (Brick Brick : mattoncini) {
-                batch.draw(Brick, Brick.getPositionBrick().x, Brick.getPositionBrick().y);
+                batch.draw(Brick, Brick.getPositionBrick().x, Brick.getPositionBrick().y,Brick.getWidth()* Info.brickresize,Brick.getHeight()* Info.brickresize);
 
                 //disegno i mattoncini
             }
 
-            batch.draw(Paddle, Paddle.getPosition().x, Paddle.getPosition().y);
+            batch.draw(Paddle, Paddle.getPosition().x, Paddle.getPosition().y, Paddle.getWidth()* Info.paddleresize , Paddle.getHeight()*Info.paddleresize);
 
             player1.Move();     //mi permette di muovere il giocatore
 
@@ -140,7 +138,7 @@ public class MyGdxGame extends Game {
 
 	public void reset() {
         palla = new Ball();
-        Paddle = new Paddle();
+        Paddle = new Paddle(0.5f);
         player1 = new CommandPlayer(Paddle);     //istanzio un Commandplayer( posso averne diversi per ogni player
         mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
         bg =livello.getBg();
