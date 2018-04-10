@@ -63,7 +63,7 @@ public class MyGdxGame extends Game {
 		        gameState=GameState.ACTION;
             }
             if(gameState.equals(GameState.GAME_OVER)) { ///////////////////////////////////////////
-                create();   //Soluzione TEMPORANEA, in attesa dell'implementazione dei livelli (ch'è sta roba????- dany)
+                create();   //Soluzione TEMPORANEA, in attesa dell'implementazione dei livelli (ch'è sta roba???? : dany)
                 gameState=GameState.INIT; ////////////////////////////////////////////////
             }
         }
