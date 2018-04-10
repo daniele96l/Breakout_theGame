@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 public class Livello {
 
-
-
     private int shift = 600;
     private int shiftAltezza = 700;
     private int nColonne;
@@ -34,53 +32,34 @@ public class Livello {
             bg = new Texture("bgLv2.jpg");
             return creaLv2();
         }
-
         return creaLvVuoto();
     }
 
     public ArrayList<Brick> creaLvVuoto(){
         return  mattoncini;
-
     }
 
     public ArrayList<Brick> creaLv1(){
-
-        mattoncini = drawLine(1);
-        return  mattoncini;
-
+        return  drawLine(4,1);
     }
-
 
     public ArrayList<Brick> creaLv2(){
-
-
-        mattoncini = drawLine(2);
-        return  mattoncini;
-
+        return drawLine(5, 2);
     }
 
 
-    public ArrayList<Brick> drawLine(int nRighe){
+    public ArrayList<Brick> drawLine(int nColonne, int nRighe){
 
         mattoncini=new ArrayList<Brick>();
-        int nColonne = 4;
-
-
         for(int y = 0; y < nRighe; y++ ){
-
             for ( int i = 0; i < nColonne; i++) { //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
                 Brick = new Brick(shift, shiftAltezza - y*100);
                 mattoncini.add(Brick);
                 shift -= 150; //ogni Brick è distante dall'altro di uno shift
-
             }
             shift = 600;
-
         }
-
         nMatt = nColonne * nRighe;
-        shift = 600;
-
         return mattoncini;
     }
 

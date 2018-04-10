@@ -61,7 +61,7 @@ public class Collision {
     public boolean collidesSide(Rectangle boundBall) {
         /////Controllo dove avviene l'impatto
         if (boundBall.overlaps(mat.getBoundsBrick())) {
-            if (boundBall.x  + boundBall.width <=mat.getBoundsBrick().x) { //impact from the left
+            if (boundBall.x  + boundBall.width <=mat.getBoundsBrick().x + 10) { //impact from the left
                 System.out.println("impact from the left");
                 return true;
             }
