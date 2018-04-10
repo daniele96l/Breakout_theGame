@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Scaling;
-import com.mygdx.game.Info;
 
 public class Brick extends Sprite{
 
@@ -18,7 +16,7 @@ public class Brick extends Sprite{
         super(new Texture("brick.jpg"));
         positionBrick = new Vector2(posX, posY);
         speed = new Vector2(0,0);
-        boundsBrick = new Rectangle(posX, posY, Brick.this.getWidth()* Info.brickresize, Brick.this.getHeight()* Info.brickresize );
+        boundsBrick = new Rectangle(posX, posY, Brick.this.getWidth(), Brick.this.getHeight() );
         //il boundBrick si riferiscono al rettangolo invisibile che costruirò intorno alla texture
         //l'altezza e la larghezza sono della texture
     }

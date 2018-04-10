@@ -6,11 +6,10 @@ import sprites.Paddle;
 
 public class CommandPlayer {
 
-    private Paddle paddle;
+    private Paddle mat;
 
-    public CommandPlayer(Paddle paddle){
-        this.paddle = paddle
-        ;
+    public CommandPlayer(Paddle mat){
+        this.mat = mat;
     }
 
 
@@ -18,15 +17,15 @@ public class CommandPlayer {
     public void Move()
     {
          if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            if(paddle.getPosition().x > 0) { //controllo il range in cui la Paddle si può muovere
-                paddle.getPosition().add(-10, 0);
-                paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
+            if(mat.getPosition().x > 0) { //controllo il range in cui la Paddle si può muovere
+                mat.getPosition().add(-10, 0);
+                mat.getBounds().setPosition(mat.getPosition().x, mat.getPosition().y);
             }
         }
             if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            if(paddle.getPosition().x < 800 - paddle.getWidth()*Info.paddleresize) {
-                paddle.getPosition().add(10, 0);//controllo il range in cui la Paddle si può muovere
-                paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
+            if(mat.getPosition().x < 800 - mat.getWidth()) {
+                mat.getPosition().add(10, 0);//controllo il range in cui la Paddle si può muovere
+                mat.getBounds().setPosition(mat.getPosition().x, mat.getPosition().y);
             }
         }
     }

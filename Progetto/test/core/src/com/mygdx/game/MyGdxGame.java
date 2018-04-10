@@ -85,15 +85,15 @@ public class MyGdxGame extends Game {
 
         if(gameState.equals(GameState.ACTION)) {
             batch.draw(bg, 0, 0);
-            batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y,palla.getWidth()* Info.ballresize, palla.getHeight()* Info.ballresize);
+            batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y);
 
             for (Brick Brick : mattoncini) {
-                batch.draw(Brick, Brick.getPositionBrick().x, Brick.getPositionBrick().y,Brick.getWidth()* Info.brickresize,Brick.getHeight()* Info.brickresize);
+                batch.draw(Brick, Brick.getPositionBrick().x, Brick.getPositionBrick().y);
 
                 //disegno i mattoncini
             }
 
-            batch.draw(Paddle, Paddle.getPosition().x, Paddle.getPosition().y, Paddle.getWidth()* Info.paddleresize , Paddle.getHeight()*Info.paddleresize);
+            batch.draw(Paddle, Paddle.getPosition().x, Paddle.getPosition().y);
 
             player1.Move();     //mi permette di muovere il giocatore
 
@@ -140,7 +140,7 @@ public class MyGdxGame extends Game {
 
 	public void reset() {
         palla = new Ball();
-        Paddle = new Paddle(0.5f);
+        Paddle = new Paddle();
         player1 = new CommandPlayer(Paddle);     //istanzio un Commandplayer( posso averne diversi per ogni player
         mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
         bg =livello.getBg();
