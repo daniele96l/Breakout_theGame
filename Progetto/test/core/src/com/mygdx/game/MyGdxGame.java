@@ -1,5 +1,6 @@
 package com.mygdx.game;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -29,6 +30,7 @@ public class MyGdxGame extends Game {
     private CommandPlayer player1;
     private  Livello livello = new Livello(Brick, palla);
     private boolean nextLevel;
+    Music music ;
     private boolean loser;
     BitmapFont bitmapFont ;
     int LostLives =0;
@@ -40,6 +42,7 @@ public class MyGdxGame extends Game {
         bitmapFont = new BitmapFont();
         bitmapFont.setColor(Color.WHITE);
         bitmapFont.getData().setScale(1.2f);
+        music =  Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
 
         reset();
 
@@ -56,6 +59,8 @@ public class MyGdxGame extends Game {
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		music.setVolume(1);
+        music.play();
 
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
