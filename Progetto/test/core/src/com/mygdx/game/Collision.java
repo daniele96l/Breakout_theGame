@@ -24,19 +24,32 @@ public class Collision {
     //questo metodo serve per la collisione con i brick verificando se collidono, nel caso cambio il verso della palla
     public boolean check(){
 
-            if(collidesTopBottom(palla.getBoundsBall())){ //controllo che collida col Brick
-                delete();            //quando abbiamo tanti mattoncini bisogna utilizzare un ciclo con un Arraylist
-                palla.getSpeedBall().set(palla.getSpeedBall().x, -palla.getSpeedBall().y );
+        if(collidesTopBottom(palla.getBoundsBall())){ //controllo che collida col Brick
+            if((palla.getPositionBall().y-mat.getBoundsBrick().y)*palla.getSpeedBall().y>=0) {
+                delete();
+                palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y);
+                System.out.println(palla.getPositionBall().y);
+                System.out.println(mat.getBoundsBrick().y);
+                System.out.println(palla.getSpeedBall().y);
                 return true;
             }
-            else {
-                if(collidesSide(palla.getBoundsBall())) {
+            delete();            //quando abbiamo tanti mattoncini bisogna utilizzare un ciclo con un Arraylist
+            palla.getSpeedBall().set(palla.getSpeedBall().x, -palla.getSpeedBall().y );
+            return true;
+        }
+        else {
+            if(collidesSide(palla.getBoundsBall())) {
+                if((palla.getPositionBall().x-(mat.getBoundsBrick().x+mat.getBoundsBrick().width/2)*palla.getSpeedBall().x)>=0) {
                     delete();
-                    palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y);
+                    palla.getSpeedBall().set(palla.getSpeedBall().x, -palla.getSpeedBall().y );
                     return true;
                 }
-                return false;
-             }
+                delete();
+                palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y);
+                return true;
+            }
+            return false;
+        }
     }
 
     //metodo usato per il check(quando tocca o sopra o sotto)
@@ -45,13 +58,9 @@ public class Collision {
 
         if(boundBall.overlaps(mat.getBoundsBrick())) {
 
-            if ((boundBall.y + boundBall.height >= mat.getBoundsBrick().y) && ((boundBall.x + boundBall.width/2 >= mat.getBoundsBrick().x) && (boundBall.x + boundBall.width/2 <= mat.getBoundsBrick().x + mat.getBoundsBrick().width)) ){
+            if ((boundBall.x + boundBall.width/2 >= mat.getBoundsBrick().x) && (boundBall.x + boundBall.width/2 <= mat.getBoundsBrick().x + mat.getBoundsBrick().width)){
                 return true;
             }
-           /* if((boundBall.y <= mat.getBoundsBrick().y +mat.getBoundsBrick().height) && ((boundBall.x + boundBall.width/2 >= mat.getBoundsBrick().x) && (boundBall.x + boundBall.width/2 <= mat.getBoundsBrick().x + mat.getBoundsBrick().width)) ){
-                //impact from the top
-                return true;
-            }*/
         }
         return false;
     }
