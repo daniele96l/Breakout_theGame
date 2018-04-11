@@ -18,7 +18,7 @@ public class MyGdxGame extends Game {
     private Collision col;
     private SpriteBatch batch;
     private Brick Brick;
-    private ArrayList<Brick> mattoncini = new ArrayList<Brick>();
+    private ArrayList<Brick> mattoncini = new ArrayList();
     private Ball palla;
     private Paddle Paddle;
     private Texture bg;
@@ -41,9 +41,7 @@ public class MyGdxGame extends Game {
         bitmapFont.setColor(Color.WHITE);
         bitmapFont.getData().setScale(1.2f);
 
-
         reset();
-
 
         start=new Texture("start.jpg");
         gameOver=new Texture("gameover.jpeg");
@@ -98,7 +96,6 @@ public class MyGdxGame extends Game {
             bitmapFont.draw(batch, "You lost: "+String.valueOf(LostLives) + " times", 20, 830);
             for (Brick Brick : mattoncini) {
                 batch.draw(Brick, Brick.getPositionBrick().x, Brick.getPositionBrick().y,Brick.getWidth()* Info.brickresize,Brick.getHeight()* Info.brickresize);
-
                 //disegno i mattoncini
             }
 

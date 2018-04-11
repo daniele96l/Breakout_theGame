@@ -14,8 +14,9 @@ public class Brick extends Sprite{
     private Rectangle boundsBrick;
     public  boolean eliminato;
 
+
     public Brick(int posX, int posY){
-        super(new Texture("brick.jpg"));
+        super(new Texture("normalBrick.jpg"));
         positionBrick = new Vector2(posX, posY);
         speed = new Vector2(0,0);
         boundsBrick = new Rectangle(posX, posY, Brick.this.getWidth()* Info.brickresize, Brick.this.getHeight()* Info.brickresize );
