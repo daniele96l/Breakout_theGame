@@ -31,6 +31,7 @@ public class MyGdxGame extends Game {
     private  Livello livello = new Livello(Brick, palla);
     private boolean nextLevel;
     Music music ;
+    Music music2 ;
     private boolean loser;
     BitmapFont bitmapFont ;
     int LostLives =0;
@@ -43,6 +44,8 @@ public class MyGdxGame extends Game {
         bitmapFont.setColor(Color.WHITE);
         bitmapFont.getData().setScale(1.2f);
         music =  Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+        music2 =  Gdx.audio.newMusic(Gdx.files.internal("Untitled.mp3"));
+
 
         reset();
 
@@ -61,6 +64,7 @@ public class MyGdxGame extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		music.setVolume(1);
         music.play();
+
 
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
@@ -93,12 +97,12 @@ public class MyGdxGame extends Game {
 
         if(gameState.equals(GameState.ACTION) ) {
 
-
             palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
             palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
             batch.draw(bg, 0, 0);
             batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y,palla.getWidth()* Info.ballresize, palla.getHeight()* Info.ballresize);
             bitmapFont.draw(batch, "You lost: "+String.valueOf(LostLives) + " times", 20, 830);
+
             for (Brick Brick : mattoncini) {
                 batch.draw(Brick, Brick.getPositionBrick().x, Brick.getPositionBrick().y,Brick.getWidth()* Info.brickresize,Brick.getHeight()* Info.brickresize);
                 //disegno i mattoncini
@@ -129,6 +133,7 @@ public class MyGdxGame extends Game {
             if(palla.getPositionBall().y<=0) {
                 gameState=GameState.GAME_OVER;
                 LostLives ++;
+                music2.play();
                 palla.setPositionBall();
             }
         }
@@ -143,7 +148,7 @@ public class MyGdxGame extends Game {
             }
             if(gameState.equals(GameState.GAME_OVER) ) {
                 batch.draw(gameOver,0,0);
-
+                music.pause();
             }
         }
         batch.end();
