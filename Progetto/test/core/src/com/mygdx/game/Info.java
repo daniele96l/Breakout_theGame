@@ -9,4 +9,8 @@ public class Info {
     public static float brickresize = 0.8f;
     public static float ballresize = 0.8f;
     public static int offset = 20;
+
+    public static void setBrickresize(float brickresize) {
+        Info.brickresize = brickresize;
+    }
 }
