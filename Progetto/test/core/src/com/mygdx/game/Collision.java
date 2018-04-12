@@ -48,12 +48,12 @@ public class Collision {
         /////Controllo dove avviene l'impatto
 
         if((boundBall.overlaps(mat.getBoundsBrick()))) {
-            if ((boundBall.y + boundBall.height >= mat.getBoundsBrick().y -2) && boundBall.x + boundBall.width - 4 > mat.getBoundsBrick().x){
+            if ((boundBall.y + boundBall.height >= mat.getBoundsBrick().y -2) && (boundBall.x  > mat.getBoundsBrick().x) && boundBall.x + 4 < mat.getBoundsBrick().x + mat.getBoundsBrick().width ){
                 top = true;
                 return true;
             }
 
-            if(boundBall.y  <= mat.getBoundsBrick().y + 4 ){
+            if((boundBall.y  <= mat.getBoundsBrick().y + 4 ) && (boundBall.x  > mat.getBoundsBrick().x ) && (boundBall.x + 4 < mat.getBoundsBrick().x + mat.getBoundsBrick().width )){
                 //impact from the bottom
                 return true;
             }
