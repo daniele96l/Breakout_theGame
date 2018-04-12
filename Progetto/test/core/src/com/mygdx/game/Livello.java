@@ -48,7 +48,6 @@ public class Livello {
             bg = new Texture("bgLv4.jpg");
             coeffy = 30;
             coeffx = 160;
-            Info.setBrickresize(0.3f);
             return creaLv4();
         }
         return creaLvVuoto();
