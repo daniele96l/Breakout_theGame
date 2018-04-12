@@ -66,12 +66,12 @@ public class Collision {
     //metodo usato per il check(quando tocca a destra o sinistra)
     public boolean collidesSide(Rectangle boundBall) { {
             /////Controllo dove avviene l'impatto
-            if (boundBall.overlaps(mat.getBoundsBrick())) {
+            if ((boundBall.overlaps(mat.getBoundsBrick()))&& (boundBall.y + boundBall.height - 4 > mat.getBoundsBrick().y ) && (boundBall.y + 4 < mat.getBoundsBrick().y + mat.getBoundsBrick().y )) {
                 if (boundBall.x < mat.getBoundsBrick().x + 4) { //impact from the left
                     System.out.println("side");
                     return true;
                 }
-                if (boundBall.x >= mat.getBoundsBrick().x + mat.getBoundsBrick().width  -4 ) { //impact from the right
+                if ((boundBall.x >= mat.getBoundsBrick().x + mat.getBoundsBrick().width  -4 )&& (boundBall.y + boundBall.height - 4 > mat.getBoundsBrick().y ) && (boundBall.y + 4 < mat.getBoundsBrick().y + mat.getBoundsBrick().y )) { //impact from the right
                     System.out.println("side");
                     return true;
                 }
@@ -83,11 +83,11 @@ public class Collision {
     // questo metodo serve per controllare quando la palla collide con i bordi o con la Paddle
     public void checkside(Paddle paddle){
 
-        if(palla.getPositionBall().x > Info.larghezza- palla.getWidth()* Info.ballresize+1) //controllo che rimbalzi a destra
+        if(palla.getPositionBall().x > Info.larghezza- palla.getWidth()* Info.ballresize+3) //controllo che rimbalzi a destra
             palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y);
         if(palla.getPositionBall().y  > Info.altezza - palla.getHeight() * Info.ballresize) //controllo che rimbalzi su
             palla.getSpeedBall().set(palla.getSpeedBall().x,-palla.getSpeedBall().y);
-        if(palla.getPositionBall().x  < -1)
+        if(palla.getPositionBall().x  < -3)
             palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y); //controllo che rimbalzi a sinistra
 
         if(collides(palla.getBoundsBall(), paddle)) { //controllo che collida con la Paddle
