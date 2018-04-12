@@ -47,15 +47,17 @@ public class Collision {
     public boolean collidesTopBottom (Rectangle boundBall){
         /////Controllo dove avviene l'impatto
 
-        if(boundBall.overlaps(mat.getBoundsBrick())) {
-            if ((boundBall.y + boundBall.height >= mat.getBoundsBrick().y -2)){
+        if((boundBall.overlaps(mat.getBoundsBrick()))) {
+            if ((boundBall.y + boundBall.height >= mat.getBoundsBrick().y -2) && boundBall.x + boundBall.width - 4 > mat.getBoundsBrick().x){
                 top = true;
                 return true;
             }
-            if(boundBall.y  <= mat.getBoundsBrick().y + 2){
+
+            if(boundBall.y  <= mat.getBoundsBrick().y + 4 ){
                 //impact from the bottom
                 return true;
             }
+
         }
         return false;
 
@@ -65,10 +67,12 @@ public class Collision {
     public boolean collidesSide(Rectangle boundBall) { {
             /////Controllo dove avviene l'impatto
             if (boundBall.overlaps(mat.getBoundsBrick())) {
-                if (boundBall.x < mat.getBoundsBrick().x + 2) { //impact from the left
+                if (boundBall.x < mat.getBoundsBrick().x + 4) { //impact from the left
+                    System.out.println("side");
                     return true;
                 }
-                if (boundBall.x >= mat.getBoundsBrick().x + mat.getBoundsBrick().width  -10 ) { //impact from the right
+                if (boundBall.x >= mat.getBoundsBrick().x + mat.getBoundsBrick().width  -4 ) { //impact from the right
+                    System.out.println("side");
                     return true;
                 }
             }
