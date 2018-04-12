@@ -83,11 +83,11 @@ public class Collision {
     // questo metodo serve per controllare quando la palla collide con i bordi o con la Paddle
     public void checkside(Paddle paddle){
 
-        if(palla.getPositionBall().x > Info.larghezza- palla.getWidth()* Info.ballresize+3) //controllo che rimbalzi a destra
+        if(palla.getPositionBall().x > Info.larghezza- palla.getWidth()* Info.ballresize) //controllo che rimbalzi a destra
             palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y);
         if(palla.getPositionBall().y  > Info.altezza - palla.getHeight() * Info.ballresize) //controllo che rimbalzi su
             palla.getSpeedBall().set(palla.getSpeedBall().x,-palla.getSpeedBall().y);
-        if(palla.getPositionBall().x  < -3)
+        if(palla.getPositionBall().x  < 0)
             palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y); //controllo che rimbalzi a sinistra
 
         if(collides(palla.getBoundsBall(), paddle)) { //controllo che collida con la Paddle

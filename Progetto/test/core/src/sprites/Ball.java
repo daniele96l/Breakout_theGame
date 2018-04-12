@@ -17,8 +17,8 @@ public class Ball extends Sprite{
 
     public Ball(){
         super(new Texture("pallone-1.png"));
-        positionBall = new Vector2(20, 40); //si vedono evidenti problemi di rimbalzo con y = 400  3 y = 200
-        speedBall = new Vector2(Info.velBall,Info.velBall);
+        positionBall = new Vector2(408, 400); //si vedono evidenti problemi di rimbalzo con y = 400  3 y = 200
+        speedBall = new Vector2(Info.velBall,-Info.velBall);
         palla=new Texture("pallone-1.png");
         boundsBall = new Rectangle(positionBall.x, positionBall.y, palla.getWidth() * Info.ballresize,palla.getHeight()* Info.ballresize);
 
