@@ -1,6 +1,7 @@
 package sprites;
 
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.*;
@@ -16,10 +17,12 @@ public class Ball extends Sprite{
 
     public Ball(){
         super(new Texture("pallone-1.png"));
-        positionBall = new Vector2(320, 200); //si vedono evidenti problemi di rimbalzo con y = 400  3 y = 200
+        positionBall = new Vector2(100, 600); //si vedono evidenti problemi di rimbalzo con y = 400  3 y = 200
         speedBall = new Vector2(Info.velBall,Info.velBall);
         palla=new Texture("pallone-1.png");
         boundsBall = new Rectangle(positionBall.x, positionBall.y, palla.getWidth() * Info.ballresize,palla.getHeight()* Info.ballresize);
+
+
     }
 
 

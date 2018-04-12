@@ -12,10 +12,11 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.Input.TextInputListener;
 
 import java.util.ArrayList;
 
-public class MyGdxGame extends Game {
+public class MyGdxGame extends Game implements TextInputListener {
     private Collision col;
     private SpriteBatch batch;
     private Brick Brick;
@@ -35,6 +36,8 @@ public class MyGdxGame extends Game {
     private boolean loser;
     BitmapFont bitmapFont ;
     int LostLives =0;
+    String text;
+    TextInputListener textInputListener;
 	
 	@Override
 	public void create () {
@@ -55,8 +58,11 @@ public class MyGdxGame extends Game {
 
         gameState=GameState.INIT;
         nextLevel=false;
+       // Gdx.input.getTextInput(textInputListener, "Title", "Default text", "OK");
+       // Gdx.app.log("Text", "test");
 
-	}
+
+    }
 
 	@Override
 	public void render () {
@@ -70,6 +76,7 @@ public class MyGdxGame extends Game {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
 		        gameState=GameState.ACTION;
+		        music2.pause();
             }
             if(gameState.equals(GameState.YOU_WON)) {
 		        reset();
@@ -165,5 +172,15 @@ public class MyGdxGame extends Game {
         player1 = new CommandPlayer(Paddle);     //istanzio un Commandplayer( posso averne diversi per ogni player
         mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
         bg =livello.getBg();
+    }
+
+    @Override
+    public void input(String text) {
+
+    }
+
+    @Override
+    public void canceled() {
+
     }
 }

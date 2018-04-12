@@ -11,6 +11,7 @@ public class Collision {
     private Ball palla;
     private boolean topCollide;
     private double MAXBOUNCEANGLE = Math.PI/3;
+    boolean top;
 
     public Collision(Brick mat, Ball palla){
         this.mat = mat;
@@ -25,31 +26,21 @@ public class Collision {
     public boolean check(){
 
         if(collidesTopBottom(palla.getBoundsBall())){ //controllo che collida col Brick
-            if((palla.getPositionBall().y-mat.getBoundsBrick().y)*palla.getSpeedBall().y>=0) {
-                delete();
-                palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y);
-                System.out.println(palla.getPositionBall().y);
-                System.out.println(mat.getBoundsBrick().y);
-                System.out.println(palla.getSpeedBall().y);
-                return true;
-            }
             delete();            //quando abbiamo tanti mattoncini bisogna utilizzare un ciclo con un Arraylist
             palla.getSpeedBall().set(palla.getSpeedBall().x, -palla.getSpeedBall().y );
+            topCollide = true;
             return true;
         }
-        else {
-            if(collidesSide(palla.getBoundsBall())) {
-                if((palla.getPositionBall().x-(mat.getBoundsBrick().x+mat.getBoundsBrick().width/2)*palla.getSpeedBall().x)>=0) {
-                    delete();
-                    palla.getSpeedBall().set(palla.getSpeedBall().x, -palla.getSpeedBall().y );
-                    return true;
-                }
+
+        if(!topCollide)
+            if(collidesSide(palla.getBoundsBall())){
                 delete();
                 palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y);
+                topCollide = true;
                 return true;
             }
+
             return false;
-        }
     }
 
     //metodo usato per il check(quando tocca o sopra o sotto)
@@ -57,30 +48,42 @@ public class Collision {
         /////Controllo dove avviene l'impatto
 
         if(boundBall.overlaps(mat.getBoundsBrick())) {
-
-            if ((boundBall.x + boundBall.width/2 >= mat.getBoundsBrick().x) && (boundBall.x + boundBall.width/2 <= mat.getBoundsBrick().x + mat.getBoundsBrick().width)){
+            if ((boundBall.y + boundBall.height >= mat.getBoundsBrick().y -2)){
+                top = true;
+                return true;
+            }
+            if(boundBall.y  <= mat.getBoundsBrick().y + 2){
+                //impact from the bottom
                 return true;
             }
         }
         return false;
+
     }
 
     //metodo usato per il check(quando tocca a destra o sinistra)
-    public boolean collidesSide(Rectangle boundBall) {
-        /////Controllo dove avviene l'impatto
-        if (boundBall.overlaps(mat.getBoundsBrick()))
-            return true;
-        return false;
+    public boolean collidesSide(Rectangle boundBall) { {
+            /////Controllo dove avviene l'impatto
+            if (boundBall.overlaps(mat.getBoundsBrick())) {
+                if (boundBall.x < mat.getBoundsBrick().x + 2) { //impact from the left
+                    return true;
+                }
+                if (boundBall.x >= mat.getBoundsBrick().x + mat.getBoundsBrick().width  -10 ) { //impact from the right
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     // questo metodo serve per controllare quando la palla collide con i bordi o con la Paddle
     public void checkside(Paddle paddle){
 
-        if(palla.getPositionBall().x > Info.larghezza- palla.getWidth()* Info.ballresize) //controllo che rimbalzi a destra
+        if(palla.getPositionBall().x > Info.larghezza- palla.getWidth()* Info.ballresize+1) //controllo che rimbalzi a destra
             palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y);
-        if(palla.getPositionBall().y > Info.altezza - palla.getHeight() * Info.ballresize) //controllo che rimbalzi su
+        if(palla.getPositionBall().y  > Info.altezza - palla.getHeight() * Info.ballresize) //controllo che rimbalzi su
             palla.getSpeedBall().set(palla.getSpeedBall().x,-palla.getSpeedBall().y);
-        if(palla.getPositionBall().x < 0)
+        if(palla.getPositionBall().x  < -1)
             palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y); //controllo che rimbalzi a sinistra
 
         if(collides(palla.getBoundsBall(), paddle)) { //controllo che collida con la Paddle

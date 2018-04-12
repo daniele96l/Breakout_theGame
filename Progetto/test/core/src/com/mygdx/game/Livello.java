@@ -17,6 +17,7 @@ public class Livello {
 
     private ArrayList<Brick> mattoncini;
     private int lv = 1;
+    private Texture texture;
 
     public Livello (Brick Brick, Ball Ball){
         this.Brick = Brick;
