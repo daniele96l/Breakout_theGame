@@ -46,34 +46,29 @@ public class Collision {
     //metodo usato per il check(quando tocca o sopra o sotto)
     public boolean collidesTopBottom (Rectangle boundBall){
         /////Controllo dove avviene l'impatto
-
-        if((boundBall.overlaps(mat.getBoundsBrick()))) {
-            if ((boundBall.y + boundBall.height >= mat.getBoundsBrick().y -2) && (boundBall.x  > mat.getBoundsBrick().x) && boundBall.x + 4 < mat.getBoundsBrick().x + mat.getBoundsBrick().width ){
-                top = true;
+        if(boundBall.overlaps(mat.getBoundsBrick())) {
+            if ((boundBall.y-boundBall.height >= mat.getBoundsBrick().y)){
+                System.out.println("impact");
+                //impact from top
                 return true;
             }
-
-            if((boundBall.y  <= mat.getBoundsBrick().y + 4 ) && (boundBall.x  > mat.getBoundsBrick().x ) && (boundBall.x + 4 < mat.getBoundsBrick().x + mat.getBoundsBrick().width )){
+            if(boundBall.y  <= mat.getBoundsBrick().y){
                 //impact from the bottom
                 return true;
             }
-
         }
         return false;
-
     }
+
 
     //metodo usato per il check(quando tocca a destra o sinistra)
     public boolean collidesSide(Rectangle boundBall) { {
             /////Controllo dove avviene l'impatto
-            if ((boundBall.overlaps(mat.getBoundsBrick()))&& (boundBall.y + boundBall.height > mat.getBoundsBrick().y ) && (boundBall.y < mat.getBoundsBrick().y + mat.getBoundsBrick().y )) {
-                if (boundBall.x < mat.getBoundsBrick().x + 4) { //impact from the left
-                    System.out.println("side");
+            if (boundBall.overlaps(mat.getBoundsBrick())) {
+                if (boundBall.x <=mat.getBoundsBrick().x) { //impact from the left
                     return true;
                 }
-
-                if ((boundBall.x >= mat.getBoundsBrick().x + mat.getBoundsBrick().width -4)&& (boundBall.y + boundBall.height  > mat.getBoundsBrick().y ) && (boundBall.y  < mat.getBoundsBrick().y + mat.getBoundsBrick().y )) { //impact from the right
-                    System.out.println("side");
+                if (boundBall.x >= mat.getBoundsBrick().x + mat.getBoundsBrick().width  -10 ) { //impact from the right
                     return true;
                 }
             }
