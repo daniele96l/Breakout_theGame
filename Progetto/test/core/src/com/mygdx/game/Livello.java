@@ -39,13 +39,13 @@ public class Livello {
         }
         if(lv ==3)
         {
-            bg = new Texture("bgLv2.jpg");
+            bg = new Texture("bgLv3.jpg");
             return creaLv3();
         }
 
         if(lv ==4)
         {
-            bg = new Texture("bgLv2.jpg");
+            bg = new Texture("bgLv4.jpg");
             coeffy = 30;
             coeffx = 160;
             Info.setBrickresize(0.3f);
