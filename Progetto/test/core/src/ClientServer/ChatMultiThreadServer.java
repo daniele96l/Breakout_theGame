@@ -37,7 +37,7 @@ public class ChatMultiThreadServer {
             //Istanzia server su porta
             serverSocket = new ServerSocket(portNumber);
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
         /*
@@ -87,7 +87,7 @@ class clientThread extends Thread {
     private String clientName = null; //nome client
     private DataInputStream is = null;
     private PrintStream os = null;
-    private Socket clientSocket = null;
+    private Socket clientSocket;
     private final clientThread[] threads;
     private int maxClientsCount;
 

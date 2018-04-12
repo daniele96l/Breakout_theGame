@@ -89,7 +89,7 @@ public class MyGdxGame extends Game implements TextInputListener {
                 gameState=GameState.ACTION;
             }
         }
-        //chatClient.start_main(palla.getPositionBall());
+        chatClient.start_main(palla.getPositionBall());
         if(nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
             mattoncini = livello.selectLv();  //ritorno l'array adatto al nuovo livello
             bg = livello.getBg(); //reimposto il bg
