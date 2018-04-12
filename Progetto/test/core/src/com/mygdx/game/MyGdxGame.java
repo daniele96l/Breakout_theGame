@@ -39,7 +39,7 @@ public class MyGdxGame extends Game implements TextInputListener {
     int LostLives =0;
     String text;
     TextInputListener textInputListener;
-	ChatClient chatClient = new ChatClient();
+	ChatClient chatClient = new ChatClient() ;
 	@Override
 	public void create () {
         batch = new SpriteBatch();
