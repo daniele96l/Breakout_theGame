@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import sprites.*;
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ public class Livello {
     private Texture bg;
     private Brick Brick;
     private int moreLayer;
+    private int coeffy = 100;
+    private int coeffx = 130;
 
     private ArrayList<Brick> mattoncini;
     private int lv = 1;
@@ -36,8 +39,17 @@ public class Livello {
         }
         if(lv ==3)
         {
-            bg = new Texture("bgLv2.jpg");
+            bg = new Texture("bgLv3.jpg");
             return creaLv3();
+        }
+
+        if(lv ==4)
+        {
+            bg = new Texture("bgLv4.jpg");
+            coeffy = 30;
+            coeffx = 160;
+            Info.setBrickresize(0.3f);
+            return creaLv4();
         }
         return creaLvVuoto();
 
@@ -59,15 +71,19 @@ public class Livello {
         return drawLine(7, 3, 0 );
     }
 
+    public ArrayList<Brick> creaLv4(){
+        return drawLine(15, 10, 0 );
+    }
+
     public ArrayList<Brick> drawLine(int nColonne, int nRighe, int moreLines){
 
         mattoncini=new ArrayList<Brick>();
 
         for(int y = 0; y < nRighe; y++ ){
             for ( int i = 0; i < nColonne; i++) { //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
-                Brick = new Brick(shift, shiftAltezza - y*100);
+                Brick = new Brick(shift, shiftAltezza - y*coeffy);
                 mattoncini.add(Brick);
-                shift -= 130 * Info.brickresize; //ogni Brick è distante dall'altro di uno shift
+                shift -= coeffx * Info.brickresize; //ogni Brick è distante dall'altro di uno shift
 
             }
             shift = 700;
@@ -75,9 +91,9 @@ public class Livello {
 
         for(int j = 0; j < moreLines; j++ ){
             for ( int i = 0; i < nColonne; i++) { //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
-                Brick = new Brick(shift, shiftAltezza - j*101);
+                Brick = new Brick(shift, shiftAltezza - j*coeffy);
                 mattoncini.add(Brick);
-                shift -= 130 * Info.brickresize; //ogni Brick è distante dall'altro di uno shift
+                shift -= coeffx * Info.brickresize; //ogni Brick è distante dall'altro di uno shift
 
             }
             shift = 700;

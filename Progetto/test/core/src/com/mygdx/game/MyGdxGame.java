@@ -5,7 +5,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.math.Vector2;
 import sprites.*;
 
 
@@ -41,7 +40,6 @@ public class MyGdxGame extends Game implements TextInputListener {
     String text;
     TextInputListener textInputListener;
 	ChatClient chatClient = new ChatClient() ;
-	private ArrayList<Integer> indici;
 	@Override
 	public void create () {
         batch = new SpriteBatch();
@@ -91,7 +89,7 @@ public class MyGdxGame extends Game implements TextInputListener {
                 gameState=GameState.ACTION;
             }
         }
- //       chatClient.start_main(palla.getPositionBall());
+        chatClient.start_main(palla.getPositionBall());
         if(nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
             mattoncini = livello.selectLv();  //ritorno l'array adatto al nuovo livello
             bg = livello.getBg(); //reimposto il bg
@@ -102,6 +100,7 @@ public class MyGdxGame extends Game implements TextInputListener {
     }
 
     public void drawScene() {
+        int index = -1;
         batch.begin();
 
         if(gameState.equals(GameState.ACTION) ) {
@@ -122,29 +121,18 @@ public class MyGdxGame extends Game implements TextInputListener {
 
             player1.Move();     //mi permette di muovere il giocatore
 
-            float oldSpeedBallX=palla.getSpeedBall().x;
-            float oldSpeedBallY=palla.getSpeedBall().y;
-
-            indici=new ArrayList<Integer>();
-            for (Brick brick : mattoncini) {
+            for (Brick Brick : mattoncini) {
                 //dato che ho un arraylist devo aggiornare le condizioni dei mattoncini dentro un ciclo for
-                col = new Collision(brick, palla);
+                col = new Collision(Brick, palla);
                 if (col.check()) {
-                    indici.add(mattoncini.indexOf(brick));
+                    index = mattoncini.indexOf(Brick);
                 }
             }
 
             col.checkside(Paddle);
             //palla.update((float) 2, Paddle, Brick);
-            if (!indici.isEmpty()) {
-                if(indici.size()==2) {
-                    palla.setSpeedBall(new Vector2(oldSpeedBallX,oldSpeedBallY));
-                    mattoncini.remove(Math.min(indici.get(0), indici.get(1)));
-                    mattoncini.remove(Math.min(indici.get(0), indici.get(1)));
-                }
-                else {
-                    mattoncini.remove((int)indici.get(0));
-                }
+            if (index != -1) {
+                mattoncini.remove(mattoncini.get(index));
             }
             if(mattoncini.isEmpty()) {
                 gameState=GameState.YOU_WON;
