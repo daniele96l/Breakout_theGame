@@ -1,4 +1,5 @@
 package com.mygdx.game;
+import ClientServer.ChatClient;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -38,7 +39,7 @@ public class MyGdxGame extends Game implements TextInputListener {
     int LostLives =0;
     String text;
     TextInputListener textInputListener;
-	
+	ChatClient chatClient;
 	@Override
 	public void create () {
         batch = new SpriteBatch();
@@ -88,7 +89,7 @@ public class MyGdxGame extends Game implements TextInputListener {
                 gameState=GameState.ACTION;
             }
         }
-
+        chatClient.start_main(palla.getPositionBall());
         if(nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
             mattoncini = livello.selectLv();  //ritorno l'array adatto al nuovo livello
             bg = livello.getBg(); //reimposto il bg
