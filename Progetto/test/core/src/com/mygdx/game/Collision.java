@@ -66,12 +66,13 @@ public class Collision {
     //metodo usato per il check(quando tocca a destra o sinistra)
     public boolean collidesSide(Rectangle boundBall) { {
             /////Controllo dove avviene l'impatto
-            if ((boundBall.overlaps(mat.getBoundsBrick()))&& (boundBall.y + boundBall.height - 4 > mat.getBoundsBrick().y ) && (boundBall.y + 4 < mat.getBoundsBrick().y + mat.getBoundsBrick().y )) {
+            if ((boundBall.overlaps(mat.getBoundsBrick()))&& (boundBall.y + boundBall.height > mat.getBoundsBrick().y ) && (boundBall.y < mat.getBoundsBrick().y + mat.getBoundsBrick().y )) {
                 if (boundBall.x < mat.getBoundsBrick().x + 4) { //impact from the left
                     System.out.println("side");
                     return true;
                 }
-                if ((boundBall.x >= mat.getBoundsBrick().x + mat.getBoundsBrick().width  -4 )&& (boundBall.y + boundBall.height - 4 > mat.getBoundsBrick().y ) && (boundBall.y + 4 < mat.getBoundsBrick().y + mat.getBoundsBrick().y )) { //impact from the right
+
+                if ((boundBall.x >= mat.getBoundsBrick().x + mat.getBoundsBrick().width -4)&& (boundBall.y + boundBall.height  > mat.getBoundsBrick().y ) && (boundBall.y  < mat.getBoundsBrick().y + mat.getBoundsBrick().y )) { //impact from the right
                     System.out.println("side");
                     return true;
                 }
