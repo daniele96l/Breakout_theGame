@@ -15,7 +15,7 @@ public class Paddle extends Sprite {
 
     public Paddle(float resize){
         super(new Texture("mattonalla curva.png"));
-        positionM = new Vector2(600, 0);
+        positionM = new Vector2(400, 0);
         speed = new Vector2(0,0);
         this.resize = resize;
         bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.paddleresize, Paddle.this.getHeight() *Info.paddleresize );
