@@ -30,6 +30,7 @@ public class MyGdxGame extends Game implements TextInputListener {
     private Texture bg;
     private Texture start;
     private Texture gameOver;
+    private Texture menu;
     private Texture youWin;
     private GameState gameState;
     private CommandPlayer player1;
@@ -38,6 +39,8 @@ public class MyGdxGame extends Game implements TextInputListener {
     private ArrayList<Integer> indici;
     private ArrayList<Brick> mattoncini1;
     private  int matEliminati;
+    private Texture startButtongame;
+    private Texture exitButtongame;
     Disegnare disegna= new Disegnare();
 
     Music music ;
@@ -64,8 +67,10 @@ public class MyGdxGame extends Game implements TextInputListener {
         start=new Texture("start.jpg");
         gameOver=new Texture("gameover.jpeg");
         youWin=new Texture("nextlevel.jpg");
-
-        gameState=GameState.INIT;
+        startButtongame = new Texture("button-play.png");
+        exitButtongame = new Texture("exit-button.png");
+        menu = new Texture("Menu.jpg");
+        gameState=GameState.MENU;
         nextLevel=false;
        // Gdx.input.getTextInput(textInputListener, "Title", "Default text", "OK");
        // Gdx.app.log("Text", "test");
@@ -80,6 +85,11 @@ public class MyGdxGame extends Game implements TextInputListener {
 		music.setVolume(1);
         music.play();
 
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+        {
+            if(gameState.equals(GameState.GAME_OVER))
+                Gdx.app.exit();
+        }
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
 		        gameState=GameState.ACTION;
@@ -109,6 +119,21 @@ public class MyGdxGame extends Game implements TextInputListener {
     public void drawScene() {
         batch.begin();
 
+
+        if(gameState == GameState.MENU){
+            batch.draw(menu,0,0);
+            batch.draw(startButtongame, 400, 200);      // al posto di metterli cosi posso usare delle costanti
+            batch.draw(exitButtongame, 200,200);        //immagini bruttissime
+            if(Gdx.input.getX() < (200+ exitButtongame.getWidth() )  && (Gdx.input.getX() > 200 )  && Gdx.input.getY() > 200 +Info.altezza/2  - exitButtongame.getHeight()/2 && Gdx.input.getY() < 200 + exitButtongame.getHeight()/2 + Info.altezza/2){
+                if(Gdx.input.isTouched())
+                    Gdx.app.exit();
+            }
+            if(Gdx.input.getX() < (400+ startButtongame.getWidth() )  && (Gdx.input.getX() > 400 )  && Gdx.input.getY() > 200 +Info.altezza/2  - startButtongame.getHeight()/2 && Gdx.input.getY() < 200 + startButtongame.getHeight()/2 + Info.altezza/2){
+                if(Gdx.input.isTouched())
+                    gameState = GameState.INIT;
+            }
+        }
+
         if(gameState.equals(GameState.ACTION) ) {
 
             palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
@@ -120,7 +145,9 @@ public class MyGdxGame extends Game implements TextInputListener {
             disegna.disegnare(batch, mattoncini, Paddle, palla, bg);
 
             player1.Move();     //mi permette di muovere il giocatore
-
+            if(player1.checkpause()){
+                gameState = GameState.MENU;
+            }
             float oldSpeedBallX=palla.getSpeedBall().x;
             float oldSpeedBallY=palla.getSpeedBall().y;
 
