@@ -9,9 +9,7 @@ public class Collision {
     private Brick mat;
     private boolean eliminato;
     private Ball palla;
-    private boolean topCollide;
     private double MAXBOUNCEANGLE = Math.PI/3;
-    boolean top;
     private Rectangle rectangle;
 
     public Collision(Brick mat, Ball palla){
@@ -84,11 +82,11 @@ public class Collision {
     // questo metodo serve per controllare quando la palla collide con i bordi o con la Paddle
     public void checkside(Paddle paddle){
 
-        if(palla.getPositionBall().x > Info.larghezza- palla.getWidth()* Info.ballresize -5 ) //controllo che rimbalzi a destra
+        if(rectangle.x> Info.larghezza- palla.getWidth()* Info.ballresize) //controllo che rimbalzi a destra
             palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y);
-        if(palla.getPositionBall().y  > Info.altezza - palla.getHeight() * Info.ballresize) //controllo che rimbalzi su
+        if(rectangle.y > Info.altezza - palla.getHeight() * Info.ballresize) //controllo che rimbalzi su
             palla.getSpeedBall().set(palla.getSpeedBall().x,-palla.getSpeedBall().y);
-        if(palla.getPositionBall().x  < +5)
+        if(rectangle.x  < 0)
             palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y); //controllo che rimbalzi a sinistra
 
         if(collides(palla.getBoundsBall(), paddle)) { //controllo che collida con la Paddle
