@@ -1,12 +1,10 @@
 package sprites;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Scaling;
-import com.mygdx.game.Info;
+import help.Info;
 
 public class Brick extends Sprite{
 

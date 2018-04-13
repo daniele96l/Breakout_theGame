@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package help;
 
 public class Info {
     public static int altezza = 850;

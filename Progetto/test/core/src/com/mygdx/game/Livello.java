@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
+import help.Info;
 import sprites.*;
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class Livello {
 
 
     private ArrayList<Brick> mattoncini;
-    private int lv = 2;
+    private int lv = 1;
     private Texture texture;
 
     public Livello (Brick Brick, Ball Ball){

@@ -1,11 +1,10 @@
 package sprites;
 
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.*;
-import com.mygdx.game.Info;
+import help.Info;
 
 
 public class Ball extends Sprite{

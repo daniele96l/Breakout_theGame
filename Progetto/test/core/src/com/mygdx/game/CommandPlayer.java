@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import help.Info;
 import sprites.Paddle;
 
 public class CommandPlayer {
@@ -25,7 +26,7 @@ public class CommandPlayer {
             //if(paddle.getPosition().x < )
         }
             if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            if(paddle.getPosition().x < 800 - paddle.getWidth()*Info.paddleresize ) {
+            if(paddle.getPosition().x < 800 - paddle.getWidth()* Info.paddleresize ) {
                 paddle.getPosition().add(10, 0);//controllo il range in cui la Paddle si può muovere
                 paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
             }
