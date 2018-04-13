@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Info;
+import help.Info;
 
 
 public class Paddle extends Sprite {
@@ -14,7 +14,7 @@ public class Paddle extends Sprite {
     private float resize;
 
     public Paddle(float resize){
-        super(new Texture("mattonalla.png"));
+        super(new Texture("mattonalla copia.jpg"));
         positionM = new Vector2(600, 0);
         speed = new Vector2(0,0);
         this.resize = resize;

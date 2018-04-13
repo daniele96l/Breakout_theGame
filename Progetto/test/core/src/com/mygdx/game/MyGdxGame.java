@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import help.GameState;
+import help.Info;
 import sprites.*;
 
 
@@ -41,6 +41,8 @@ public class MyGdxGame extends Game implements TextInputListener {
     private  int matEliminati;
     private Texture startButtongame;
     private Texture exitButtongame;
+    Disegnare disegna= new Disegnare();
+
     Music music ;
     Music music2 ;
     private boolean loser;
@@ -52,6 +54,7 @@ public class MyGdxGame extends Game implements TextInputListener {
 	@Override
 	public void create () {
         batch = new SpriteBatch();
+
         bitmapFont = new BitmapFont();
         bitmapFont.setColor(Color.WHITE);
         bitmapFont.getData().setScale(1.2f);
@@ -81,7 +84,6 @@ public class MyGdxGame extends Game implements TextInputListener {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		music.setVolume(1);
         music.play();
-
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
@@ -131,17 +133,13 @@ public class MyGdxGame extends Game implements TextInputListener {
 
             palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
             palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
-            batch.draw(bg, 0, 0);
-            batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y,palla.getWidth()* Info.ballresize, palla.getHeight()* Info.ballresize);
+
+
             bitmapFont.draw(batch, "You lost: "+String.valueOf(LostLives) + " times", 20, 830);
 
-            for (Brick Brick : mattoncini) {
-                batch.draw(Brick, Brick.getPositionBrick().x, Brick.getPositionBrick().y,Brick.getWidth()* Info.brickresize,Brick.getHeight()* Info.brickresize);
-                //disegno i mattoncini
-            }
 
 
-            batch.draw(Paddle, Paddle.getPosition().x, Paddle.getPosition().y, Paddle.getWidth()* Info.paddleresize , Paddle.getHeight()*Info.paddleresize);
+            disegna.disegnare(batch, mattoncini, Paddle, palla, bg);
 
             player1.Move();     //mi permette di muovere il giocatore
             if(player1.checkpause()){
@@ -182,7 +180,9 @@ public class MyGdxGame extends Game implements TextInputListener {
                     }
                 }
             }
+
             System.out.println(matEliminati+ " = " + livello.nMatMorbidi);
+
             if(matEliminati == livello.nMatMorbidi) {
                 gameState=GameState.YOU_WON;
                 livello.inceaseLv();
