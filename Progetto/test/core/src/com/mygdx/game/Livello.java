@@ -14,6 +14,8 @@ public class Livello {
     private Brick Brick;
     private int coeffy = 100;
     private int coeffx = 130;
+    int nMat = 0;
+    int nMatDuri = 0;
 
 
     private ArrayList<Brick> mattoncini;
@@ -58,15 +60,15 @@ public class Livello {
     }
 
     public ArrayList<Brick> creaLv1(){
-        return  drawLine(6,1,  0,0,0,0);
+        return  drawLine(6,1,  1,0,1,0);
     }
 
     public ArrayList<Brick> creaLv2(){
-        return drawLine(5, 2,  0 ,0,0,0);
+        return drawLine(5, 2,  1 ,0,1,0);
     }
 
     public ArrayList<Brick> creaLv3(){
-        return drawLine(7, 3, 1 , 1,3,2);
+        return drawLine(7, 3, 1 , 1,1,2);
     }
 
     public ArrayList<Brick> creaLv4(){
@@ -74,11 +76,19 @@ public class Livello {
     }
 
 
+    public int getnMat() {
+        return nMat;
+    }
 
+    public int getnMatDuri() {
+        return nMatDuri;
+    }
 
     public ArrayList<Brick> drawLine(int nColonne, int nRighe, int HardLines, int HardLineFrom, int HardCol, int HardColFrom ){
 
         mattoncini=new ArrayList<Brick>();
+
+      //  mattoncini = mattonciniDuri(HardLines, HardLineFrom,HardCol,HardColFrom );
 
         for(int y = 0; y < nRighe; y++ ){
             for ( int i = 0; i < nColonne; i++) { //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
@@ -89,8 +99,11 @@ public class Livello {
             }
             shift = 700;
         }
+        nMat = nRighe * nColonne;
+        nMatDuri = HardCol*HardLines;
 
-        mattoncini = mattonciniDuri(HardLines, HardLineFrom,HardCol,HardColFrom );
+
+
 
         return mattoncini;
     }
@@ -109,6 +122,8 @@ public class Livello {
             }
             shift = 700;
         }
+
+        shiftAltezza += coeffy*HardLineFrom;
 
         return mattoncini;
     }

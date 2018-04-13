@@ -35,6 +35,7 @@ public class MyGdxGame extends Game implements TextInputListener {
     private boolean nextLevel;
     private ArrayList<Integer> indici;
     private ArrayList<Brick> mattoncini1;
+    private  int matEliminati;
     Music music ;
     Music music2 ;
     private boolean loser;
@@ -145,6 +146,7 @@ public class MyGdxGame extends Game implements TextInputListener {
                 else {
                     if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) { //se i mattoncini sono mattoncini "morbidi" li posso eliminare
                         mattoncini.remove((int) indici.get(0));
+                        matEliminati++;
                     }
                 }
             }
