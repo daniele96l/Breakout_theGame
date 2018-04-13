@@ -138,10 +138,15 @@ public class MyGdxGame extends Game implements TextInputListener {
             col.checkside(Paddle);
 
             if (!indici.isEmpty()) {
-                if(indici.size()==2) {
+                if(indici.size()>=2) {
+                    ArrayList<Brick> tempMatt=new ArrayList<sprites.Brick>();
                     palla.setSpeedBall(new Vector2(oldSpeedBallX,oldSpeedBallY));
-                    mattoncini.remove(Math.min(indici.get(0), indici.get(1)));
-                    mattoncini.remove(Math.min(indici.get(0), indici.get(1)));
+                    for(int i:indici) {
+                        tempMatt.add(mattoncini.get(i));
+                    }
+                    for(Brick brick:tempMatt) {
+                        mattoncini.remove(brick);
+                    }
                 }
                 else {
                     if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) { //se i mattoncini sono mattoncini "morbidi" li posso eliminare
