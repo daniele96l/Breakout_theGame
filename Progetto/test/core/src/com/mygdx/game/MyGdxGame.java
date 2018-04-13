@@ -100,7 +100,7 @@ public class MyGdxGame extends Game implements TextInputListener {
         }
 
         drawScene();
-		mattonciniDuri();
+
     }
 
     public void drawScene() {
@@ -145,7 +145,9 @@ public class MyGdxGame extends Game implements TextInputListener {
                     mattoncini.remove(Math.min(indici.get(0), indici.get(1)));
                 }
                 else {
-                    mattoncini.remove((int)indici.get(0));
+                    if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) {
+                        mattoncini.remove((int) indici.get(0));
+                    }
                 }
             }
             if(mattoncini.isEmpty()) {
@@ -176,36 +178,6 @@ public class MyGdxGame extends Game implements TextInputListener {
         batch.end();
     }
 
-    public void mattonciniDuri(){
-
-        int index = -1;
-        batch.begin();
-
-
-
-        mattoncini1 = livello.aggiuntivi(livello.getLv());
-
-        if(gameState.equals(GameState.ACTION) ) {
-
-            for (Brick Brick : mattoncini1) {
-                //dato che ho un arraylist devo aggiornare le condizioni dei mattoncini dentro un ciclo for
-                col = new Collision(Brick, palla);
-                if (col.check()) {
-                    index = mattoncini1.indexOf(Brick);
-                }
-            }
-
-
-            for (Brick Brick : mattoncini1) {
-                batch.draw(Brick, Brick.getPositionBrick().x, Brick.getPositionBrick().y,Brick.getWidth()* Info.brickresize,Brick.getHeight()* Info.brickresize);
-                //disegno i mattoncini
-            }
-
-        }
-        batch.end();
-
-
-    }
 	
 	@Override
 	public void dispose () {

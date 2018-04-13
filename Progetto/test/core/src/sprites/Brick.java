@@ -15,15 +15,15 @@ public class Brick extends Sprite{
     private Rectangle boundsBrick;
     public  boolean eliminato;
     String nome;
-    int intero;
+    int durezza;
 
 
 
 
 
-    public Brick(int posX, int posY, String nome, int intero ){
+    public Brick(int posX, int posY, String nome, int durezza ){
         super(new Texture(nome));
-        setAlpha(0.1f);
+        this.durezza = durezza;
         positionBrick = new Vector2(posX, posY);
         speed = new Vector2(0,0);
         boundsBrick = new Rectangle(posX, posY, Brick.this.getWidth()* Info.brickresize, Brick.this.getHeight()* Info.brickresize );
@@ -31,6 +31,9 @@ public class Brick extends Sprite{
         //l'altezza e la larghezza sono della texture
     }
 
+    public int getDurezza() {
+        return durezza;
+    }
 
     public Vector2 getPositionBrick() {
         return positionBrick;
