@@ -85,6 +85,11 @@ public class MyGdxGame extends Game implements TextInputListener {
 		music.setVolume(1);
         music.play();
 
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+        {
+            if(gameState.equals(GameState.GAME_OVER))
+                Gdx.app.exit();
+        }
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
 		        gameState=GameState.ACTION;
