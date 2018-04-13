@@ -140,9 +140,12 @@ public class MyGdxGame extends Game implements TextInputListener {
             if (!indici.isEmpty()) {
                 if(indici.size()>=2) {
                     ArrayList<Brick> tempMatt=new ArrayList<sprites.Brick>();
-                    palla.setSpeedBall(new Vector2(oldSpeedBallX,oldSpeedBallY));
+                    palla.setSpeedBall(new Vector2(oldSpeedBallX,-oldSpeedBallY));
                     for(int i:indici) {
-                        tempMatt.add(mattoncini.get(i));
+                        if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) {//i mattoncini vengono eliminati solo se sono quelli MORBIDI
+                            tempMatt.add(mattoncini.get(i));
+                            matEliminati += 2;
+                        }
                     }
                     for(Brick brick:tempMatt) {
                         mattoncini.remove(brick);
