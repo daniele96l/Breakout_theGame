@@ -67,9 +67,9 @@ public class MyGdxGame extends Game implements TextInputListener {
         start=new Texture("start.jpg");
         gameOver=new Texture("gameover.jpeg");
         youWin=new Texture("nextlevel.jpg");
-        startButtongame = new Texture("button-play.png");
-        exitButtongame = new Texture("exit-button.png");
-        menu = new Texture("Menu.jpg");
+        startButtongame = new Texture("play.png");
+        exitButtongame = new Texture("exit.png");
+        menu = new Texture("pausa.jpg");
         gameState=GameState.MENU;
         nextLevel=false;
        // Gdx.input.getTextInput(textInputListener, "Title", "Default text", "OK");
@@ -122,13 +122,14 @@ public class MyGdxGame extends Game implements TextInputListener {
 
         if(gameState == GameState.MENU){
             batch.draw(menu,0,0);
-            batch.draw(startButtongame, 400, 200);      // al posto di metterli cosi posso usare delle costanti
-            batch.draw(exitButtongame, 200,200);        //immagini bruttissime
-            if(Gdx.input.getX() < (200+ exitButtongame.getWidth() )  && (Gdx.input.getX() > 200 )  && Gdx.input.getY() > 200 +Info.altezza/2  - exitButtongame.getHeight()/2 && Gdx.input.getY() < 200 + exitButtongame.getHeight()/2 + Info.altezza/2){
+            batch.draw(startButtongame, 450, 300);      // al posto di metterli cosi posso usare delle costanti
+            batch.draw(exitButtongame, 50,300);        //immagini bruttissime
+            System.out.println(Gdx.input.getY());
+            if(Gdx.input.getX() < (50+ exitButtongame.getWidth() )  && (Gdx.input.getX() > 50 )  && (Gdx.input.getY() > 400 )&& (Gdx.input.getY() < 500 )){
                 if(Gdx.input.isTouched())
                     Gdx.app.exit();
             }
-            if(Gdx.input.getX() < (400+ startButtongame.getWidth() )  && (Gdx.input.getX() > 400 )  && Gdx.input.getY() > 200 +Info.altezza/2  - startButtongame.getHeight()/2 && Gdx.input.getY() < 200 + startButtongame.getHeight()/2 + Info.altezza/2){
+            if(Gdx.input.getX() < (450+ startButtongame.getWidth() )  && (Gdx.input.getX() > 450 )  &&( Gdx.input.getY() > 400  && (Gdx.input.getY() < 500 ))){
                 if(Gdx.input.isTouched())
                     gameState = GameState.INIT;
             }
