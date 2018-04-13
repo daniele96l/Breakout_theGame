@@ -131,7 +131,7 @@ public class MyGdxGame extends Game implements TextInputListener {
             }
             if(Gdx.input.getX() < (450+ startButtongame.getWidth() )  && (Gdx.input.getX() > 450 )  &&( Gdx.input.getY() > 400  && (Gdx.input.getY() < 500 ))){
                 if(Gdx.input.isTouched())
-                    gameState = GameState.INIT;
+                    gameState = GameState.ACTION;
             }
         }
 
