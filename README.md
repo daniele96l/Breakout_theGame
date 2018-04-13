@@ -1,8 +1,8 @@
 # Progetto-C18
 Progetto di Ingegneria del software
 
-Breackout
-Il probramma dovrà ricreare il gioco breakout. 
+Breackout.
+Il programma dovrà ricreare il gioco breakout. 
 Esso consiste in una schermata con diversi mattoncini, una pedana mobile e una pallina.
 Lo scopo è distruggere tutti i mattoncini colpendo la pallina con la pedana, che si potrà mouovere solo a destra e sinistra.
 
