@@ -38,7 +38,7 @@ public class MyGdxGame extends Game implements TextInputListener {
     private ArrayList<Integer> indici;
     private ArrayList<Brick> mattoncini1;
     private  int matEliminati;
-    draw disegna= new draw();
+    Disegnare disegna= new Disegnare();
 
     Music music ;
     Music music2 ;

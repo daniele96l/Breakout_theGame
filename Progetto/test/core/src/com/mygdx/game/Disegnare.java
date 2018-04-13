@@ -7,7 +7,7 @@ import sprites.Paddle;
 
 import java.util.ArrayList;
 
-public class draw {
+public class Disegnare {
 
 
     public void disegnare(SpriteBatch batch, ArrayList<Brick> mattoncini, Paddle Paddle) {
