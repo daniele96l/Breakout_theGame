@@ -150,12 +150,17 @@ public class MyGdxGame extends Game implements TextInputListener {
                     }
                 }
             }
-            if(mattoncini.isEmpty()) {
+            System.out.println(matEliminati+ " = " + livello.nMatMorbidi);
+            if(matEliminati == livello.nMatMorbidi) {
                 gameState=GameState.YOU_WON;
                 livello.inceaseLv();
             }
+
             if(palla.getPositionBall().y<=0) {
                 gameState=GameState.GAME_OVER;
+                livello.setnMatMorbidi(0);
+                livello.setnMat(0);
+                matEliminati = 0;
                 LostLives ++;
                 music2.play();
                 palla.setPositionBall();
