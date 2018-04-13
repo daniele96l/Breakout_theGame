@@ -178,6 +178,9 @@ public class MyGdxGame extends Game implements TextInputListener {
             }
             if(gameState.equals(GameState.YOU_WON)) {
                 nextLevel=true;
+                livello.setnMatMorbidi(0);
+                livello.setnMat(0);
+                matEliminati = 0;
                 batch.draw(youWin,0,0);
             }
             if(gameState.equals(GameState.GAME_OVER) ) {
