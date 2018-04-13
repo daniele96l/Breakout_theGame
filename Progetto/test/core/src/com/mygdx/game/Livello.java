@@ -61,25 +61,25 @@ public class Livello {
     }
 
     public ArrayList<Brick> creaLv1(){
-        return  drawLine(6,1,  0,0,0,0, 1);
+        return  drawLine(6,1,  0,0,0,0);
     }
 
     public ArrayList<Brick> creaLv2(){
-        return drawLine(5, 2,  0 ,0,0,0, 0);
+        return drawLine(5, 2,  0 ,0,0,0);
     }
 
     public ArrayList<Brick> creaLv3(){
-        return drawLine(7, 3, 1 , 1,3,2, 1);
+        return drawLine(7, 3, 1 , 1,3,2);
     }
 
     public ArrayList<Brick> creaLv4(){
-        return drawLine(7, 3, 0 , 0,0,0,0);
+        return drawLine(7, 3, 0 , 0,0,0);
     }
 
 
 
 
-    public ArrayList<Brick> drawLine(int nColonne, int nRighe, int HardLines, int HardLineFrom, int HardCol, int HardColFrom , int durezza){
+    public ArrayList<Brick> drawLine(int nColonne, int nRighe, int HardLines, int HardLineFrom, int HardCol, int HardColFrom ){
 
         mattoncini=new ArrayList<Brick>();
 
@@ -93,16 +93,23 @@ public class Livello {
             shift = 700;
         }
 
-        float distanzaX = coeffx* Info.brickresize;
+
+        mattoncini = mattonciniDuri(HardLines, HardLineFrom,HardCol,HardColFrom );
+
+        nMatt = nColonne * nRighe;
 
 
+        return mattoncini;
+    }
+
+    public ArrayList<Brick> mattonciniDuri(int HardLines, int HardLineFrom, int HardCol , int HardColFrom){
 
         shiftAltezza -= coeffy*HardLineFrom;
         shift -= coeffx*Info.brickresize*HardColFrom;
 
         for(int j = 0; j < HardLines; j++ ){
             for ( int z = 0; z < HardCol; z++) { //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
-                Brick = new Brick(shift , shiftAltezza , "brick.jpg", durezza);
+                Brick = new Brick(shift , shiftAltezza , "brick.jpg", 1);
                 mattoncini.add(Brick);
                 shift -= coeffx * Info.brickresize; //ogni Brick è distante dall'altro di uno shift
 
@@ -110,10 +117,8 @@ public class Livello {
             shift = 700;
         }
 
-        nMatt = nColonne * nRighe;
         return mattoncini;
     }
-
 
     public void inceaseLv() {
         this.lv++;

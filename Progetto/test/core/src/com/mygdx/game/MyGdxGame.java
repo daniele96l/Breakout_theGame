@@ -145,7 +145,7 @@ public class MyGdxGame extends Game implements TextInputListener {
                     mattoncini.remove(Math.min(indici.get(0), indici.get(1)));
                 }
                 else {
-                    if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) {
+                    if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) { //se i mattoncini sono mattoncini "morbidi" li posso eliminare
                         mattoncini.remove((int) indici.get(0));
                     }
                 }
