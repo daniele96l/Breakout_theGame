@@ -75,8 +75,6 @@ public class MyGdxGame extends Game implements TextInputListener {
 		music.setVolume(1);
         music.play();
 
-
-
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
 		        gameState=GameState.ACTION;
@@ -137,7 +135,7 @@ public class MyGdxGame extends Game implements TextInputListener {
             }
 
             col.checkside(Paddle);
-            //palla.update((float) 2, Paddle, Brick);
+
             if (!indici.isEmpty()) {
                 if(indici.size()==2) {
                     palla.setSpeedBall(new Vector2(oldSpeedBallX,oldSpeedBallY));

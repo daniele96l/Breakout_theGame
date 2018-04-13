@@ -10,17 +10,14 @@ public class Livello {
     private int shiftAltezza = 700;
     private int nColonne;
     private Ball Ball;
-    private int nMatt;
     private Texture bg;
     private Brick Brick;
-    private int moreLayer;
     private int coeffy = 100;
     private int coeffx = 130;
-    private int durezza = 0;
+
 
     private ArrayList<Brick> mattoncini;
-    private ArrayList<Brick> mattoncini1;
-    private int lv = 3;
+    private int lv = 1;
     private Texture texture;
 
     public Livello (Brick Brick, Ball Ball){
@@ -93,11 +90,7 @@ public class Livello {
             shift = 700;
         }
 
-
         mattoncini = mattonciniDuri(HardLines, HardLineFrom,HardCol,HardColFrom );
-
-        nMatt = nColonne * nRighe;
-
 
         return mattoncini;
     }
