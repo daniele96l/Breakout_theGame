@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.math.Rectangle;
+import help.Info;
 import sprites.Ball;
 import sprites.Brick;
 import sprites.Paddle;
@@ -14,7 +15,7 @@ public class Collision {
 
     public Collision(Brick mat, Ball palla){
 
-        int pallaX=(int)(palla.getBoundsBall().x+palla.getSpeedBall().x*Info.dt);
+        int pallaX=(int)(palla.getBoundsBall().x+palla.getSpeedBall().x* Info.dt);
         int pallaY=(int)(palla.getBoundsBall().y+palla.getSpeedBall().y*Info.dt);
         rectangle=new Rectangle(pallaX,pallaY,palla.getWidth(), palla.getHeight());
         this.mat = mat;

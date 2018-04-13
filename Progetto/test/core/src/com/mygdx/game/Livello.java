@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
+import help.Info;
 import sprites.*;
 import java.util.ArrayList;
 

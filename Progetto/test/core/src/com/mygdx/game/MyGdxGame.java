@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import help.GameState;
+import help.Info;
 import sprites.*;
 
 
@@ -158,6 +160,7 @@ public class MyGdxGame extends Game implements TextInputListener {
                     }
                 }
             }
+
             System.out.println(matEliminati+ " = " + livello.nMatMorbidi);
             if(matEliminati == livello.nMatMorbidi) {
                 gameState=GameState.YOU_WON;
