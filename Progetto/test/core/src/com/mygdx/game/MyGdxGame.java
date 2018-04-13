@@ -123,38 +123,8 @@ public class MyGdxGame extends Game implements TextInputListener {
 
             player1.Move();     //mi permette di muovere il giocatore
 
-            float oldSpeedBallX=palla.getSpeedBall().x;
-            float oldSpeedBallY=palla.getSpeedBall().y;
+            gestioneCollisioni();
 
-            indici=new ArrayList<Integer>();
-            for (Brick brick : mattoncini) {
-                //dato che ho un arraylist devo aggiornare le condizioni dei mattoncini dentro un ciclo for
-                col = new Collision(brick, palla);
-                if (col.check()) {
-                    indici.add(mattoncini.indexOf(brick));
-                }
-            }
-
-            col.checkside(Paddle);
-
-            if (!indici.isEmpty()) {
-                if(indici.size()>=2) {
-                    ArrayList<Brick> tempMatt=new ArrayList<sprites.Brick>();
-                    palla.setSpeedBall(new Vector2(oldSpeedBallX,oldSpeedBallY));
-                    for(int i:indici) {
-                        tempMatt.add(mattoncini.get(i));
-                    }
-                    for(Brick brick:tempMatt) {
-                        mattoncini.remove(brick);
-                    }
-                }
-                else {
-                    if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) { //se i mattoncini sono mattoncini "morbidi" li posso eliminare
-                        mattoncini.remove((int) indici.get(0));
-                        matEliminati++;
-                    }
-                }
-            }
             System.out.println(matEliminati+ " = " + livello.nMatMorbidi);
             if(matEliminati == livello.nMatMorbidi) {
                 gameState=GameState.YOU_WON;
@@ -203,6 +173,41 @@ public class MyGdxGame extends Game implements TextInputListener {
         player1 = new CommandPlayer(Paddle);     //istanzio un Commandplayer( posso averne diversi per ogni player
         mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
         bg =livello.getBg();
+    }
+
+    public void gestioneCollisioni() {
+        float oldSpeedBallX=palla.getSpeedBall().x;
+        float oldSpeedBallY=palla.getSpeedBall().y;
+
+        indici=new ArrayList<Integer>();
+        for (Brick brick : mattoncini) {
+            //dato che ho un arraylist devo aggiornare le condizioni dei mattoncini dentro un ciclo for
+            col = new Collision(brick, palla);
+            if (col.check()) {
+                indici.add(mattoncini.indexOf(brick));
+            }
+        }
+
+        col.checkside(Paddle);
+
+        if (!indici.isEmpty()) {
+            if(indici.size()>=2) {
+                ArrayList<Brick> tempMatt=new ArrayList<sprites.Brick>();
+                palla.setSpeedBall(new Vector2(oldSpeedBallX,oldSpeedBallY));
+                for(int i:indici) {
+                    tempMatt.add(mattoncini.get(i));
+                }
+                for(Brick brick:tempMatt) {
+                    mattoncini.remove(brick);
+                }
+            }
+            else {
+                if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) { //se i mattoncini sono mattoncini "morbidi" li posso eliminare
+                    mattoncini.remove((int) indici.get(0));
+                    matEliminati++;
+                }
+            }
+        }
     }
 
     @Override
