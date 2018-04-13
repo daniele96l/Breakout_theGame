@@ -117,8 +117,6 @@ public class MyGdxGame extends Game implements TextInputListener {
 
             bitmapFont.draw(batch, "You lost: "+String.valueOf(LostLives) + " times", 20, 830);
 
-
-
             disegna.disegnare(batch, mattoncini, Paddle, palla, bg);
 
             player1.Move();     //mi permette di muovere il giocatore
