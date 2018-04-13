@@ -113,13 +113,13 @@ public class MyGdxGame extends Game implements TextInputListener {
 
             palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
             palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
-            batch.draw(bg, 0, 0);
-            batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y,palla.getWidth()* Info.ballresize, palla.getHeight()* Info.ballresize);
+
+
             bitmapFont.draw(batch, "You lost: "+String.valueOf(LostLives) + " times", 20, 830);
 
 
 
-            disegna.disegnare(batch, mattoncini, Paddle);
+            disegna.disegnare(batch, mattoncini, Paddle, palla, bg);
 
             player1.Move();     //mi permette di muovere il giocatore
 
