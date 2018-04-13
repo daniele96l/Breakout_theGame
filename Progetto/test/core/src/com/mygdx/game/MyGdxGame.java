@@ -34,6 +34,7 @@ public class MyGdxGame extends Game implements TextInputListener {
     private  Livello livello = new Livello(Brick, palla);
     private boolean nextLevel;
     private ArrayList<Integer> indici;
+    private ArrayList<Brick> mattoncini1;
     Music music ;
     Music music2 ;
     private boolean loser;
@@ -91,7 +92,7 @@ public class MyGdxGame extends Game implements TextInputListener {
                 gameState=GameState.ACTION;
             }
         }
-        chatClient.start_main(palla.getPositionBall());
+      //  chatClient.start_main(palla.getPositionBall());
         if(nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
             mattoncini = livello.selectLv();  //ritorno l'array adatto al nuovo livello
             bg = livello.getBg(); //reimposto il bg
@@ -99,6 +100,7 @@ public class MyGdxGame extends Game implements TextInputListener {
         }
 
         drawScene();
+		mattonciniDuri();
     }
 
     public void drawScene() {
@@ -172,6 +174,37 @@ public class MyGdxGame extends Game implements TextInputListener {
             }
         }
         batch.end();
+    }
+
+    public void mattonciniDuri(){
+
+        int index = -1;
+        batch.begin();
+
+
+
+        mattoncini1 = livello.aggiuntivi(livello.getLv());
+
+        if(gameState.equals(GameState.ACTION) ) {
+
+            for (Brick Brick : mattoncini1) {
+                //dato che ho un arraylist devo aggiornare le condizioni dei mattoncini dentro un ciclo for
+                col = new Collision(Brick, palla);
+                if (col.check()) {
+                    index = mattoncini1.indexOf(Brick);
+                }
+            }
+
+
+            for (Brick Brick : mattoncini1) {
+                batch.draw(Brick, Brick.getPositionBrick().x, Brick.getPositionBrick().y,Brick.getWidth()* Info.brickresize,Brick.getHeight()* Info.brickresize);
+                //disegno i mattoncini
+            }
+
+        }
+        batch.end();
+
+
     }
 	
 	@Override

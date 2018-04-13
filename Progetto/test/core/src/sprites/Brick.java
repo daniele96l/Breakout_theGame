@@ -14,13 +14,15 @@ public class Brick extends Sprite{
     private Vector2 speed;
     private Rectangle boundsBrick;
     public  boolean eliminato;
+    String nome;
+    int intero;
 
 
 
 
 
-    public Brick(int posX, int posY){
-        super(new Texture("normalBrick.jpg"));
+    public Brick(int posX, int posY, String nome, int intero ){
+        super(new Texture(nome));
         setAlpha(0.1f);
         positionBrick = new Vector2(posX, posY);
         speed = new Vector2(0,0);

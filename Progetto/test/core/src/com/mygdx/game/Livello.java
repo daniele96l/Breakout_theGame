@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import sprites.*;
 import java.util.ArrayList;
@@ -19,6 +18,7 @@ public class Livello {
     private int coeffx = 130;
 
     private ArrayList<Brick> mattoncini;
+    private ArrayList<Brick> mattoncini1;
     private int lv = 1;
     private Texture texture;
 
@@ -48,6 +48,7 @@ public class Livello {
             bg = new Texture("bgLv4.jpg");
             coeffy = 30;
             coeffx = 160;
+            Info.setBrickresize(0.3f);
             return creaLv4();
         }
         return creaLvVuoto();
@@ -59,7 +60,7 @@ public class Livello {
     }
 
     public ArrayList<Brick> creaLv1(){
-        return  drawLine(6,1,  0);
+        return  drawLine(6,1,  1);
     }
 
     public ArrayList<Brick> creaLv2(){
@@ -71,8 +72,11 @@ public class Livello {
     }
 
     public ArrayList<Brick> creaLv4(){
-        return drawLine(15, 10, 0 );
+        return drawLine(7, 3, 0 );
     }
+
+
+
 
     public ArrayList<Brick> drawLine(int nColonne, int nRighe, int moreLines){
 
@@ -80,7 +84,7 @@ public class Livello {
 
         for(int y = 0; y < nRighe; y++ ){
             for ( int i = 0; i < nColonne; i++) { //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
-                Brick = new Brick(shift, shiftAltezza - y*coeffy);
+                Brick = new Brick(shift, shiftAltezza - y*coeffy, "normalBrick.jpg", 0);
                 mattoncini.add(Brick);
                 shift -= coeffx * Info.brickresize; //ogni Brick è distante dall'altro di uno shift
 
@@ -88,20 +92,36 @@ public class Livello {
             shift = 700;
         }
 
-        for(int j = 0; j < moreLines; j++ ){
+       /* for(int j = 0; j < moreLines; j++ ){
             for ( int i = 0; i < nColonne; i++) { //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
-                Brick = new Brick(shift, shiftAltezza - j*coeffy);
+                Brick = new Brick(shift, shiftAltezza - j*coeffy, "brick.jpg", 1);
                 mattoncini.add(Brick);
                 shift -= coeffx * Info.brickresize; //ogni Brick è distante dall'altro di uno shift
 
             }
             shift = 700;
-        }
-
-
+        } */
 
         nMatt = nColonne * nRighe;
         return mattoncini;
+    }
+
+    public ArrayList<Brick> aggiuntivi(int contatorelivelli){
+
+
+        float distanza = coeffx* Info.ballresize;
+        mattoncini1=new ArrayList<Brick>();
+
+        if(contatorelivelli == 3 )
+            for(int y = 0; y < 1; y++ ){
+                for ( int i = 0; i < 3; i++) { //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
+                    Brick = new Brick(shift - 2*(int)distanza, shiftAltezza - 1*coeffy, "brick.jpg", 0);
+                    mattoncini1.add(Brick);
+                    shift -= coeffx * Info.brickresize; //ogni Brick è distante dall'altro di uno shift
+                }
+                shift = 700;
+            }
+        return  mattoncini1;
     }
 
 
@@ -111,6 +131,10 @@ public class Livello {
 
     public int getShift() {
         return shift;
+    }
+
+    public int getLv() {
+        return lv;
     }
 
     public Texture getBg() {
