@@ -170,7 +170,7 @@ public class MyGdxGame extends Game implements TextInputListener {
                     for(int i:indici) {
                         if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) {//i mattoncini vengono eliminati solo se sono quelli MORBIDI
                             tempMatt.add(mattoncini.get(i));
-                            matEliminati += 2;
+                            matEliminati ++;
                         }
                     }
                     for(Brick brick:tempMatt) {
