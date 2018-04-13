@@ -38,6 +38,8 @@ public class MyGdxGame extends Game implements TextInputListener {
     private ArrayList<Integer> indici;
     private ArrayList<Brick> mattoncini1;
     private  int matEliminati;
+    draw disegna= new draw();
+
     Music music ;
     Music music2 ;
     private boolean loser;
@@ -115,19 +117,16 @@ public class MyGdxGame extends Game implements TextInputListener {
             batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y,palla.getWidth()* Info.ballresize, palla.getHeight()* Info.ballresize);
             bitmapFont.draw(batch, "You lost: "+String.valueOf(LostLives) + " times", 20, 830);
 
-            for (Brick Brick : mattoncini) {
-                batch.draw(Brick, Brick.getPositionBrick().x, Brick.getPositionBrick().y,Brick.getWidth()* Info.brickresize,Brick.getHeight()* Info.brickresize);
-                //disegno i mattoncini
-            }
 
 
-            batch.draw(Paddle, Paddle.getPosition().x, Paddle.getPosition().y, Paddle.getWidth()* Info.paddleresize , Paddle.getHeight()*Info.paddleresize);
+            disegna.disegnare(batch, mattoncini, Paddle);
 
             player1.Move();     //mi permette di muovere il giocatore
 
             gestioneCollisioni();
 
             System.out.println(matEliminati+ " = " + livello.nMatMorbidi);
+
             if(matEliminati == livello.nMatMorbidi) {
                 gameState=GameState.YOU_WON;
                 livello.inceaseLv();
