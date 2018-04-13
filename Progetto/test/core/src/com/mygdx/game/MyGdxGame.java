@@ -124,12 +124,12 @@ public class MyGdxGame extends Game implements TextInputListener {
             batch.draw(menu,0,0);
             batch.draw(startButtongame, 450, 300);      // al posto di metterli cosi posso usare delle costanti
             batch.draw(exitButtongame, 50,300);        //immagini bruttissime
-            System.out.println(Gdx.input.getY());
-            if(Gdx.input.getX() < (50+ exitButtongame.getWidth() )  && (Gdx.input.getX() > 50 )  && (Gdx.input.getY() > 400 )&& (Gdx.input.getY() < 500 )){
+            System.out.println(Gdx.input.getY() + " " + Gdx.input.getX() );
+            if(Gdx.input.getX()> 67   && (Gdx.input.getX() <341)  && (Gdx.input.getY() > 420 && (Gdx.input.getY() < 525 ))){
                 if(Gdx.input.isTouched())
                     Gdx.app.exit();
             }
-            if(Gdx.input.getX() < (450+ startButtongame.getWidth() )  && (Gdx.input.getX() > 450 )  &&( Gdx.input.getY() > 400  && (Gdx.input.getY() < 500 ))){
+            if(Gdx.input.getX() < 741  && (Gdx.input.getX() > 467 )  &&( Gdx.input.getY() > 400  && (Gdx.input.getY() < 525 ))){
                 if(Gdx.input.isTouched())
                     gameState = GameState.ACTION;
             }
