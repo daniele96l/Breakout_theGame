@@ -12,10 +12,14 @@ public class Paddle extends Sprite {
     private Vector2 speed;
     private Rectangle bounds;
     private float resize;
+    private int numeroGiocatori;
+    private int giocatore;
 
-    public Paddle(float resize){
+    public Paddle(float resize, int numeroGiocatori, int giocatore){
         super(new Texture("mattonalla curva.png"));
-        positionM = new Vector2(400, 0);
+        this.numeroGiocatori=numeroGiocatori;
+        this.giocatore=giocatore;
+        positionM = new Vector2((Info.larghezza/numeroGiocatori)*(giocatore-1), 0);
         speed = new Vector2(0,0);
         this.resize = resize;
         bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.paddleresize, Paddle.this.getHeight() *Info.paddleresize );

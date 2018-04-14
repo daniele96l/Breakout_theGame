@@ -26,14 +26,19 @@ public class MyGdxGame extends Game implements TextInputListener {
     private Brick Brick;
     private ArrayList<Brick> mattoncini = new ArrayList();
     private Ball palla;
-    private Paddle Paddle;
+    private Paddle paddle1;
+    private Paddle paddle2;
+    private boolean isMultiplayer;
     private Texture bg;
     private Texture start;
     private Texture gameOver;
     private Texture menu;
     private Texture youWin;
     private GameState gameState;
-    private CommandPlayer player1;
+    private CommandPlayer commandPlayer1;
+    private CommandPlayer commandPlayer2;
+    private HumanPlayer player1;
+    private RobotPlayer robotPlayer;
     private Texture multiplayerButton;
     private Texture resumeButton;
     private Texture playButton;
@@ -44,8 +49,6 @@ public class MyGdxGame extends Game implements TextInputListener {
     private ArrayList<Integer> indici;
     private ArrayList<Brick> mattoncini1;
     private  int matEliminati;
-
-    Disegnare disegna= new Disegnare();
 
     Music music ;
     Music music2 ;
@@ -82,6 +85,7 @@ public class MyGdxGame extends Game implements TextInputListener {
 
         gameState=GameState.MENU;
         nextLevel=false;
+        isMultiplayer=false;
        // Gdx.input.getTextInput(textInputListener, "Title", "Default text", "OK");
        // Gdx.app.log("Text", "test");
 
@@ -175,31 +179,42 @@ public class MyGdxGame extends Game implements TextInputListener {
             }
         }
 
-
-        /*
-        QUA ALBI PER AGGIUNGERE IL MULTIPLAYER USO LO STATO MULTIPLAYER COSI QUANDO SCHIACCI DAL MENU SU MULTIPLAYER VA IN QUELLO STATO QUINDI si puo fare tipo
-
         if(gameState == GameState.MULTIPLAYER){
-
-            qua la implementazione del multiplayer
-
+            isMultiplayer=true;
+            paddle1=new Paddle(0.5f,2,1);
+            paddle2=new Paddle(0.5f, 2, 2);
+            robotPlayer=new RobotPlayer(palla, paddle2);
+            commandPlayer1=new CommandPlayer(paddle1, player1, 2, 1);
+            commandPlayer2=new CommandPlayer(paddle2, robotPlayer, 2, 2);
+            gameState=GameState.ACTION;
         }
-         */
 
         if(gameState.equals(GameState.ACTION) ) {
 
             palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
             palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
+            batch.draw(bg, 0, 0);
+
+            for (Brick Brick : mattoncini) {
+                batch.draw(Brick, Brick.getPositionBrick().x, Brick.getPositionBrick().y,Brick.getWidth()* Info.brickresize,Brick.getHeight()* Info.brickresize);
+                //disegno i mattoncini
+            }
 
 
+            batch.draw(paddle1, paddle1.getPosition().x, paddle1.getPosition().y, paddle1.getWidth()* Info.paddleresize , paddle1.getHeight()*Info.paddleresize);
+            batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y,palla.getWidth()* Info.ballresize, palla.getHeight()* Info.ballresize);
 
 
-            disegna.disegnare(batch, mattoncini, Paddle, palla, bg);
             bitmapFont.draw(batch, "You lost: "+String.valueOf(LostLives) + " times", 20, 830);
 
-            player1.Move();     //mi permette di muovere il giocatore
-            if(player1.checkpause()){
+            commandPlayer1.move();     //mi permette di muovere il giocatore
+            if(commandPlayer1.checkpause()){
                 gameState = GameState.PAUSE;
+            }
+
+            if(isMultiplayer) {
+                batch.draw(paddle2, paddle2.getPosition().x, paddle2.getPosition().y, paddle2.getWidth()* Info.paddleresize , paddle2.getHeight()*Info.paddleresize);
+                commandPlayer2.move();
             }
 
             gestisciCollisioni();
@@ -249,8 +264,16 @@ public class MyGdxGame extends Game implements TextInputListener {
 
 	public void reset() {
         palla = new Ball();
-        Paddle = new Paddle(0.5f);
-        player1 = new CommandPlayer(Paddle);     //istanzio un Commandplayer( posso averne diversi per ogni player
+        paddle1 = new Paddle(0.5f,1, 1);
+        player1=new HumanPlayer();
+        commandPlayer1 = new CommandPlayer(paddle1, player1, 1, 1);     //istanzio un Commandplayer( posso averne diversi per ogni player
+        if(isMultiplayer) {
+            paddle1=new Paddle(0.5f,2,1);
+            paddle2=new Paddle(0.5f, 2, 2);
+            robotPlayer=new RobotPlayer(palla, paddle2);
+            commandPlayer1=new CommandPlayer(paddle1, player1, 2, 1);
+            commandPlayer2=new CommandPlayer(paddle2, robotPlayer,2,2);
+        }
         mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
         bg =livello.getBg();
     }
@@ -268,14 +291,19 @@ public class MyGdxGame extends Game implements TextInputListener {
             }
         }
 
-        col.checkside(Paddle);
+        col.checkBorderCollision();
+
+        col.checkside(paddle1);
+        if(isMultiplayer) {
+            col.checkside(paddle2);
+        }
 
         if (!indici.isEmpty()) {
             if(indici.size()>=2) {
                 ArrayList<Brick> tempMatt=new ArrayList<sprites.Brick>();
                 palla.setSpeedBall(new Vector2(oldSpeedBallX,-oldSpeedBallY));
                 for(int i:indici) {
-                    if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) {//i mattoncini vengono eliminati solo se sono quelli MORBIDI
+                    if(mattoncini.get(indici.get(0)).getDurezza() == 0) {//i mattoncini vengono eliminati solo se sono quelli MORBIDI
                         tempMatt.add(mattoncini.get(i));
                         matEliminati ++;
                     }
@@ -285,7 +313,7 @@ public class MyGdxGame extends Game implements TextInputListener {
                 }
             }
             else {
-                if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) { //se i mattoncini sono mattoncini "morbidi" li posso eliminare
+                if(mattoncini.get(indici.get(0)).getDurezza() == 0) { //se i mattoncini sono mattoncini "morbidi" li posso eliminare
                     mattoncini.remove((int) indici.get(0));
                     matEliminati++;
                 }

@@ -8,25 +8,29 @@ import sprites.Paddle;
 public class CommandPlayer {
 
     private Paddle paddle;
+    private Player player;
+    int numeroGiocatori;
+    int giocatore;
 
-    public CommandPlayer(Paddle paddle){
-        this.paddle = paddle
-        ;
+    public CommandPlayer(Paddle paddle, Player player, int numeroGiocatori, int giocatore){
+        this.paddle = paddle;
+        this.player=player;
+        this.numeroGiocatori=numeroGiocatori;
+        this.giocatore=giocatore;
     }
 
 
     // richiamo questo metodo nel MainGDfx cosi posso far muovere il personaggio
-    public void Move()
+    public void move()
     {
-         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            if(paddle.getPosition().x > 0) { //controllo il range in cui la Paddle si può muovere
+        if(player.keyPressed()==Input.Keys.LEFT){
+            if(paddle.getPosition().x >(Info.larghezza/numeroGiocatori)*(giocatore-1)) { //controllo il range in cui la Paddle si può muovere
                 paddle.getPosition().add(-10, 0);
                 paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
             }
-            //if(paddle.getPosition().x < )
         }
-            if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            if(paddle.getPosition().x < 800 - paddle.getWidth()* Info.paddleresize ) {
+        if(player.keyPressed()==Input.Keys.RIGHT){
+            if(paddle.getPosition().x < ((Info.larghezza/numeroGiocatori)*(giocatore))- paddle.getWidth()* Info.paddleresize ) {
                 paddle.getPosition().add(10, 0);//controllo il range in cui la Paddle si può muovere
                 paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
             }
@@ -34,7 +38,7 @@ public class CommandPlayer {
     }
 
     public boolean checkpause(){
-        if(Gdx.input.isKeyPressed(Input.Keys.P)){
+        if(player.keyPressed()==Input.Keys.P){
             return true;
         }
         return false;
