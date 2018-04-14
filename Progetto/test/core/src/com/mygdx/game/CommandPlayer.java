@@ -32,4 +32,11 @@ public class CommandPlayer {
             }
         }
     }
+
+    public boolean checkpause(){
+        if(Gdx.input.isKeyPressed(Input.Keys.P)){
+            return true;
+        }
+        return false;
+    }
 }

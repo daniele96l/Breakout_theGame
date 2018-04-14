@@ -73,7 +73,7 @@ public class Livello {
     }
 
     public ArrayList<Brick> creaLv4(){
-        return drawLine(7, 3, 0 , 0);
+        return drawLine(14, 10, 100 , 110);
     }
 
 

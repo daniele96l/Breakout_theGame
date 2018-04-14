@@ -30,6 +30,7 @@ public class MyGdxGame extends Game implements TextInputListener {
     private Texture bg;
     private Texture start;
     private Texture gameOver;
+    private Texture menu;
     private Texture youWin;
     private GameState gameState;
     private CommandPlayer player1;
@@ -38,7 +39,9 @@ public class MyGdxGame extends Game implements TextInputListener {
     private ArrayList<Integer> indici;
     private ArrayList<Brick> mattoncini1;
     private  int matEliminati;
-    draw disegna= new draw();
+    private Texture startButtongame;
+    private Texture exitButtongame;
+    Disegnare disegna= new Disegnare();
 
     Music music ;
     Music music2 ;
@@ -64,8 +67,10 @@ public class MyGdxGame extends Game implements TextInputListener {
         start=new Texture("start.jpg");
         gameOver=new Texture("gameover.jpeg");
         youWin=new Texture("nextlevel.jpg");
-
-        gameState=GameState.INIT;
+        startButtongame = new Texture("play.png");
+        exitButtongame = new Texture("exit.png");
+        menu = new Texture("pausa.jpg");
+        gameState=GameState.MENU;
         nextLevel=false;
        // Gdx.input.getTextInput(textInputListener, "Title", "Default text", "OK");
        // Gdx.app.log("Text", "test");
@@ -80,6 +85,11 @@ public class MyGdxGame extends Game implements TextInputListener {
 		music.setVolume(1);
         music.play();
 
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+        {
+            if(gameState.equals(GameState.GAME_OVER))
+                Gdx.app.exit();
+        }
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { //Barra spaziatrice per iniziare
 		    if(gameState.equals(GameState.INIT)) {
 		        gameState=GameState.ACTION;
@@ -109,21 +119,72 @@ public class MyGdxGame extends Game implements TextInputListener {
     public void drawScene() {
         batch.begin();
 
+
+        if(gameState == GameState.MENU){
+            batch.draw(menu,0,0);
+            batch.draw(startButtongame, 450, 300);      // al posto di metterli cosi posso usare delle costanti
+            batch.draw(exitButtongame, 50,300);        //immagini bruttissime
+            System.out.println(Gdx.input.getY() + " " + Gdx.input.getX() );
+            if(Gdx.input.getX()> 67   && (Gdx.input.getX() <341)  && (Gdx.input.getY() > 420 && (Gdx.input.getY() < 525 ))){
+                if(Gdx.input.isTouched())
+                    Gdx.app.exit();
+            }
+            if(Gdx.input.getX() < 741  && (Gdx.input.getX() > 467 )  &&( Gdx.input.getY() > 400  && (Gdx.input.getY() < 525 ))){
+                if(Gdx.input.isTouched())
+                    gameState = GameState.ACTION;
+            }
+        }
+
         if(gameState.equals(GameState.ACTION) ) {
 
             palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
             palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
-            batch.draw(bg, 0, 0);
-            batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y,palla.getWidth()* Info.ballresize, palla.getHeight()* Info.ballresize);
+
+
+
+
+            disegna.disegnare(batch, mattoncini, Paddle, palla, bg);
             bitmapFont.draw(batch, "You lost: "+String.valueOf(LostLives) + " times", 20, 830);
 
-
-
-            disegna.disegnare(batch, mattoncini, Paddle);
-
             player1.Move();     //mi permette di muovere il giocatore
+            if(player1.checkpause()){
+                gameState = GameState.MENU;
+            }
+            float oldSpeedBallX=palla.getSpeedBall().x;
+            float oldSpeedBallY=palla.getSpeedBall().y;
 
-            gestioneCollisioni();
+            indici=new ArrayList<Integer>();
+            for (Brick brick : mattoncini) {
+                //dato che ho un arraylist devo aggiornare le condizioni dei mattoncini dentro un ciclo for
+                col = new Collision(brick, palla);
+                if (col.check()) {
+                    indici.add(mattoncini.indexOf(brick));
+                }
+            }
+
+            col.checkside(Paddle);
+
+            if (!indici.isEmpty()) {
+                if(indici.size()>=2) {
+                    ArrayList<Brick> tempMatt=new ArrayList<sprites.Brick>();
+                    palla.setSpeedBall(new Vector2(oldSpeedBallX,-oldSpeedBallY));
+                    for(int i:indici) {
+                        if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) {//i mattoncini vengono eliminati solo se sono quelli MORBIDI
+                            tempMatt.add(mattoncini.get(i));
+                            matEliminati ++;
+                        }
+                    }
+                    for(Brick brick:tempMatt) {
+                        mattoncini.remove(brick);
+                    }
+                }
+                else {
+                    if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) { //se i mattoncini sono mattoncini "morbidi" li posso eliminare
+                        mattoncini.remove((int) indici.get(0));
+                        matEliminati++;
+                    }
+                }
+            }
 
             System.out.println(matEliminati+ " = " + livello.nMatMorbidi);
 
@@ -174,44 +235,6 @@ public class MyGdxGame extends Game implements TextInputListener {
         player1 = new CommandPlayer(Paddle);     //istanzio un Commandplayer( posso averne diversi per ogni player
         mattoncini = livello.selectLv(); //la classe livello si occuperà di ritornare l'array list dei mattoncini adatti a questo livello
         bg =livello.getBg();
-    }
-
-    public void gestioneCollisioni() {
-        float oldSpeedBallX=palla.getSpeedBall().x;
-        float oldSpeedBallY=palla.getSpeedBall().y;
-
-        indici=new ArrayList<Integer>();
-        for (Brick brick : mattoncini) {
-            //dato che ho un arraylist devo aggiornare le condizioni dei mattoncini dentro un ciclo for
-            col = new Collision(brick, palla);
-            if (col.check()) {
-                indici.add(mattoncini.indexOf(brick));
-            }
-        }
-
-        col.checkside(Paddle);
-
-        if (!indici.isEmpty()) {
-            if(indici.size()>=2) {
-                ArrayList<Brick> tempMatt=new ArrayList<sprites.Brick>();
-                palla.setSpeedBall(new Vector2(oldSpeedBallX,-oldSpeedBallY));
-                for(int i:indici) {
-                    if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) {//i mattoncini vengono eliminati solo se sono quelli MORBIDI
-                        tempMatt.add(mattoncini.get(i));
-                        matEliminati += 2;
-                    }
-                }
-                for(Brick brick:tempMatt) {
-                    mattoncini.remove(brick);
-                }
-            }
-            else {
-                if(mattoncini.get((int)indici.get(0)).getDurezza() == 0) { //se i mattoncini sono mattoncini "morbidi" li posso eliminare
-                    mattoncini.remove((int) indici.get(0));
-                    matEliminati++;
-                }
-            }
-        }
     }
 
     @Override
