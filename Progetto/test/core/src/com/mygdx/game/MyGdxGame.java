@@ -190,10 +190,7 @@ public class MyGdxGame extends Game implements TextInputListener {
 
             palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
             palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
-
-
-
-
+            
             disegna.disegnare(batch, mattoncini, Paddle, palla, bg);
             bitmapFont.draw(batch, "You lost: "+String.valueOf(LostLives) + " times", 20, 830);
 
