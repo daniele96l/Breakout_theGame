@@ -34,13 +34,17 @@ public class MyGdxGame extends Game implements TextInputListener {
     private Texture youWin;
     private GameState gameState;
     private CommandPlayer player1;
+    private Texture multiplayerButton;
+    private Texture resumeButton;
+    private Texture playButton;
+    private Texture exitButton;
+    private Texture menuButton;
     private  Livello livello = new Livello(Brick, palla);
     private boolean nextLevel;
     private ArrayList<Integer> indici;
     private ArrayList<Brick> mattoncini1;
     private  int matEliminati;
-    private Texture startButtongame;
-    private Texture exitButtongame;
+
     Disegnare disegna= new Disegnare();
 
     Music music ;
@@ -67,9 +71,15 @@ public class MyGdxGame extends Game implements TextInputListener {
         start=new Texture("start.jpg");
         gameOver=new Texture("gameover.jpeg");
         youWin=new Texture("nextlevel.jpg");
-        startButtongame = new Texture("play.png");
-        exitButtongame = new Texture("exit.png");
-        menu = new Texture("pausa.jpg");
+        playButton = new Texture("play.png");
+        exitButton = new Texture("exit.png");
+        menu = new Texture("menuscreen.jpg");
+        menuButton = new Texture("menu.png");
+        resumeButton = new Texture("resume.png");
+        multiplayerButton = new Texture("multiplayer.png");
+
+
+
         gameState=GameState.MENU;
         nextLevel=false;
        // Gdx.input.getTextInput(textInputListener, "Title", "Default text", "OK");
@@ -120,20 +130,61 @@ public class MyGdxGame extends Game implements TextInputListener {
         batch.begin();
 
 
-        if(gameState == GameState.MENU){
+        if(gameState == GameState.PAUSE){
             batch.draw(menu,0,0);
-            batch.draw(startButtongame, 450, 300);      // al posto di metterli cosi posso usare delle costanti
-            batch.draw(exitButtongame, 50,300);        //immagini bruttissime
+            batch.draw(resumeButton, Info.larghezza/2 - playButton.getWidth()/2, 550);      // al posto di metterli cosi posso usare delle costanti
+            batch.draw(exitButton, Info.larghezza/2 - exitButton.getWidth()/2,150);
+            batch.draw(menuButton, Info.larghezza/2 - multiplayerButton.getWidth()/2, 350);
             System.out.println(Gdx.input.getY() + " " + Gdx.input.getX() );
-            if(Gdx.input.getX()> 67   && (Gdx.input.getX() <341)  && (Gdx.input.getY() > 420 && (Gdx.input.getY() < 525 ))){
+
+            if(Gdx.input.getX()>Info.larghezza/2 - playButton.getWidth()/2    && (Gdx.input.getX() <Info.larghezza/2 + exitButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 150 && (Info.altezza - Gdx.input.getY() < 150 + exitButton.getHeight() ))){
                 if(Gdx.input.isTouched())
                     Gdx.app.exit();
             }
-            if(Gdx.input.getX() < 741  && (Gdx.input.getX() > 467 )  &&( Gdx.input.getY() > 400  && (Gdx.input.getY() < 525 ))){
+            if(Gdx.input.getX()>Info.larghezza/2 - resumeButton.getWidth()/2    && (Gdx.input.getX() <Info.larghezza/2 + resumeButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 550 && (Info.altezza - Gdx.input.getY() < 550 + resumeButton.getHeight() ))){
                 if(Gdx.input.isTouched())
                     gameState = GameState.ACTION;
             }
+            if(Gdx.input.getX()>Info.larghezza/2 - menuButton.getWidth()/2    && (Gdx.input.getX() <Info.larghezza/2 + menuButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 350 && (Info.altezza - Gdx.input.getY() < 350 + menuButton.getHeight() ))){
+                if(Gdx.input.isTouched()) {
+                    gameState = GameState.MENU;
+                    reset();
+
+                }
+            }
         }
+
+        if(gameState == GameState.MENU){
+            Gdx.gl.glClearColor(1, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            batch.draw(menu,0,0);
+            batch.draw(playButton, Info.larghezza/2 - playButton.getWidth()/2, 550);      // al posto di metterli cosi posso usare delle costanti
+            batch.draw(exitButton, Info.larghezza/2 - exitButton.getWidth()/2,150);
+            batch.draw(multiplayerButton, Info.larghezza/2 - multiplayerButton.getWidth()/2, 350);//immagini bruttissime
+            if(Gdx.input.getX()>Info.larghezza/2 - playButton.getWidth()/2    && (Gdx.input.getX() <Info.larghezza/2 + exitButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 150 && (Info.altezza - Gdx.input.getY() < 150 + exitButton.getHeight() ))){
+                if(Gdx.input.isTouched())
+                    Gdx.app.exit();
+            }
+            if(Gdx.input.getX()>Info.larghezza/2 - playButton.getWidth()/2    && (Gdx.input.getX() <Info.larghezza/2 + playButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 550 && (Info.altezza - Gdx.input.getY() < 550 + exitButton.getHeight() ))){
+                if(Gdx.input.isTouched())
+                    gameState = GameState.ACTION;
+            }
+            if(Gdx.input.getX()>Info.larghezza/2 - multiplayerButton.getWidth()/2    && (Gdx.input.getX() <Info.larghezza/2 + multiplayerButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 350 && (Info.altezza - Gdx.input.getY() < 350 + multiplayerButton.getHeight() ))){
+                if(Gdx.input.isTouched())
+                    gameState = GameState.MULTIPLAYER;
+            }
+        }
+
+
+        /*
+        QUA ALBI PER AGGIUNGERE IL MULTIPLAYER USO LO STATO MULTIPLAYER COSI QUANDO SCHIACCI DAL MENU SU MULTIPLAYER VA IN QUELLO STATO QUINDI si puo fare tipo
+
+        if(gameState == GameState.MULTIPLAYER){
+
+            qua la implementazione del multiplayer
+
+        }
+         */
 
         if(gameState.equals(GameState.ACTION) ) {
 
@@ -148,7 +199,7 @@ public class MyGdxGame extends Game implements TextInputListener {
 
             player1.Move();     //mi permette di muovere il giocatore
             if(player1.checkpause()){
-                gameState = GameState.MENU;
+                gameState = GameState.PAUSE;
             }
 
             gestisciCollisioni();
