@@ -21,6 +21,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Input.TextInputListener;
 import sprites.Brick.AbstractBrick;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class MyGdxGame extends Game implements TextInputListener {
@@ -52,18 +53,20 @@ public class MyGdxGame extends Game implements TextInputListener {
     private ArrayList<Integer> indici;
     private ArrayList<AbstractBrick> mattoncini1;
     private  int matEliminati;
+    private String playerName;
+    private boolean isLoggedIn;
 
     Music music ;
     Music music2 ;
     private boolean loser;
     BitmapFont bitmapFont ;
     int LostLives =0;
-    String text;
     TextInputListener textInputListener;
 	ChatClient chatClient = new ChatClient() ;
 	@Override
 	public void create () {
         batch = new SpriteBatch();
+        isLoggedIn=false;
 
         bitmapFont = new BitmapFont();
         bitmapFont.setColor(Color.WHITE);
@@ -100,7 +103,7 @@ public class MyGdxGame extends Game implements TextInputListener {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		music.setVolume(1);
-        music.play();
+
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {
@@ -173,8 +176,11 @@ public class MyGdxGame extends Game implements TextInputListener {
                     Gdx.app.exit();
             }
             if(Gdx.input.getX()>Info.larghezza/2 - playButton.getWidth()/2    && (Gdx.input.getX() <Info.larghezza/2 + playButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 550 && (Info.altezza - Gdx.input.getY() < 550 + exitButton.getHeight() ))){
-                if(Gdx.input.isTouched())
+                if(Gdx.input.isTouched()) {
+
+                    player1.setPlayerName(JOptionPane.showInputDialog(null,"Nickname:","enter nickname:",1));
                     gameState = GameState.ACTION;
+                }
             }
             if(Gdx.input.getX()>Info.larghezza/2 - multiplayerButton.getWidth()/2    && (Gdx.input.getX() <Info.larghezza/2 + multiplayerButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 350 && (Info.altezza - Gdx.input.getY() < 350 + multiplayerButton.getHeight() ))){
                 if(Gdx.input.isTouched())
@@ -186,14 +192,14 @@ public class MyGdxGame extends Game implements TextInputListener {
             isMultiplayer=true;
             paddle1=new Paddle(0.5f,2,1);
             paddle2=new Paddle(0.5f, 2, 2);
-            robotPlayer=new RobotPlayer(palla, paddle2);
+            robotPlayer=new RobotPlayer("Robot",palla, paddle2);
             commandPlayer1=new CommandPlayer(paddle1, player1, 2, 1);
             commandPlayer2=new CommandPlayer(paddle2, robotPlayer, 2, 2);
             gameState=GameState.ACTION;
         }
 
         if(gameState.equals(GameState.ACTION) ) {
-
+            music.play();
             palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y* Info.dt);
             palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
             batch.draw(bg, 0, 0);
@@ -268,12 +274,12 @@ public class MyGdxGame extends Game implements TextInputListener {
 	public void reset() {
         palla = new Ball();
         paddle1 = new Paddle(0.5f,1, 1);
-        player1=new HumanPlayer();
+        player1=new HumanPlayer(playerName);
         commandPlayer1 = new CommandPlayer(paddle1, player1, 1, 1);     //istanzio un Commandplayer( posso averne diversi per ogni player
         if(isMultiplayer) {
             paddle1=new Paddle(0.5f,2,1);
             paddle2=new Paddle(0.5f, 2, 2);
-            robotPlayer=new RobotPlayer(palla, paddle2);
+            robotPlayer=new RobotPlayer("Robot",palla, paddle2);
             commandPlayer1=new CommandPlayer(paddle1, player1, 2, 1);
             commandPlayer2=new CommandPlayer(paddle2, robotPlayer,2,2);
         }
