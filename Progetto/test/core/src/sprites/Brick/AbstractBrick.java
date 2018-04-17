@@ -1,4 +1,4 @@
-package sprites;
+package sprites.Brick;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import help.Info;
 
-public class Brick extends Sprite{
+public  abstract class AbstractBrick  extends Sprite{
 
     private Vector2 positionBrick;
     private Vector2 speed;
@@ -15,18 +15,8 @@ public class Brick extends Sprite{
     String nome;
     int durezza;
 
-
-
-
-
-    public Brick(int posX, int posY, String nome, int durezza ){
-        super(new Texture(nome));
-        this.durezza = durezza;
-        positionBrick = new Vector2(posX, posY);
-        speed = new Vector2(0,0);
-        boundsBrick = new Rectangle(posX, posY, Brick.this.getWidth()* Info.brickresize, Brick.this.getHeight()* Info.brickresize );
-        //il boundBrick si riferiscono al rettangolo invisibile che costruirò intorno alla texture
-        //l'altezza e la larghezza sono della texture
+    public AbstractBrick(int posX, int posY, String nome){
+       super(new Texture(nome));
     }
 
     public int getDurezza() {
@@ -69,6 +59,4 @@ public class Brick extends Sprite{
     public boolean isEliminato() {
         return eliminato;
     }
-
-
 }

@@ -79,16 +79,18 @@ public class Collision {
         return false;
     }
 
-
-    // questo metodo serve per controllare quando la palla collide con i bordi o con la Paddle
-    public void checkside(Paddle paddle){
-
+    public void checkBorderCollision() {
         if(rectangle.x> Info.larghezza- palla.getWidth()* Info.ballresize) //controllo che rimbalzi a destra
             palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y);
         if(rectangle.y > Info.altezza - palla.getHeight() * Info.ballresize) //controllo che rimbalzi su
             palla.getSpeedBall().set(palla.getSpeedBall().x,-palla.getSpeedBall().y);
         if(rectangle.x  < 0)
             palla.getSpeedBall().set(-palla.getSpeedBall().x, palla.getSpeedBall().y); //controllo che rimbalzi a sinistra
+    }
+
+
+    // questo metodo serve per controllare quando la palla collide con i bordi o con la Paddle
+    public void checkside(Paddle paddle){
 
         if(collides(palla.getBoundsBall(), paddle)) { //controllo che collida con la Paddle
             float relativeIntersectX = -((paddle.getPosition().x + (paddle.getWidth()*Info.paddleresize / 2)) - (palla.getPositionBall().x+palla.getWidth()*Info.paddleresize/2));
