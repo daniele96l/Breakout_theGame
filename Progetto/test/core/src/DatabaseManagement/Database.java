@@ -70,24 +70,20 @@ public class Database {
         return s;
     }
 
-    public void insert () {
-        BufferedReader fr = new BufferedReader(new InputStreamReader(System.in));
+    public void insert (String name) {
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
             String url = "jdbc:sqlite:BbDb.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
-            System.out.println("Connection established! Enter the name to insert in the database:");
-            String a = fr.readLine();
-            String query = "INSERT INTO PLAYERS('NAME') VALUES ('" + a +"')";
+            System.out.println("Connection established!");
+            String query = "INSERT INTO PLAYERS('NAME') VALUES ('" + name +"')";
             stmt.executeUpdate(query);
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
         } catch (ClassNotFoundException cnfe) {
             System.err.println(cnfe.getMessage());
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
         }
     }
 

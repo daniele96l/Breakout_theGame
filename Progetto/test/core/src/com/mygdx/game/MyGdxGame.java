@@ -1,5 +1,6 @@
 package com.mygdx.game;
 import ClientServer.ChatClient;
+import DatabaseManagement.Database;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -55,14 +56,15 @@ public class MyGdxGame extends Game implements TextInputListener {
     private  int matEliminati;
     private String playerName;
     private boolean isLoggedIn;
-
-    Music music ;
-    Music music2 ;
+    private Database db;
+    Music music;
+    Music music2;
     private boolean loser;
     BitmapFont bitmapFont ;
     int LostLives =0;
     TextInputListener textInputListener;
-	ChatClient chatClient = new ChatClient() ;
+	ChatClient chatClient = new ChatClient();
+
 	@Override
 	public void create () {
         batch = new SpriteBatch();
@@ -73,7 +75,6 @@ public class MyGdxGame extends Game implements TextInputListener {
         bitmapFont.getData().setScale(1.2f);
         music =  Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         music2 =  Gdx.audio.newMusic(Gdx.files.internal("Untitled.mp3"));
-
 
         reset();
 
@@ -87,15 +88,12 @@ public class MyGdxGame extends Game implements TextInputListener {
         resumeButton = new Texture("resume.png");
         multiplayerButton = new Texture("multiplayer.png");
 
-
-
         gameState=GameState.MENU;
         nextLevel=false;
         isMultiplayer=false;
-       // Gdx.input.getTextInput(textInputListener, "Title", "Default text", "OK");
-       // Gdx.app.log("Text", "test");
-
-
+       //Gdx.input.getTextInput(textInputListener, "Title", "Default text", "OK");
+       //Gdx.app.log("Text", "test");
+        db = new Database();
     }
 
 	@Override
@@ -139,7 +137,6 @@ public class MyGdxGame extends Game implements TextInputListener {
     public void drawScene() {
         batch.begin();
 
-
         if(gameState == GameState.PAUSE){
             batch.draw(menu,0,0);
             batch.draw(resumeButton, Info.larghezza/2 - playButton.getWidth()/2, 550);      // al posto di metterli cosi posso usare delle costanti
@@ -147,15 +144,15 @@ public class MyGdxGame extends Game implements TextInputListener {
             batch.draw(menuButton, Info.larghezza/2 - multiplayerButton.getWidth()/2, 350);
             System.out.println(Gdx.input.getY() + " " + Gdx.input.getX() );
 
-            if(Gdx.input.getX()>Info.larghezza/2 - playButton.getWidth()/2    && (Gdx.input.getX() <Info.larghezza/2 + exitButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 150 && (Info.altezza - Gdx.input.getY() < 150 + exitButton.getHeight() ))){
+            if(Gdx.input.getX()>Info.larghezza/2 - playButton.getWidth()/2 && (Gdx.input.getX() < Info.larghezza/2 + exitButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 150 && (Info.altezza - Gdx.input.getY() < 150 + exitButton.getHeight() ))){
                 if(Gdx.input.isTouched())
                     Gdx.app.exit();
             }
-            if(Gdx.input.getX()>Info.larghezza/2 - resumeButton.getWidth()/2    && (Gdx.input.getX() <Info.larghezza/2 + resumeButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 550 && (Info.altezza - Gdx.input.getY() < 550 + resumeButton.getHeight() ))){
+            if(Gdx.input.getX()>Info.larghezza/2 - resumeButton.getWidth()/2 && (Gdx.input.getX() < Info.larghezza/2 + resumeButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 550 && (Info.altezza - Gdx.input.getY() < 550 + resumeButton.getHeight() ))){
                 if(Gdx.input.isTouched())
                     gameState = GameState.ACTION;
             }
-            if(Gdx.input.getX()>Info.larghezza/2 - menuButton.getWidth()/2    && (Gdx.input.getX() <Info.larghezza/2 + menuButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 350 && (Info.altezza - Gdx.input.getY() < 350 + menuButton.getHeight() ))){
+            if(Gdx.input.getX()>Info.larghezza/2 - menuButton.getWidth()/2 && (Gdx.input.getX() < Info.larghezza/2 + menuButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 350 && (Info.altezza - Gdx.input.getY() < 350 + menuButton.getHeight() ))){
                 if(Gdx.input.isTouched()) {
                     gameState = GameState.MENU;
                     reset();
@@ -178,7 +175,10 @@ public class MyGdxGame extends Game implements TextInputListener {
             if(Gdx.input.getX()>Info.larghezza/2 - playButton.getWidth()/2    && (Gdx.input.getX() <Info.larghezza/2 + playButton.getWidth()/2)  && (Info.altezza - Gdx.input.getY() > 550 && (Info.altezza - Gdx.input.getY() < 550 + exitButton.getHeight() ))){
                 if(Gdx.input.isTouched()) {
 
-                    player1.setPlayerName(JOptionPane.showInputDialog(null,"Nickname:","enter nickname:",1));
+                    String playerName = JOptionPane.showInputDialog(null,"Nickname:","enter nickname:",1);
+                    player1.setPlayerName(playerName);
+                    db.insert(playerName);
+
                     gameState = GameState.ACTION;
                 }
             }
