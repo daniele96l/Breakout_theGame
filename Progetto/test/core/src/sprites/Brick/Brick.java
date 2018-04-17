@@ -1,7 +1,5 @@
-package sprites;
+package sprites.Brick;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import help.Info;
@@ -17,8 +15,8 @@ public class Brick extends AbstractBrick{
 
 
 
-    public Brick(int posX, int posY, String nome, int durezza ){
-        super(posX, posY, nome, durezza);
+    public Brick(int posX, int posY, String nome ){
+        super(posX, posY, nome);
         this.durezza = 0;
         positionBrick = new Vector2(posX, posY);
         speed = new Vector2(0,0);

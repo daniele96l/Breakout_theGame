@@ -3,17 +3,17 @@ package com.mygdx.game;
 import com.badlogic.gdx.math.Rectangle;
 import help.Info;
 import sprites.Ball;
-import sprites.Brick;
+import sprites.Brick.AbstractBrick;
 import sprites.Paddle;
 
 public class Collision {
-    private Brick mat;
+    private AbstractBrick mat;
     private boolean eliminato;
     private Ball palla;
     private double MAXBOUNCEANGLE = Math.PI/3;
     private Rectangle rectangle;
 
-    public Collision(Brick mat, Ball palla){
+    public Collision(AbstractBrick mat, Ball palla){
 
         int pallaX=(int)(palla.getBoundsBall().x+palla.getSpeedBall().x* Info.dt);
         int pallaY=(int)(palla.getBoundsBall().y+palla.getSpeedBall().y*Info.dt);

@@ -3,32 +3,35 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Texture;
 import help.Info;
 import sprites.*;
+import sprites.Brick.AbstractBrick;
+import sprites.Brick.Brick;
+import sprites.Brick.HardBrick;
+
 import java.util.ArrayList;
 
 public class Livello {
 
     private int shift = 700;
     private int shiftAltezza = 700;
-    private int nColonne;
+    private sprites.Brick.AbstractBrick AbstractBrick;
     private Ball Ball;
     private Texture bg;
-    private Brick Brick;
+    private sprites.Brick.Brick Brick;
+    private sprites.Brick.HardBrick HardBrick;
     private int coeffy = 100;
     private int coeffx = 130;
     int nMat = 0;
     int nMatMorbidi= 0;
-
-
-    private ArrayList<Brick> mattoncini;
+    private ArrayList<AbstractBrick> mattoncini;
     private int lv = 1;
-    private Texture texture;
 
-    public Livello (Brick Brick, Ball Ball){
-        this.Brick = Brick;
+
+    public Livello (AbstractBrick AbstractBrick, Ball Ball){
+        this.AbstractBrick = AbstractBrick;
         this.Ball = Ball;
     }
 
-    public  ArrayList<Brick> selectLv(){
+    public  ArrayList<AbstractBrick> selectLv(){
         if(lv == 1){
             bg = new Texture("bg.jpg");
             return creaLv1();
@@ -56,23 +59,23 @@ public class Livello {
 
     }
 
-    public ArrayList<Brick> creaLvVuoto(){
+    public ArrayList<AbstractBrick> creaLvVuoto(){
         return  mattoncini;
     }
 
-    public ArrayList<Brick> creaLv1(){
+    public ArrayList<AbstractBrick> creaLv1(){
         return  drawLine(6,1,  0,0);
     }
 
-    public ArrayList<Brick> creaLv2(){
+    public ArrayList<AbstractBrick> creaLv2(){
         return drawLine(5, 2,  0 ,0);
     }
 
-    public ArrayList<Brick> creaLv3(){
+    public ArrayList<AbstractBrick> creaLv3(){
         return drawLine(7, 3, 8 , 12);
     }
 
-    public ArrayList<Brick> creaLv4(){
+    public ArrayList<AbstractBrick> creaLv4(){
         return drawLine(14, 10, 100 , 110);
     }
 
@@ -90,47 +93,28 @@ public class Livello {
         this.nMatMorbidi = nMatMorbidi;
     }
 
-    public ArrayList<Brick> drawLine(int nColonne, int nRighe, int StartHard, int FinishHard){
+    public ArrayList<AbstractBrick> drawLine(int nColonne, int nRighe, int StartHard, int FinishHard){
 
-        mattoncini=new ArrayList<Brick>();
-
-      //  mattoncini = mattonciniDuri(StartHard, FinishHard,HardCol,HardColFrom );
+        mattoncini=new ArrayList<AbstractBrick>();
 
         for(int y = 0; y < nRighe; y++ ){
             for ( int i = 0; i < nColonne; i++) { //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
-                if((nMat > StartHard ) && nMat < FinishHard)
-                    Brick = new Brick(shift , shiftAltezza -y*coeffy , "brick.jpg", 1);
+                if((nMat > StartHard ) && nMat < FinishHard) {
+                    HardBrick = new HardBrick(shift, shiftAltezza - y * coeffy, "brick.jpg");
+                    mattoncini.add(HardBrick);
+                }
                 else {
-                    Brick = new Brick(shift, shiftAltezza - y * coeffy, "normalBrick.jpg", 0);
+                    Brick = new Brick(shift, shiftAltezza - y * coeffy, "normalBrick.jpg");
                     nMatMorbidi++;
+                    mattoncini.add(Brick);
                 }
 
-                mattoncini.add(Brick);
+
                 shift -= coeffx * Info.brickresize; //ogni Brick è distante dall'altro di uno shift
                 nMat++;
             }
             shift = 700;
         }
-
-        return mattoncini;
-    }
-
-    public ArrayList<Brick> mattonciniDuri(int StartHard, int FinishHard, int HardCol , int HardColFrom){
-
-        shiftAltezza -= coeffy*FinishHard;
-        shift -= coeffx*Info.brickresize*HardColFrom;
-
-        for(int j = 0; j < StartHard; j++ ){
-            for ( int z = 0; z < HardCol; z++) { //con un ciclo creo tutti i mattoncini e li metto dentro un arraylist
-                Brick = new Brick(shift , shiftAltezza , "brick.jpg", 1);
-                mattoncini.add(Brick);
-                shift -= coeffx * Info.brickresize; //ogni Brick è distante dall'altro di uno shift
-
-            }
-            shift = 700;
-        }
-
-        shiftAltezza += coeffy*FinishHard;
 
         return mattoncini;
     }
@@ -157,7 +141,7 @@ public class Livello {
         return Brick;
     }
 
-    public ArrayList<Brick> getMattoncini() {
+    public ArrayList<AbstractBrick> getMattoncini() {
         return mattoncini;
     }
 }

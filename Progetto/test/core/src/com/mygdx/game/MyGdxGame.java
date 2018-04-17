@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Player.HumanPlayer;
+import com.mygdx.game.Player.RobotPlayer;
 import help.GameState;
 import help.Info;
 import sprites.*;
@@ -17,14 +19,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Input.TextInputListener;
+import sprites.Brick.AbstractBrick;
 
 import java.util.ArrayList;
 
 public class MyGdxGame extends Game implements TextInputListener {
     private Collision col;
     private SpriteBatch batch;
-    private Brick Brick;
-    private ArrayList<Brick> mattoncini = new ArrayList();
+    private AbstractBrick AbstractBrick;
+    private ArrayList<AbstractBrick> mattoncini = new ArrayList();
     private Ball palla;
     private Paddle paddle1;
     private Paddle paddle2;
@@ -44,10 +47,10 @@ public class MyGdxGame extends Game implements TextInputListener {
     private Texture playButton;
     private Texture exitButton;
     private Texture menuButton;
-    private  Livello livello = new Livello(Brick, palla);
+    private  Livello livello = new Livello(AbstractBrick, palla);
     private boolean nextLevel;
     private ArrayList<Integer> indici;
-    private ArrayList<Brick> mattoncini1;
+    private ArrayList<AbstractBrick> mattoncini1;
     private  int matEliminati;
 
     Music music ;
@@ -195,8 +198,8 @@ public class MyGdxGame extends Game implements TextInputListener {
             palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
             batch.draw(bg, 0, 0);
 
-            for (Brick Brick : mattoncini) {
-                batch.draw(Brick, Brick.getPositionBrick().x, Brick.getPositionBrick().y,Brick.getWidth()* Info.brickresize,Brick.getHeight()* Info.brickresize);
+            for (AbstractBrick AbstractBrick : mattoncini) {
+                batch.draw(AbstractBrick, AbstractBrick.getPositionBrick().x, AbstractBrick.getPositionBrick().y,AbstractBrick.getWidth()* Info.brickresize,AbstractBrick.getHeight()* Info.brickresize);
                 //disegno i mattoncini
             }
 
@@ -283,11 +286,11 @@ public class MyGdxGame extends Game implements TextInputListener {
         float oldSpeedBallY=palla.getSpeedBall().y;
 
         indici=new ArrayList<Integer>();
-        for (Brick brick : mattoncini) {
+        for (AbstractBrick Abstractbrick : mattoncini) {
             //dato che ho un arraylist devo aggiornare le condizioni dei mattoncini dentro un ciclo for
-            col = new Collision(brick, palla);
+            col = new Collision(Abstractbrick, palla);
             if (col.check()) {
-                indici.add(mattoncini.indexOf(brick));
+                indici.add(mattoncini.indexOf(Abstractbrick));
             }
         }
 
@@ -300,7 +303,7 @@ public class MyGdxGame extends Game implements TextInputListener {
 
         if (!indici.isEmpty()) {
             if(indici.size()>=2) {
-                ArrayList<Brick> tempMatt=new ArrayList<sprites.Brick>();
+                ArrayList<AbstractBrick> tempMatt=new ArrayList<sprites.Brick.AbstractBrick>();
                 palla.setSpeedBall(new Vector2(oldSpeedBallX,-oldSpeedBallY));
                 for(int i:indici) {
                     if(mattoncini.get(indici.get(0)).getDurezza() == 0) {//i mattoncini vengono eliminati solo se sono quelli MORBIDI
@@ -308,8 +311,8 @@ public class MyGdxGame extends Game implements TextInputListener {
                         matEliminati ++;
                     }
                 }
-                for(Brick brick:tempMatt) {
-                    mattoncini.remove(brick);
+                for(AbstractBrick Abstractbrick:tempMatt) {
+                    mattoncini.remove(Abstractbrick);
                 }
             }
             else {
