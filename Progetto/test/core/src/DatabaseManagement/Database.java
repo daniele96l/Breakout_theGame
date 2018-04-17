@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.*;
 
+/*
+    Windows users may has problems with JDBC
+ */
+
 public class Database {
 
     public Database() {
@@ -26,7 +30,8 @@ public class Database {
                 System.out.println(rs.getString("NAME"));
                 s += rs.getString("NAME") + "\n";
             }
-            // TODO: 08/04/18 I should close the connection
+            conn.close();
+            rs.close();
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
             s = "There is a big problem!";
