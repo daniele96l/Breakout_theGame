@@ -1,16 +1,40 @@
 package DatabaseManagement;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.*;
 
 /*
-    Windows users may has problems with JDBC
+    You must download sqlite jdbc jar and add it as library to use db
  */
 
 public class Database {
 
     public Database() {
+    }
+
+    private boolean check () {
+        boolean empity = true;
+        try {
+            String driver = "org.sqlite.JDBC";
+            Class.forName(driver);
+            String url = "jdbc:sqlite:BbDb.sqlite";
+            Connection conn = DriverManager.getConnection(url);
+            Statement stmt = conn.createStatement();
+            //I use this query and not "SELECT COUNT..." because the last method returns always a result set, while
+            //now if there aren't tuple rs.next() is false!
+            String query = "SELECT * FROM PLAYERS";
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                empity = false;
+            }
+        } catch (SQLException sqle) {
+            System.err.println(sqle.getMessage());
+        } catch (ClassNotFoundException cnfe) {
+            System.err.println(cnfe.getMessage());
+        }
+        return empity;
     }
 
     public String start () {
@@ -23,16 +47,15 @@ public class Database {
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
             System.out.println("Connection established!\nResult set:");
+            if (check()) {
+                System.out.println("Database empity!");
+                return s;
+            }
             String query = "SELECT * FROM PLAYERS ORDER BY NAME";
             ResultSet rs = stmt.executeQuery(query);
-            // TODO: 17/04/18 Fix check on empity database
-            //if (rs.getString("NAME").isEmpty()) {
-            //    System.out.println("No result set!");
-            //    return s = "No result set!";
-            //}
             while (rs.next()) {
                 //rs.getString() take as parameter the name or the numeric index of the column
-                System.out.println(rs.getString("NAME"));
+                System.out.println("- " + rs.getString("NAME"));
                 s += rs.getString("NAME") + "\n";
             }
         } catch (SQLException sqle) {
@@ -96,7 +119,7 @@ public class Database {
             String url = "jdbc:sqlite:BbDb.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
-            System.out.println("Connection established! Enter the name to remove:");
+            System.out.println("Connection established!");
             String query = "DELETE FROM PLAYERS";
             stmt.executeUpdate(query);
             System.out.println("Database empity!");
