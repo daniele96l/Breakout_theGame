@@ -8,8 +8,8 @@ import sprites.Paddle;
 public class RobotPlayer extends Player{
     private Ball palla;
     private Paddle paddle;
-    public RobotPlayer(Ball palla, Paddle paddle) {
-        super();
+    public RobotPlayer(String playerName,Ball palla, Paddle paddle) {
+        super(playerName);
         this.palla=palla;
         this.paddle=paddle;
     }

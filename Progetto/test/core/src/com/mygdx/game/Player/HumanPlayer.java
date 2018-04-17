@@ -4,6 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 public class HumanPlayer extends Player {
+
+    public HumanPlayer(String playerName) {
+        super(playerName);
+    }
     @Override
     public int keyPressed() {
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT))

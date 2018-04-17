@@ -9,7 +9,6 @@ import help.Info;
 public  abstract class AbstractBrick  extends Sprite{
 
     private Vector2 positionBrick;
-    private Vector2 speed;
     private Rectangle boundsBrick;
     public  boolean eliminato;
     String nome;
@@ -35,21 +34,12 @@ public  abstract class AbstractBrick  extends Sprite{
         this.positionBrick = positionBrick;
     }
 
-    public void setSpeed(Vector2 speed) {
-        this.speed = speed;
-    }
-
     public void setBoundsBrick(Rectangle boundsBrick) {
         this.boundsBrick = boundsBrick;
     }
 
     public void setEliminato(boolean eliminato) {
         this.eliminato = eliminato;
-    }
-
-
-    public Vector2 getSpeed() {
-        return speed;
     }
 
     public Rectangle getBoundsBrick() {
