@@ -8,14 +8,15 @@ import help.Info;
 
 public  abstract class AbstractBrick  extends Sprite{
 
-    private Vector2 positionBrick;
-    private Rectangle boundsBrick;
-    public  boolean eliminato;
-    String nome;
-    int durezza;
+    protected Vector2 positionBrick;
+    protected Rectangle boundsBrick;
+    protected boolean eliminato;
+    protected int durezza;
 
     public AbstractBrick(int posX, int posY, String nome){
-       super(new Texture(nome));
+        super(new Texture(nome));
+        positionBrick = new Vector2(posX, posY);
+        boundsBrick = new Rectangle(posX, posY, this.getWidth()* Info.brickresize, this.getHeight()* Info.brickresize );
     }
 
     public int getDurezza() {

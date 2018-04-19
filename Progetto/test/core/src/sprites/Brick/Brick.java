@@ -6,21 +6,9 @@ import help.Info;
 
 public class Brick extends AbstractBrick{
 
-    private Vector2 positionBrick;
-    private Vector2 speed;
-    private Rectangle boundsBrick;
-    public  boolean eliminato;
-    String nome;
-    int durezza;
-
-
-
-    public Brick(int posX, int posY, String nome ){
-        super(posX, posY, nome);
+    public Brick(int posX, int posY){
+        super(posX, posY, "normalBrick.jpg");
         this.durezza = 0;
-        positionBrick = new Vector2(posX, posY);
-        speed = new Vector2(0,0);
-        boundsBrick = new Rectangle(posX, posY, Brick.this.getWidth()* Info.brickresize, Brick.this.getHeight()* Info.brickresize );
         //il boundBrick si riferiscono al rettangolo invisibile che costruirò intorno alla texture
         //l'altezza e la larghezza sono della texture
     }
@@ -41,21 +29,12 @@ public class Brick extends AbstractBrick{
         this.positionBrick = positionBrick;
     }
 
-    public void setSpeed(Vector2 speed) {
-        this.speed = speed;
-    }
-
     public void setBoundsBrick(Rectangle boundsBrick) {
         this.boundsBrick = boundsBrick;
     }
 
     public void setEliminato(boolean eliminato) {
         this.eliminato = eliminato;
-    }
-
-
-    public Vector2 getSpeed() {
-        return speed;
     }
 
     public Rectangle getBoundsBrick() {

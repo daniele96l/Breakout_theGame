@@ -1,0 +1,25 @@
+%legenda:
+%   "." è uno spazio vuoto
+%   "-" è un mattoncino normale
+%   "#" è un mattoncino di acciaio
+%
+%Inserire i livelli uno dopo l'altro seguiti da "fine"
+%Occorre coprire tutto lo spazio disponibile, altrimenti verrà generata un'eccezione con le misure corrette
+
+background bg.jpg
+.......
+.-----.
+fine
+
+background bgLv2.jpg
+.......
+.-----.
+.-#-#-.
+fine
+
+background bgLv3.jpg
+.......
+.-----.
+.-###-.
+.-----.
+fine
