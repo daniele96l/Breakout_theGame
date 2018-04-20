@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Leaderboard.Leaderboard;
+import com.mygdx.game.Levels.GestoreLivelli;
 import com.mygdx.game.Player.HumanPlayer;
 import com.mygdx.game.Player.RobotPlayer;
 import help.GameState;
@@ -21,7 +23,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Input.TextInputListener;
 import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
-import sprites.Brick.HardBrick;
 
 import java.util.ArrayList;
 
@@ -55,6 +56,8 @@ public class MyGdxGame extends Game implements TextInputListener {
     private GestoreLivelli gestoreLivelli;
     private int livelloCorrente;
     private boolean isFinished;
+    private Texture score;
+    private Leaderboard leaderboard;
 
     Music music;
     Music music2;
@@ -88,6 +91,7 @@ public class MyGdxGame extends Game implements TextInputListener {
         menuButton = new Texture("menu.png");
         resumeButton = new Texture("resume.png");
         multiplayerButton = new Texture("multiplayer.png");
+        score = new Texture("score.png");
 
 
         gameState = GameState.MENU;
@@ -167,15 +171,24 @@ public class MyGdxGame extends Game implements TextInputListener {
         if (gameState == GameState.MENU) {
             Gdx.gl.glClearColor(1, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
             batch.draw(menu, 0, 0);
-            batch.draw(playButton, Info.larghezza / 2 - playButton.getWidth() / 2, 550);//alpostodimetterlicosipossousaredellecostanti
+            batch.draw(playButton, Info.larghezza / 2 - playButton.getWidth() / 2, 530);//alpostodimetterlicosipossousaredellecostanti
             batch.draw(exitButton, Info.larghezza / 2 - exitButton.getWidth() / 2, 150);
             batch.draw(multiplayerButton, Info.larghezza / 2 - multiplayerButton.getWidth() / 2, 350);//immaginibruttissime
+            batch.draw(score,Info.larghezza / 2 - multiplayerButton.getWidth() / 2, 700 );
+
+            if (Gdx.input.getX() > Info.larghezza / 2 - menuButton.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + menuButton.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 700 && (Info.altezza - Gdx.input.getY() < 700 + exitButton.getHeight()))) {
+                if (Gdx.input.isTouched())
+                    gameState = GameState.SCORE;
+            }
+
             if (Gdx.input.getX() > Info.larghezza / 2 - playButton.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + exitButton.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 150 && (Info.altezza - Gdx.input.getY() < 150 + exitButton.getHeight()))) {
                 if (Gdx.input.isTouched())
                     Gdx.app.exit();
             }
-            if (Gdx.input.getX() > Info.larghezza / 2 - playButton.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + playButton.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 550 && (Info.altezza - Gdx.input.getY() < 550 + exitButton.getHeight()))) {
+            if (Gdx.input.getX() > Info.larghezza / 2 - playButton.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + playButton.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 530 && (Info.altezza - Gdx.input.getY() < 530 + exitButton.getHeight()))) {
                 if (Gdx.input.isTouched())
                     gameState = GameState.ACTION;
             }
@@ -183,7 +196,15 @@ public class MyGdxGame extends Game implements TextInputListener {
                 if (Gdx.input.isTouched())
                     gameState = GameState.MULTIPLAYER;
             }
+
         }
+
+        if(gameState == GameState.SCORE) {
+            leaderboard = new Leaderboard(batch, menu, gameState);
+            gameState = leaderboard.draw();
+        }
+
+
 
         if (gameState == GameState.MULTIPLAYER) {
             isMultiplayer = true;

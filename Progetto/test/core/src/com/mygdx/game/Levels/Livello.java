@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Levels;
 
 import com.badlogic.gdx.graphics.Texture;
 import eccezioni.IllegalBricksNumber;
