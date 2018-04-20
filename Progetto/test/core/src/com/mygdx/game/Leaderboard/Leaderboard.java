@@ -45,7 +45,8 @@ public class Leaderboard implements Comparable<Score> {
         bitmapFont.setColor(Color.WHITE);
         bitmapFont.getData().setScale(1.2f);
         scores = new ArrayList<Score>();
-        scoreScreen = new Texture("scoreFinal.png");
+        scoreScreen = new Texture("score.jpg");
+        menu = new Texture("menuscreen.jpg");
 
         draw();
 
@@ -58,7 +59,7 @@ public class Leaderboard implements Comparable<Score> {
 
 
 
-        batch.draw(scoreScreen, 0, 0);
+        batch.draw(menu, 0, 0);
         batch.draw(backButton, 270, 50);
 
         getFromDB();
