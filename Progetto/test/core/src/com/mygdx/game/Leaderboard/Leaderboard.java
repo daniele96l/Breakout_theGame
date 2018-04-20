@@ -56,8 +56,6 @@ public class Leaderboard implements Comparable<Score> {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         backButton = new Texture("menu.png");
 
-
-
         batch.draw(scoreScreen, 0, 0);
         batch.draw(backButton, 270, 50);
 
