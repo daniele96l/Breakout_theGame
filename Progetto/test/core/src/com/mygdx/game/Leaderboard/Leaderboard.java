@@ -38,15 +38,14 @@ public class Leaderboard implements Comparable<Score> {
     private Texture scoreScreen;
 
 
-    public Leaderboard (SpriteBatch batch, Texture menu, GameState gameState){
-        this.menu = menu;
+    public Leaderboard (SpriteBatch batch, GameState gameState){
         this.batch = batch;
         this.gameState = gameState;
         bitmapFont = new BitmapFont();
         bitmapFont.setColor(Color.WHITE);
         bitmapFont.getData().setScale(1.2f);
         scores = new ArrayList<Score>();
-        scoreScreen = new Texture("score.jpg");
+        scoreScreen = new Texture("scoreFinal.png");
 
         draw();
 
@@ -59,7 +58,7 @@ public class Leaderboard implements Comparable<Score> {
 
 
 
-        batch.draw(menu, 0, 0);
+        batch.draw(scoreScreen, 0, 0);
         batch.draw(backButton, 270, 50);
 
         getFromDB();

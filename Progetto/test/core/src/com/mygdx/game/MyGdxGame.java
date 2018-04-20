@@ -200,7 +200,7 @@ public class MyGdxGame extends Game implements TextInputListener {
         }
 
         if(gameState == GameState.SCORE) {
-            leaderboard = new Leaderboard(batch, menu, gameState);
+            leaderboard = new Leaderboard(batch, gameState);
             gameState = leaderboard.draw();
         }
 
