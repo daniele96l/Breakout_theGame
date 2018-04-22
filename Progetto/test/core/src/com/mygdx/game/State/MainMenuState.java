@@ -2,6 +2,7 @@ package com.mygdx.game.State;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,18 +10,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import help.GameState;
 import help.Info;
 
-public class MainMenuState  {
+public class MainMenuState  implements Input.TextInputListener{
 
     private Texture menu;
     private Texture playButton;
     private Texture exitButton;
     private Texture multiplayerButton;
     private Texture score;
+    static private boolean ok;
 
     private SpriteBatch batch;
+    private String text;
     private GameState gamestate;
 
-    public MainMenuState(SpriteBatch batch, GameState gameState) {
+    public MainMenuState(SpriteBatch batch, GameState gameState)  {
         this.batch = batch;
         this.gamestate = gameState;
         menu = new Texture("menuscreen.jpg");
@@ -32,6 +35,9 @@ public class MainMenuState  {
 
 
     public GameState draw(){
+
+
+
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.draw(menu, 0, 0);
@@ -39,6 +45,8 @@ public class MainMenuState  {
         batch.draw(exitButton, Info.larghezza / 2 - exitButton.getWidth() / 2, 140);
         batch.draw(multiplayerButton, Info.larghezza / 2 - multiplayerButton.getWidth() / 2, 460);//immaginibruttissime
         batch.draw(score,Info.larghezza / 2 - multiplayerButton.getWidth() / 2, 300 );
+
+
         if (Gdx.input.getX() > Info.larghezza / 2 - score.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + score.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 300 && (Info.altezza - Gdx.input.getY() < 300 + score.getHeight()))) {
             if (Gdx.input.isTouched())
                 return GameState.SCORE;
@@ -61,4 +69,14 @@ public class MainMenuState  {
         return GameState.MENU;
     }
 
+    @Override
+    public void input(String text) {
+        this.text = text;
+    }
+
+    @Override
+    public void canceled() {
+        text = "cancelled";
+
+    }
 }

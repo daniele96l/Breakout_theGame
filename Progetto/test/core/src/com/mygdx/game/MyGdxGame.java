@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Leaderboard.Leaderboard;
+import com.mygdx.game.Leaderboard.Score;
 import com.mygdx.game.Levels.GestoreLivelli;
 import com.mygdx.game.Player.HumanPlayer;
 import com.mygdx.game.Player.RobotPlayer;
@@ -54,6 +55,9 @@ public class MyGdxGame extends Game implements TextInputListener {
     private MainMenuState mainMenuState;
     private PauseMenuState pauseMenuState;
     private WinLoseState winLoseState;
+    static private int myScore;
+    static private boolean nick;
+    private Score score;
 
     Music music;
     Music music2;
@@ -81,10 +85,18 @@ public class MyGdxGame extends Game implements TextInputListener {
         nextLevel = false;
         isMultiplayer = false;
 
+
     }
 
     @Override
     public void render() {
+
+       if(!nick){
+            Gdx.input.getTextInput(this, "", "", "");
+            nick = true;
+        }
+        Gdx.app.log(text, "");
+
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         music.setVolume(1);
@@ -100,6 +112,8 @@ public class MyGdxGame extends Game implements TextInputListener {
 
     public void drawScene() {
         batch.begin();
+
+
 
 
         if (gameState == GameState.PAUSE) {
@@ -163,6 +177,7 @@ public class MyGdxGame extends Game implements TextInputListener {
 
             if (matEliminati == gestoreLivelli.getLivello(livelloCorrente-1).getnMatMorbidi()) {
                 gameState = GameState.YOU_WON;
+
                 livelloCorrente++;
                 if(livelloCorrente>gestoreLivelli.getNumeroLivelli()) {
                     isFinished=true;
@@ -171,6 +186,7 @@ public class MyGdxGame extends Game implements TextInputListener {
 
             if (palla.getPositionBall().y <= 0) {
                 gameState = GameState.GAME_OVER;
+                myScore -= matEliminati;
                 matEliminati = 0;
                 LostLives++;
                 music.stop();
@@ -257,19 +273,35 @@ public class MyGdxGame extends Game implements TextInputListener {
                     if(brick instanceof Brick) {
                         bricks.remove(brick);
                         matEliminati++;
+                        myScore++;
+
                     }
                 }
             } else {
                 if (bricks.get(indici.get(0)) instanceof Brick) {//seimattoncinisonomattoncini"morbidi"lipossoeliminare
                     bricks.remove((int) indici.get(0));
                     matEliminati++;
+                    myScore++;
+
                 }
             }
         }
+
+
+
+        System.out.println(text + " " + myScore);
+
+        ///////////////////////////////VARIABILI CHE ANDRANNO NEL DATABASE//////////////////////////////////////////////////////////////////
+       score = new  Score(text, myScore);
+
+
+
+
     }
 
     @Override
     public void input(String text) {
+        this.text = text;
 
     }
 
