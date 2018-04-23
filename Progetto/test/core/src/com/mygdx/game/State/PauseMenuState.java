@@ -3,6 +3,7 @@ package com.mygdx.game.State;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.MyGdxGame;
 import help.GameState;
 import help.Info;
 
@@ -16,6 +17,7 @@ public class PauseMenuState {
     private Texture resumeButton;
     private Texture exitButton;
     private Texture menuButton;
+    private MyGdxGame game;
 
     public PauseMenuState(SpriteBatch batch, GameState gameState) {
         this.batch = batch;
@@ -45,6 +47,7 @@ public class PauseMenuState {
         }
         if (Gdx.input.getX() > Info.larghezza / 2 - menuButton.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + menuButton.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 350 && (Info.altezza - Gdx.input.getY() < 350 + menuButton.getHeight()))) {
             if (Gdx.input.isTouched()) {
+
                 return GameState.MENU;
 
             }

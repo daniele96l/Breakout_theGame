@@ -91,11 +91,7 @@ public class MyGdxGame extends Game implements TextInputListener {
     @Override
     public void render() {
 
-       if(!nick){
-            Gdx.input.getTextInput(this, "", "", "");
-            nick = true;
-        }
-        Gdx.app.log(text, "");
+
 
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -114,14 +110,18 @@ public class MyGdxGame extends Game implements TextInputListener {
         batch.begin();
 
 
-
-
         if (gameState == GameState.PAUSE) {
             pauseMenuState = new PauseMenuState(batch,gameState);
             gameState = pauseMenuState.draw();
         }
 
         if (gameState == GameState.MENU) {
+            if(!nick){
+                Gdx.input.getTextInput(this, "", "", "");
+                nick = true;
+            }
+            Gdx.app.log(text, "");
+            reset();
             mainMenuState = new MainMenuState(batch,gameState);
             gameState = mainMenuState.draw();
 
