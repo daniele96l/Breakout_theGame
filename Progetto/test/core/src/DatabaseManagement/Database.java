@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.sql.*;
 
 /*
-    You must download sqlite jdbc jar and add it as library to use db
+    You must have jdbc library in the same package of desktop launcher!
  */
 
 public class Database {
@@ -42,7 +42,7 @@ public class Database {
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
-            //jdbc:sqlite:<address of database>. The root is the main directory of the intellij project
+            //!!!!!!!!!! jdbc:sqlite:path of db!!!!!!!!!!
             String url = "jdbc:sqlite:BbDb.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
@@ -51,12 +51,12 @@ public class Database {
                 System.out.println("Database empity!");
                 return s;
             }
-            String query = "SELECT * FROM PLAYERS ORDER BY NAME";
+            String query = "SELECT * FROM GAMES ORDER BY NAME";
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 //rs.getString() take as parameter the name or the numeric index of the column
-                System.out.println("- " + rs.getString("NAME"));
-                s += rs.getString("NAME") + "\n";
+                System.out.println("- " + rs.getString("P_ID") + " | " + rs.getString("NAME") + " | " + rs.getString("POINTS"));
+                s += "- " + rs.getString("P_ID") + " | " + rs.getString("NAME") + " | " + rs.getString("POINTS");
             }
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
@@ -70,16 +70,19 @@ public class Database {
         return s;
     }
 
-    public void insert (String name) {
+    public void insert (String id, String nome, int punteggio) {
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
             String url = "jdbc:sqlite:BbDb.sqlite";
             Connection conn = DriverManager.getConnection(url);
-            Statement stmt = conn.createStatement();
-            System.out.println("Connection established!");
-            String query = "INSERT INTO PLAYERS('NAME') VALUES ('" + name +"')";
-            stmt.executeUpdate(query);
+            //System.out.println("Connection established!");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO GAMES VALUES (?, ?, ?)");
+            stmt.setString(1, id);
+            stmt.setString(2, nome);
+            stmt.setInt(3, punteggio);
+            stmt.executeUpdate();
+            conn.close();
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
         } catch (ClassNotFoundException cnfe) {
@@ -87,7 +90,7 @@ public class Database {
         }
     }
 
-    public void drop () {
+    public void drop (String name) {
         BufferedReader fr = new BufferedReader(new InputStreamReader(System.in));
         try {
             String driver = "org.sqlite.JDBC";
@@ -95,9 +98,8 @@ public class Database {
             String url = "jdbc:sqlite:BbDb.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
-            System.out.println("Connection established! Enter the name to remove:");
             String a = fr.readLine();
-            String query = "DELETE FROM PLAYERS WHERE NAME = '" + a + "'";
+            String query = "DELETE FROM PLAYERS WHERE NAME = '" + name + "'";
             stmt.executeUpdate(query);
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
@@ -115,7 +117,7 @@ public class Database {
             String url = "jdbc:sqlite:BbDb.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
-            System.out.println("Connection established!");
+            //System.out.println("Connection established!");
             String query = "DELETE FROM PLAYERS";
             stmt.executeUpdate(query);
             System.out.println("Database empity!");

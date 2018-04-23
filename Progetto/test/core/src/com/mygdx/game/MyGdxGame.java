@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import ClientServer.ChatClient;
 import ClientServer.Dato;
+import DatabaseManagement.Database;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -28,7 +29,10 @@ import com.badlogic.gdx.Input.TextInputListener;
 import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
 
 public class MyGdxGame extends Game implements TextInputListener {
     private Collision col;
@@ -58,6 +62,8 @@ public class MyGdxGame extends Game implements TextInputListener {
     static private int myScore;
     static private boolean nick;
     private Score score;
+    private Database db;
+    private Date data;
 
     Music music;
     Music music2;
@@ -84,8 +90,7 @@ public class MyGdxGame extends Game implements TextInputListener {
         gameState = GameState.MENU;
         nextLevel = false;
         isMultiplayer = false;
-
-
+        db = new Database();
     }
 
     @Override
@@ -283,6 +288,7 @@ public class MyGdxGame extends Game implements TextInputListener {
                     matEliminati++;
                     myScore++;
 
+
                 }
             }
         }
@@ -291,12 +297,19 @@ public class MyGdxGame extends Game implements TextInputListener {
 
         System.out.println(text + " " + myScore);
 
-        ///////////////////////////////VARIABILI CHE ANDRANNO NEL DATABASE//////////////////////////////////////////////////////////////////
+        ///////////////////////////////VARIABILI CHE ANDRANNO NEL DATABASE/////////////////////////////////////////////
+
        score = new  Score(text, myScore);
+       db.insert(randomID(), text, myScore);
 
+    }
 
+    //provvisoriamente l'id è un numero pseudo-casuale
+    private String randomID () {
+        Random gen = new Random();
+        String str;
 
-
+        return str = "" + gen.nextInt(10000);
     }
 
     @Override
