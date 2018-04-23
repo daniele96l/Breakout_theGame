@@ -19,7 +19,7 @@ public class Database {
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
-            String url = "jdbc:sqlite:BbDb.sqlite";
+            String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
             //I use this query and not "SELECT COUNT..." because the last method returns always a result set, while
@@ -43,7 +43,7 @@ public class Database {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
             //!!!!!!!!!! jdbc:sqlite:path of db!!!!!!!!!!
-            String url = "jdbc:sqlite:BbDb.sqlite";
+            String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
             System.out.println("Connection established!\nResult set:");
@@ -55,8 +55,8 @@ public class Database {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 //rs.getString() take as parameter the name or the numeric index of the column
-                System.out.println("- " + rs.getString("P_ID") + " | " + rs.getString("NAME") + " | " + rs.getString("POINTS"));
-                s += "- " + rs.getString("P_ID") + " | " + rs.getString("NAME") + " | " + rs.getString("POINTS");
+                System.out.println("- " + rs.getString("ID") + " | " + rs.getString("NICKNAME") + " | " + rs.getString("POINTS"));
+                s += "- " + rs.getString("ID") + " | " + rs.getString("NICKNAME") + " | " + rs.getString("POINTS");
             }
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
@@ -74,7 +74,7 @@ public class Database {
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
-            String url = "jdbc:sqlite:BbDb.sqlite";
+            String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
             //System.out.println("Connection established!");
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO GAMES VALUES (?, ?, ?)");
@@ -95,7 +95,7 @@ public class Database {
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
-            String url = "jdbc:sqlite:BbDb.sqlite";
+            String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
             String a = fr.readLine();
@@ -114,7 +114,7 @@ public class Database {
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
-            String url = "jdbc:sqlite:BbDb.sqlite";
+            String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
             //System.out.println("Connection established!");

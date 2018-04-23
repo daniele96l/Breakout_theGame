@@ -62,8 +62,6 @@ public class MyGdxGame extends Game {
     static private int myScore;
     static private boolean nick;
     private Score score;
-    private Database db;
-    private Date data;
     private String playerName;
 
     Music music;
@@ -90,7 +88,6 @@ public class MyGdxGame extends Game {
         leaderboard = new Leaderboard(gameState);
         pauseMenuState = new PauseMenuState(gameState);
 
-
         isFinished = false;
         livelloCorrente = 1;
         reset();
@@ -98,7 +95,6 @@ public class MyGdxGame extends Game {
         gameState = GameState.MENU;
         nextLevel = false;
         isMultiplayer = false;
-        db = new Database();
     }
 
     @Override
@@ -295,11 +291,8 @@ public class MyGdxGame extends Game {
         }
 
         ///////////////////////////////VARIABILI CHE ANDRANNO NEL DATABASE/////////////////////////////////////////////
-
-        score = new Score(text, myScore);
-        db.insert(randomID(), text, myScore);
-
     }
+
 
     //provvisoriamente l'id è un numero pseudo-casuale
     private String randomID() {
