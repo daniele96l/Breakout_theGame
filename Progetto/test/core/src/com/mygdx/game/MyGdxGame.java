@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import ClientServer.ChatClient;
 import ClientServer.Dato;
+import DatabaseManagement.Database;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -28,9 +29,12 @@ import com.badlogic.gdx.Input.TextInputListener;
 import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
 
-public class MyGdxGame extends Game implements TextInputListener {
+public class MyGdxGame extends Game {
     private Collision col;
     private SpriteBatch batch;
     private ArrayList<AbstractBrick> bricks = new ArrayList();
@@ -58,6 +62,9 @@ public class MyGdxGame extends Game implements TextInputListener {
     static private int myScore;
     static private boolean nick;
     private Score score;
+    private Database db;
+    private Date data;
+    private String playerName;
 
     Music music;
     Music music2;
@@ -77,33 +84,32 @@ public class MyGdxGame extends Game implements TextInputListener {
         bitmapFont.getData().setScale(1.2f);
         music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         music2 = Gdx.audio.newMusic(Gdx.files.internal("Untitled.mp3"));
-        isFinished=false;
-        livelloCorrente=1;
+        music.setVolume(1);
+
+        mainMenuState = new MainMenuState(gameState, this);
+        leaderboard = new Leaderboard(gameState);
+        pauseMenuState = new PauseMenuState(gameState);
+
+
+        isFinished = false;
+        livelloCorrente = 1;
         reset();
-        bg=gestoreLivelli.getLivello(livelloCorrente-1).getBackground();
+        bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
         gameState = GameState.MENU;
         nextLevel = false;
         isMultiplayer = false;
-
-
+        db = new Database();
     }
 
     @Override
     public void render() {
 
-       if(!nick){
-            Gdx.input.getTextInput(this, "", "", "");
-            nick = true;
-        }
-        Gdx.app.log(text, "");
-
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        music.setVolume(1);
 
         if (nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
-            bricks = gestoreLivelli.getLivello(livelloCorrente-1).getBricks();//ritorno l'array adatto al nuovo livello
-            bg=gestoreLivelli.getLivello(livelloCorrente-1).getBackground();
+            bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//ritorno l'array adatto al nuovo livello
+            bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
         }
 
         drawScene();
@@ -115,23 +121,23 @@ public class MyGdxGame extends Game implements TextInputListener {
 
 
 
+        if (gameState == GameState.MENU) {
+            gameState = mainMenuState.draw(batch);
+
+            playerName = mainMenuState.getPlayerName();
+        }
+
+        if (gameState == GameState.SCORE) {
+            gameState = leaderboard.draw(batch);
+        }
 
         if (gameState == GameState.PAUSE) {
-            pauseMenuState = new PauseMenuState(batch,gameState);
-            gameState = pauseMenuState.draw();
+            music.pause();
+            gameState = pauseMenuState.draw(batch);
+            if(gameState==GameState.MENU) {
+                music.stop();
+            }
         }
-
-        if (gameState == GameState.MENU) {
-            mainMenuState = new MainMenuState(batch,gameState);
-            gameState = mainMenuState.draw();
-
-        }
-
-        if(gameState == GameState.SCORE) {
-            leaderboard = new Leaderboard(batch, gameState);
-            gameState = leaderboard.draw();
-        }
-
 
 
         if (gameState == GameState.MULTIPLAYER) {
@@ -145,6 +151,7 @@ public class MyGdxGame extends Game implements TextInputListener {
         }
 
         if (gameState.equals(GameState.ACTION)) {
+
             music.play();
             palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y * Info.dt);
             palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
@@ -175,19 +182,18 @@ public class MyGdxGame extends Game implements TextInputListener {
             gestisciCollisioni();
 
 
-            if (matEliminati == gestoreLivelli.getLivello(livelloCorrente-1).getnMatMorbidi()) {
+            if (matEliminati == gestoreLivelli.getLivello(livelloCorrente - 1).getnMatMorbidi()) {
                 gameState = GameState.YOU_WON;
 
                 livelloCorrente++;
-                if(livelloCorrente>gestoreLivelli.getNumeroLivelli()) {
-                    isFinished=true;
+                if (livelloCorrente > gestoreLivelli.getNumeroLivelli()) {
+                    isFinished = true;
                 }
             }
 
             if (palla.getPositionBall().y <= 0) {
                 gameState = GameState.GAME_OVER;
                 myScore -= matEliminati;
-                matEliminati = 0;
                 LostLives++;
                 music.stop();
                 music2.play();
@@ -196,24 +202,23 @@ public class MyGdxGame extends Game implements TextInputListener {
         } else {
 
             if (gameState == GameState.YOU_WON) {
-                if(isFinished) {
-                    gameState=GameState.MENU;
-                    livelloCorrente=1;
-                    isFinished=false;
+                if (isFinished) {
+                    gameState = GameState.MENU;
+                    livelloCorrente = 1;
+                    isFinished = false;
                     reset();
-                }
-                else {
+                } else {
                     nextLevel = true;
-                    matEliminati = 0;
-                    winLoseState = new WinLoseState(batch,gameState);
+                    winLoseState = new WinLoseState(batch, gameState);
                     gameState = winLoseState.draw();
                     reset();
                 }
+                music.stop();
             }
             if (gameState == GameState.GAME_OVER) {
-                winLoseState = new WinLoseState(batch,gameState);
+                winLoseState = new WinLoseState(batch, gameState);
                 gameState = winLoseState.draw();
-                music.pause();
+                music.stop();
                 reset();
             }
         }
@@ -238,9 +243,10 @@ public class MyGdxGame extends Game implements TextInputListener {
             commandPlayer1 = new CommandPlayer(paddle1, player1, 2, 1);
             commandPlayer2 = new CommandPlayer(paddle2, robotPlayer, 2, 2);
         }
-        gestoreLivelli=new GestoreLivelli("fileLivelli.txt");
-        bricks = gestoreLivelli.getLivello(livelloCorrente-1).getBricks();//laclasselivellosioccuperàdiritornarel'arraylistdeimattonciniadattiaquestolivello
-      ///////////////////////  bg = livello.getBg();
+        gestoreLivelli = new GestoreLivelli("fileLivelli.txt");
+        bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//laclasselivellosioccuperàdiritornarel'arraylistdeimattonciniadattiaquestolivello
+        matEliminati = 0;
+        ///////////////////////  bg = livello.getBg();
     }
 
     public void gestisciCollisioni() {
@@ -270,7 +276,7 @@ public class MyGdxGame extends Game implements TextInputListener {
                     tempMatt.add(bricks.get(i));
                 }
                 for (AbstractBrick brick : tempMatt) {
-                    if(brick instanceof Brick) {
+                    if (brick instanceof Brick) {
                         bricks.remove(brick);
                         matEliminati++;
                         myScore++;
@@ -283,30 +289,31 @@ public class MyGdxGame extends Game implements TextInputListener {
                     matEliminati++;
                     myScore++;
 
+
                 }
             }
         }
 
+        ///////////////////////////////VARIABILI CHE ANDRANNO NEL DATABASE/////////////////////////////////////////////
 
-
-        System.out.println(text + " " + myScore);
-
-        ///////////////////////////////VARIABILI CHE ANDRANNO NEL DATABASE//////////////////////////////////////////////////////////////////
-       score = new  Score(text, myScore);
-
-
-
+        score = new Score(text, myScore);
+        db.insert(randomID(), text, myScore);
 
     }
 
-    @Override
-    public void input(String text) {
-        this.text = text;
+    //provvisoriamente l'id è un numero pseudo-casuale
+    private String randomID() {
+        Random gen = new Random();
+        String str;
 
+        return str = "" + gen.nextInt(10000);
     }
 
-    @Override
-    public void canceled() {
+    public void setMultiplayer(boolean value) {
+        this.isMultiplayer = value;
+    }
 
+    public void setLivelloCorrente(int livelloCorrente) {
+        this.livelloCorrente = livelloCorrente;
     }
 }

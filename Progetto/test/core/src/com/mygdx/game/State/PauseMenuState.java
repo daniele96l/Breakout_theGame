@@ -10,15 +10,13 @@ import java.awt.event.TextEvent;
 
 public class PauseMenuState {
 
-    private SpriteBatch batch;
     private GameState gameState;
     private Texture menu;
     private Texture resumeButton;
     private Texture exitButton;
     private Texture menuButton;
 
-    public PauseMenuState(SpriteBatch batch, GameState gameState) {
-        this.batch = batch;
+    public PauseMenuState(GameState gameState) {
         this.gameState = gameState;
         menu = new Texture("menuscreen.jpg");
         menuButton = new Texture("menu.png");
@@ -27,7 +25,8 @@ public class PauseMenuState {
     }
 
 
-    public GameState draw(){
+    public GameState draw(SpriteBatch batch){
+
 
         batch.draw(menu, 0, 0);
         batch.draw(resumeButton, Info.larghezza / 2 - resumeButton.getWidth() / 2, 550);//alpostodimetterlicosipossousaredellecostanti
@@ -36,15 +35,15 @@ public class PauseMenuState {
 
 
         if (Gdx.input.getX() > Info.larghezza / 2 - exitButton.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + exitButton.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 150 && (Info.altezza - Gdx.input.getY() < 150 + exitButton.getHeight()))) {
-            if (Gdx.input.isTouched())
+            if (Gdx.input.justTouched())
                 Gdx.app.exit();
         }
         if (Gdx.input.getX() > Info.larghezza / 2 - resumeButton.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + resumeButton.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 550 && (Info.altezza - Gdx.input.getY() < 550 + resumeButton.getHeight()))) {
-            if (Gdx.input.isTouched())
+            if (Gdx.input.justTouched())
                 return GameState.ACTION;
         }
         if (Gdx.input.getX() > Info.larghezza / 2 - menuButton.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + menuButton.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 350 && (Info.altezza - Gdx.input.getY() < 350 + menuButton.getHeight()))) {
-            if (Gdx.input.isTouched()) {
+            if (Gdx.input.justTouched()) {
                 return GameState.MENU;
 
             }

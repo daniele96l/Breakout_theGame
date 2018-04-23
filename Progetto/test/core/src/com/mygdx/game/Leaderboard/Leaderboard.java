@@ -29,7 +29,6 @@ import java.util.*;
 
 public class Leaderboard implements Comparable<Score> {
 
-    private SpriteBatch batch;
     private Texture menu, backButton;
     BitmapFont bitmapFont;
     private ArrayList<Score> scores;
@@ -38,20 +37,16 @@ public class Leaderboard implements Comparable<Score> {
     private Texture scoreScreen;
 
 
-    public Leaderboard (SpriteBatch batch, GameState gameState){
-        this.batch = batch;
+    public Leaderboard (GameState gameState){
         this.gameState = gameState;
         bitmapFont = new BitmapFont();
         bitmapFont.setColor(Color.WHITE);
         bitmapFont.getData().setScale(1.2f);
         scores = new ArrayList<Score>();
         scoreScreen = new Texture("scoreFinal.png");
-
-        draw();
-
     }
 
-    public GameState draw(){
+    public GameState draw(SpriteBatch batch){
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         backButton = new Texture("menu.png");
@@ -61,9 +56,10 @@ public class Leaderboard implements Comparable<Score> {
 
         getFromDB();
         //theBest10();
-        bestScores();
+        bestScores(batch);
+
         if (Gdx.input.getX() > Info.larghezza / 2 - backButton.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + backButton.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 50 && (Info.altezza - Gdx.input.getY() < 50 + backButton.getHeight()))) {
-            if (Gdx.input.isTouched())
+            if (Gdx.input.justTouched())
                 return GameState.MENU;
         }
 
@@ -72,7 +68,7 @@ public class Leaderboard implements Comparable<Score> {
     }
 
 
-    public void bestScores(){
+    public void bestScores(SpriteBatch batch){
 ///////////////////////////////////best 10
         for(int i = 0; i< 10; i++){
             bitmapFont.draw(batch, scores.get(i).name + " "  + scores.get(i).point, 350, 700 - 50*i);

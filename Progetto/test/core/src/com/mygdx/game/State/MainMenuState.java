@@ -7,10 +7,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.MyGdxGame;
 import help.GameState;
 import help.Info;
 
-public class MainMenuState  implements Input.TextInputListener{
+import javax.swing.*;
+
+public class MainMenuState {
 
     private Texture menu;
     private Texture playButton;
@@ -19,23 +22,23 @@ public class MainMenuState  implements Input.TextInputListener{
     private Texture score;
     static private boolean ok;
 
-    private SpriteBatch batch;
     private String text;
     private GameState gamestate;
+    private String playerName;
+    private MyGdxGame game;
 
-    public MainMenuState(SpriteBatch batch, GameState gameState)  {
-        this.batch = batch;
+    public MainMenuState( GameState gameState,MyGdxGame game)  {
         this.gamestate = gameState;
         menu = new Texture("menuscreen.jpg");
         playButton = new Texture("play.png");
         exitButton = new Texture("exit.png");
         multiplayerButton = new Texture("multiplayer.png");
         score = new Texture("score.png");
+        this.game = game;
     }
 
 
-    public GameState draw(){
-
+    public GameState draw(SpriteBatch batch){
 
 
         Gdx.gl.glClearColor(1, 0, 0, 1);
@@ -46,37 +49,34 @@ public class MainMenuState  implements Input.TextInputListener{
         batch.draw(multiplayerButton, Info.larghezza / 2 - multiplayerButton.getWidth() / 2, 460);//immaginibruttissime
         batch.draw(score,Info.larghezza / 2 - multiplayerButton.getWidth() / 2, 300 );
 
-
         if (Gdx.input.getX() > Info.larghezza / 2 - score.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + score.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 300 && (Info.altezza - Gdx.input.getY() < 300 + score.getHeight()))) {
-            if (Gdx.input.isTouched())
+            if (Gdx.input.justTouched())
                 return GameState.SCORE;
         }
 
         if (Gdx.input.getX() > Info.larghezza / 2 - playButton.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + exitButton.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 140 && (Info.altezza - Gdx.input.getY() < 140 + exitButton.getHeight()))) {
-            if (Gdx.input.isTouched())
+            if (Gdx.input.justTouched())
                 Gdx.app.exit();
         }
         if (Gdx.input.getX() > Info.larghezza / 2 - playButton.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + playButton.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 620 && (Info.altezza - Gdx.input.getY() < 620 + exitButton.getHeight()))) {
-            if (Gdx.input.isTouched()) {
+            if (Gdx.input.justTouched()) {
+                playerName= JOptionPane.showInputDialog(null, "Nickname", "Enter a nickname", 1);
+                game.setLivelloCorrente(1);
+                game.reset();
+                game.setMultiplayer(false);
                 return GameState.ACTION;
             }
         }
         if (Gdx.input.getX() > Info.larghezza / 2 - multiplayerButton.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + multiplayerButton.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 460 && (Info.altezza - Gdx.input.getY() < 460 + multiplayerButton.getHeight()))) {
             if (Gdx.input.justTouched()) {
+                game.reset();
                 return GameState.MULTIPLAYER;
             }
         }
         return GameState.MENU;
     }
 
-    @Override
-    public void input(String text) {
-        this.text = text;
-    }
-
-    @Override
-    public void canceled() {
-        text = "cancelled";
-
+    public String getPlayerName() {
+        return playerName;
     }
 }
