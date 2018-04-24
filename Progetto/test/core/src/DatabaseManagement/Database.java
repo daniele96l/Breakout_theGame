@@ -24,7 +24,7 @@ public class Database {
             Statement stmt = conn.createStatement();
             //I use this query and not "SELECT COUNT..." because the last method returns always a result set, while
             //now if there aren't tuple rs.next() is false!
-            String query = "SELECT * FROM PLAYERS";
+            String query = "SELECT * FROM GAMES";
             ResultSet rs = stmt.executeQuery(query);
             if (rs.next()) {
                 empity = false;
@@ -51,7 +51,7 @@ public class Database {
                 System.out.println("Database empity!");
                 return s;
             }
-            String query = "SELECT * FROM GAMES ORDER BY NAME";
+            String query = "SELECT * FROM GAMES ORDER BY NICKNAME";
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 //rs.getString() take as parameter the name or the numeric index of the column
@@ -98,15 +98,12 @@ public class Database {
             String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
-            String a = fr.readLine();
-            String query = "DELETE FROM PLAYERS WHERE NAME = '" + name + "'";
+            String query = "DELETE FROM GAMES WHERE NICKNAME = '" + name + "'";
             stmt.executeUpdate(query);
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
         } catch (ClassNotFoundException cnfe) {
             System.err.println(cnfe.getMessage());
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
         }
     }
 
@@ -118,7 +115,7 @@ public class Database {
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
             //System.out.println("Connection established!");
-            String query = "DELETE FROM PLAYERS";
+            String query = "DELETE FROM GAMES";
             stmt.executeUpdate(query);
             System.out.println("Database empity!");
         } catch (SQLException sqle) {
