@@ -63,8 +63,8 @@ public class ChatClient implements Runnable{
         os.println(dato.getPaddle().getPosition().y);
         for(AbstractBrick abs:dato.getMattoncini())
         {
-        os.println(abs.getPositionBrick().x);
-        os.println(abs.getPositionBrick().y);
+                os.println(abs.getPositionBrick().x);
+                os.println(abs.getPositionBrick().y);
 
         }
         /*

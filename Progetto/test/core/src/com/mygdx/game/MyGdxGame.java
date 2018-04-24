@@ -103,7 +103,9 @@ public class MyGdxGame extends Game {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
+        if (nextLevel) {
+            //deve stare dentro render perchè deve essere controllato sempre
+            //deve stare dentro render perchè deve essere controllato sempre
             bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//ritorno l'array adatto al nuovo livello
             bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
         }
@@ -157,7 +159,8 @@ public class MyGdxGame extends Game {
                 batch.draw(AbstractBrick, AbstractBrick.getPositionBrick().x, AbstractBrick.getPositionBrick().y, AbstractBrick.getWidth() * Info.brickresize, AbstractBrick.getHeight() * Info.brickresize);
 //disegnoimattoncini
             }
-
+            dato = new Dato(palla,paddle1,bricks);
+            paddle1.setPositionM(chatClient.start_main(dato));
 
             batch.draw(paddle1, paddle1.getPosition().x, paddle1.getPosition().y, paddle1.getWidth() * Info.paddleresize, paddle1.getHeight() * Info.paddleresize);
             batch.draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.ballresize, palla.getHeight() * Info.ballresize);

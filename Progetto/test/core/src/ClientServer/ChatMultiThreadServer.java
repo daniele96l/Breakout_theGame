@@ -1,34 +1,33 @@
 
 package ClientServer;
 
-        import java.io.DataInputStream;
-        import java.io.ObjectInputStream;
-        import java.io.PrintStream;
-        import java.io.IOException;
-        import java.net.Socket;
-        import java.net.ServerSocket;
+import java.io.DataInputStream;
+import java.io.ObjectInputStream;
+import java.io.PrintStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.ServerSocket;
 
-        /*
-         *Achatserverthatdeliverspublicandprivatemessages.
-         */
+/*A chat server that delivers public and private messages.*/
         /*SERVERRRRRRRRRR*/
-        public class ChatMultiThreadServer{
+        public class ChatMultiThreadServer
+{
 
-//Theserversocket.
+        //Theserversocket.
         private static ServerSocket serverSocket=null;
-//Theclientsocket.
+        //Theclientsocket.
         private static Socket clientSocket=null;
 
-//ThischatservercanacceptuptomaxClientsCountclients'connections.
+        //This  chat    servercanacceptuptomaxClientsCountclients'connections.
         private static final int maxClientsCount=10;
 //ARRAYDICLIENT
         private static final clientThread[]threads=new clientThread[maxClientsCount];
+        public static void main(String[]args)
+        {
 
-        public static void main(String[]args){
 
 
-
-//Thedefaultportnumber.
+        //Thedefaultportnumber.
         int portNumber=2222;
 
         /*
@@ -36,14 +35,14 @@ package ClientServer;
          *notchooseaportlessthan1023ifwearenotprivilegedusers(root).
          */
         try{
-//Istanziaserversuporta
+//Istanzia server suporta
         serverSocket=new ServerSocket(portNumber);
         }catch(IOException e){
         System.out.println(e.getMessage());
         }
 
         /*
-         *Createaclientsocketforeachconnectionandpassittoanewclient
+         *Create a client socket for each connection and pass it to a new  client
          *thread.
          */
         while(true){
@@ -122,7 +121,7 @@ synchronized(this){
         for(int i=0;i<maxClientsCount;i++){
         if(threads[i]!=null&&threads[i]==this){
 
-//seilthreadnonèvuotoedèugualeaquestothreadgliassegnailnomedatoalclient
+//se il thread non è vuoto ed è uguale a questo thread gli assegna il nome dato alclient
         clientName="@"+count;
         count++;
         break;
@@ -140,8 +139,8 @@ synchronized(this){
         String line=is.readLine();
         System.out.println(line);
         os.println(line);
-//if(line.startsWith("/quit")){
-//seilmessaggioiniziaconquitchiudelalettura
+        //if(line.startsWith("/quit")){
+        //seilmessaggioiniziaconquitchiudelalettura
 //break;
 //}
         /*Ifthemessageisprivatesentittothegivenclient.*/
