@@ -2,8 +2,8 @@ package com.mygdx.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.mygdx.game.MyGdxGame;
 
+import com.mygdx.game.BreakGame;
 import help.Info;
 
 
@@ -14,6 +14,6 @@ public class DesktopLauncher {
 		//Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 		config.width = Info.larghezza;
 		config.height = Info.altezza;
-		new LwjglApplication(new MyGdxGame(), config);
+		new LwjglApplication(new BreakGame(), config);
 	}
 }
