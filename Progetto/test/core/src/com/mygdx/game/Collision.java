@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.audio.Music;
 import help.Info;
 import sprites.Ball;
 import sprites.Brick.AbstractBrick;
@@ -11,12 +12,15 @@ import sprites.Brick.AbstractBrick;
 import sprites.Paddle;
 
 public class Collision
+
+
 {
     private AbstractBrick mat;
     private boolean eliminato;
     private Ball palla;
     private double MAXBOUNCEANGLE=Math.PI/3;
     private Rectangle rectangle;
+
     public Collision(AbstractBrick mat,Ball palla)
     {
 

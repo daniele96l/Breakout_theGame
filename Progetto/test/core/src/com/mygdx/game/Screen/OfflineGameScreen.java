@@ -57,7 +57,7 @@ public class OfflineGameScreen implements Screen {
     private static String playerName;
     private WinLoseState winLoseState;
     Music music;
-    Music music2;
+    Music music2, music3;
     private boolean pause;
     private int numeroPlayer;
     private Hud hud;
@@ -79,6 +79,8 @@ public class OfflineGameScreen implements Screen {
     public void show() {
         music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         music2 = Gdx.audio.newMusic(Gdx.files.internal("Untitled.mp3"));
+        music3 = Gdx.audio.newMusic(Gdx.files.internal("audio.mp3"));
+        music3.setLooping(false);
         music.setVolume(1);
         leaderboard = new Leaderboard(gameState);
         isFinished = false;
@@ -285,6 +287,8 @@ public class OfflineGameScreen implements Screen {
                     if (brick instanceof Brick) {
                         bricks.remove(brick);
                         matEliminati++;
+                        music3.pause();
+                        music3.play();
                         players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore()+(int)Math.pow(2,brickCounter));
                         brickCounter++;
                     }
@@ -293,6 +297,8 @@ public class OfflineGameScreen implements Screen {
                 if (bricks.get(indici.get(0)) instanceof Brick) {//seimattoncinisonomattoncini"morbidi"lipossoeliminare
                     bricks.remove((int) indici.get(0));
                     matEliminati++;
+                    music3.pause();
+                    music3.play();
                     players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore()+(int)Math.pow(2,brickCounter));
                     brickCounter++;
                 }

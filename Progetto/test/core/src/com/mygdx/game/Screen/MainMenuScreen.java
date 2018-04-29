@@ -106,9 +106,6 @@ public class MainMenuScreen implements Screen {
 
 
 
-
-
-
         Vector2 size = Scaling.fit.apply(800, 850, width, height);
         int viewportX = (int)(width - size.x) / 2;
         int viewportY = (int)(height - size.y) / 2;
