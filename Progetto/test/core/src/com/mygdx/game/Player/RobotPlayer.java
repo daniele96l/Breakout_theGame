@@ -21,7 +21,7 @@ public class RobotPlayer extends Player{
             return Input.Keys.LEFT;
         }
         if((palla.getBoundsBall().x+palla.getBoundsBall().getWidth()/2>paddle.getBounds().x+0.75*paddle.getBounds().getWidth())
-                && palla.getBoundsBall().y<Info.altezza*1/3) {
+                && palla.getBoundsBall().y<Info.altezza/6) {
             return Input.Keys.RIGHT;
         }
         return Input.Keys.ANY_KEY;

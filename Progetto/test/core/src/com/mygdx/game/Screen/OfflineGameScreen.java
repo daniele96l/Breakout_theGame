@@ -2,9 +2,11 @@ package com.mygdx.game.Screen;
 
 import ClientServer.Dato;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
@@ -15,8 +17,10 @@ import com.mygdx.game.Leaderboard.Leaderboard;
 import com.mygdx.game.Leaderboard.Score;
 import com.mygdx.game.Levels.GestoreLivelli;
 import com.mygdx.game.Player.HumanPlayer;
+import com.mygdx.game.Player.Player;
 import com.mygdx.game.Player.RobotPlayer;
 import com.mygdx.game.State.WinLoseState;
+import com.mygdx.game.hud.Hud;
 import help.GameState;
 import help.Info;
 import sprites.Ball;
@@ -29,15 +33,14 @@ import java.util.ArrayList;
 public class OfflineGameScreen implements Screen {
 
     private BreakGame game;
-    private Collision col;
+    private Collision collision;
     private ArrayList<AbstractBrick> bricks = new ArrayList();
     private Ball palla;
     private ArrayList<Paddle> paddles;
     private Texture bg;
     private GameState gameState;
     private ArrayList<CommandPlayer> commandPlayers;
-    private HumanPlayer player1;
-    private ArrayList<RobotPlayer> robotPlayers;
+    private ArrayList<Player> players;
     private Dato dato;
     private boolean nextLevel;
     private ArrayList<Integer> indici;
@@ -54,24 +57,24 @@ public class OfflineGameScreen implements Screen {
     Music music;
     Music music2;
     private boolean pause;
-    BitmapFont bitmapFont;
-    int LostLives = 0;
     private int numeroPlayer;
+    private Hud hud;
+    private Player gameHolder;  //Giocatore che ha toccato la pallina per ultimo
+    private int brickCounter;
+    private int tmpDT;
 
 
     public OfflineGameScreen(BreakGame game, int numeroPlayer) {
         this.numeroPlayer = numeroPlayer;
         this.game = game;
-        player1 = new HumanPlayer(playerName);
+        players =new ArrayList<Player>();
         paddles = new ArrayList<Paddle>();
         commandPlayers = new ArrayList<CommandPlayer>();
+        players.add(new HumanPlayer(playerName));
     }
 
     @Override
     public void show() {
-        bitmapFont = new BitmapFont();
-        bitmapFont.setColor(Color.WHITE);
-        bitmapFont.getData().setScale(1.2f);
         music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         music2 = Gdx.audio.newMusic(Gdx.files.internal("Untitled.mp3"));
         music.setVolume(1);
@@ -80,26 +83,27 @@ public class OfflineGameScreen implements Screen {
         livelloCorrente = 1;
         winLoseState = new WinLoseState(game.getBatch(), gameState);
         nextLevel = false;
-        paddles.add(new Paddle(0.5f, numeroPlayer, 1));
-        commandPlayers.add(new CommandPlayer(paddles.get(0), player1, numeroPlayer, 1));
+        palla=new Ball();
+        tmpDT=Info.dt;
+        paddles.add(new Paddle(numeroPlayer, 1));
         if (numeroPlayer > 1) {
-            robotPlayers = new ArrayList<RobotPlayer>();
             for (int i = 1; i < numeroPlayer; i++) {
-                paddles.add(new Paddle(0.5f, numeroPlayer, i + 1));
-                robotPlayers.add(new RobotPlayer("robot ", palla, paddles.get(i)));
-                commandPlayers.add(new CommandPlayer(paddles.get(i), robotPlayers.get(i - 1), numeroPlayer, i + 1));
+                paddles.add(new Paddle( numeroPlayer, i + 1));
+                players.add(new RobotPlayer("Robot "+i, palla, paddles.get(i)));
             }
         }
-        reset();
+        updateScene();
+        updateLevel();
+        hud=new Hud(players, game.getBatch());
+        gameHolder= players.get(0);
+        brickCounter=0;
         bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
     }
 
 
     @Override
     public void render(float delta) {
-
         game.getBatch().begin();
-
 
         if (nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
             bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//ritorno l'array adatto al nuovo livello
@@ -110,6 +114,13 @@ public class OfflineGameScreen implements Screen {
         palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y * Info.dt);
         palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
         game.getBatch().draw(bg, 0, 0);
+
+        game.getBatch().end();
+
+        hud=new Hud(players, game.getBatch());
+        hud.stage.draw();
+
+        game.getBatch().begin();
 
         for (AbstractBrick AbstractBrick : bricks) {
             game.getBatch().draw(AbstractBrick, AbstractBrick.getPositionBrick().x, AbstractBrick.getPositionBrick().y, AbstractBrick.getWidth() * Info.brickresize, AbstractBrick.getHeight() * Info.brickresize);
@@ -127,18 +138,15 @@ public class OfflineGameScreen implements Screen {
             }
         }
 
-
-        bitmapFont.draw(game.getBatch(), "Youlost:" + String.valueOf(LostLives) + "times", 20, 830);
-
         commandPlayers.get(0).move();//mipermettedimuovereilgiocatore
         if (commandPlayers.get(0).checkpause()) {
             music.stop();
             game.setScreen(new PauseScreen(game));
         }
 
-         if (commandPlayers.get(0).checkpausesingle()) {
-               Info.dt = 0;
-               delta = 0;
+        if (commandPlayers.get(0).checkpausesingle()) {
+            Info.dt = 0;
+            delta = 0;
         }
 
 
@@ -155,12 +163,8 @@ public class OfflineGameScreen implements Screen {
         }
 
         if (palla.getPositionBall().y <= 0) {
-            gameState = GameState.GAME_OVER;
-            myScore -= matEliminati;
-            LostLives++;
-            music.stop();
-            music2.play();
-            palla.setPositionBall();
+            lostLife(palla.getPositionBall().x);
+            updateScene();
         }
 
 
@@ -169,23 +173,35 @@ public class OfflineGameScreen implements Screen {
 
                 livelloCorrente = 1;
                 isFinished = false;
-                reset();
+                updateScene();
+                updateLevel(); /////////////SERVE UNO SCREEN DI FINE GIOCO
                 game.setScreen(new FinishScreen(game));
             } else {
                 nextLevel = true;
                 winLoseState = new WinLoseState(game.getBatch(), gameState);
                 gameState = winLoseState.draw();
-                reset();
+                updateScene();
+                updateLevel();
             }
             music.stop();
         }
         if (gameState == GameState.GAME_OVER) {
+            music.stop();
+            music2.play();
             winLoseState = new WinLoseState(game.getBatch(), gameState);
             gameState = winLoseState.draw();
-            music.stop();
-            reset();
+            if(gameState==GameState.MENU) {
+                game.setScreen(new MainMenuScreen(game));
+            }
         }
 
+        if(gameState== GameState.WAIT) {
+            Info.dt=0;
+            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                Info.dt=tmpDT;
+                gameState=GameState.ACTION;
+            }
+        }
 
         game.getBatch().end();
 
@@ -217,41 +233,30 @@ public class OfflineGameScreen implements Screen {
 
     }
 
-    public void reset() {
-        palla = new Ball();
-        paddles.set(0, new Paddle(0.5f, numeroPlayer, 1));
-        player1 = new HumanPlayer(playerName); // non so cosa ci va
-        commandPlayers.set(0, new CommandPlayer(paddles.get(0), player1, numeroPlayer, 1));//istanziounCommandplayer(possoavernediversiperogniplayer
-        if (numeroPlayer > 1) {
-            for (int i = 1; i < numeroPlayer; i++) {
-                paddles.set(i, new Paddle(0.5f, numeroPlayer, i + 1));
-                robotPlayers.set(i - 1, new RobotPlayer("robot ", palla, paddles.get(i)));
-                commandPlayers.set(i, new CommandPlayer(paddles.get(i), robotPlayers.get(i - 1), numeroPlayer, i + 1));
-            }
-        }
-        gestoreLivelli = new GestoreLivelli("fileLivelli.txt");
-        bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//laclasselivellosioccuperàdiritornarel'arraylistdeimattonciniadattiaquestolivello
-        matEliminati = 0;
-    }
-
     public void gestisciCollisioni() {
         float oldSpeedBallX = palla.getSpeedBall().x;
         float oldSpeedBallY = palla.getSpeedBall().y;
 
         indici = new ArrayList<Integer>();
         for (AbstractBrick Abstractbrick : bricks) {
-            col = new Collision(Abstractbrick, palla);
-            if (col.check()) {
+            collision = new Collision(Abstractbrick, palla);
+            if (collision.check()) {
                 indici.add(bricks.indexOf(Abstractbrick));
             }
         }
 
-        col.checkBorderCollision();
+        collision.checkBorderCollision();
 
-        col.checkside(paddles.get(0));
+        if(collision.checkSide(paddles.get(0))) {
+            gameHolder = players.get(0);
+            brickCounter = 0;
+        }
         if (numeroPlayer > 1) {
             for (int i = 1; i < numeroPlayer; i++) {
-                col.checkside(paddles.get(i));
+                if(collision.checkSide(paddles.get(i))) {
+                    gameHolder = players.get(i);
+                    brickCounter = 0;
+                }
             }
         }
 
@@ -260,23 +265,23 @@ public class OfflineGameScreen implements Screen {
                 ArrayList<AbstractBrick> tempMatt = new ArrayList<sprites.Brick.AbstractBrick>();
                 palla.setSpeedBall(new Vector2(oldSpeedBallX, -oldSpeedBallY));
                 for (int i : indici) {
+                    System.out.println(i);
                     tempMatt.add(bricks.get(i));
                 }
                 for (AbstractBrick brick : tempMatt) {
                     if (brick instanceof Brick) {
                         bricks.remove(brick);
                         matEliminati++;
-                        myScore++;
-
+                        players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore()+(int)Math.pow(2,brickCounter));
+                        brickCounter++;
                     }
                 }
             } else {
                 if (bricks.get(indici.get(0)) instanceof Brick) {//seimattoncinisonomattoncini"morbidi"lipossoeliminare
                     bricks.remove((int) indici.get(0));
                     matEliminati++;
-                    myScore++;
-
-
+                    players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore()+(int)Math.pow(2,brickCounter));
+                    brickCounter++;
                 }
             }
         }
@@ -284,5 +289,47 @@ public class OfflineGameScreen implements Screen {
 
     public static void setPlayerName(String playerName) {
         OfflineGameScreen.playerName = playerName;
+    }
+
+    private void lostLife(float positionX) {
+        int range=Info.larghezza/numeroPlayer;
+        Player loser=new RobotPlayer("default", palla, paddles.get(0));
+        for(int i=0; i<numeroPlayer; i++) {
+            if(positionX>=i*range && positionX<(i+1)*range) {
+                loser=players.get(i);
+            }
+        }
+
+        loser.setLives(loser.getLives()-1);
+        gameState=GameState.WAIT;
+        if(loser.getLives()<0) {
+            if(players.get(0).equals(loser)) {
+                gameState=GameState.GAME_OVER;
+            }
+            else {
+                int index=players.indexOf(loser);
+                players.remove(loser);
+                paddles.remove(index);
+                numeroPlayer--;
+            }
+        }
+    }
+
+    private void updateScene() {
+        palla.setDefaultState();
+        for(Paddle paddle:paddles) {
+            paddle.setDefaultState(numeroPlayer);
+        }
+        commandPlayers=new ArrayList<CommandPlayer>();
+        for(int i=0; i<players.size(); i++) {
+            commandPlayers.add(new CommandPlayer(paddles.get(i), players.get(i), numeroPlayer, i+1));
+        }
+    }
+
+    private void updateLevel() {
+        gestoreLivelli = new GestoreLivelli("fileLivelli.txt");
+        bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//laclasselivellosioccuperàdiritornarel'arraylistdeimattonciniadattiaquestolivello
+        bg=gestoreLivelli.getLivello(livelloCorrente-1).getBackground();
+        matEliminati = 0;
     }
 }

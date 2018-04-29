@@ -7,18 +7,15 @@
 %Occorre coprire tutto lo spazio disponibile, altrimenti verrà generata un'eccezione con le misure corrette
 
 background bg.jpg
-.......
 .-----.
 fine
 
 background bgLv2.jpg
-.......
 .-----.
 .-#-#-.
 fine
 
 background bgLv3.jpg
-.......
 .-----.
 .-###-.
 .-----.

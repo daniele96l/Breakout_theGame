@@ -87,19 +87,19 @@ public class ScoreScreen implements Screen {
 
     }
 
-    public void bestScores(SpriteBatch batch){
+    public void bestScores(SpriteBatch batch) {
 ///////////////////////////////////best 10
-        for(int i = 0; i< 10; i++){
-            bitmapFont.draw(batch, scores.get(i).getName() + " "  + scores.get(i).getPoint(), 350, 700 - 50*i);
+        for (int i = 0; i < 10; i++) {
+            bitmapFont.draw(batch, scores.get(i).getName() + " " + scores.get(i).getPoint(), 350, 700 - 50 * i);
 
         }
 
     }
 
-    public void getFromDB(){
+    public void getFromDB() {
         //improvviso
 
-        for(int i = 0; i< 10; i++){
+        for (int i = 0; i < 10; i++) {
             score = new Score("Player" + "point", i);
             scores.add(score);
 
@@ -107,29 +107,17 @@ public class ScoreScreen implements Screen {
         }
 
 
-
-
-
-
-
-
         Collections.sort(scores, new Comparator<Score>() {
             @Override
             public int compare(Score o1, Score o2) {
-                if(o1.getPoint() < o2.getPoint())
+                if (o1.getPoint() < o2.getPoint())
                     return 1;
-                if(o1.getPoint() > o2.getPoint())
+                if (o1.getPoint() > o2.getPoint())
                     return -1;
                 return 0;
             }
         });
 
 
-
-
     }
-
-
-
-
 }

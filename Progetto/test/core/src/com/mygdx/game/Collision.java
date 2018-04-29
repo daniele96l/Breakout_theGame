@@ -95,7 +95,7 @@ public class Collision
 
 
     //questometodoservepercontrollarequandolapallacollideconibordioconlaPaddle
-    public void checkside(Paddle paddle){
+    public boolean checkSide(Paddle paddle){
 
         if(collides(palla.getBoundsBall(),paddle)){//controllochecollidaconlaPaddle
             float relativeIntersectX=-((paddle.getPosition().x+(paddle.getWidth()*Info.paddleresize/2))-(palla.getPositionBall().x+palla.getWidth()*Info.paddleresize/2));
@@ -104,7 +104,9 @@ public class Collision
             float speedx=(float)Math.sqrt(2*Info.velBall*Info.velBall)*(float)(Math.sin(bounceAngle));
             float speedy=(float)Math.sqrt(2*Info.velBall*Info.velBall)*(float)(Math.cos(bounceAngle));
             palla.getSpeedBall().set(speedx,speedy);
+            return true;
         }
+        return false;
     }
 
     private boolean collides(Rectangle boundsBall,Paddle paddle){

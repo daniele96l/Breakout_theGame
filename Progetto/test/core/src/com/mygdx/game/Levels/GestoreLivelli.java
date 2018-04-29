@@ -32,7 +32,7 @@ public class GestoreLivelli {
             numBrickY++;
             remainder=Info.altezza/2-(Info.getBrickHeight()+Info.brickGapY)*numBrickY;
         }
-        startPosY=Info.altezza-remainder/2-Info.getBrickHeight();
+        startPosY=Info.altezza-remainder/2-Info.getBrickHeight()-Info.hudHeight;
 
         //Nel costruttore calcolo il numero massimo di mattoncini su entrambi gli assi;
 

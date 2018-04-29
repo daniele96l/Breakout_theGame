@@ -20,7 +20,6 @@ public class CommandPlayer {
     }
 
 
-    // richiamo questo metodo nel MainGDfx cosi posso far muovere il personaggio
     public void move()
     {
         if(player.keyPressed()==Input.Keys.LEFT){

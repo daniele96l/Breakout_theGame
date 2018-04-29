@@ -12,6 +12,8 @@ public class Info {
     public static float ballresize = 0.8f;
     public static int brickGapX=10;
     public static int brickGapY=7;
+    public static int defaultLivesNum=3;
+    public static int hudHeight=80;
 
     public static int getBrickWidth () {
         Texture brick=new Texture("normalBrick.jpg");

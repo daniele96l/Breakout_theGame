@@ -33,7 +33,7 @@ public class WinLoseState {
         if(gameState.equals(GameState.GAME_OVER)){
             batch.draw(gameOver, 0, 0);
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-                return GameState.ACTION;
+                return GameState.MENU;
             }
             return GameState.GAME_OVER;
         }
