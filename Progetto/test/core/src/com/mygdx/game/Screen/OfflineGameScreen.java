@@ -5,16 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.game.BreakGame;
 import com.mygdx.game.Collision;
 import com.mygdx.game.CommandPlayer;
-import com.mygdx.game.Leaderboard.Leaderboard;
 import com.mygdx.game.Leaderboard.Score;
 import com.mygdx.game.Levels.GestoreLivelli;
 import com.mygdx.game.Player.HumanPlayer;
@@ -49,7 +45,6 @@ public class OfflineGameScreen implements Screen {
     private GestoreLivelli gestoreLivelli;
     private int livelloCorrente;
     private boolean isFinished;
-    private Leaderboard leaderboard;
     static private int myScore;
     static private boolean nick;
     private Score score;
@@ -82,7 +77,7 @@ public class OfflineGameScreen implements Screen {
         music3 = Gdx.audio.newMusic(Gdx.files.internal("audio.mp3"));
         music3.setLooping(false);
         music.setVolume(1);
-        leaderboard = new Leaderboard(gameState);
+
         isFinished = false;
         livelloCorrente = 1;
         winLoseState = new WinLoseState(game.getBatch(), gameState);
@@ -217,7 +212,6 @@ public class OfflineGameScreen implements Screen {
 
         this.newHeight = height;
         this.newWight = width;
-
 
         Vector2 size = Scaling.fit.apply(800, 850, width, height);
         int viewportX = (int)(width - size.x) / 2;

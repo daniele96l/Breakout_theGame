@@ -27,6 +27,7 @@ public class ScoreScreen implements Screen {
     private GameState gameState;
     private Texture scoreScreen;
     private float newHeight, newWight, coeffDimensionale = 1;
+    private static boolean drawn;
 
     private BreakGame game;
 
@@ -41,6 +42,7 @@ public class ScoreScreen implements Screen {
         bitmapFont.getData().setScale(1.2f);
         scores = new ArrayList<Score>();
         scoreScreen = new Texture("scoreFinal.png");
+        getFromDB();
 
     }
 
@@ -53,9 +55,6 @@ public class ScoreScreen implements Screen {
 
         game.getBatch().draw(scoreScreen, 0, 0);
         game.getBatch().draw(backButton, 270, 50);
-
-        getFromDB();
-        //theBest10();
         bestScores(game.getBatch());
 
         if (Gdx.input.getX() > Info.larghezza*coeffDimensionale / 2 - backButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza*coeffDimensionale / 2 + backButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 50*coeffDimensionale && (Info.altezza*coeffDimensionale - Gdx.input.getY() < 50*coeffDimensionale + backButton.getHeight()*coeffDimensionale))) {
@@ -105,9 +104,9 @@ public class ScoreScreen implements Screen {
 
     public void bestScores(SpriteBatch batch) {
 ///////////////////////////////////best 10
+
         for (int i = 0; i < 10; i++) {
             bitmapFont.draw(batch, scores.get(i).getName() + " " + scores.get(i).getPoint(), 350, 700 - 50 * i);
-
         }
 
     }
