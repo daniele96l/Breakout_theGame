@@ -32,9 +32,9 @@ public class Hud {
 
         for(int i=0; i<players.size(); i++) {
             Player player=players.get(i);
-            Label label=new Label(String.format("PLAYER: %s \n SCORE: %d \n LIVES: %d", player.getPlayerName(), player.getScore(), player.getLives()),
+            Label label=new Label(String.format("PLAYER: %s\nSCORE: %d \nLIVES: %d", player.getPlayerName(), player.getScore(), player.getLives()),
                     new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-            label.setFontScale(1.5f);
+            label.setFontScale(1f);
             table.add(label).expandX();
         }
     }
