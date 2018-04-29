@@ -44,6 +44,7 @@ public class ScoreScreen implements Screen {
         scoreScreen = new Texture("scoreFinal.png");
         getFromDB();
 
+
     }
 
     @Override
