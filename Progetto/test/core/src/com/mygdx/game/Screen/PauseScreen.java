@@ -3,6 +3,8 @@ package com.mygdx.game.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.game.BreakGame;
 import help.GameState;
 import help.Info;
@@ -15,6 +17,7 @@ public class PauseScreen implements Screen {
     private Texture resumeButton;
     private Texture exitButton;
     private Texture menuButton;
+    private float newHeight, newWight, coeffDimensionale = 1;
 
 
     public PauseScreen(BreakGame game) {
@@ -40,12 +43,12 @@ public class PauseScreen implements Screen {
         game.getBatch().draw(menuButton, Info.larghezza / 2 - menuButton.getWidth() / 2, 500);
 
 
-        if (Gdx.input.getX() > Info.larghezza / 2 - exitButton.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + exitButton.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 250 && (Info.altezza - Gdx.input.getY() < 250 + exitButton.getHeight()))) {
+        if (Gdx.input.getX() > Info.larghezza*coeffDimensionale / 2 - exitButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza*coeffDimensionale / 2 + exitButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 250*coeffDimensionale && (Info.altezza *coeffDimensionale- Gdx.input.getY() < 250 *coeffDimensionale+ exitButton.getHeight()*coeffDimensionale))) {
             if (Gdx.input.justTouched())
                 Gdx.app.exit();
         }
 
-        if (Gdx.input.getX() > Info.larghezza / 2 - menuButton.getWidth() / 2 && (Gdx.input.getX() < Info.larghezza / 2 + menuButton.getWidth() / 2) && (Info.altezza - Gdx.input.getY() > 500 && (Info.altezza - Gdx.input.getY() < 500 + menuButton.getHeight()))) {
+        if (Gdx.input.getX()*coeffDimensionale > Info.larghezza *coeffDimensionale/ 2 - menuButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza*coeffDimensionale / 2 + menuButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 500*coeffDimensionale && (Info.altezza*coeffDimensionale - Gdx.input.getY() < 500 *coeffDimensionale+ menuButton.getHeight()*coeffDimensionale))) {
             if (Gdx.input.justTouched()) {
                 game.setScreen(new MainMenuScreen(game));
 
@@ -63,6 +66,19 @@ public class PauseScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+
+        this.newHeight = height;
+        this.newWight = width;
+
+        coeffDimensionale = newHeight/(float)Info.altezza;
+
+
+        Vector2 size = Scaling.fit.apply(800, 850, width, height);
+        int viewportX = (int)(width - size.x) / 2;
+        int viewportY = (int)(height - size.y) / 2;
+        int viewportWidth = (int)size.x;
+        int viewportHeight = (int)size.y;
+        Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
 
     }
 

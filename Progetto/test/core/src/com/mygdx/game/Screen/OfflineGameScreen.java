@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.game.BreakGame;
 import com.mygdx.game.Collision;
 import com.mygdx.game.CommandPlayer;
@@ -52,6 +53,7 @@ public class OfflineGameScreen implements Screen {
     static private int myScore;
     static private boolean nick;
     private Score score;
+    private int newHeight, newWight;
     private static String playerName;
     private WinLoseState winLoseState;
     Music music;
@@ -210,6 +212,17 @@ public class OfflineGameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+
+        this.newHeight = height;
+        this.newWight = width;
+
+
+        Vector2 size = Scaling.fit.apply(800, 850, width, height);
+        int viewportX = (int)(width - size.x) / 2;
+        int viewportY = (int)(height - size.y) / 2;
+        int viewportWidth = (int)size.x;
+        int viewportHeight = (int)size.y;
+        Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
 
     }
 
