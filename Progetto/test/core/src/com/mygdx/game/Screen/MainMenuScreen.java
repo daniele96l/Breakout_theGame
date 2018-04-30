@@ -81,7 +81,7 @@ public class MainMenuScreen implements Screen {
 
         if (Gdx.input.getX() > Info.larghezza*coeffDimensionale / 2 - multiplayeronlineButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza *coeffDimensionale/ 2 + multiplayeronlineButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 380*coeffDimensionale && (Info.altezza*coeffDimensionale - Gdx.input.getY() < 380*coeffDimensionale + multiplayeronlineButton.getHeight()*coeffDimensionale))) {
             if (Gdx.input.justTouched()) {
-                //game.setScreen();      Qua si mettera il MultiplayerGameScreen
+                game.setScreen(new MultiplayerGameScreen(game));
             }
         }
 
