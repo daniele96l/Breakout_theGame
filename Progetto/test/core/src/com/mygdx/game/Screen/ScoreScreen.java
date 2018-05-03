@@ -43,7 +43,7 @@ public class ScoreScreen implements Screen {
         bitmapFont.setColor(Color.WHITE);
         bitmapFont.getData().setScale(1.2f);
         scores = new ArrayList<Score>();
-        scoreScreen = new Texture("scoreFinal.png");
+        scoreScreen = new Texture("score2.jpg");
     }
 
     @Override
@@ -103,7 +103,7 @@ public class ScoreScreen implements Screen {
     }
 
     public void bestScores(SpriteBatch batch) {
-        bitmapFont.draw(batch, db.start(), 260, 700);
+        bitmapFont.draw(batch, db.start(), 260, 704);
 
     }
 }
