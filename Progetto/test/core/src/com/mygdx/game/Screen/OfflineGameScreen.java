@@ -85,7 +85,6 @@ public class OfflineGameScreen implements Screen {
             music3 = Gdx.audio.newMusic(Gdx.files.internal("audio.mp3"));
             music3.setLooping(false);
             music.setVolume(1);
-
             isFinished = false;
             livelloCorrente = 1;
             winLoseState = new WinLoseState(game.getBatch(), gameState);
