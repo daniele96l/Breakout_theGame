@@ -67,7 +67,9 @@ public class MainMenuScreen implements Screen {
         if (Gdx.input.getX() > Info.larghezza*coeffDimensionale / 2 - playButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza*coeffDimensionale / 2 + playButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 650*coeffDimensionale && (Info.altezza*coeffDimensionale - Gdx.input.getY() < 650*coeffDimensionale + exitButton.getHeight()*coeffDimensionale))) {
             if (Gdx.input.justTouched()) {
                 OfflineGameScreen.setPlayerName(JOptionPane.showInputDialog(null, "Enter a nickname", "Nickname ", 1));
-                game.setScreen(new OfflineGameScreen(game,1));
+                if(OfflineGameScreen.getPlayerName() != null && !OfflineGameScreen.getPlayerName().isEmpty()) {
+                    game.setScreen(new OfflineGameScreen(game, 1));
+                }
             }
         }
         if (Gdx.input.getX() > Info.larghezza*coeffDimensionale / 2 - multiplayerofflineButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza*coeffDimensionale / 2 + multiplayerofflineButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 520*coeffDimensionale && (Info.altezza*coeffDimensionale - Gdx.input.getY() < 520*coeffDimensionale + multiplayerofflineButton.getHeight()*coeffDimensionale))) {

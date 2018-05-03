@@ -311,6 +311,10 @@ public class OfflineGameScreen implements Screen {
         OfflineGameScreen.playerName = playerName;
     }
 
+    public static String getPlayerName() {
+        return playerName;
+    }
+
     private void lostLife(float positionX) {
         int range=Info.larghezza/numeroPlayer;
         Player loser=new RobotPlayer("default", palla, paddles.get(0));
