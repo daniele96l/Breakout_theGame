@@ -1,5 +1,6 @@
 package com.mygdx.game.Screen;
 
+import DatabaseManagement.Database;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -28,6 +29,7 @@ public class ScoreScreen implements Screen {
     private Texture scoreScreen;
     private float newHeight, newWight, coeffDimensionale = 1;
     private static boolean drawn;
+    private Database db = new Database();
 
     private BreakGame game;
 
@@ -42,9 +44,6 @@ public class ScoreScreen implements Screen {
         bitmapFont.getData().setScale(1.2f);
         scores = new ArrayList<Score>();
         scoreScreen = new Texture("scoreFinal.png");
-        getFromDB();
-
-
     }
 
     @Override
@@ -104,36 +103,7 @@ public class ScoreScreen implements Screen {
     }
 
     public void bestScores(SpriteBatch batch) {
-///////////////////////////////////best 10
-
-        for (int i = 0; i < 10; i++) {
-            bitmapFont.draw(batch, scores.get(i).getName() + " " + scores.get(i).getPoint(), 350, 700 - 50 * i);
-        }
-
-    }
-
-    public void getFromDB() {
-        //improvviso
-
-        for (int i = 0; i < 10; i++) {
-            score = new Score("Player" + "point", i);
-            scores.add(score);
-
-
-        }
-
-
-        Collections.sort(scores, new Comparator<Score>() {
-            @Override
-            public int compare(Score o1, Score o2) {
-                if (o1.getPoint() < o2.getPoint())
-                    return 1;
-                if (o1.getPoint() > o2.getPoint())
-                    return -1;
-                return 0;
-            }
-        });
-
+        bitmapFont.draw(batch, db.start(), 260, 700);
 
     }
 }

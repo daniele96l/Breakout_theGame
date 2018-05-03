@@ -6,10 +6,11 @@ import java.io.InputStreamReader;
 import java.sql.*;
 
 /*
-    You must have jdbc library in the same package of desktop launcher!
+    You must have jdbc library in the same package of desktop launcher and db in assets folder!
  */
 
 public class Database {
+    private int cont = 0;
 
     public Database() {
     }
@@ -46,17 +47,15 @@ public class Database {
             String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
-            System.out.println("Connection established!\nResult set:");
             if (check()) {
-                System.out.println("Database empity!");
+                s += "NO SCORE";
                 return s;
             }
-            String query = "SELECT * FROM GAMES ORDER BY NICKNAME";
+            String query = "SELECT * FROM GAMES ORDER BY POINTS DESC";
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                //rs.getString() take as parameter the name or the numeric index of the column
-                System.out.println("- " + rs.getString("ID") + " | " + rs.getString("NICKNAME") + " | " + rs.getString("POINTS"));
-                s += "- " + rs.getString("ID") + " | " + rs.getString("NICKNAME") + " | " + rs.getString("POINTS");
+                s += rs.getString("NICKNAME") + "              " +  rs.getString("POINTS") + "\n\n";
+                cont++;
             }
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
