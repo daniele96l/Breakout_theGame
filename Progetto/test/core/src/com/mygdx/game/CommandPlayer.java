@@ -42,10 +42,4 @@ public class CommandPlayer {
         }
         return false;
     }
-    public boolean checkpausesingle(){
-        if(player.keyPressed()==Input.Keys.SPACE){
-            return true;
-        }
-        return false;
-    }
 }

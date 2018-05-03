@@ -59,6 +59,8 @@ public class OfflineGameScreen implements Screen {
     private Player gameHolder;  //Giocatore che ha toccato la pallina per ultimo
     private int brickCounter;
     private int tmpDT;
+    private boolean isPaused;
+    private boolean isFirstCalled;
 
 
     public OfflineGameScreen(BreakGame game, int numeroPlayer) {
@@ -68,35 +70,40 @@ public class OfflineGameScreen implements Screen {
         paddles = new ArrayList<Paddle>();
         commandPlayers = new ArrayList<CommandPlayer>();
         players.add(new HumanPlayer(playerName));
+        isFirstCalled=true;
     }
 
     @Override
     public void show() {
-        music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
-        music2 = Gdx.audio.newMusic(Gdx.files.internal("Untitled.mp3"));
-        music3 = Gdx.audio.newMusic(Gdx.files.internal("audio.mp3"));
-        music3.setLooping(false);
-        music.setVolume(1);
+        if(isFirstCalled) {
+            isFirstCalled=false;
+            music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+            music2 = Gdx.audio.newMusic(Gdx.files.internal("Untitled.mp3"));
+            music3 = Gdx.audio.newMusic(Gdx.files.internal("audio.mp3"));
+            music3.setLooping(false);
+            music.setVolume(1);
 
-        isFinished = false;
-        livelloCorrente = 1;
-        winLoseState = new WinLoseState(game.getBatch(), gameState);
-        nextLevel = false;
-        palla=new Ball();
-        tmpDT=Info.dt;
-        paddles.add(new Paddle(numeroPlayer, 1));
-        if (numeroPlayer > 1) {
-            for (int i = 1; i < numeroPlayer; i++) {
-                paddles.add(new Paddle( numeroPlayer, i + 1));
-                players.add(new RobotPlayer("Robot "+i, palla, paddles.get(i)));
+            isFinished = false;
+            livelloCorrente = 1;
+            winLoseState = new WinLoseState(game.getBatch(), gameState);
+            nextLevel = false;
+            isPaused = false;
+            palla = new Ball();
+            tmpDT = Info.dt;
+            paddles.add(new Paddle(numeroPlayer, 1));
+            if (numeroPlayer > 1) {
+                for (int i = 1; i < numeroPlayer; i++) {
+                    paddles.add(new Paddle(numeroPlayer, i + 1));
+                    players.add(new RobotPlayer("Robot " + i, palla, paddles.get(i)));
+                }
             }
+            updateScene();
+            updateLevel();
+            hud = new Hud(players, game.getBatch());
+            gameHolder = players.get(0);
+            brickCounter = 0;
+            bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
         }
-        updateScene();
-        updateLevel();
-        hud=new Hud(players, game.getBatch());
-        gameHolder= players.get(0);
-        brickCounter=0;
-        bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
     }
 
 
@@ -108,8 +115,9 @@ public class OfflineGameScreen implements Screen {
             bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//ritorno l'array adatto al nuovo livello
             bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
         }
-
-        music.play();
+        if(gameState!=GameState.GAME_OVER && gameState!=GameState.YOU_WON) {
+            music.play();
+        }
         palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y * Info.dt);
         palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
         game.getBatch().draw(bg, 0, 0);
@@ -133,19 +141,19 @@ public class OfflineGameScreen implements Screen {
         if (numeroPlayer > 1) {
             for (int i = 1; i < numeroPlayer; i++) {
                 game.getBatch().draw(paddles.get(i), paddles.get(i).getPosition().x, paddles.get(i).getPosition().y, paddles.get(i).getWidth() * Info.paddleresize, paddles.get(i).getHeight() * Info.paddleresize);
-                commandPlayers.get(i).move();
+                if(!isPaused) {
+                    commandPlayers.get(i).move();
+                }
             }
         }
 
-        commandPlayers.get(0).move();//mipermettedimuovereilgiocatore
-        if (commandPlayers.get(0).checkpause()) {
-            music.stop();
-            game.setScreen(new PauseScreen(game));
+        if(!isPaused) {
+            commandPlayers.get(0).move();//mipermettedimuovereilgiocatore
         }
 
-        if (commandPlayers.get(0).checkpausesingle()) {
-            Info.dt = 0;
-            delta = 0;
+        if (commandPlayers.get(0).checkpause()) {
+            music.pause();
+            game.setScreen(new PauseScreen(game, this));
         }
 
 
@@ -213,7 +221,7 @@ public class OfflineGameScreen implements Screen {
         this.newHeight = height;
         this.newWight = width;
 
-        Vector2 size = Scaling.fit.apply(800, 850, width, height);
+        Vector2 size = Scaling.fit.apply(Info.larghezza, Info.altezza, width, height);
         int viewportX = (int)(width - size.x) / 2;
         int viewportY = (int)(height - size.y) / 2;
         int viewportWidth = (int)size.x;
@@ -274,14 +282,13 @@ public class OfflineGameScreen implements Screen {
                 ArrayList<AbstractBrick> tempMatt = new ArrayList<sprites.Brick.AbstractBrick>();
                 palla.setSpeedBall(new Vector2(oldSpeedBallX, -oldSpeedBallY));
                 for (int i : indici) {
-                    System.out.println(i);
                     tempMatt.add(bricks.get(i));
                 }
                 for (AbstractBrick brick : tempMatt) {
                     if (brick instanceof Brick) {
                         bricks.remove(brick);
                         matEliminati++;
-                        music3.pause();
+                        music3.stop();
                         music3.play();
                         players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore()+(int)Math.pow(2,brickCounter));
                         brickCounter++;
@@ -291,7 +298,7 @@ public class OfflineGameScreen implements Screen {
                 if (bricks.get(indici.get(0)) instanceof Brick) {//seimattoncinisonomattoncini"morbidi"lipossoeliminare
                     bricks.remove((int) indici.get(0));
                     matEliminati++;
-                    music3.pause();
+                    music3.stop();
                     music3.play();
                     players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore()+(int)Math.pow(2,brickCounter));
                     brickCounter++;

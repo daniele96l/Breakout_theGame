@@ -130,12 +130,7 @@ public class MultiplayerGameScreen implements Screen {
         commandPlayers.get(0).move();//mipermettedimuovereilgiocatore
         if (commandPlayers.get(0).checkpause()) {
             music.stop();
-            game.setScreen(new PauseScreen(game));
-        }
-
-        if (commandPlayers.get(0).checkpausesingle()) {
-            Info.dt = 0;
-            delta = 0;
+           // game.setScreen(new PauseScreen(game, ));
         }
 
 

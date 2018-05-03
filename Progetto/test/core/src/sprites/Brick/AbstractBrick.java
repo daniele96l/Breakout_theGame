@@ -12,8 +12,8 @@ public  abstract class AbstractBrick  extends Sprite{
     protected Rectangle boundsBrick;
     protected boolean eliminato;
 
-    public AbstractBrick(int posX, int posY, String nome){
-        super(new Texture(nome));
+    public AbstractBrick(int posX, int posY, String immagine){
+        super(new Texture(immagine));
         positionBrick = new Vector2(posX, posY);
         boundsBrick = new Rectangle(posX, posY, this.getWidth()* Info.brickresize, this.getHeight()* Info.brickresize );
     }

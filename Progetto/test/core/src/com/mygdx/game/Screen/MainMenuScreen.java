@@ -55,7 +55,6 @@ public class MainMenuScreen implements Screen {
         game.getBatch().draw(multiplayeronlineButton,Info.larghezza / 2 - multiplayeronlineButton.getWidth() / 2, 380 );
 
 
-
         if (Gdx.input.getX() > (newWight / 2) - score.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < newWight / 2 + (score.getWidth()*coeffDimensionale) / 2) && (newHeight - Gdx.input.getY() > 240*coeffDimensionale && (newHeight - Gdx.input.getY() < 240*coeffDimensionale + score.getHeight()*coeffDimensionale))) {
             if (Gdx.input.justTouched())
                 game.setScreen(new ScoreScreen(game));
@@ -98,9 +97,6 @@ public class MainMenuScreen implements Screen {
         this.newHeight = height;
         this.newWight = width;
         coeffDimensionale = newHeight/(float)Info.altezza;
-
-
-        System.out.println((newWight / 2) +" "+ score.getWidth()*coeffDimensionale / 2);
 
        // System.out.println(newHeight);
 

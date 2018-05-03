@@ -17,11 +17,13 @@ public class PauseScreen implements Screen {
     private Texture resumeButton;
     private Texture exitButton;
     private Texture menuButton;
+    private OfflineGameScreen oldScreen;
     private float newHeight, newWight, coeffDimensionale = 1;
 
 
-    public PauseScreen(BreakGame game) {
+    public PauseScreen(BreakGame game, OfflineGameScreen oldScreen) {
         this.game = game;
+        this.oldScreen=oldScreen;
     }
 
     @Override
@@ -30,6 +32,7 @@ public class PauseScreen implements Screen {
         menuButton = new Texture("menu.png");
         resumeButton = new Texture("resume.png");
         exitButton = new Texture("exit.png");
+        resumeButton = new Texture("resume.png");
 
     }
 
@@ -38,20 +41,27 @@ public class PauseScreen implements Screen {
         game.getBatch().begin();
 
 
+
         game.getBatch().draw(menu, 0, 0);
-        game.getBatch().draw(exitButton, Info.larghezza / 2 - exitButton.getWidth() / 2, 250);
-        game.getBatch().draw(menuButton, Info.larghezza / 2 - menuButton.getWidth() / 2, 500);
+        game.getBatch().draw(resumeButton, Info.larghezza / 2 - resumeButton.getWidth() / 2, 550);//alpostodimetterlicosipossousaredellecostanti
+        game.getBatch().draw(exitButton, Info.larghezza / 2 - exitButton.getWidth() / 2, 150);
+        game.getBatch().draw(menuButton, Info.larghezza / 2 - menuButton.getWidth() / 2, 350);
 
 
-        if (Gdx.input.getX() > Info.larghezza*coeffDimensionale / 2 - exitButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza*coeffDimensionale / 2 + exitButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 250*coeffDimensionale && (Info.altezza *coeffDimensionale- Gdx.input.getY() < 250 *coeffDimensionale+ exitButton.getHeight()*coeffDimensionale))) {
+        if (Gdx.input.getX() > Info.larghezza*coeffDimensionale / 2 - exitButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza*coeffDimensionale / 2 + exitButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 150*coeffDimensionale && (Info.altezza *coeffDimensionale- Gdx.input.getY() < 150 *coeffDimensionale+ exitButton.getHeight()*coeffDimensionale))) {
             if (Gdx.input.justTouched())
                 Gdx.app.exit();
         }
 
-        if (Gdx.input.getX()*coeffDimensionale > Info.larghezza *coeffDimensionale/ 2 - menuButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza*coeffDimensionale / 2 + menuButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 500*coeffDimensionale && (Info.altezza*coeffDimensionale - Gdx.input.getY() < 500 *coeffDimensionale+ menuButton.getHeight()*coeffDimensionale))) {
+        if (Gdx.input.getX()*coeffDimensionale > Info.larghezza *coeffDimensionale/ 2 - menuButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza*coeffDimensionale / 2 + menuButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 550*coeffDimensionale && (Info.altezza*coeffDimensionale - Gdx.input.getY() < 550 *coeffDimensionale+ menuButton.getHeight()*coeffDimensionale))) {
+            if (Gdx.input.justTouched()) {
+                game.setScreen(oldScreen);
+            }
+        }
+
+        if (Gdx.input.getX()*coeffDimensionale > Info.larghezza *coeffDimensionale/ 2 - menuButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza*coeffDimensionale / 2 + menuButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 350*coeffDimensionale && (Info.altezza*coeffDimensionale - Gdx.input.getY() < 350 *coeffDimensionale+ menuButton.getHeight()*coeffDimensionale))) {
             if (Gdx.input.justTouched()) {
                 game.setScreen(new MainMenuScreen(game));
-
             }
         }
 
@@ -59,8 +69,7 @@ public class PauseScreen implements Screen {
 
 
 
-
-        game.getBatch().end();
+                game.getBatch().end();
 
     }
 

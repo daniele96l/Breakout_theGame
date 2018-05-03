@@ -14,6 +14,8 @@ public class Info {
     public static int brickGapY=7;
     public static int defaultLivesNum=3;
     public static int hudHeight=80;
+    public static int powerUpSpeed=4;
+    public static float powerUpResize=1f;
 
     public static int getBrickWidth () {
         Texture brick=new Texture("normalBrick.jpg");
