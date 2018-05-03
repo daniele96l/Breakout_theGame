@@ -4,13 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.*;
+import java.util.ArrayList;
 
 /*
     You must have jdbc library in the same package of desktop launcher and db in assets folder!
  */
 
 public class Database {
-    private int cont = 0;
+    private ArrayList<String> listaGiocatori;
 
     public Database() {
     }
@@ -39,7 +40,9 @@ public class Database {
     }
 
     public String start () {
+        listaGiocatori = new ArrayList<String>();
         String s = "";
+        int cont = 0;
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
@@ -54,8 +57,16 @@ public class Database {
             String query = "SELECT * FROM GAMES ORDER BY POINTS DESC";
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                s += rs.getString("NICKNAME") + "              " +  rs.getString("POINTS") + "\n\n";
-                cont++;
+                listaGiocatori.add(rs.getString("NICKNAME") + "              " +  rs.getString("POINTS") + "\n\n");
+            }
+            if (listaGiocatori.size() < 10) {
+                for (int i = 0; i < listaGiocatori.size(); i++) {
+                    s += listaGiocatori.get(i);
+                }
+            } else {
+                for (int i = 0; i < 10; i++) {
+                    s += listaGiocatori.get(i);
+                }
             }
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
