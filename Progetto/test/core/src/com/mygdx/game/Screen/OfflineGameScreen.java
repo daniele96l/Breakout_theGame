@@ -1,6 +1,7 @@
 package com.mygdx.game.Screen;
 
 import ClientServer.Dato;
+import DatabaseManagement.Database;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -26,6 +27,7 @@ import sprites.Brick.Brick;
 import sprites.Paddle;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class OfflineGameScreen implements Screen {
 
@@ -61,6 +63,7 @@ public class OfflineGameScreen implements Screen {
     private int tmpDT;
     private boolean isPaused;
     private boolean isFirstCalled;
+    private Database db = new Database();
 
 
     public OfflineGameScreen(BreakGame game, int numeroPlayer) {
@@ -328,6 +331,7 @@ public class OfflineGameScreen implements Screen {
         gameState=GameState.WAIT;
         if(loser.getLives()<0) {
             if(players.get(0).equals(loser)) {
+                db.insert(ranGen(), playerName, players.get(0).getScore());
                 gameState=GameState.GAME_OVER;
             }
             else {
@@ -355,5 +359,11 @@ public class OfflineGameScreen implements Screen {
         bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//laclasselivellosioccuperàdiritornarel'arraylistdeimattonciniadattiaquestolivello
         bg=gestoreLivelli.getLivello(livelloCorrente-1).getBackground();
         matEliminati = 0;
+    }
+
+    private String ranGen () {
+        Random n = new Random();
+        String s = "" + n.nextInt(1000);
+        return s;
     }
 }
