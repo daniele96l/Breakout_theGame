@@ -25,7 +25,6 @@ import sprites.Ball;
 import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
 import sprites.Paddle;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -64,7 +63,6 @@ public class OfflineGameScreen implements Screen {
     private boolean isPaused;
     private boolean isFirstCalled;
     private Database db = new Database();
-
 
     public OfflineGameScreen(BreakGame game, int numeroPlayer) {
         this.numeroPlayer = numeroPlayer;
@@ -108,7 +106,6 @@ public class OfflineGameScreen implements Screen {
         }
     }
 
-
     @Override
     public void render(float delta) {
         game.getBatch().begin();
@@ -123,23 +120,16 @@ public class OfflineGameScreen implements Screen {
         palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y * Info.dt);
         palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
         game.getBatch().draw(bg, 0, 0);
-
         game.getBatch().end();
-
         hud=new Hud(players, game.getBatch());
         hud.stage.draw();
-
         game.getBatch().begin();
-
         for (AbstractBrick AbstractBrick : bricks) {
             game.getBatch().draw(AbstractBrick, AbstractBrick.getPositionBrick().x, AbstractBrick.getPositionBrick().y, AbstractBrick.getWidth() * Info.brickresize, AbstractBrick.getHeight() * Info.brickresize);
 //disegnoimattoncini
         }
-
-
         game.getBatch().draw(paddles.get(0), paddles.get(0).getPosition().x, paddles.get(0).getPosition().y, paddles.get(0).getWidth() * Info.paddleresize, paddles.get(0).getHeight() * Info.paddleresize);
         game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.ballresize, palla.getHeight() * Info.ballresize);
-
         if (numeroPlayer > 1) {
             for (int i = 1; i < numeroPlayer; i++) {
                 game.getBatch().draw(paddles.get(i), paddles.get(i).getPosition().x, paddles.get(i).getPosition().y, paddles.get(i).getWidth() * Info.paddleresize, paddles.get(i).getHeight() * Info.paddleresize);
@@ -148,20 +138,14 @@ public class OfflineGameScreen implements Screen {
                 }
             }
         }
-
         if(!isPaused) {
             commandPlayers.get(0).move();//mipermettedimuovereilgiocatore
         }
-
         if (commandPlayers.get(0).checkpause()) {
             music.pause();
             game.setScreen(new PauseScreen(game, this));
         }
-
-
         gestisciCollisioni();
-
-
         if (matEliminati == gestoreLivelli.getLivello(livelloCorrente - 1).getnMatMorbidi()) {
             gameState = GameState.YOU_WON;
 
@@ -179,9 +163,9 @@ public class OfflineGameScreen implements Screen {
 
         if (gameState == GameState.YOU_WON) {
             if (isFinished) {
-
                 livelloCorrente = 1;
                 isFinished = false;
+                db.insert(ranGen(), playerName, players.get(0).getScore());
                 updateScene();
                 updateLevel(); /////////////SERVE UNO SCREEN DI FINE GIOCO
                 game.setScreen(new FinishScreen(game));
