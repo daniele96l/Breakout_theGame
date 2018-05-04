@@ -30,6 +30,7 @@ public class ScoreScreen implements Screen {
     private float newHeight, newWight, coeffDimensionale = 1;
     private static boolean drawn;
     private Database db = new Database();
+    float barreNere = 0;
 
     private BreakGame game;
 
@@ -57,7 +58,7 @@ public class ScoreScreen implements Screen {
         game.getBatch().draw(backButton, 270, 50);
         bestScores(game.getBatch());
 
-        if (Gdx.input.getX() > Info.larghezza*coeffDimensionale / 2 - backButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza*coeffDimensionale / 2 + backButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 50*coeffDimensionale && (Info.altezza*coeffDimensionale - Gdx.input.getY() < 50*coeffDimensionale + backButton.getHeight()*coeffDimensionale))) {
+        if (Gdx.input.getX() > (newWight/ 2) - (backButton.getWidth() / 2 * coeffDimensionale)  && (Gdx.input.getX() < newWight  + (backButton.getWidth()/ 2) * coeffDimensionale ) && (newHeight - Gdx.input.getY() > 50 * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < 50 * coeffDimensionale + backButton.getHeight() * coeffDimensionale+ barreNere))) {
             if (Gdx.input.justTouched())
                 game.setScreen(new MainMenuScreen(game));
         }
@@ -69,17 +70,24 @@ public class ScoreScreen implements Screen {
 
         this.newHeight = height;
         this.newWight = width;
+        barreNere = 0;
 
-        coeffDimensionale = newHeight/(float) Info.altezza;
 
+        // System.out.println(newHeight);
 
         Vector2 size = Scaling.fit.apply(800, 850, width, height);
         int viewportX = (int)(width - size.x) / 2;
         int viewportY = (int)(height - size.y) / 2;
         int viewportWidth = (int)size.x;
         int viewportHeight = (int)size.y;
-        Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
 
+        coeffDimensionale = size.y/(float)Info.altezza;
+
+        if(newHeight > size.y )
+            barreNere = Math.abs((newHeight - size.y)/2);
+
+
+        Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
     }
 
     @Override

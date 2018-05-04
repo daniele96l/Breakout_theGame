@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.game.BreakGame;
 import help.Info;
 
+
+
 import javax.swing.*;
 
 public class MainMenuScreen implements Screen {
@@ -22,6 +24,7 @@ public class MainMenuScreen implements Screen {
     BreakGame game;
     private int numeroPlayer;
     private float coeffDimensionale;
+    float barreNere = 0;
 
     public MainMenuScreen(BreakGame game) {
         this.game = game;
@@ -54,35 +57,32 @@ public class MainMenuScreen implements Screen {
         game.getBatch().draw(score,Info.larghezza / 2 - score.getWidth() / 2, 240 );
         game.getBatch().draw(multiplayeronlineButton,Info.larghezza / 2 - multiplayeronlineButton.getWidth() / 2, 380 );
 
+        if(Gdx.input.justTouched()) {
 
-        if (Gdx.input.getX() > (newWight / 2) - score.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < newWight / 2 + (score.getWidth()*coeffDimensionale) / 2) && (newHeight - Gdx.input.getY() > 240*coeffDimensionale && (newHeight - Gdx.input.getY() < 240*coeffDimensionale + score.getHeight()*coeffDimensionale))) {
-            if (Gdx.input.justTouched())
-                game.setScreen(new ScoreScreen(game));
-        }
+            if (Gdx.input.getX() > (newWight / 2) - (score.getWidth() * coeffDimensionale) / 2 && (Gdx.input.getX() < newWight / 2 + (score.getWidth() * coeffDimensionale) / 2) && (newHeight - Gdx.input.getY() > 240 * coeffDimensionale+ barreNere) && (newHeight - Gdx.input.getY() < 240 * coeffDimensionale + score.getHeight() * coeffDimensionale +  barreNere)) {
+                    game.setScreen(new ScoreScreen(game));
+            }
 
-        if (Gdx.input.getX() > (Info.larghezza / 2)*coeffDimensionale - (playButton.getWidth() / 2)*coeffDimensionale && (Gdx.input.getX() < (Info.larghezza / 2)*coeffDimensionale + (exitButton.getWidth() / 2)*coeffDimensionale) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 100*coeffDimensionale && (Info.altezza*coeffDimensionale - Gdx.input.getY() < 100*coeffDimensionale + exitButton.getHeight()*coeffDimensionale))) {
-            if (Gdx.input.justTouched())
-                Gdx.app.exit();
-        }
-        if (Gdx.input.getX() > Info.larghezza*coeffDimensionale / 2 - playButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza*coeffDimensionale / 2 + playButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 650*coeffDimensionale && (Info.altezza*coeffDimensionale - Gdx.input.getY() < 650*coeffDimensionale + exitButton.getHeight()*coeffDimensionale))) {
-            if (Gdx.input.justTouched()) {
-                OfflineGameScreen.setPlayerName(JOptionPane.showInputDialog(null, "Enter a nickname", "Nickname ", 1));
-                if(OfflineGameScreen.getPlayerName() != null && !OfflineGameScreen.getPlayerName().isEmpty()) {
-                    game.setScreen(new OfflineGameScreen(game, 1));
+            if (Gdx.input.getX() > (newWight / 2) - (playButton.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (exitButton.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > 100 * coeffDimensionale +  barreNere&& (newHeight- Gdx.input.getY() < 100 * coeffDimensionale + exitButton.getHeight() * coeffDimensionale+  barreNere))) {
+                    Gdx.app.exit();
+            }
+
+            if (Gdx.input.getX() > (newWight/ 2) - (playButton.getWidth() / 2 * coeffDimensionale)  && (Gdx.input.getX() < newWight  + (playButton.getWidth()/ 2) * coeffDimensionale ) && (newHeight - Gdx.input.getY() > 650 * coeffDimensionale +  barreNere&& (newHeight - Gdx.input.getY() < 650 * coeffDimensionale + exitButton.getHeight() * coeffDimensionale+  barreNere))) {
+                    OfflineGameScreen.setPlayerName(JOptionPane.showInputDialog(null, "Enter a nickname", "Nickname ", 1));
+                    if (OfflineGameScreen.getPlayerName() != null && !OfflineGameScreen.getPlayerName().isEmpty()) {
+                        game.setScreen(new OfflineGameScreen(game, 1));
                 }
             }
-        }
-        if (Gdx.input.getX() > Info.larghezza*coeffDimensionale / 2 - multiplayerofflineButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza*coeffDimensionale / 2 + multiplayerofflineButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 520*coeffDimensionale && (Info.altezza*coeffDimensionale - Gdx.input.getY() < 520*coeffDimensionale + multiplayerofflineButton.getHeight()*coeffDimensionale))) {
-            if (Gdx.input.justTouched()) {
-                OfflineGameScreen.setPlayerName(JOptionPane.showInputDialog(null, "Enter a nickname", "Nickname ", 1));
-                numeroPlayer =(Integer.parseInt(JOptionPane.showInputDialog(null, "Number of player", "Enter the number of player ", 1)));
-                game.setScreen(new OfflineGameScreen(game,numeroPlayer));
-            }
-        }
+            if (Gdx.input.getX() > (newWight/ 2) - (playButton.getWidth() / 2 * coeffDimensionale)  && (Gdx.input.getX() < newWight  + (playButton.getWidth()/ 2) * coeffDimensionale ) && (newHeight - Gdx.input.getY() > 520 * coeffDimensionale+  barreNere && (newHeight - Gdx.input.getY() < 520 * coeffDimensionale + exitButton.getHeight() * coeffDimensionale+  barreNere))) {
 
-        if (Gdx.input.getX() > Info.larghezza*coeffDimensionale / 2 - multiplayeronlineButton.getWidth()*coeffDimensionale / 2 && (Gdx.input.getX() < Info.larghezza *coeffDimensionale/ 2 + multiplayeronlineButton.getWidth()*coeffDimensionale / 2) && (Info.altezza*coeffDimensionale - Gdx.input.getY() > 380*coeffDimensionale && (Info.altezza*coeffDimensionale - Gdx.input.getY() < 380*coeffDimensionale + multiplayeronlineButton.getHeight()*coeffDimensionale))) {
-            if (Gdx.input.justTouched()) {
-                game.setScreen(new MultiplayerGameScreen(game));
+                    OfflineGameScreen.setPlayerName(JOptionPane.showInputDialog(null, "Enter a nickname", "Nickname ", 1));
+                    numeroPlayer = (Integer.parseInt(JOptionPane.showInputDialog(null, "Number of player", "Enter the number of player ", 1)));
+                    game.setScreen(new OfflineGameScreen(game, numeroPlayer));
+
+            }
+
+            if (Gdx.input.getX() > (newWight/ 2) - (playButton.getWidth() / 2 * coeffDimensionale)  && (Gdx.input.getX() < newWight  + (playButton.getWidth()/ 2) * coeffDimensionale ) && (newHeight - Gdx.input.getY() > 380 * coeffDimensionale +  barreNere&& (newHeight - Gdx.input.getY() < 380 * coeffDimensionale + exitButton.getHeight() * coeffDimensionale+  barreNere))) {
+                    game.setScreen(new MultiplayerGameScreen(game));
             }
         }
 
@@ -98,17 +98,20 @@ public class MainMenuScreen implements Screen {
 
         this.newHeight = height;
         this.newWight = width;
-        coeffDimensionale = newHeight/(float)Info.altezza;
-
-       // System.out.println(newHeight);
-
-
+        barreNere = 0;
 
         Vector2 size = Scaling.fit.apply(800, 850, width, height);
         int viewportX = (int)(width - size.x) / 2;
         int viewportY = (int)(height - size.y) / 2;
         int viewportWidth = (int)size.x;
         int viewportHeight = (int)size.y;
+
+        coeffDimensionale = size.y/(float)Info.altezza;
+
+        if(newHeight > size.y )
+            barreNere = Math.abs((newHeight - size.y)/2);
+
+
         Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
     }
 
