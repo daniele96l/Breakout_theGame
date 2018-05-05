@@ -8,6 +8,7 @@ import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
 import sprites.Brick.HardBrick;
 import sprites.powerup.ExtraLife;
+import sprites.powerup.LossLife;
 
 import java.util.ArrayList;
 
@@ -73,6 +74,10 @@ public class Livello {
             float interval=(float) Info.powerUpChance/Info.numeroPowerUp;
             if(randNum>=0 && randNum<interval) {
                 brick.setPowerUp(new ExtraLife(posX, posY));
+            }
+
+            if(randNum>=interval && randNum<2*interval) {
+                brick.setPowerUp(new LossLife(posX,posY));
             }
 
             //////Inserire nuovi power up qua

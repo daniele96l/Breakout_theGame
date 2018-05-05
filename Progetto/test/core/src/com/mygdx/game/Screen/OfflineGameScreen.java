@@ -167,7 +167,7 @@ public class OfflineGameScreen implements Screen {
         }
 
         if (palla.getPositionBall().y <= 0) {
-            lostLife(palla.getPositionBall().x);
+            lostLife(palla.getPositionBall().x,false);
             updateScene();
         }
 
@@ -272,7 +272,9 @@ public class OfflineGameScreen implements Screen {
                 if(collision.checkPowerUp(paddles.get(i), p)) {
                     tempPowerUps.add(p);
                     p.effect(players.get(paddles.indexOf(paddles.get(i))), paddles.get(i), palla);
+                    lostLife(palla.getPositionBall().x,true);
                 }
+
             }
             for(PowerUp p:tempPowerUps) {
                 powerUps.remove(p);
@@ -323,17 +325,20 @@ public class OfflineGameScreen implements Screen {
         return playerName;
     }
 
-    private void lostLife(float positionX) {
+    private void lostLife(float positionX,boolean powerup) {
         int range=Info.larghezza/numeroPlayer;
         Player loser=new RobotPlayer("default", palla, paddles.get(0));
+
         for(int i=0; i<numeroPlayer; i++) {
             if(positionX>=i*range && positionX<(i+1)*range) {
                 loser=players.get(i);
             }
         }
+        if(!powerup) {
+            loser.setLives(loser.getLives() - 1);
+            gameState = GameState.WAIT;
+        }
 
-        loser.setLives(loser.getLives()-1);
-        gameState=GameState.WAIT;
         if(loser.getLives()<0) {
             if(players.get(0).equals(loser)) {
                 db.insert(ranGen(), playerName, players.get(0).getScore());
@@ -372,4 +377,7 @@ public class OfflineGameScreen implements Screen {
         String s = "" + n.nextInt(1000);
         return s;
     }
+
+
 }
+
