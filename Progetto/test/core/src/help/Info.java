@@ -16,8 +16,8 @@ public class Info {
     public static int hudHeight=80;
     public static int powerUpSpeed=3;
     public static float powerUpResize=0.5f;
-    public static int powerUpChance=1; //Probabilità da 1 a 10 che in un mattoncino ci sia un power up
-    public static int numeroPowerUp=1; //Numero di power up esistenti (da aggiornare se se ne crea uno nuovo)
+    public static int powerUpChance=2; //Probabilità da 1 a 10 che in un mattoncino ci sia un power up
+    public static int numeroPowerUp=2; //Numero di power up esistenti (da aggiornare se se ne crea uno nuovo)
     public static int powerUpWidth=50;
     public static int powerUpHeight=45;
 
