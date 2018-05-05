@@ -231,11 +231,12 @@ public class MultiplayerGameScreen implements Screen {
         float oldSpeedBallX = palla.getSpeedBall().x;
         float oldSpeedBallY = palla.getSpeedBall().y;
 
+        collision = new Collision(palla);
+
         indici = new ArrayList<Integer>();
-        for (AbstractBrick Abstractbrick : bricks) {
-            collision = new Collision(Abstractbrick, palla);
-            if (collision.check()) {
-                indici.add(bricks.indexOf(Abstractbrick));
+        for (AbstractBrick brick : bricks) {
+            if (collision.check(brick)) {
+                indici.add(bricks.indexOf(brick));
             }
         }
 

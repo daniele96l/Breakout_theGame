@@ -8,7 +8,6 @@ import help.Info;
 
 
 public class Ball extends Sprite{
-    //commento inutile
     private Texture palla;
     static private Vector2 positionBall;
     static private Vector2 speedBall;

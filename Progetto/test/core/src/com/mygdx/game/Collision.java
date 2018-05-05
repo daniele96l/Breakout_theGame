@@ -10,48 +10,46 @@ import help.Info;
 import sprites.Ball;
 import sprites.Brick.AbstractBrick;
 import sprites.Paddle;
+import sprites.powerup.PowerUp;
 
 public class Collision
 
 
 {
-    private AbstractBrick mat;
     private boolean eliminato;
     private Ball palla;
     private double MAXBOUNCEANGLE=Math.PI/3;
     private Rectangle rectangle;
 
-    public Collision(AbstractBrick mat,Ball palla)
+    public Collision(Ball palla)
     {
 
         int pallaX=(int)(palla.getBoundsBall().x+palla.getSpeedBall().x* Info.dt);
         int pallaY=(int)(palla.getBoundsBall().y+palla.getSpeedBall().y*Info.dt);
         rectangle = new Rectangle(pallaX,pallaY,palla.getWidth(),palla.getHeight());
-        this.mat=mat;
         this.palla=palla;
     }
 
-    public void delete(){
+    private void delete(){
         eliminato=true;
     }
 
-//questometodoserveperlacollisioneconibrickverificandosecollidono,nelcasocambioilversodellapalla
-    public boolean check(){
+    public boolean check(AbstractBrick brick){
 
-        if(collidesTopBottom()){//controllochecollidacolBrick
-            if((palla.getSpeedBall().y*(palla.getBoundsBall().y-(mat.getBoundsBrick().y+mat.getBoundsBrick().height/2))>=0)&&palla.getSpeedBall().y!=0){
+        if(collidesTopBottom(brick)){
+            if((palla.getSpeedBall().y*(palla.getBoundsBall().y-(brick.getBoundsBrick().y+brick.getBoundsBrick().height/2))>=0)&&palla.getSpeedBall().y!=0){
                 palla.getSpeedBall().set(-palla.getSpeedBall().x,palla.getSpeedBall().y);
                 delete();
                 return true;
             }
-            delete();//quandoabbiamotantimattoncinibisognautilizzareuncicloconunArraylist
+            delete();
             palla.getSpeedBall().set(palla.getSpeedBall().x,-palla.getSpeedBall().y);
             return true;
         }
 
         else{
-            if(collidesSide()){
-                if((palla.getSpeedBall().x*(palla.getBoundsBall().x-(mat.getBoundsBrick().x+mat.getBoundsBrick().width/2))>=0)&&palla.getSpeedBall().x!=0){
+            if(collidesSide(brick)){
+                if((palla.getSpeedBall().x*(palla.getBoundsBall().x-(brick.getBoundsBrick().x+brick.getBoundsBrick().width/2))>=0)&&palla.getSpeedBall().x!=0){
                     palla.getSpeedBall().set(palla.getSpeedBall().x,-palla.getSpeedBall().y);
                     delete();
                     return true;
@@ -65,13 +63,11 @@ public class Collision
         return false;
     }
 
-//metodousatoperilcheck(quandotoccaosopraosotto)
-    public boolean collidesTopBottom(){
-/////Controllodoveavvienel'impatto
-        if(mat.getBoundsBrick().overlaps(rectangle)){
+    private boolean collidesTopBottom(AbstractBrick brick){
+        if(brick.getBoundsBrick().overlaps(rectangle)){
 
-            if((palla.getBoundsBall().x+palla.getBoundsBall().width/2<=mat.getBoundsBrick().x+mat.getBoundsBrick().width)&&
-                    (palla.getBoundsBall().x+palla.getBoundsBall().width/2>=mat.getBoundsBrick().x)){
+            if((palla.getBoundsBall().x+palla.getBoundsBall().width/2<=brick.getBoundsBrick().x+brick.getBoundsBrick().width)&&
+                    (palla.getBoundsBall().x+palla.getBoundsBall().width/2>=brick.getBoundsBrick().x)){
                 return true;
             }
         }
@@ -79,10 +75,8 @@ public class Collision
     }
 
 
-    //metodousatoperilcheck(quandotoccaadestraosinistra)
-    public boolean collidesSide(){
-/////Controllodoveavvienel'impatto
-        if(mat.getBoundsBrick().overlaps(rectangle)){
+    private boolean collidesSide(AbstractBrick brick){
+        if(brick.getBoundsBrick().overlaps(rectangle)){
             return true;
         }
         return false;
@@ -98,10 +92,9 @@ public class Collision
     }
 
 
-    //questometodoservepercontrollarequandolapallacollideconibordioconlaPaddle
     public boolean checkSide(Paddle paddle){
 
-        if(collides(palla.getBoundsBall(),paddle)){//controllochecollidaconlaPaddle
+        if(collides(palla.getBoundsBall(),paddle)){
             float relativeIntersectX=-((paddle.getPosition().x+(paddle.getWidth()*Info.paddleresize/2))-(palla.getPositionBall().x+palla.getWidth()*Info.paddleresize/2));
             float normalizedRelativeIntersectionX=(relativeIntersectX/((paddle.getTexture().getWidth()*Info.paddleresize/2)+palla.getWidth()/2));
             float bounceAngle=normalizedRelativeIntersectionX*(float)MAXBOUNCEANGLE;
@@ -114,9 +107,15 @@ public class Collision
     }
 
     private boolean collides(Rectangle boundsBall,Paddle paddle){
-        if(boundsBall.y<3/4*paddle.getHeight()*Info.paddleresize)//ovveroselapallascendesottoilbordosuperioseecolpisceillatodellaPaddlenonrimalzamavadrittagiu
-            return false;//datochehamancatolapartesuperiorepianaèimpossibilechevengarimbalzatasu
-//serveancheadevitareunbugchefacevaentrarelapallinadentrolaPaddle
-        return boundsBall.overlaps(paddle.getBounds());//lafunzionechecontrolleràselapallinatoccalaPaddle
+        if(boundsBall.y<3/4*paddle.getHeight()*Info.paddleresize)
+            return false;
+        return boundsBall.overlaps(paddle.getBounds());
+    }
+
+    public boolean checkPowerUp(Paddle paddle, PowerUp powerUp) {
+        if(paddle.getBounds().overlaps(powerUp.getBounds())) {
+            return true;
+        }
+        return false;
     }
 }

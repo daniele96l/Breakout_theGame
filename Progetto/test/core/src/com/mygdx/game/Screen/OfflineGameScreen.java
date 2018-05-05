@@ -25,6 +25,8 @@ import sprites.Ball;
 import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
 import sprites.Paddle;
+import sprites.powerup.PowerUp;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -42,6 +44,7 @@ public class OfflineGameScreen implements Screen {
     private Dato dato;
     private boolean nextLevel;
     private ArrayList<Integer> indici;
+    private ArrayList<PowerUp> powerUps;
     private int matEliminati;
     private GestoreLivelli gestoreLivelli;
     private int livelloCorrente;
@@ -118,15 +121,23 @@ public class OfflineGameScreen implements Screen {
             music.play();
         }
         palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y * Info.dt);
-        palla.getBoundsBall().setPosition(palla.getPositionBall().x, palla.getPositionBall().y);
+        palla.getBoundsBall().setPosition(palla.getPositionBall());
+        for(PowerUp p:powerUps) {
+            p.getPosition().add(p.getSpeed().x*Info.dt, p.getSpeed().y*Info.dt);
+            p.getBounds().setPosition(p.getPosition());
+        }
+
         game.getBatch().draw(bg, 0, 0);
         game.getBatch().end();
         hud=new Hud(players, game.getBatch());
         hud.stage.draw();
         game.getBatch().begin();
-        for (AbstractBrick AbstractBrick : bricks) {
-            game.getBatch().draw(AbstractBrick, AbstractBrick.getPositionBrick().x, AbstractBrick.getPositionBrick().y, AbstractBrick.getWidth() * Info.brickresize, AbstractBrick.getHeight() * Info.brickresize);
+        for (AbstractBrick brick : bricks) {
+            game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.brickresize, brick.getHeight() * Info.brickresize);
 //disegnoimattoncini
+        }
+        for(PowerUp p:powerUps) {
+            game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth()*Info.powerUpResize, p.getHeight()*Info.powerUpResize);
         }
         game.getBatch().draw(paddles.get(0), paddles.get(0).getPosition().x, paddles.get(0).getPosition().y, paddles.get(0).getWidth() * Info.paddleresize, paddles.get(0).getHeight() * Info.paddleresize);
         game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.ballresize, palla.getHeight() * Info.ballresize);
@@ -240,26 +251,31 @@ public class OfflineGameScreen implements Screen {
         float oldSpeedBallX = palla.getSpeedBall().x;
         float oldSpeedBallY = palla.getSpeedBall().y;
 
+        collision = new Collision(palla);
+
         indici = new ArrayList<Integer>();
-        for (AbstractBrick Abstractbrick : bricks) {
-            collision = new Collision(Abstractbrick, palla);
-            if (collision.check()) {
-                indici.add(bricks.indexOf(Abstractbrick));
+        for (AbstractBrick brick : bricks) {
+            if (collision.check(brick)) {
+                indici.add(bricks.indexOf(brick));
             }
         }
 
         collision.checkBorderCollision();
 
-        if(collision.checkSide(paddles.get(0))) {
-            gameHolder = players.get(0);
-            brickCounter = 0;
-        }
-        if (numeroPlayer > 1) {
-            for (int i = 1; i < numeroPlayer; i++) {
-                if(collision.checkSide(paddles.get(i))) {
-                    gameHolder = players.get(i);
-                    brickCounter = 0;
+        for (int i = 0; i < numeroPlayer; i++) {
+            if (collision.checkSide(paddles.get(i))) {
+                gameHolder = players.get(i);
+                brickCounter = 0;
+            }
+            ArrayList<PowerUp> tempPowerUps=new ArrayList<PowerUp>();
+            for(PowerUp p:powerUps) {
+                if(collision.checkPowerUp(paddles.get(i), p)) {
+                    tempPowerUps.add(p);
+                    p.effect(players.get(paddles.indexOf(paddles.get(i))), paddles.get(i), palla);
                 }
+            }
+            for(PowerUp p:tempPowerUps) {
+                powerUps.remove(p);
             }
         }
 
@@ -272,21 +288,27 @@ public class OfflineGameScreen implements Screen {
                 }
                 for (AbstractBrick brick : tempMatt) {
                     if (brick instanceof Brick) {
+                        if (brick.hasPowerUp()) {
+                            powerUps.add(brick.getPowerUp());
+                        }
                         bricks.remove(brick);
                         matEliminati++;
                         music3.stop();
                         music3.play();
-                        players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore()+(int)Math.pow(2,brickCounter));
+                        players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore() + (int) Math.pow(2, brickCounter));
                         brickCounter++;
                     }
                 }
             } else {
-                if (bricks.get(indici.get(0)) instanceof Brick) {//seimattoncinisonomattoncini"morbidi"lipossoeliminare
+                if (bricks.get(indici.get(0)) instanceof Brick) {
+                    if (bricks.get(indici.get(0)).hasPowerUp()) {
+                        powerUps.add(bricks.get(indici.get(0)).getPowerUp());
+                    }
                     bricks.remove((int) indici.get(0));
                     matEliminati++;
                     music3.stop();
                     music3.play();
-                    players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore()+(int)Math.pow(2,brickCounter));
+                    players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore() + (int) Math.pow(2, brickCounter));
                     brickCounter++;
                 }
             }
@@ -340,6 +362,7 @@ public class OfflineGameScreen implements Screen {
     private void updateLevel() {
         gestoreLivelli = new GestoreLivelli("fileLivelli.txt");
         bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//laclasselivellosioccuperàdiritornarel'arraylistdeimattonciniadattiaquestolivello
+        powerUps=new ArrayList<PowerUp>();
         bg=gestoreLivelli.getLivello(livelloCorrente-1).getBackground();
         matEliminati = 0;
     }
