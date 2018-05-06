@@ -12,15 +12,20 @@ background bg.jpg
 
 fine
 
-background bgLv2.jpg
-.---------.
-.--#---#--.
-fine
 
-background bgLv3.jpg
+background bgLv2.jpg
 .---------.
 .---###---.
 .---------.
+fine
+
+background bgLv3.jpg
+.--#---#--.
+.--#---#--.
+.--#---#--.
+.--#---#--.
+.--#---#--.
+.--#---#--.
 fine
 
 background bg.jpg
@@ -34,11 +39,3 @@ background bg.jpg
 fine
 
 
-background bgLv2.jpg
-.--#---#--.
-.--#---#--.
-.--#---#--.
-.--#---#--.
-.--#---#--.
-.--#---#--.
-fine

@@ -27,7 +27,7 @@ package sprites;
             }
 
             public void setDefaultState(int numeroGiocatori) {
-                positionM = new Vector2((Info.larghezza / numeroGiocatori) * (giocatore - 1) + Info.larghezza / (2 * numeroGiocatori) - this.getWidth() / 2 * Info.paddleresize, 0);
+                positionM = new Vector2((Info.larghezza / numeroGiocatori) * (giocatore - 1) + Info.larghezza / (2 * numeroGiocatori) - this.getWidth() / 2 * Info.paddleresize-3, 0);
                 speed = new Vector2(0, 0);
                 bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.paddleresize, Paddle.this.getHeight() * Info.paddleresize);
             }
