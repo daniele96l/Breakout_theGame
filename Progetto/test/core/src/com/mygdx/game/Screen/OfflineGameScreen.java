@@ -36,12 +36,14 @@ public class OfflineGameScreen implements Screen {
     private Collision collision;
     private ArrayList<AbstractBrick> bricks = new ArrayList();
     private Ball palla;
+    int contatore;
     private ArrayList<Paddle> paddles;
     private Texture bg;
     private GameState gameState;
     private ArrayList<CommandPlayer> commandPlayers;
     private ArrayList<Player> players;
     private Dato dato;
+    private int contatore2 = 0;
     private boolean nextLevel;
     private ArrayList<Integer> indici;
     private ArrayList<PowerUp> powerUps;
@@ -49,6 +51,7 @@ public class OfflineGameScreen implements Screen {
     private GestoreLivelli gestoreLivelli;
     private int livelloCorrente;
     private boolean isFinished;
+    boolean primo, secondo;
     static private int myScore;
     static private boolean nick;
     private Score score;
@@ -56,7 +59,7 @@ public class OfflineGameScreen implements Screen {
     private static String playerName;
     private WinLoseState winLoseState;
     Music music;
-    Music music2, music3;
+    Music music2, music3, music4;
     private boolean pause;
     private int numeroPlayer;
     private Hud hud;
@@ -84,7 +87,9 @@ public class OfflineGameScreen implements Screen {
             music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
             music2 = Gdx.audio.newMusic(Gdx.files.internal("Untitled.mp3"));
             music3 = Gdx.audio.newMusic(Gdx.files.internal("audio.mp3"));
+            music4 = Gdx.audio.newMusic(Gdx.files.internal("evil.mp3"));//deve essere inzializzato in qualche modo, poi si cambia
             music3.setLooping(false);
+            music4.setLooping(false);
             music.setVolume(1);
             isFinished = false;
             livelloCorrente = 1;
@@ -272,6 +277,8 @@ public class OfflineGameScreen implements Screen {
                 if(collision.checkPowerUp(paddles.get(i), p)) {
                     tempPowerUps.add(p);
                     p.effect(players.get(paddles.indexOf(paddles.get(i))), paddles.get(i), palla);
+                    music4 = Gdx.audio.newMusic(Gdx.files.internal(p.getSound()));
+                    music4.play();
                     lostLife(palla.getPositionBall().x,true);
                 }
 
@@ -283,11 +290,25 @@ public class OfflineGameScreen implements Screen {
 
         if (!indici.isEmpty()) {
             if (indici.size() >= 2) {
+                contatore = 0;
+                contatore2 = 0;
                 ArrayList<AbstractBrick> tempMatt = new ArrayList<sprites.Brick.AbstractBrick>();
-                palla.setSpeedBall(new Vector2(oldSpeedBallX, -oldSpeedBallY));
                 for (int i : indici) {
+                    System.out.println(i);
+                    if(bricks.get(i).getPositionBrick().x < palla.getPositionBall().x ){ /////////////NUOVO
+                        contatore++; /////////////NUOVO
+                    }
+                    if(bricks.get(i).getPositionBrick().x > palla.getPositionBall().x ){ /////////////NUOVO
+                        contatore2++; /////////////NUOVO
+                    }
                     tempMatt.add(bricks.get(i));
                 }
+                if(contatore ==1 && contatore2 == 1) /////////////NUOVO
+                palla.setSpeedBall(new Vector2(oldSpeedBallX, -oldSpeedBallY));
+                else /////////////NUOVO
+                    palla.setSpeedBall(new Vector2(-oldSpeedBallX, oldSpeedBallY)); /////////////NUOVO
+
+
                 for (AbstractBrick brick : tempMatt) {
                     if (brick instanceof Brick) {
                         if (brick.hasPowerUp()) {

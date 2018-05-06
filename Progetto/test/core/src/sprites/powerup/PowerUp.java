@@ -13,6 +13,7 @@ public abstract class PowerUp extends Sprite{
     protected Vector2 position;
     protected Vector2 speed;
     protected Rectangle bounds;
+    protected String sound;
 
     public PowerUp(String image, int posX, int posY) {
         super(new Texture(image));
@@ -34,4 +35,7 @@ public abstract class PowerUp extends Sprite{
     public Vector2 getSpeed() {
         return speed;
     }
+
+    public abstract String getSound() ;
+
 }

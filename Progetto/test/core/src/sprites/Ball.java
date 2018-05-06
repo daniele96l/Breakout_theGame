@@ -26,6 +26,8 @@ public class Ball extends Sprite{
     public void setDefaultState() {
         speedBall=new Vector2(0,-Info.velBall);
         positionBall = new Vector2(Info.larghezza/2-palla.getWidth()*Info.ballresize/2, Info.altezza/3);
+       //  speedBall=new Vector2(-2,1);
+        // positionBall = new Vector2(40, 630);
     }
 
     public Texture getPalla() { return palla; }
