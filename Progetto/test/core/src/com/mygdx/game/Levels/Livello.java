@@ -71,15 +71,16 @@ public class Livello {
         int posX=(int)(brick.getBoundsBrick().x+brick.getBoundsBrick().width/2-Info.powerUpWidth/2*Info.powerUpResize);
         int posY=(int)(brick.getBoundsBrick().y+brick.getBoundsBrick().height/2-Info.powerUpHeight/2*Info.powerUpResize);
 
-        int randNum=(int)(Math.random()*10);
+        float randNum=(float)(Math.random()*10);
         if(randNum < Info.powerUpChance) {
-            float interval=(float) Info.powerUpChance/Info.numeroPowerUp;
+            float interval=Info.powerUpChance/(float)Info.numeroPowerUp;
             if(randNum>=0 && randNum<interval) {
                 brick.setPowerUp(new ExtraLife(posX, posY));
             }
 
             if(randNum>=interval && randNum<2*interval) {
                 brick.setPowerUp(new LossLife(posX,posY));
+                System.out.println("lost");
             }
 
             if(randNum>=2* interval && randNum< 3*interval) {
@@ -88,6 +89,7 @@ public class Livello {
 
             if(randNum>=3* interval && randNum< 4*interval) {
                 brick.setPowerUp(new ShortPaddle(posX,posY));
+                System.out.println("short");
             }
 
             //////Inserire nuovi power up qua
