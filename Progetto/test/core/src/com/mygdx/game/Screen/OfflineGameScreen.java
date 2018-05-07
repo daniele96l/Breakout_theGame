@@ -28,6 +28,7 @@ import sprites.Paddle;
 import sprites.powerup.PowerUp;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 public class OfflineGameScreen implements Screen {
@@ -68,6 +69,7 @@ public class OfflineGameScreen implements Screen {
     private int tmpDT;
     private boolean isPaused;
     private boolean isFirstCalled;
+    private ArrayList<Date> date;
     private Database db = new Database();
 
     public OfflineGameScreen(BreakGame game, int numeroPlayer) {
@@ -77,6 +79,7 @@ public class OfflineGameScreen implements Screen {
         paddles = new ArrayList<Paddle>();
         commandPlayers = new ArrayList<CommandPlayer>();
         players.add(new HumanPlayer(playerName));
+        date = new ArrayList<Date>();
         isFirstCalled=true;
     }
 
@@ -98,11 +101,15 @@ public class OfflineGameScreen implements Screen {
             isPaused = false;
             palla = new Ball();
             tmpDT = Info.dt;
+            date.add(new Date());
             paddles.add(new Paddle(numeroPlayer, 1));
+            Info.paddleresizex.add(0.5f);
             if (numeroPlayer > 1) {
                 for (int i = 1; i < numeroPlayer; i++) {
                     paddles.add(new Paddle(numeroPlayer, i + 1));
                     players.add(new RobotPlayer("Robot " + i, palla, paddles.get(i)));
+                    Info.paddleresizex.add(0.5f);
+                    date.add(i,new Date());
                 }
             }
             updateScene();
@@ -144,11 +151,11 @@ public class OfflineGameScreen implements Screen {
         for(PowerUp p:powerUps) {
             game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth()*Info.powerUpResize, p.getHeight()*Info.powerUpResize);
         }
-        game.getBatch().draw(paddles.get(0), paddles.get(0).getPosition().x, paddles.get(0).getPosition().y, paddles.get(0).getWidth() * Info.paddleresize, paddles.get(0).getHeight() * Info.paddleresize);
+        game.getBatch().draw(paddles.get(0), paddles.get(0).getPosition().x, paddles.get(0).getPosition().y, paddles.get(0).getWidth() * Info.paddleresizex.get(0), paddles.get(0).getHeight() * Info.paddleresize);
         game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.ballresize, palla.getHeight() * Info.ballresize);
         if (numeroPlayer > 1) {
             for (int i = 1; i < numeroPlayer; i++) {
-                game.getBatch().draw(paddles.get(i), paddles.get(i).getPosition().x, paddles.get(i).getPosition().y, paddles.get(i).getWidth() * Info.paddleresize, paddles.get(i).getHeight() * Info.paddleresize);
+                game.getBatch().draw(paddles.get(i), paddles.get(i).getPosition().x, paddles.get(i).getPosition().y, paddles.get(i).getWidth() * Info.paddleresizex.get(i), paddles.get(i).getHeight() * Info.paddleresize);
                 if(!isPaused) {
                     commandPlayers.get(i).move();
                 }
@@ -162,6 +169,9 @@ public class OfflineGameScreen implements Screen {
             game.setScreen(new PauseScreen(game, this));
         }
         gestisciCollisioni();
+
+        checktimer(); // controlla il tempo
+
         if (matEliminati == gestoreLivelli.getLivello(livelloCorrente - 1).getnMatMorbidi()) {
             gameState = GameState.YOU_WON;
 
@@ -280,7 +290,12 @@ public class OfflineGameScreen implements Screen {
                     music4 = Gdx.audio.newMusic(Gdx.files.internal(p.getSound()));
                     music4.play();
                     lostLife(palla.getPositionBall().x,true);
+                    if(Info.paddleresizex.get(i) != Info.paddleresize){ // qua verifico che sia stato cambiato la resize una volta che prendo il powerup
+                        date.set(i,new Date());
+                    }
+
                 }
+
 
             }
             for(PowerUp p:tempPowerUps) {
@@ -403,6 +418,15 @@ public class OfflineGameScreen implements Screen {
         Random n = new Random();
         String s = "" + n.nextInt(1000);
         return s;
+    }
+
+    private void checktimer(){
+        if(date != null){
+            Date date2 = new Date();
+            for(int i =0; i < numeroPlayer;i++)
+            if(date2.getTime() - date.get(i).getTime() > Info.durataPowerUp)
+                Info.paddleresizex.set(i,Info.paddleresize);
+        }
     }
 
 

@@ -95,8 +95,8 @@ public class Collision
     public boolean checkSide(Paddle paddle){
 
         if(collides(palla.getBoundsBall(),paddle)){
-            float relativeIntersectX=-((paddle.getPosition().x+(paddle.getWidth()*Info.paddleresize/2))-(palla.getPositionBall().x+palla.getWidth()*Info.paddleresize/2));
-            float normalizedRelativeIntersectionX=(relativeIntersectX/((paddle.getTexture().getWidth()*Info.paddleresize/2)+palla.getWidth()/2));
+            float relativeIntersectX=-((paddle.getPosition().x+(paddle.getWidth()*Info.paddleresizex.get(paddle.getGiocatore()-1)/2))-(palla.getPositionBall().x+palla.getWidth()*Info.paddleresize/2));
+            float normalizedRelativeIntersectionX=(relativeIntersectX/((paddle.getTexture().getWidth()*Info.paddleresizex.get(paddle.getGiocatore()-1)/2)+palla.getWidth()/2));
             float bounceAngle=normalizedRelativeIntersectionX*(float)MAXBOUNCEANGLE;
             float speedx=(float)Math.sqrt(2*Info.velBall*Info.velBall)*(float)(Math.sin(bounceAngle));
             float speedy=(float)Math.sqrt(2*Info.velBall*Info.velBall)*(float)(Math.cos(bounceAngle));

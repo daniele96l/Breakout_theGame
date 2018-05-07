@@ -29,7 +29,7 @@ public class CommandPlayer {
             }
         }
         if(player.keyPressed()==Input.Keys.RIGHT){
-            if(paddle.getPosition().x < ((Info.larghezza/numeroGiocatori)*(giocatore))- paddle.getWidth()* Info.paddleresize ) {
+            if(paddle.getPosition().x < ((Info.larghezza/numeroGiocatori)*(giocatore))- paddle.getWidth()* Info.paddleresizex.get(giocatore-1) ) {
                 paddle.getPosition().add(10, 0);//controllo il range in cui la Paddle si può muovere
                 paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
             }

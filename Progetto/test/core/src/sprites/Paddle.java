@@ -27,6 +27,9 @@ package sprites;
             }
 
             public void setDefaultState(int numeroGiocatori) {
+                for(int i = 0;i< numeroGiocatori; i++) {
+                    Info.paddleresizex.set(i, Info.paddleresize);
+                }
                 positionM = new Vector2((Info.larghezza / numeroGiocatori) * (giocatore - 1) + Info.larghezza / (2 * numeroGiocatori) - this.getWidth() / 2 * Info.paddleresize-3, 0);
                 speed = new Vector2(0, 0);
                 bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.paddleresize, Paddle.this.getHeight() * Info.paddleresize);
@@ -44,6 +47,11 @@ package sprites;
             }
 
             public Rectangle getBounds() {
+                bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.paddleresizex.get(giocatore-1), Paddle.this.getHeight() * Info.paddleresize);
                 return bounds;
+            }
+
+            public int getGiocatore() {
+                return giocatore;
             }
         }

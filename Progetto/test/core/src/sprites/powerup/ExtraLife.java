@@ -7,7 +7,7 @@ import sprites.Paddle;
 public class ExtraLife extends PowerUp {
     private String sound = "good.mp3";
     public ExtraLife(int posX, int posY) {
-        super("extralife.png", posX, posY);
+        super("cuore.png", posX, posY);
     }
 
     public String getSound() {

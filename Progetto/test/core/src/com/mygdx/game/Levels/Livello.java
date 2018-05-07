@@ -8,7 +8,9 @@ import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
 import sprites.Brick.HardBrick;
 import sprites.powerup.ExtraLife;
+import sprites.powerup.LongPaddle;
 import sprites.powerup.LossLife;
+import sprites.powerup.ShortPaddle;
 
 import java.util.ArrayList;
 
@@ -78,6 +80,14 @@ public class Livello {
 
             if(randNum>=interval && randNum<2*interval) {
                 brick.setPowerUp(new LossLife(posX,posY));
+            }
+
+            if(randNum>=2* interval && randNum< 3*interval) {
+                brick.setPowerUp(new LongPaddle(posX,posY));
+            }
+
+            if(randNum>=3* interval && randNum< 4*interval) {
+                brick.setPowerUp(new ShortPaddle(posX,posY));
             }
 
             //////Inserire nuovi power up qua
