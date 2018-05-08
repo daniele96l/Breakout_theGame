@@ -134,9 +134,16 @@ public class OfflineGameScreen implements Screen {
         }
         palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y * Info.dt);
         palla.getBoundsBall().setPosition(palla.getPositionBall());
+        ArrayList<PowerUp> tmpPUps=new ArrayList<PowerUp>();
         for(PowerUp p:powerUps) {
+            if(p.getPosition().y+Info.powerUpHeight<0) {
+                tmpPUps.add(p);
+            }
             p.getPosition().add(p.getSpeed().x*Info.dt, p.getSpeed().y*Info.dt);
             p.getBounds().setPosition(p.getPosition());
+        }
+        for(PowerUp p:tmpPUps) {
+            powerUps.remove(p);
         }
 
         game.getBatch().draw(bg, 0, 0);
