@@ -24,6 +24,7 @@ public class CommandPlayer {
     {
         if(player.keyPressed()==Input.Keys.LEFT){
             if(paddle.getPosition().x >(Info.larghezza/numeroGiocatori)*(giocatore-1)) { //controllo il range in cui la Paddle si può muovere
+
                 paddle.getPosition().add(-10, 0);
                 paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
             }

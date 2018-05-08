@@ -23,7 +23,7 @@ public class Info {
     public static int numeroPowerUp=4; //Numero di power up esistenti (da aggiornare se se ne crea uno nuovo)
     public static int powerUpWidth=50;
     public static int powerUpHeight=45;
-    public static int durataPowerUp = 100000;
+    public static int durataPowerUp = 10000;
     public static int getBrickWidth () {
         Texture brick=new Texture("normalBrick.jpg");
         int brickWidth=(int)(brick.getWidth()*brickresize);
