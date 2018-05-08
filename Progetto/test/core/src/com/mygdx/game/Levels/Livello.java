@@ -80,7 +80,7 @@ public class Livello {
 
             if(randNum>=interval && randNum<2*interval) {
                 brick.setPowerUp(new LossLife(posX,posY));
-                System.out.println("lost");
+
             }
 
             if(randNum>=2* interval && randNum< 3*interval) {
@@ -89,7 +89,7 @@ public class Livello {
 
             if(randNum>=3* interval && randNum< 4*interval) {
                 brick.setPowerUp(new ShortPaddle(posX,posY));
-                System.out.println("short");
+
             }
 
             //////Inserire nuovi power up qua
