@@ -9,20 +9,16 @@ import sprites.Paddle;
 import java.util.concurrent.CountDownLatch;
 
 public class LongPaddle extends PowerUp {
-    private String sound = "good.mp3";
 
     public LongPaddle(int posX, int posY) {
         super("big.png", posX, posY);
+        this.sound="good.mp3";
+
     }
 
     @Override
     public void effect(Player player, Paddle paddle, Ball palla) {
 
-       Info.paddleresizex.set(paddle.getGiocatore()-1,0.7f);
-    }
-
-    @Override
-    public String getSound() {
-        return sound;
+        Info.paddleresizex.set(paddle.getGiocatore() - 1, 0.7f);
     }
 }

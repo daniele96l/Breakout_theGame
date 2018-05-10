@@ -37,6 +37,23 @@ public class CommandPlayer {
         }
     }
 
+    public void move(int key)
+    {
+        if(key==Input.Keys.LEFT){
+            if(paddle.getPosition().x >(Info.larghezza/numeroGiocatori)*(giocatore-1)) { //controllo il range in cui la Paddle si può muovere
+
+                paddle.getPosition().add(-10, 0);
+                paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
+            }
+        }
+        if(key==Input.Keys.RIGHT){
+            if(paddle.getPosition().x < ((Info.larghezza/numeroGiocatori)*(giocatore))- paddle.getWidth()* Info.paddleresizex.get(giocatore-1) ) {
+                paddle.getPosition().add(10, 0);//controllo il range in cui la Paddle si può muovere
+                paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
+            }
+        }
+    }
+
     public boolean checkpause(){
         if(player.keyPressed()==Input.Keys.P){
             return true;

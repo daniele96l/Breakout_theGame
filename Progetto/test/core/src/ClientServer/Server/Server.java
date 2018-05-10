@@ -21,9 +21,6 @@ public class Server
         try
         {
             serverSocket = new ServerSocket(port);
-
-
-
         }
         catch (IOException e)
         {

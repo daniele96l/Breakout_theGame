@@ -8,20 +8,14 @@ import sprites.Paddle;
 public class ShortPaddle extends PowerUp{
 
 
-    private String sound = "good.mp3";
-
     public ShortPaddle(int posX, int posY) {
         super("little.png", posX, posY);
+        this.sound="evil.mp3";
     }
 
     @Override
     public void effect(Player player, Paddle paddle, Ball palla) {
         Info.paddleresizex.set(paddle.getGiocatore()-1,0.3f);
-    }
-
-    @Override
-    public String getSound() {
-        return sound;
     }
 }
 
