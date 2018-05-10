@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.BreakGame;
 import com.mygdx.game.ClientServer.Client;
 
+
 public class MultiplayerGameScreen implements Screen {
 
     private Client client;
@@ -31,10 +32,12 @@ public class MultiplayerGameScreen implements Screen {
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
             client.keyPressed(Input.Keys.LEFT);
+            System.out.println(Input.Keys.LEFT);
         }
         else {
             if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
                 client.keyPressed(Input.Keys.RIGHT);
+                System.out.println(Input.Keys.RIGHT);
             }
             else {
                 client.keyPressed(0);

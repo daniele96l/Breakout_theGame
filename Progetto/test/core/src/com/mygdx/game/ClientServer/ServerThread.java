@@ -11,7 +11,8 @@ public class ServerThread extends Thread
     private Socket socket;
     private DataInputStream is;
     private DataOutputStream os;
-    private  int key=0;
+    private  int key=1;
+    String s;
     public ServerThread(Socket socket)
     {
         this.socket= socket;
@@ -27,19 +28,28 @@ public class ServerThread extends Thread
     }
 
     @Override
-    public void run() {
-        while (true) {
-            try {
-                key = is.readInt();
-                System.out.println(key);
-            } catch (EOFException e) {
+    public void run()
+    {
+        while (true)
+        {
+            try
+            {
+                s=is.readLine();
+                System.out.println(s);
+            }
+            catch (EOFException e) {
                 System.out.println("A");
-                continue;
             }
             catch (IOException e) {
                 e.printStackTrace();
             }
+            finally
+            {
+
+
+            }
         }
+
     }
 
     public DataInputStream getIs() {

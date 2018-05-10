@@ -42,30 +42,6 @@ public class Server
             e.printStackTrace();
         }
     }
-    public void gestisciMessaggi() {
-        String s1;
-        int flag = 0;
-        try {
-            while (flag == 0) {
-                s1 = inputStreams.get(0).readLine();
-                if (s1 != null) {
-                    System.out.println(s1);
-                    outputStreams.get(1).writeBytes(s1);
-                    outputStreams.get(1).flush();
-                    flag = 1;
-                } else {
-                    System.out.println("porcoiddio!");
-                    flag = 1;
-                }
-            }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
 
 
 }

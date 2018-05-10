@@ -58,8 +58,9 @@ public class Client
     public void keyPressed(int key) {
         this.key=key;
         try {
-            os.writeInt(this.key);
-            os.flush();
+           // os.flush();
+            os.writeBytes(String.valueOf(key)+"\n");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
