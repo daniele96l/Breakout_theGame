@@ -36,6 +36,8 @@ public abstract class PowerUp extends Sprite{
         return speed;
     }
 
-    public abstract String getSound() ;
+    public String getSound(){
+        return sound;
+    }
 
 }

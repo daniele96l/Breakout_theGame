@@ -5,14 +5,10 @@ import sprites.Ball;
 import sprites.Paddle;
 
 public class LossLife extends PowerUp{
-    private String sound = "evil.mp3";
     public LossLife(int posX, int posY) {
         super("losslife.png", posX, posY);
-    }
+        this.sound="evil.mp3";
 
-    @Override
-    public String getSound() {
-        return sound;
     }
 
     @Override
