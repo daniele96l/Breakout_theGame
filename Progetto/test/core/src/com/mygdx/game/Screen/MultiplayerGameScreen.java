@@ -1,14 +1,16 @@
 package com.mygdx.game.Screen;
-import ClientServer.Server.Client;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.BreakGame;
+import com.mygdx.game.ClientServer.Client;
 
 public class MultiplayerGameScreen implements Screen {
 
     private Client client;
     private BreakGame game;
+
 
     public MultiplayerGameScreen(BreakGame game) {
         client=new Client();
@@ -17,23 +19,25 @@ public class MultiplayerGameScreen implements Screen {
 
     @Override
     public void show() {
+
     }
 
     @Override
     public void render(float delta) {
         game.getBatch().begin();
+        game.getBatch().draw(new Texture("bg.jpg"), 0, 0);
         ////Disegna dati da server
         game.getBatch().end();
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-            client.keyPressed("left");
+            client.keyPressed(Input.Keys.LEFT);
         }
         else {
             if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-                client.keyPressed("right");
+                client.keyPressed(Input.Keys.RIGHT);
             }
             else {
-                client.keyPressed("");
+                client.keyPressed(0);
             }
         }
     }

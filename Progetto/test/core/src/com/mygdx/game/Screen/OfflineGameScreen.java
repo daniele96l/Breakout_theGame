@@ -1,6 +1,5 @@
 package com.mygdx.game.Screen;
 
-import ClientServer.Dato;
 import DatabaseManagement.Database;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -43,7 +42,6 @@ public class OfflineGameScreen implements Screen {
     private GameState gameState;
     private ArrayList<CommandPlayer> commandPlayers;
     private ArrayList<Player> players;
-    private Dato dato;
     private int contatore2 = 0;
     private boolean nextLevel;
     private ArrayList<Integer> indici;

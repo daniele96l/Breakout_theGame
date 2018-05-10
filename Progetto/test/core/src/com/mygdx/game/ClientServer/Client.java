@@ -13,6 +13,7 @@ public class Client
     private DataOutputStream os;
     private String host;
     private int port;
+    private int key;
     public Client()
     {
         port=4444;
@@ -32,6 +33,7 @@ public class Client
         String s=i.concat("\n");
         try
         {
+            os.flush();
             os.writeBytes(s);
         }
         catch (IOException e)
@@ -45,6 +47,7 @@ public class Client
         try
         {
             s=is.readLine();
+            System.out.println(s);
         }
         catch(IOException e)
         {
@@ -52,4 +55,18 @@ public class Client
         }
     }
 
+    public void keyPressed(int key) {
+        this.key=key;
+        try {
+            os.writeInt(this.key);
+            os.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public int getKey() {
+        return key;
+    }
 }

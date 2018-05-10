@@ -10,72 +10,62 @@ import java.util.ArrayList;
 public class Server
 {
     private ServerSocket serverSocket;
-    private Socket socket1;
-    private Socket socket2;
-    private DataInputStream is;
-    private DataOutputStream os;
+    private ArrayList<Socket> sockets;
     private int porta;
-    private ArrayList<Thread> threads;
+    private ArrayList<DataInputStream> inputStreams;
+    private ArrayList<DataOutputStream> outputStreams;
+    private ArrayList<ServerThread> threads;
 
     public Server()
     {
         this.porta=4444;
+        sockets=new ArrayList<Socket>();
+        inputStreams=new ArrayList<DataInputStream>();
+        outputStreams=new ArrayList<DataOutputStream>();
         try
         {
             serverSocket= new ServerSocket(porta);
-            threads= new ArrayList<Thread>();
-            while(threads.size()<2)
-            {
-                if (threads.size() == 0) {
-                    socket1 = serverSocket.accept();
-                    is = new DataInputStream(socket1.getInputStream());
-                    threads.add(new ServerThread(socket1));
-                    //System.out.println("Aggiunto: " + threads.get(threads.size() - 1).getName());
-                }
-                else {
-                    socket2 = serverSocket.accept();
-                    threads.add(new ServerThread(socket2));
-                    os = new DataOutputStream(socket2.getOutputStream());
-                }
-                //threads.get(threads.size()-1).start();
-                System.out.println(threads.size());
+            threads= new ArrayList<ServerThread>();
+            while(threads.size()<1) {
+                sockets.add(serverSocket.accept());
+                inputStreams.add(new DataInputStream(sockets.get(sockets.size() - 1).getInputStream()));
+                outputStreams.add(new DataOutputStream(sockets.get(sockets.size() - 1).getOutputStream()));
+                threads.add(new ServerThread(sockets.get(sockets.size() - 1)));
+                outputStreams.get(outputStreams.size() - 1).writeInt(outputStreams.size() - 1);
             }
-
+            for(ServerThread t:threads) {
+                t.start();
+            }
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
     }
-    public void gestisciMessaggi()
-    {
+    public void gestisciMessaggi() {
         String s1;
-        int flag= 0;
-            try
-            {
-                while(flag==0)
-                {
-                    s1 = is.readLine();
-                    if (s1 != null) {
-                        System.out.println(s1);
-                        os.writeBytes(s1+"\n");
-                        os.flush();
-                        flag = 1;
-                    }
-                    else {
-                        System.out.println("porcoiddio!");
-                        flag = 1;
-                    }
+        int flag = 0;
+        try {
+            while (flag == 0) {
+                s1 = inputStreams.get(0).readLine();
+                if (s1 != null) {
+                    System.out.println(s1);
+                    outputStreams.get(1).writeBytes(s1);
+                    outputStreams.get(1).flush();
+                    flag = 1;
+                } else {
+                    System.out.println("porcoiddio!");
+                    flag = 1;
                 }
+            }
 
 
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }
+
 
 }
