@@ -6,8 +6,10 @@ package sprites;
         import com.badlogic.gdx.math.Vector2;
         import help.Info;
 
+        import java.io.Serializable;
 
-        public class Paddle extends Sprite {
+
+public class Paddle extends Sprite{
             private Vector2 positionM;
             private Vector2 speed;
             private Rectangle bounds;
@@ -19,6 +21,7 @@ package sprites;
                 this.resize=Info.paddleresize;
                 this.giocatore = giocatore;
                 positionM = new Vector2((Info.larghezza / numeroGiocatori) * (giocatore - 1) + Info.larghezza / (2 * numeroGiocatori) - this.getWidth() / 2 * Info.paddleresize, 0);
+                System.out.println(positionM.x);
                 speed = new Vector2(0, 0);
                 this.resize = resize;
                 bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.paddleresize, Paddle.this.getHeight() * Info.paddleresize);

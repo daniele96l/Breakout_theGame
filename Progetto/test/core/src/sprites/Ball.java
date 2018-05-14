@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.*;
 import help.Info;
 
+import java.io.Serializable;
 
-public class Ball extends Sprite{
+
+public class Ball extends Sprite {
     private Texture palla;
     static private Vector2 positionBall;
     static private Vector2 speedBall;

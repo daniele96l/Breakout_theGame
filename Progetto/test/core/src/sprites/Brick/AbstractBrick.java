@@ -7,7 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 import help.Info;
 import sprites.powerup.PowerUp;
 
-public  abstract class AbstractBrick  extends Sprite{
+import java.io.Serializable;
+
+public  abstract class AbstractBrick  extends Sprite {
 
     protected Vector2 positionBrick;
     protected Rectangle boundsBrick;
