@@ -34,7 +34,7 @@ public class ServerThreadIn extends Thread
         while (true) {
             try {
                 if(message==null) {
-                    message="\n";
+                    message="";
                 }
                 os.flush();
                 os.writeBytes(message+"\n");

@@ -36,8 +36,12 @@ public class MultiplayerGameScreen implements Screen {
         paddles=new ArrayList<Paddle>();
         bricks=new ArrayList<AbstractBrick>();
         powerUps=new ArrayList<PowerUp>();
-        paddles.add(new Paddle(1,1));
+        paddles.add(new Paddle(2,1));
+        paddles.add(new Paddle(2,2));
+
         paddleresizex.add(0.5f);
+        paddleresizex.add(0.5f);
+
 
         this.game=game;
     }
@@ -53,8 +57,9 @@ public class MultiplayerGameScreen implements Screen {
         game.getBatch().draw(new Texture("bg.jpg"), 0, 0);
         client.ricevi();
         String m=client.getMessage();
-        System.out.println(m);
-        if(!m.equals("")) {
+        //System.out.println(m);
+        if(!m.equals(""))
+        {
             parseMessage(m);
         }
         for (AbstractBrick brick : bricks) {
@@ -65,6 +70,7 @@ public class MultiplayerGameScreen implements Screen {
             game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth()*Info.powerUpResize, p.getHeight()*Info.powerUpResize);
         }
         game.getBatch().draw(paddles.get(0), paddles.get(0).getPosition().x, paddles.get(0).getPosition().y, paddles.get(0).getWidth() * Info.paddleresizex.get(0), paddles.get(0).getHeight() * Info.paddleresize);
+        game.getBatch().draw(paddles.get(1), paddles.get(1).getPosition().x, paddles.get(1).getPosition().y, paddles.get(1).getWidth() * Info.paddleresizex.get(1), paddles.get(1).getHeight() * Info.paddleresize);
         game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.ballresize, palla.getHeight() * Info.ballresize);
         game.getBatch().end();
 
@@ -83,20 +89,24 @@ public class MultiplayerGameScreen implements Screen {
 
     public void parseMessage(String message) {
         int i;
-        String[] lines=message.split("\n"); //Separa le righe
+        String[] lines=message.split("\t"); //Separa le righe
+
         palla.getPositionBall().x=Float.parseFloat(lines[0].split(" ")[0]);
         palla.getPositionBall().y=Float.parseFloat(lines[0].split(" ")[1]);
 
-        paddles.get(0).getPosition().x=Float.parseFloat(lines[1].split(" ")[0]);
-        Info.paddleresizex.set(0,Float.parseFloat(lines[2].split(" ")[0]));
+        for(Paddle paddle:paddles) {
+            paddle.getPosition().x = Float.parseFloat(lines[1].split(" ")[paddles.indexOf(paddle)]);
+            Info.paddleresizex.set(paddles.indexOf(paddle), Float.parseFloat(lines[2].split(" ")[paddles.indexOf(paddle)]));
+        }
 
         bricks.removeAll(bricks);
+
         for(i=3; i<lines.length; i++) {
-            if(lines[i].split(" ")[2].equals("Brick")) {
+            if(lines[i].split(" ")[2].equals("Brick") || lines[i].split(" ")[2].equals("Brick\n")  ) {
                 bricks.add(new Brick((int)Float.parseFloat(lines[i].split(" ")[0]),(int)Float.parseFloat(lines[i].split(" ")[1])));
             }
             else {
-                if (lines[i].split(" ")[2].equals("HardBrick")) {
+                if (lines[i].split(" ")[2].equals("HardBrick") || lines[i].split(" ")[2].equals("HardBrick\n")) {
                     bricks.add(new HardBrick((int)Float.parseFloat(lines[i].split(" ")[0]), (int)Float.parseFloat(lines[i].split(" ")[1])));
                 }
                 else
@@ -106,6 +116,7 @@ public class MultiplayerGameScreen implements Screen {
         }
 
         powerUps.removeAll(powerUps);
+
         while(i<lines.length) {
             if(lines[i].split(" ")[2].equals("ExtraLife")){
                 powerUps.add(new ExtraLife((int)Float.parseFloat(lines[i].split(" ")[0]), (int)Float.parseFloat(lines[i].split(" ")[1])));
@@ -124,7 +135,6 @@ public class MultiplayerGameScreen implements Screen {
             }
             i++;
         }
-
     }
 
     @Override

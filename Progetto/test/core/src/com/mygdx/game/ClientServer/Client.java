@@ -44,17 +44,18 @@ public class Client {
         String s;
         try {
             message="";
-            while(true) {
+
 
                 s=is.readLine();
-                if(s.equals("")) {
-                    break;
+                if(!s.equals(""))
+                {
+                    message += s+"\n";
                 }
-                message += s+"\n";
-            }
+
+
             os.flush();
             os.writeBytes(String.valueOf(key) + "\n");
-            System.out.println(message);
+            //System.out.println(message);
 
         } catch (IOException e) {
             e.printStackTrace();

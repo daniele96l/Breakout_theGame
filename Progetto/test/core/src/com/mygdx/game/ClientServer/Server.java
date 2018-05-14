@@ -74,19 +74,24 @@ public class Server extends Game{
 
     @Override
     public void create() {
-
+        numeroPlayer=2;
         initServer();
-
-        numeroPlayer=1;
 
         players = new ArrayList<Player>();
         paddles = new ArrayList<Paddle>();
         date = new ArrayList<Date>();
         commandPlayers = new ArrayList<CommandPlayer>();
-        players.add(new HumanPlayer("default"));
+        players.add(new HumanPlayer("player1"));
+        players.add(new HumanPlayer("player2"));
         paddles.add(new Paddle(numeroPlayer, 1));
+        paddles.add(new Paddle(numeroPlayer, 2));
+
         Info.paddleresizex.add(0.5f);
+        Info.paddleresizex.add(0.5f);
+
         commandPlayers.add(new CommandPlayer(paddles.get(0), players.get(0), numeroPlayer, 1));
+        commandPlayers.add(new CommandPlayer(paddles.get(1), players.get(1), numeroPlayer, 2));
+
         isFirstCalled = true;
 
         if (isFirstCalled) {
@@ -97,6 +102,7 @@ public class Server extends Game{
             isPaused = false;
             palla = new Ball();
             tmpDT = Info.dt;
+            date.add(new Date());
             date.add(new Date());
             updateScene();
             updateLevel();
@@ -180,39 +186,41 @@ public class Server extends Game{
 
     private void writeMessage() {
         String message="";
-        message+=palla.getPositionBall().x+" "+palla.getPositionBall().y+"\n";
+        message+=palla.getPositionBall().x+" "+palla.getPositionBall().y+"\t";
         for(Paddle paddle:paddles) {
             message+=paddle.getPosition().x+" ";
         }
-        message+="\n";
+        message+="\t";
         for(float f:Info.paddleresizex) {
             message+=f+" ";
         }
-        message+="\n";
+        message+="\t";
         for(AbstractBrick brick:bricks) {
             message+=brick.getPositionBrick().x+" "+brick.getPositionBrick().y+" ";
             if(brick instanceof HardBrick) {
-                message+="HardBrick\n";
+                message+="HardBrick\t";
             }
             else {
-                message+="Brick\n";
+                message+="Brick\t";
             }
         }
         for(PowerUp powerUp:powerUps) {
             message+=powerUp.getPosition().x+" "+powerUp.getPosition().y+" ";
             if(powerUp instanceof ExtraLife) {
-                message+="ExtraLife\n";
+                message+="ExtraLife\t";
             }
             if(powerUp instanceof LossLife) {
-                message+="LossLife\n";
+                message+="LossLife\t";
             }
             if(powerUp instanceof LongPaddle) {
-                message+="LongPaddle\n";
+                message+="LongPaddle\t";
             }
             if(powerUp instanceof ShortPaddle) {
-                message+="ShortPaddle\n";
+                message+="ShortPaddle\t";
             }
         }
+
+        message=message.substring(0, message.length()-1);
         for(ServerThreadIn thread:threadsIn) {
             thread.setMessage(message);
         }
@@ -259,7 +267,7 @@ public class Server extends Game{
         try {
             serverSocket = new ServerSocket(porta);
             threadsIn = new ArrayList<ServerThreadIn>();
-            while (threadsIn.size() < 1) {
+            while (threadsIn.size() < numeroPlayer) {
                 socketsIn.add(serverSocket.accept());
                 threadsIn.add(new ServerThreadIn(socketsIn.get(socketsIn.size() - 1)));
             }
