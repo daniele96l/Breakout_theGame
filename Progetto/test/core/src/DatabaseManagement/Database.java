@@ -1,8 +1,6 @@
 package DatabaseManagement;
-import java.awt.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
+import DatabaseManagement.Enum.DropType;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -42,11 +40,10 @@ public class Database {
     public String start () {
         listaGiocatori = new ArrayList<String>();
         String s = "";
-        int cont = 0;
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
-            //!!!!!!!!!! jdbc:sqlite:path of db!!!!!!!!!!
+            //The main path is assets!
             String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
@@ -100,34 +97,23 @@ public class Database {
         }
     }
 
-    public void drop (String name) {
-        BufferedReader fr = new BufferedReader(new InputStreamReader(System.in));
+    public void drop (String name, DropType tipo) {
+        String query = "";
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
             String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
-            String query = "DELETE FROM GAMES WHERE NICKNAME = '" + name + "'";
+            switch (tipo) {
+                case DROP_PLAYER:
+                    query = "DELETE FROM GAMES WHERE NICKNAME = '" + name + "'";
+                    break;
+                case DROP_ALL:
+                    query = "DELETE FROM GAMES";
+                    break;
+            }
             stmt.executeUpdate(query);
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-        } catch (ClassNotFoundException cnfe) {
-            System.err.println(cnfe.getMessage());
-        }
-    }
-
-    public void empity () {
-        try {
-            String driver = "org.sqlite.JDBC";
-            Class.forName(driver);
-            String url = "jdbc:sqlite:DB.sqlite";
-            Connection conn = DriverManager.getConnection(url);
-            Statement stmt = conn.createStatement();
-            //System.out.println("Connection established!");
-            String query = "DELETE FROM GAMES";
-            stmt.executeUpdate(query);
-            System.out.println("Database empity!");
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
         } catch (ClassNotFoundException cnfe) {

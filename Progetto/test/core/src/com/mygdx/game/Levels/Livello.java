@@ -91,7 +91,6 @@ public class Livello {
                 brick.setPowerUp(new ShortPaddle(posX,posY));
 
             }
-
             //////Inserire nuovi power up qua
             /*
             if(randNum>=interval && randNum<2*interval) {
