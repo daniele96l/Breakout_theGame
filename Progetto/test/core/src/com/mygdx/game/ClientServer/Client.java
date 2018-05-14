@@ -14,7 +14,7 @@ public class Client {
     private DataInputStream is;
     private DataOutputStream os;
     private String host;
-    private int port;
+    private int port=0;
     private int key;
     String message;
 
