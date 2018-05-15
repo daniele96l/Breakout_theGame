@@ -31,6 +31,7 @@ public class MultiplayerGameScreen implements Screen {
     private ArrayList<PowerUp> powerUps;
 
 
+
     public MultiplayerGameScreen(BreakGame game) {
         client=new Client();
         palla=new Ball();
@@ -54,7 +55,7 @@ public class MultiplayerGameScreen implements Screen {
         client.ricevi();
         String m=client.getMessage();
         //System.out.println(m);
-        if(!m.equals(""))
+        if(!m.equals("") || (m.equals("\n")))
         {
             parseMessage(m);
         }
@@ -167,4 +168,6 @@ public class MultiplayerGameScreen implements Screen {
     public void dispose() {
 
     }
+
+
 }

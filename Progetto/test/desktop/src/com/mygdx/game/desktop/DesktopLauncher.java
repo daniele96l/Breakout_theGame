@@ -13,6 +13,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		//Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 		config.width = Info.larghezza;
+		config.foregroundFPS = 60;
 		config.height = Info.altezza;
 		new LwjglApplication(new BreakGame(), config);
 	}

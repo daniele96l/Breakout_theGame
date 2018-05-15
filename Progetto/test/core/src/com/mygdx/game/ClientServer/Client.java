@@ -36,12 +36,11 @@ public class Client {
             message="";
 
                 s=is.readLine();
-            System.out.println(s);
+            //System.out.println(s);
                 if(!s.equals(""))
                 {
                     message += s+"\n";
                 }
-
 
             os.flush();
             os.writeBytes(String.valueOf(key) + "\n");

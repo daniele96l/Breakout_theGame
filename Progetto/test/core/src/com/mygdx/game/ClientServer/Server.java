@@ -74,6 +74,7 @@ public class Server extends Game{
     private boolean isPaused;
     private boolean isFirstCalled;
     private ArrayList<Date> date;
+    private long diff, start = System.currentTimeMillis();
     private Database db = new Database();
 
 
@@ -118,6 +119,7 @@ public class Server extends Game{
     }
 
     public void render() {
+        sleep(26); // questo mi permette di forzare i frame
         System.out.println(Gdx.graphics.getFramesPerSecond());
         if (nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
             bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//ritorno l'array adatto al nuovo livello
@@ -411,6 +413,20 @@ public class Server extends Game{
                 paddles.remove(index);
                 numeroPlayer--;
             }
+        }
+    }
+
+
+    public void sleep(int fps) {
+        if(fps>0){
+            diff = System.currentTimeMillis() - start;
+            long targetDelay = 1000/fps;
+            if (diff < targetDelay) {
+                try{
+                    Thread.sleep(targetDelay - diff);
+                } catch (InterruptedException e) {}
+            }
+            start = System.currentTimeMillis();
         }
     }
 }
