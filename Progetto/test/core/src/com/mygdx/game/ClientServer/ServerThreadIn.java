@@ -5,14 +5,11 @@ import sprites.Paddle;
 import java.io.*;
 import java.net.Socket;
 
-public class ServerThreadIn extends Thread
-{
+public class ServerThreadIn extends Thread {
     private Socket socket;
     private DataInputStream is;
-    private DataOutputStream os;
     private int key=0;
-    private String message;
-    String line;
+    private String line;
 
     public ServerThreadIn(Socket socket)
     {
@@ -20,7 +17,6 @@ public class ServerThreadIn extends Thread
         try
         {
             is= new DataInputStream(socket.getInputStream());
-            os= new DataOutputStream(socket.getOutputStream());
         }
         catch (IOException e)
         {
@@ -33,15 +29,12 @@ public class ServerThreadIn extends Thread
     {
         while (true) {
             try {
-                if(message==null) {
-                    message="";
-                }
-                os.flush();
-                os.writeBytes(message+"\n");
 
+                System.out.println("IN");
                 line = is.readLine();
                 if (line != null) {
                     key = Integer.parseInt(line);
+                    System.out.println(key);
                 } else {
                     key = 0;
                 }
@@ -56,18 +49,6 @@ public class ServerThreadIn extends Thread
 
     public int getKey() {
         return key;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public DataInputStream getIs() {
-        return is;
-    }
-
-    public DataOutputStream getOs() {
-        return os;
     }
 
 }

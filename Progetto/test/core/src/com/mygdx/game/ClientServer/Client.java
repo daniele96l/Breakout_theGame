@@ -45,8 +45,8 @@ public class Client {
         try {
             message="";
 
-
                 s=is.readLine();
+            System.out.println(s);
                 if(!s.equals(""))
                 {
                     message += s+"\n";

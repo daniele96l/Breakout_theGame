@@ -35,9 +35,11 @@ import java.util.Random;
 
 public class Server extends Game{
     private ServerSocket serverSocket;
-    private ArrayList<Socket> socketsIn;
+    private ArrayList<Socket> sockets;
+
     private int porta;
     private ArrayList<ServerThreadIn> threadsIn;
+    private ArrayList<ServerThreadOut> threadsOut;
     private ArrayList<Player> players;
     private ArrayList<Paddle> paddles;
     private ArrayList<CommandPlayer> commandPlayers;
@@ -223,7 +225,7 @@ public class Server extends Game{
         }
 
         message=message.substring(0, message.length()-1);
-        for(ServerThreadIn thread:threadsIn) {
+        for(ServerThreadOut thread:threadsOut) {
             thread.setMessage(message);
         }
 
@@ -265,15 +267,22 @@ public class Server extends Game{
 
     private void initServer() {
         this.porta = 4444;
-        socketsIn = new ArrayList<Socket>();
+        sockets = new ArrayList<Socket>();
+
         try {
             serverSocket = new ServerSocket(porta);
             threadsIn = new ArrayList<ServerThreadIn>();
+            threadsOut = new ArrayList<ServerThreadOut>();
             while (threadsIn.size() < numeroPlayer) {
-                socketsIn.add(serverSocket.accept());
-                threadsIn.add(new ServerThreadIn(socketsIn.get(socketsIn.size() - 1)));
+                sockets.add(serverSocket.accept());
+                threadsIn.add(new ServerThreadIn(sockets.get(sockets.size() - 1)));
+                threadsOut.add(new ServerThreadOut(sockets.get(sockets.size() - 1)));
+
             }
             for (ServerThreadIn t : threadsIn) {
+                t.start();
+            }
+            for (ServerThreadOut t : threadsOut) {
                 t.start();
             }
         } catch (IOException e) {
