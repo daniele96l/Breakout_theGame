@@ -24,6 +24,7 @@ import sprites.Brick.HardBrick;
 import sprites.Paddle;
 import sprites.powerup.*;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -74,23 +75,20 @@ public class Server extends Game{
 
     @Override
     public void create() {
-        numeroPlayer=2;
+        numeroPlayer = (Integer.parseInt(JOptionPane.showInputDialog(null, "Number of player", "Enter the number of player ", 1)));
         initServer();
 
         players = new ArrayList<Player>();
         paddles = new ArrayList<Paddle>();
         date = new ArrayList<Date>();
         commandPlayers = new ArrayList<CommandPlayer>();
-        players.add(new HumanPlayer("player1"));
-        players.add(new HumanPlayer("player2"));
-        paddles.add(new Paddle(numeroPlayer, 1));
-        paddles.add(new Paddle(numeroPlayer, 2));
 
-        Info.paddleresizex.add(0.5f);
-        Info.paddleresizex.add(0.5f);
-
-        commandPlayers.add(new CommandPlayer(paddles.get(0), players.get(0), numeroPlayer, 1));
-        commandPlayers.add(new CommandPlayer(paddles.get(1), players.get(1), numeroPlayer, 2));
+        for(int i=0; i<numeroPlayer; i++) {
+            players.add(new HumanPlayer("player "+ i+1));
+            paddles.add(new Paddle(numeroPlayer, i+1));
+            Info.paddleresizex.add(0.5f);
+            commandPlayers.add(new CommandPlayer(paddles.get(i), players.get(i), numeroPlayer, i+1));
+        }
 
         isFirstCalled = true;
 
@@ -102,8 +100,11 @@ public class Server extends Game{
             isPaused = false;
             palla = new Ball();
             tmpDT = Info.dt;
-            date.add(new Date());
-            date.add(new Date());
+
+            for(int i=0; i<numeroPlayer;i++) {
+                date.add(new Date());
+            }
+
             updateScene();
             updateLevel();
             gameHolder = players.get(0);

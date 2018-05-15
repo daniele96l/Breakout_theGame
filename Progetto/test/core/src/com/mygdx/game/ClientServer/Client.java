@@ -22,7 +22,7 @@ public class Client {
         port = 4444;
         key=0;
         try {
-            socket = new Socket("127.0.0.1", port);
+            socket = new Socket("localhost", port);
             is = new DataInputStream(socket.getInputStream());
             os = new DataOutputStream(socket.getOutputStream());
         } catch (IOException e) {
