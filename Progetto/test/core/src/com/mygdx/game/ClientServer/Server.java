@@ -1,6 +1,7 @@
 package com.mygdx.game.ClientServer;
 
 import DatabaseManagement.Database;
+import DatabaseManagement.Enum.DropType;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -161,7 +162,7 @@ public class Server extends Game{
             if (isFinished) {
                 livelloCorrente = 1;
                 isFinished = false;
-                db.insert(ranGen(), playerName, players.get(0).getScore());
+                db.modify(ranGen(), playerName, players.get(0).getScore(), DropType.INSERT);
                 updateScene();
                 updateLevel(); /////////////SERVE UNO SCREEN DI FINE GIOCO
             } else {
@@ -387,7 +388,7 @@ public class Server extends Game{
 
         if(loser.getLives()<0) {
             if(players.get(0).equals(loser)) {
-                db.insert(ranGen(), playerName, players.get(0).getScore());
+                db.modify(ranGen(), playerName, players.get(0).getScore(), DropType.INSERT);
                 gameState=GameState.GAME_OVER;
             }
             else {

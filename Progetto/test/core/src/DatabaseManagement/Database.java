@@ -1,8 +1,6 @@
 package DatabaseManagement;
-import java.awt.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
+import DatabaseManagement.Enum.DropType;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -16,7 +14,7 @@ public class Database {
     public Database() {
     }
 
-    private boolean check () {
+    private boolean check() {
         boolean empity = true;
         try {
             String driver = "org.sqlite.JDBC";
@@ -39,14 +37,13 @@ public class Database {
         return empity;
     }
 
-    public String start () {
+    public String start() {
         listaGiocatori = new ArrayList<String>();
         String s = "";
-        int cont = 0;
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
-            //!!!!!!!!!! jdbc:sqlite:path of db!!!!!!!!!!
+            //The main path is assets!
             String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
@@ -57,7 +54,7 @@ public class Database {
             String query = "SELECT * FROM GAMES ORDER BY POINTS DESC";
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                listaGiocatori.add(rs.getString("NICKNAME") + "              " +  rs.getString("POINTS") + "\n\n");
+                listaGiocatori.add(rs.getString("NICKNAME") + "              " + rs.getString("POINTS") + "\n\n");
             }
             if (listaGiocatori.size() < 10) {
                 for (int i = 0; i < listaGiocatori.size(); i++) {
@@ -80,54 +77,35 @@ public class Database {
         return s;
     }
 
-    public void insert (String id, String nome, int punteggio) {
+    public void modify(String id, String name, int points, DropType type) {
+        String query;
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
             String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
-            //System.out.println("Connection established!");
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO GAMES VALUES (?, ?, ?)");
-            stmt.setString(1, id);
-            stmt.setString(2, nome);
-            stmt.setInt(3, punteggio);
-            stmt.executeUpdate();
-            conn.close();
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-        } catch (ClassNotFoundException cnfe) {
-            System.err.println(cnfe.getMessage());
-        }
-    }
-
-    public void drop (String name) {
-        BufferedReader fr = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            String driver = "org.sqlite.JDBC";
-            Class.forName(driver);
-            String url = "jdbc:sqlite:DB.sqlite";
-            Connection conn = DriverManager.getConnection(url);
-            Statement stmt = conn.createStatement();
-            String query = "DELETE FROM GAMES WHERE NICKNAME = '" + name + "'";
-            stmt.executeUpdate(query);
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-        } catch (ClassNotFoundException cnfe) {
-            System.err.println(cnfe.getMessage());
-        }
-    }
-
-    public void empity () {
-        try {
-            String driver = "org.sqlite.JDBC";
-            Class.forName(driver);
-            String url = "jdbc:sqlite:DB.sqlite";
-            Connection conn = DriverManager.getConnection(url);
-            Statement stmt = conn.createStatement();
-            //System.out.println("Connection established!");
-            String query = "DELETE FROM GAMES";
-            stmt.executeUpdate(query);
-            System.out.println("Database empity!");
+            switch (type) {
+                case INSERT:
+                    PreparedStatement stmt = conn.prepareStatement("INSERT INTO GAMES VALUES (?, ?, ?)");
+                    stmt.setString(1, id);
+                    stmt.setString(2, name);
+                    stmt.setInt(3, points);
+                    stmt.executeUpdate();
+                    conn.close();
+                    break;
+                case DROP_PLAYER:
+                    Statement stm = conn.createStatement();
+                    query = "DELETE FROM GAMES WHERE NICKNAME = '" + name + "'";
+                    stm.executeUpdate(query);
+                    conn.close();
+                    break;
+                case DROP_ALL:
+                    Statement st = conn.createStatement();
+                    query = "DELETE FROM GAMES";
+                    st.executeUpdate(query);
+                    conn.close();
+                    break;
+            }
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
         } catch (ClassNotFoundException cnfe) {
