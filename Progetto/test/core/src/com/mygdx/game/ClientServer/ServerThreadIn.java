@@ -30,7 +30,6 @@ public class ServerThreadIn extends Thread {
         while (true) {
             try {
 
-                System.out.println("IN");
                 line = is.readLine();
                 if (line != null) {
                     key = Integer.parseInt(line);

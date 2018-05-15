@@ -48,6 +48,7 @@ public class MultiplayerGameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        System.out.println(Gdx.graphics.getFramesPerSecond());
         game.getBatch().begin();
         game.getBatch().draw(new Texture("bg.jpg"), 0, 0);
         client.ricevi();

@@ -30,16 +30,6 @@ public class Client {
         }
     }
 
-    public void messaggio(String i) {
-        String s = i.concat("\n");
-        try {
-            os.flush();
-            os.writeBytes(s);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void ricevi() {
         String s;
         try {
