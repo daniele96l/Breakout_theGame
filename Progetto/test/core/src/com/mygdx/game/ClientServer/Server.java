@@ -26,24 +26,22 @@ import sprites.Paddle;
 import sprites.powerup.*;
 
 import javax.swing.*;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
 public class Server extends Game{
-    private ServerSocket serverSocket;
-    private ArrayList<Socket> sockets;
-
-    private int porta;
+    private DatagramSocket datagramSocket;
+    private int portaServer=4444;
     private ArrayList<ServerThreadIn> threadsIn;
+    private ArrayList<DatagramSocket> sockets;
     private ArrayList<Player> players;
     private ArrayList<Paddle> paddles;
     private ArrayList<CommandPlayer> commandPlayers;
-    private ArrayList<DataOutputStream> outputStreams;
     private int numeroPlayer=1;
     private Collision collision;
     private ArrayList<AbstractBrick> bricks = new ArrayList();
@@ -118,7 +116,6 @@ public class Server extends Game{
     }
 
     public void render() {
-        System.out.println(Gdx.graphics.getFramesPerSecond());
         if (nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
             bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//ritorno l'array adatto al nuovo livello
             bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
@@ -227,14 +224,16 @@ public class Server extends Game{
         }
 
         message=message.substring(0, message.length()-1);
+        byte[] bytes=message.getBytes();
 
-        for(DataOutputStream stream:outputStreams) {
+        for(ServerThreadIn thread:threadsIn) {
+            DatagramPacket packet=new DatagramPacket(bytes, bytes.length, thread.getAddress(), thread.getPort());
             try {
-                stream.flush();
-                stream.writeBytes(message+"\n");
+                thread.getSocket().send(packet);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
 
     }
@@ -274,18 +273,24 @@ public class Server extends Game{
     }
 
     private void initServer() {
-        this.porta = 4444;
-        sockets = new ArrayList<Socket>();
-
         try {
-            serverSocket = new ServerSocket(porta);
+            datagramSocket=new DatagramSocket(portaServer);
             threadsIn = new ArrayList<ServerThreadIn>();
-            outputStreams=new ArrayList<DataOutputStream>();
+            sockets=new ArrayList<DatagramSocket>();
             while (threadsIn.size() < numeroPlayer) {
-                sockets.add(serverSocket.accept());
-                threadsIn.add(new ServerThreadIn(sockets.get(sockets.size() - 1)));
-                outputStreams.add(new DataOutputStream(sockets.get(sockets.size()-1).getOutputStream()));
+                byte[] b=new byte[1024];
+                DatagramPacket packet=new DatagramPacket(b, b.length);
+                datagramSocket.receive(packet);
+                int newPort=portaServer+threadsIn.size()+1;
+                b=((Integer)newPort).toString().getBytes();
+                DatagramPacket packetBack=new DatagramPacket(b, b.length, packet.getAddress(), packet.getPort());
+                datagramSocket.send(packetBack);
+                sockets.add(new DatagramSocket(newPort));
+                threadsIn.add(new ServerThreadIn(sockets.get(sockets.size()-1),packet.getAddress(), packet.getPort()));
             }
+
+            datagramSocket.close();
+
             for (ServerThreadIn t : threadsIn) {
                 t.start();
             }

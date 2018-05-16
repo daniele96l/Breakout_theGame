@@ -4,7 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.BreakGame;
-import com.mygdx.game.ClientServer.Client;
+import com.mygdx.game.ClientServer.ClientThread;
 import help.Info;
 import sprites.Ball;
 import sprites.Brick.AbstractBrick;
@@ -13,30 +13,47 @@ import sprites.Brick.HardBrick;
 import sprites.Paddle;
 import sprites.powerup.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
+import java.net.*;
 import java.util.ArrayList;
-
-import static help.Info.paddleresizex;
 
 
 public class MultiplayerGameScreen implements Screen {
 
-    private Client client;
     private BreakGame game;
     private Ball palla;
     private int numeroPlayer;
     private ArrayList<Paddle> paddles;
     private ArrayList<AbstractBrick> bricks;
     private ArrayList<PowerUp> powerUps;
+    private ClientThread thread;
+    private int key;
+    private DatagramSocket datagramSocket;
+    private int serverPort;
+    private InetAddress address;
 
 
     public MultiplayerGameScreen(BreakGame game) {
-        client=new Client();
         palla=new Ball();
         paddles=new ArrayList<Paddle>();
         bricks=new ArrayList<AbstractBrick>();
         powerUps=new ArrayList<PowerUp>();
+        boolean f=true;
+        try {
+            address=InetAddress.getByName("localhost");
+            byte[] b=new byte[1024];
+            datagramSocket=new DatagramSocket();
+            DatagramPacket packet=new DatagramPacket(b, b.length, address, 4444);
+            datagramSocket.send(packet);
+            DatagramPacket packet1=new DatagramPacket(b, b.length);
+            datagramSocket.receive(packet1);
+            serverPort=Integer.parseInt(new String(packet1.getData(),0,packet1.getLength()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        thread=new ClientThread(serverPort, datagramSocket);
+        thread.start();
 
         this.game=game;
     }
@@ -48,12 +65,9 @@ public class MultiplayerGameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        System.out.println(Gdx.graphics.getFramesPerSecond());
         game.getBatch().begin();
         game.getBatch().draw(new Texture("bg.jpg"), 0, 0);
-        client.ricevi();
-        String m=client.getMessage();
-        //System.out.println(m);
+        String m=thread.getMessage();
         if(!m.equals(""))
         {
             parseMessage(m);
@@ -73,15 +87,16 @@ public class MultiplayerGameScreen implements Screen {
         game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.ballresize, palla.getHeight() * Info.ballresize);
         game.getBatch().end();
 
+
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            client.keyPressed(Input.Keys.LEFT);
+            keyPressed(Input.Keys.LEFT);
         }
         else {
             if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                client.keyPressed(Input.Keys.RIGHT);
+                keyPressed(Input.Keys.RIGHT);
             }
             else {
-                client.keyPressed(0);
+                keyPressed(0);
             }
         }
     }
@@ -140,6 +155,17 @@ public class MultiplayerGameScreen implements Screen {
 
             }
             i++;
+        }
+    }
+
+    public void keyPressed(int key) {
+       String s=""+key;
+       byte[] b=s.getBytes();
+       DatagramPacket packet=new DatagramPacket(b, b.length, address, serverPort);
+        try {
+            datagramSocket.send(packet);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
