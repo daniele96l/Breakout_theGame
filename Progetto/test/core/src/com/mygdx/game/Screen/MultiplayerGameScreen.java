@@ -13,6 +13,7 @@ import sprites.Brick.HardBrick;
 import sprites.Paddle;
 import sprites.powerup.*;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class MultiplayerGameScreen implements Screen {
         powerUps=new ArrayList<PowerUp>();
         boolean f=true;
         try {
-            address=InetAddress.getByName("localhost");
+            address=InetAddress.getByName(JOptionPane.showInputDialog(null, "Insert IP address", "IP", 1));
             byte[] b=new byte[1024];
             datagramSocket=new DatagramSocket();
             DatagramPacket packet=new DatagramPacket(b, b.length, address, 4444);
@@ -52,7 +53,7 @@ public class MultiplayerGameScreen implements Screen {
             e.printStackTrace();
         }
 
-        thread=new ClientThread(serverPort, datagramSocket);
+        thread=new ClientThread(address, serverPort, datagramSocket);
         thread.start();
 
         this.game=game;

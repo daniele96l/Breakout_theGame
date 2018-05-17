@@ -11,15 +11,11 @@ public class ClientThread extends Thread {
     private byte[] buf=new byte[1024];
     String message;
 
-    public ClientThread(int port, DatagramSocket socket) {
+    public ClientThread(InetAddress address, int port,  DatagramSocket socket) {
         message = "";
         this.port = port;
         this.socket = socket;
-        try {
-            socket.connect(InetAddress.getByName("localhost"), port);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+        socket.connect(address, port);
     }
 
     public void run() {
