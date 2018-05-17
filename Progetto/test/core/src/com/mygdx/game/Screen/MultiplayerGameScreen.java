@@ -17,6 +17,7 @@ import javax.swing.*;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class MultiplayerGameScreen implements Screen {
@@ -69,6 +70,7 @@ public class MultiplayerGameScreen implements Screen {
     public void render(float delta) {
         game.getBatch().begin();
         String m=thread.getMessage();
+        System.out.println(m);
         if(!m.equals(""))
         {
             parseMessage(m);
@@ -175,6 +177,8 @@ public class MultiplayerGameScreen implements Screen {
             e.printStackTrace();
         }
     }
+
+
 
     @Override
     public void resize(int width, int height) {

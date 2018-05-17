@@ -8,7 +8,7 @@ import java.net.*;
 public class ClientThread extends Thread {
     private DatagramSocket socket;
     private int port;
-    private byte[] buf=new byte[1024];
+    private byte[] buf=new byte[2048];
     String message;
 
     public ClientThread(InetAddress address, int port,  DatagramSocket socket) {
