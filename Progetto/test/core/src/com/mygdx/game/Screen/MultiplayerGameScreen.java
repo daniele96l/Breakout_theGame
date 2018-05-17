@@ -57,6 +57,7 @@ public class MultiplayerGameScreen implements Screen {
             datagramSocket=new DatagramSocket();
             DatagramPacket packet=new DatagramPacket(b, b.length, address, 4444);
             datagramSocket.send(packet);
+            b = new byte[1024];
             DatagramPacket packet1=new DatagramPacket(b, b.length);
             datagramSocket.receive(packet1);
             serverPort=Integer.parseInt(new String(packet1.getData(),0,packet1.getLength()));
