@@ -70,7 +70,6 @@ public class MultiplayerGameScreen implements Screen {
     public void render(float delta) {
         game.getBatch().begin();
         String m=thread.getMessage();
-        System.out.println(m);
         if(!m.equals(""))
         {
             parseMessage(m);

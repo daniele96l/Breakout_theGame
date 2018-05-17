@@ -302,7 +302,6 @@ public class Server extends Game {
                 byte[] b = new byte[1024];
                 DatagramPacket packet = new DatagramPacket(b, b.length);
                 datagramSocket.receive(packet);
-                System.out.println(packet.getAddress());
                 int newPort = portaServer + threadsIn.size() + 1;
                 b = ((Integer) newPort).toString().getBytes();
                 DatagramPacket packetBack = new DatagramPacket(b, b.length, packet.getAddress(), packet.getPort());
