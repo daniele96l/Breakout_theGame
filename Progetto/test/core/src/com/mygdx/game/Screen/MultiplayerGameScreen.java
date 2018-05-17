@@ -27,6 +27,7 @@ public class MultiplayerGameScreen implements Screen {
     private ArrayList<Paddle> paddles;
     private ArrayList<AbstractBrick> bricks;
     private ArrayList<PowerUp> powerUps;
+    private Texture bg;
     private ClientThread thread;
     private int key;
     private DatagramSocket datagramSocket;
@@ -67,7 +68,6 @@ public class MultiplayerGameScreen implements Screen {
     @Override
     public void render(float delta) {
         game.getBatch().begin();
-        game.getBatch().draw(new Texture("bg.jpg"), 0, 0);
         String m=thread.getMessage();
         if(!m.equals(""))
         {
@@ -157,6 +157,8 @@ public class MultiplayerGameScreen implements Screen {
             }
             i++;
         }
+
+        bg=new Texture(lines[i]);
     }
 
     public void keyPressed(int key) {

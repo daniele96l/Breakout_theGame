@@ -6,6 +6,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Collision;
 import com.mygdx.game.CommandPlayer;
@@ -119,6 +120,7 @@ public class Server extends Game{
         if (nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
             bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//ritorno l'array adatto al nuovo livello
             bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
+
         }
         palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y * Info.dt);
         palla.getBoundsBall().setPosition(palla.getPositionBall());
@@ -168,7 +170,6 @@ public class Server extends Game{
                 updateLevel(); /////////////SERVE UNO SCREEN DI FINE GIOCO
             } else {
                 nextLevel = true;
-                gameState = winLoseState.draw();
                 updateScene();
                 updateLevel();
             }
@@ -222,6 +223,10 @@ public class Server extends Game{
                 message+="ShortPaddle\t";
             }
         }
+
+        String bgPath=((FileTextureData)bg.getTextureData()).getFileHandle().name();
+
+        message+=bgPath+"\t";
 
         message=message.substring(0, message.length()-1);
         byte[] bytes=message.getBytes();
