@@ -81,15 +81,14 @@ public class Server extends Game {
     @Override
     public void create() {
         numeroPlayer = (Integer.parseInt(JOptionPane.showInputDialog(null, "Number of player", "Enter the number of player ", 1)));
-        initServer();
-        creato = false;
         players = new ArrayList<Player>();
         paddles = new ArrayList<Paddle>();
         date = new ArrayList<Date>();
         commandPlayers = new ArrayList<CommandPlayer>();
+        initServer();
+        creato = false;
 
         for (int i = 0; i < numeroPlayer; i++) {
-            players.add(new HumanPlayer("player " + i + 1));
             paddles.add(new Paddle(numeroPlayer, i + 1));
             Info.paddleresizex.add(0.5f);
             commandPlayers.add(new CommandPlayer(paddles.get(i), players.get(i), numeroPlayer, i + 1));
@@ -202,10 +201,19 @@ public class Server extends Game {
             message += paddle.getPosition().x + " ";
         }
         message += "\t";
+
         for (float f : Info.paddleresizex) {
             message += f + " ";
         }
         message += "\t";
+
+        for (Player player:players) {
+            message += player.getPlayerName() + " ";
+            message+= player.getScore()+" ";
+            message+= player.getLives()+" ";
+            message += "\t";
+        }
+
         for (AbstractBrick brick : bricks) {
             message += brick.getPositionBrick().x + " " + brick.getPositionBrick().y + " ";
             if (brick instanceof HardBrick) {
@@ -302,11 +310,13 @@ public class Server extends Game {
                 byte[] b = new byte[1024];
                 DatagramPacket packet = new DatagramPacket(b, b.length);
                 datagramSocket.receive(packet);
+                String playerName=new String(packet.getData());
                 int newPort = portaServer + threadsIn.size() + 1;
                 b = ((Integer) newPort).toString().getBytes();
                 DatagramPacket packetBack = new DatagramPacket(b, b.length, packet.getAddress(), packet.getPort());
                 datagramSocket.send(packetBack);
                 sockets.add(new DatagramSocket(newPort));
+                players.add(new HumanPlayer(playerName));
                 threadsIn.add(new ServerThreadIn(sockets.get(sockets.size() - 1), packet.getAddress(), packet.getPort()));
             }
 

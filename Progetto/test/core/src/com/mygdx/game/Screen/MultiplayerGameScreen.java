@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.BreakGame;
 import com.mygdx.game.ClientServer.ClientThread;
+import com.mygdx.game.hud.Hud;
 import help.Info;
 import sprites.Ball;
 import sprites.Brick.AbstractBrick;
@@ -34,6 +35,11 @@ public class MultiplayerGameScreen implements Screen {
     private DatagramSocket datagramSocket;
     private int serverPort;
     private InetAddress address;
+    private String playerName;
+    private Hud hud;
+    private ArrayList<String> playerNames;
+    private ArrayList<String> scores;
+    private ArrayList<String> lives;
 
 
     public MultiplayerGameScreen(BreakGame game) {
@@ -41,10 +47,13 @@ public class MultiplayerGameScreen implements Screen {
         paddles=new ArrayList<Paddle>();
         bricks=new ArrayList<AbstractBrick>();
         powerUps=new ArrayList<PowerUp>();
-        boolean f=true;
+        playerNames=new ArrayList<String>();
+        scores=new ArrayList<String>();
+        lives=new ArrayList<String>();
         try {
             address=InetAddress.getByName(JOptionPane.showInputDialog(null, "Insert IP address", "IP", 1));
-            byte[] b=new byte[1024];
+            playerName = JOptionPane.showInputDialog(null, "Insert Nickname", "Nickname", 1);
+            byte[] b=playerName.getBytes();
             datagramSocket=new DatagramSocket();
             DatagramPacket packet=new DatagramPacket(b, b.length, address, 4444);
             datagramSocket.send(packet);
@@ -76,6 +85,13 @@ public class MultiplayerGameScreen implements Screen {
 
             game.getBatch().draw(bg,0,0);
         }
+
+        game.getBatch().end();
+
+        hud=new Hud(game.getBatch(),playerNames, scores, lives);
+        hud.stage.draw();
+
+        game.getBatch().begin();
 
         for (AbstractBrick brick : bricks) {
             game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.brickresize, brick.getHeight() * Info.brickresize);
@@ -125,20 +141,32 @@ public class MultiplayerGameScreen implements Screen {
             Info.paddleresizex.set(paddles.indexOf(paddle), Float.parseFloat(lines[2].split(" ")[paddles.indexOf(paddle)]));
         }
 
+        playerNames.removeAll(playerNames);
+        lives.removeAll(lives);
+        scores.removeAll(scores);
+
+        for(i=3;i<numeroPlayer+3; i++) {
+            playerNames.add(lines[i].split(" ")[0]);
+            scores.add(lines[i].split(" ")[1]);
+            lives.add(lines[i].split(" ")[2]);
+
+        }
+
         bricks.removeAll(bricks);
 
-        for(i=3; i<lines.length-1; i++) {
+        while(i<lines.length-1) {
             if(lines[i].split(" ")[2].equals("Brick") || lines[i].split(" ")[2].equals("Brick\n")  ) {
                 bricks.add(new Brick((int)Float.parseFloat(lines[i].split(" ")[0]),(int)Float.parseFloat(lines[i].split(" ")[1])));
+                i++;
             }
             else {
                 if (lines[i].split(" ")[2].equals("HardBrick") || lines[i].split(" ")[2].equals("HardBrick\n")) {
                     bricks.add(new HardBrick((int)Float.parseFloat(lines[i].split(" ")[0]), (int)Float.parseFloat(lines[i].split(" ")[1])));
+                    i++;
                 }
                 else
                     break;
             }
-
         }
 
         powerUps.removeAll(powerUps);

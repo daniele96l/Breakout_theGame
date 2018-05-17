@@ -147,8 +147,10 @@ public class OfflineGameScreen implements Screen {
 
         game.getBatch().draw(bg, 0, 0);
         game.getBatch().end();
+
         hud=new Hud(players, game.getBatch());
         hud.stage.draw();
+
         game.getBatch().begin();
         for (AbstractBrick brick : bricks) {
             game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.brickresize, brick.getHeight() * Info.brickresize);

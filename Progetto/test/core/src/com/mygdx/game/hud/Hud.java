@@ -19,35 +19,66 @@ public class Hud {
     Table table;
 
     public Hud(ArrayList<Player> players, SpriteBatch sb) {
-        viewport=new FitViewport(Info.larghezza, Info.altezza);
-        stage=new Stage(viewport, sb);
+        viewport = new FitViewport(Info.larghezza, Info.altezza);
+        stage = new Stage(viewport, sb);
         fillTable(players);
+        stage.addActor(table);
+    }
+    public Hud(SpriteBatch sb,ArrayList<String> playerNames, ArrayList<String> scores, ArrayList<String> lives) {
+        viewport = new FitViewport(Info.larghezza, Info.altezza);
+        stage = new Stage(viewport, sb);
+        fillTable(playerNames,scores,lives);
         stage.addActor(table);
     }
 
     public void fillTable(ArrayList<Player> players) {
-        table=new Table();
+        table = new Table();
         table.top();
         table.setFillParent(true);
 
-        for(int i=0; i<players.size(); i++) {
-            Player player=players.get(i);
+        for (int i = 0; i < players.size(); i++) {
+            Player player = players.get(i);
 
-            if(players.size() > 1){
-                Label label=new Label(String.format("PLAYER: %s\nSCORE: %d \nLIVES: %d", player.getPlayerName(), player.getScore(), player.getLives()),
+            if (players.size() > 1) {
+                Label label = new Label(String.format("PLAYER: %s\nSCORE: %d \nLIVES: %d", player.getPlayerName(), player.getScore(), player.getLives()),
                         new Label.LabelStyle(new BitmapFont(), Color.WHITE));
                 label.setFontScale(1f);
                 table.add(label).expandX();
 
             }
-            if(players.size() == 1){
-                Label label=new Label(String.format("PLAYER: %s                   SCORE: %d                  LIVES: %d", player.getPlayerName(), player.getScore(), player.getLives()),
+            if (players.size() == 1) {
+                Label label = new Label(String.format("PLAYER: %s                   SCORE: %d                  LIVES: %d", player.getPlayerName(), player.getScore(), player.getLives()),
                         new Label.LabelStyle(new BitmapFont(), Color.WHITE));
                 label.setFontScale(1f);
                 table.add(label).expandX();
 
             }
 
+
+        }
+    }
+
+    public void fillTable(ArrayList<String> playerNames, ArrayList<String> scores, ArrayList<String> lives) {
+        table = new Table();
+        table.top();
+        table.setFillParent(true);
+
+        for (int i = 0; i < playerNames.size(); i++) {
+
+            if (playerNames.size() > 1) {
+                Label label = new Label(String.format("PLAYER: %s\nSCORE: %d \nLIVES: %d", playerNames.get(i), Integer.parseInt(scores.get(i)), Integer.parseInt(lives.get(i))),
+                        new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+                label.setFontScale(1f);
+                table.add(label).expandX();
+
+            }
+            if (playerNames.size() == 1) {
+                Label label = new Label(String.format("PLAYER: %s                   SCORE: %d                  LIVES: %d", playerNames.get(i), Integer.parseInt(scores.get(i)), Integer.parseInt(lives.get(i))),
+                        new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+                label.setFontScale(1f);
+                table.add(label).expandX();
+
+            }
 
 
         }
