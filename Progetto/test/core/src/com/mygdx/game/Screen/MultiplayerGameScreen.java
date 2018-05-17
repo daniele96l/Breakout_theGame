@@ -72,7 +72,10 @@ public class MultiplayerGameScreen implements Screen {
         if(!m.equals(""))
         {
             parseMessage(m);
+
+            game.getBatch().draw(bg,0,0);
         }
+
         for (AbstractBrick brick : bricks) {
             game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.brickresize, brick.getHeight() * Info.brickresize);
         }
@@ -123,7 +126,7 @@ public class MultiplayerGameScreen implements Screen {
 
         bricks.removeAll(bricks);
 
-        for(i=3; i<lines.length; i++) {
+        for(i=3; i<lines.length-1; i++) {
             if(lines[i].split(" ")[2].equals("Brick") || lines[i].split(" ")[2].equals("Brick\n")  ) {
                 bricks.add(new Brick((int)Float.parseFloat(lines[i].split(" ")[0]),(int)Float.parseFloat(lines[i].split(" ")[1])));
             }
@@ -139,7 +142,7 @@ public class MultiplayerGameScreen implements Screen {
 
         powerUps.removeAll(powerUps);
 
-        while(i<lines.length) {
+        while(i<lines.length-1) {
             if(lines[i].split(" ")[2].equals("ExtraLife")){
                 powerUps.add(new ExtraLife((int)Float.parseFloat(lines[i].split(" ")[0]), (int)Float.parseFloat(lines[i].split(" ")[1])));
             }
@@ -155,6 +158,7 @@ public class MultiplayerGameScreen implements Screen {
                 powerUps.add(new ShortPaddle((int)Float.parseFloat(lines[i].split(" ")[0]), (int)Float.parseFloat(lines[i].split(" ")[1])));
 
             }
+
             i++;
         }
 
