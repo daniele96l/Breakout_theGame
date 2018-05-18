@@ -20,6 +20,7 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.Date;
 
+//Da implementare i pattern
 
 public class MultiplayerGameScreen implements Screen {
 
@@ -123,7 +124,7 @@ public class MultiplayerGameScreen implements Screen {
         }
     }
 
-    public void parseMessage(String message) {
+    public void parseMessage(String message) { // si potrebbe implementare pure fabrication e fare un altra classe, che sarebbe anche HightCOesion
         int i;
         String[] lines=message.split("\t"); //Separa le righe
 

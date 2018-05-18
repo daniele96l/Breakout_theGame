@@ -58,8 +58,9 @@ public class OfflineGameScreen implements Screen {
     private int newHeight, newWight;
     private static String playerName;
     private WinLoseState winLoseState;
-    Music music;
-    Music music2, music3, music4;
+    private boolean loop;
+    private Music music;
+    private Music music2, music3, music4;
     private boolean pause;
     private int numeroPlayer;
     private Hud hud;
@@ -74,10 +75,10 @@ public class OfflineGameScreen implements Screen {
     public OfflineGameScreen(BreakGame game, int numeroPlayer) {
         this.numeroPlayer = numeroPlayer;
         this.game = game;
-        players =new ArrayList<Player>();
-        paddles = new ArrayList<Paddle>();
-        commandPlayers = new ArrayList<CommandPlayer>();
-        players.add(new HumanPlayer(playerName));
+        players =new ArrayList<Player>(); //Pattern Expert, if Object A instanziate B it must have all the info to create it
+        paddles = new ArrayList<Paddle>();//Pattern Expert, if Object A instanziate B it must have all the info to create it
+        commandPlayers = new ArrayList<CommandPlayer>();//Pattern Expert, if Object A instanziate B it must have all the info to create it
+        players.add(new HumanPlayer(playerName));//Pattern Expert, if Object A instanziate B it must have all the info to create it
         date = new ArrayList<Date>();
         isFirstCalled=true;
     }
@@ -121,7 +122,7 @@ public class OfflineGameScreen implements Screen {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float delta) { // si potrebbe astrattizzare
         game.getBatch().begin();
 
         if (nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
@@ -214,7 +215,10 @@ public class OfflineGameScreen implements Screen {
         }
         if (gameState == GameState.GAME_OVER) {
             music.stop();
+
+            if(!loop)
             music2.play();
+            loop = true;
             winLoseState = new WinLoseState(game.getBatch(), gameState);
             gameState = winLoseState.draw();
             if(gameState==GameState.MENU) {
@@ -270,7 +274,8 @@ public class OfflineGameScreen implements Screen {
 
     }
 
-    public void gestisciCollisioni() {
+    public void gestisciCollisioni() {//Questa classe va spostata secondo me, violerebbe il pattern Hight Coesion
+        //Hight coesion; A measure of how focused the responsability of a class are
         float oldSpeedBallX = palla.getSpeedBall().x;
         float oldSpeedBallY = palla.getSpeedBall().y;
 
@@ -301,10 +306,7 @@ public class OfflineGameScreen implements Screen {
                     if(Info.paddleresizex.get(i) != Info.paddleresize){ // qua verifico che sia stato cambiato la resize una volta che prendo il powerup
                         date.set(i,new Date());
                     }
-
                 }
-
-
             }
             for(PowerUp p:tempPowerUps) {
                 powerUps.remove(p);
@@ -375,7 +377,9 @@ public class OfflineGameScreen implements Screen {
         return playerName;
     }
 
-    private void lostLife(float positionX,boolean powerup) {
+    private void lostLife(float positionX,boolean powerup) {  //Questa classe va spostata secondo me, violerebbe il pattern Hight Coesion
+        //Hight coesion; A measure of how focused the responsability of a class are
+
         int range=Info.larghezza/numeroPlayer;
         Player loser=new RobotPlayer("default", palla, paddles.get(0));
 

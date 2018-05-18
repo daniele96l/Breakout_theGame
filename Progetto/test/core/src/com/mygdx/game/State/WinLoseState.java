@@ -17,7 +17,7 @@ public class WinLoseState {
         this.batch = batch;
         this.gameState = gameState;
         youWin = new Texture("nextlevel.jpg");
-        gameOver = new Texture("gameover.jpeg");
+        gameOver = new Texture("gameover.jpg");
     }
 
     public GameState draw(){

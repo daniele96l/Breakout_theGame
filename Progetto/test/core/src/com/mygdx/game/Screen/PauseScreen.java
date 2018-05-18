@@ -39,10 +39,8 @@ public class PauseScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
         game.getBatch().begin();
-
-
-
         game.getBatch().draw(menu, 0, 0);
         game.getBatch().draw(resumeButton, Info.larghezza / 2 - resumeButton.getWidth() / 2, 550);//alpostodimetterlicosipossousaredellecostanti
         game.getBatch().draw(exitButton, Info.larghezza / 2 - exitButton.getWidth() / 2, 150);
@@ -69,11 +67,9 @@ public class PauseScreen implements Screen {
         this.newHeight = height;
         this.newWight = width;
         barreNere = 0;
-
-
         // System.out.println(newHeight);
 
-        Vector2 size = Scaling.fit.apply(800, 850, width, height);
+        Vector2 size = Scaling.fit.apply(1280, 720, width, height);
         int viewportX = (int)(width - size.x) / 2;
         int viewportY = (int)(height - size.y) / 2;
         int viewportWidth = (int)size.x;

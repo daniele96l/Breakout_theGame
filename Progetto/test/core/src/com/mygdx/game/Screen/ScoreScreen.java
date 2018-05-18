@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class ScoreScreen implements Screen {
+//Applicato HightCoesion
 
     private Texture menu, backButton;
     BitmapFont bitmapFont;
@@ -31,6 +32,8 @@ public class ScoreScreen implements Screen {
     private static boolean drawn;
     private Database db = new Database();
     float barreNere = 0;
+    int backbuttonx = 500;
+    int backbuttony = 50;
 
     private BreakGame game;
 
@@ -44,7 +47,7 @@ public class ScoreScreen implements Screen {
         bitmapFont.setColor(Color.WHITE);
         bitmapFont.getData().setScale(1.2f);
         scores = new ArrayList<Score>();
-        scoreScreen = new Texture("score2.jpg");
+        scoreScreen = new Texture("menuscreen.jpg");
     }
 
     @Override
@@ -55,10 +58,10 @@ public class ScoreScreen implements Screen {
         backButton = new Texture("menu.png");
 
         game.getBatch().draw(scoreScreen, 0, 0);
-        game.getBatch().draw(backButton, 270, 50);
+        game.getBatch().draw(backButton, backbuttonx, backbuttony);
         bestScores(game.getBatch());
 
-        if (Gdx.input.getX() > (newWight/ 2) - (backButton.getWidth() / 2 * coeffDimensionale)  && (Gdx.input.getX() < newWight  + (backButton.getWidth()/ 2) * coeffDimensionale ) && (newHeight - Gdx.input.getY() > 50 * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < 50 * coeffDimensionale + backButton.getHeight() * coeffDimensionale+ barreNere))) {
+        if (Gdx.input.getX() > (newWight/ 2) - (backButton.getWidth() / 2 * coeffDimensionale)  && (Gdx.input.getX() < newWight  + (backButton.getWidth()/ 2) * coeffDimensionale ) && (newHeight - Gdx.input.getY() > backbuttony * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < backbuttony * coeffDimensionale + backButton.getHeight() * coeffDimensionale+ barreNere))) {
             if (Gdx.input.justTouched())
                 game.setScreen(new MainMenuScreen(game));
         }
@@ -71,11 +74,9 @@ public class ScoreScreen implements Screen {
         this.newHeight = height;
         this.newWight = width;
         barreNere = 0;
-
-
         // System.out.println(newHeight);
 
-        Vector2 size = Scaling.fit.apply(800, 850, width, height);
+        Vector2 size = Scaling.fit.apply(1280, 720, width, height);
         int viewportX = (int)(width - size.x) / 2;
         int viewportY = (int)(height - size.y) / 2;
         int viewportWidth = (int)size.x;
@@ -111,7 +112,7 @@ public class ScoreScreen implements Screen {
     }
 
     public void bestScores(SpriteBatch batch) {
-        bitmapFont.draw(batch, db.start(), 260, 704);
+        bitmapFont.draw(batch, db.start(), 500, 704);
 
     }
 }

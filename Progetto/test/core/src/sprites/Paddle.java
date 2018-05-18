@@ -24,8 +24,8 @@ public class Paddle extends Sprite{
                 speed = new Vector2(0, 0);
                 this.resize = resize;
                 bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.paddleresize, Paddle.this.getHeight() * Info.paddleresize);
-//ilboundsiriferisconoalrettangoloinvisibilechecostruiròintornoallatexture
-//l'altezzaelalarghezzasonodellatexture
+                //ilboundsiriferisconoalrettangoloinvisibilechecostruiròintornoallatexture
+                //l'altezzaelalarghezzasonodellatexture
             }
 
             public void setDefaultState(int numeroGiocatori) {

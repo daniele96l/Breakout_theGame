@@ -123,6 +123,7 @@ public class Server extends Game {
             bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
 
         }
+
         palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y * Info.dt);
         palla.getBoundsBall().setPosition(palla.getPositionBall());
         ArrayList<PowerUp> tmpPUps = new ArrayList<PowerUp>();
@@ -443,6 +444,4 @@ public class Server extends Game {
             }
         }
     }
-
-
 }

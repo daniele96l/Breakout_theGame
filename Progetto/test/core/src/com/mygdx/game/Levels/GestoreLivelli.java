@@ -11,7 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GestoreLivelli {
+public class GestoreLivelli { //quà c'è già il "pure fabrication"
     private ArrayList<Livello> livelli;
     private int startPosX;
     private int startPosY;
