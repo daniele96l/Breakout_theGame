@@ -59,8 +59,10 @@ public class ScoreScreen implements Screen {
         bestScores(game.getBatch());
 
         if (Gdx.input.getX() > (newWight/ 2) - (backButton.getWidth() / 2 * coeffDimensionale)  && (Gdx.input.getX() < newWight  + (backButton.getWidth()/ 2) * coeffDimensionale ) && (newHeight - Gdx.input.getY() > 50 * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < 50 * coeffDimensionale + backButton.getHeight() * coeffDimensionale+ barreNere))) {
-            if (Gdx.input.justTouched())
+            if (Gdx.input.justTouched()){
+                dispose();
                 game.setScreen(new MainMenuScreen(game));
+            }
         }
         game.getBatch().end();
     }

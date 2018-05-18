@@ -267,6 +267,7 @@ public class OfflineGameScreen implements Screen {
 
     @Override
     public void dispose() {
+        dispose();
 
     }
 
