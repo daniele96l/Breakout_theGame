@@ -178,9 +178,7 @@ public class OfflineGameScreen implements Screen {
             game.setScreen(new PauseScreen(game, this));
         }
         gestisciCollisioni();
-
         checktimer(); // controlla il tempo
-
         if (matEliminati == gestoreLivelli.getLivello(livelloCorrente - 1).getnMatMorbidi()) {
             gameState = GameState.YOU_WON;
 
@@ -189,13 +187,10 @@ public class OfflineGameScreen implements Screen {
                 isFinished = true;
             }
         }
-
         if (palla.getPositionBall().y <= 0) {
             lostLife(palla.getPositionBall().x,false);
             updateScene();
         }
-
-
         if (gameState == GameState.YOU_WON) {
             if (isFinished) {
                 livelloCorrente = 1;
@@ -215,7 +210,6 @@ public class OfflineGameScreen implements Screen {
         }
         if (gameState == GameState.GAME_OVER) {
             music.stop();
-
             if(!loop)
             music2.play();
             loop = true;
@@ -225,7 +219,6 @@ public class OfflineGameScreen implements Screen {
                 game.setScreen(new MainMenuScreen(game));
             }
         }
-
         if(gameState== GameState.WAIT) {
             Info.dt=0;
             if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
@@ -233,9 +226,7 @@ public class OfflineGameScreen implements Screen {
                 gameState=GameState.ACTION;
             }
         }
-
         game.getBatch().end();
-
     }
 
 
@@ -380,7 +371,6 @@ public class OfflineGameScreen implements Screen {
 
     private void lostLife(float positionX,boolean powerup) {  //Questa classe va spostata secondo me, violerebbe il pattern Hight Coesion
         //Hight coesion; A measure of how focused the responsability of a class are
-
         int range=Info.larghezza/numeroPlayer;
         Player loser=new RobotPlayer("default", palla, paddles.get(0));
 
@@ -393,8 +383,7 @@ public class OfflineGameScreen implements Screen {
             loser.setLives(loser.getLives() - 1);
             gameState = GameState.WAIT;
         }
-
-        if(loser.getLives()<0) {
+        if(loser.getLives() < 0) {
             if(players.get(0).equals(loser)) {
                 db.modify(ranGen(), playerName, players.get(0).getScore(), DropType.INSERT);
                 gameState=GameState.GAME_OVER;
