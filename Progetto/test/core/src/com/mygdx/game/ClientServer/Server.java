@@ -15,7 +15,6 @@ import com.mygdx.game.Levels.GestoreLivelli;
 import com.mygdx.game.Player.HumanPlayer;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Player.RobotPlayer;
-import com.mygdx.game.State.WinLoseState;
 import com.mygdx.game.hud.Hud;
 import help.GameState;
 import help.Info;
@@ -64,7 +63,6 @@ public class Server extends Game {
     private Score score;
     private int newHeight, newWight;
     private static String playerName;
-    private WinLoseState winLoseState;
     private boolean pause;
     private Hud hud;
     private Player gameHolder;  //Giocatore che ha toccato la pallina per ultimo
