@@ -32,6 +32,7 @@ public class FinishScreen implements Screen {
         game.getBatch().draw(win, 0, 0);
 
         if(Gdx.input.isKeyPressed(Input.Keys.ENTER))
+            dispose();
             game.setScreen(new MainMenuScreen(game));
 
         game.getBatch().end();
