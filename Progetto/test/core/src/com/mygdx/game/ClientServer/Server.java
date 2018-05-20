@@ -18,6 +18,7 @@ import com.mygdx.game.Player.RobotPlayer;
 import com.mygdx.game.hud.Hud;
 import help.GameState;
 import help.Info;
+
 import sprites.Ball;
 import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
@@ -26,8 +27,7 @@ import sprites.Paddle;
 import sprites.powerup.*;
 
 import javax.swing.*;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
@@ -74,11 +74,13 @@ public class Server extends Game {
     private Date datetmp;
     private ArrayList<Date> date;
     private Database db = new Database();
+    private Icon icon = new ImageIcon("playersIcon.png");
 
 
     @Override
     public void create() {
-        numeroPlayer = (Integer.parseInt(JOptionPane.showInputDialog(null, "Number of player", "Enter the number of player ", 1)));
+
+        numeroPlayer = (Integer.parseInt((String) JOptionPane.showInputDialog(null, "Enter the number of players", "Players", 1, icon, null, "" )));
         players = new ArrayList<Player>();
         paddles = new ArrayList<Paddle>();
         date = new ArrayList<Date>();
