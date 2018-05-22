@@ -14,6 +14,12 @@ import sprites.powerup.ShortPaddle;
 
 import java.util.ArrayList;
 
+/**
+ * La classe permette di definire la struttura del livello instanziando gli oggetti che ne fanno parte
+ *
+ * @author Schillaci
+ *
+ */
 public class Livello {
     private ArrayList<AbstractBrick> bricks;
     private int currentPosX;
@@ -40,6 +46,13 @@ public class Livello {
         nMatMorbidi=0;
     }
 
+    /**
+     * aggiunge una riga di mattoncini
+     *
+     * @param line
+     * @throws IllegalBricksNumber
+     * @throws IllegalCharacter
+     */
     public void addLine(String line) throws IllegalBricksNumber, IllegalCharacter {
         linesAdded++;
         if (linesAdded > numBrickY || line.length() != numBrickX)
@@ -67,6 +80,11 @@ public class Livello {
         currentPosY -= Info.getBrickHeight()+Info.brickGapY;
     }
 
+    /**
+     * aggiunge i power up in maniera casuale ai mattoncini del livello
+     *
+     * @param brick
+     */
     private void insertPowerUp(AbstractBrick brick) {
         int posX=(int)(brick.getBoundsBrick().x+brick.getBoundsBrick().width/2-Info.powerUpWidth/2*Info.powerUpResize);
         int posY=(int)(brick.getBoundsBrick().y+brick.getBoundsBrick().height/2-Info.powerUpHeight/2*Info.powerUpResize);

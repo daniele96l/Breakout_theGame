@@ -14,7 +14,7 @@ import help.Info;
 import java.util.ArrayList;
 
 /**
- * @Autor Alberto king scillachi
+ * @author Alberto king scillachi
  *  classe il cui compito è quello di mostrare le lablel di ogni giocatore dove indicano punteggio, vita e nome.
  */
 public class Hud {
@@ -40,6 +40,12 @@ public class Hud {
         fillTable(playerNames,scores,lives);
         stage.addActor(table);
     }
+
+    /**
+     * metodo che permette di costruire la tabella dei punteggi ottenuti dai giocatori durante le partite offline
+     *
+     * @param players la lista dei giocatori
+     */
 
     public void fillTable(ArrayList<Player> players) {
         table = new Table();
@@ -67,6 +73,14 @@ public class Hud {
 
         }
     }
+
+    /**
+     * è il metodo corrispondente per le partite online: in particolare permette di assegnare ai client le informazioni relative ai punteggi
+     *
+     * @param playerNames
+     * @param scores
+     * @param lives
+     */
 
     public void fillTable(ArrayList<String> playerNames, ArrayList<String> scores, ArrayList<String> lives) {
         table = new Table();
