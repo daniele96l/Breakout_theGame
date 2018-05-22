@@ -61,9 +61,11 @@ public class ScoreScreen implements Screen {
         game.getBatch().draw(backButton, backbuttonx, backbuttony);
         bestScores(game.getBatch());
 
-        if (Gdx.input.getX() > (newWight/ 2) - (backButton.getWidth() / 2 * coeffDimensionale)  && (Gdx.input.getX() < newWight  + (backButton.getWidth()/ 2) * coeffDimensionale ) && (newHeight - Gdx.input.getY() > backbuttony * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < backbuttony * coeffDimensionale + backButton.getHeight() * coeffDimensionale+ barreNere))) {
-            if (Gdx.input.justTouched())
+        if (Gdx.input.getX() > (newWight / 2) - (backButton.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (backButton.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > backbuttony * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < backbuttony * coeffDimensionale + backButton.getHeight() * coeffDimensionale + barreNere))) {
+            if (Gdx.input.justTouched()) {
+                dispose();
                 game.setScreen(new MainMenuScreen(game));
+            }
         }
         game.getBatch().end();
     }
@@ -77,15 +79,15 @@ public class ScoreScreen implements Screen {
         // System.out.println(newHeight);
 
         Vector2 size = Scaling.fit.apply(1280, 720, width, height);
-        int viewportX = (int)(width - size.x) / 2;
-        int viewportY = (int)(height - size.y) / 2;
-        int viewportWidth = (int)size.x;
-        int viewportHeight = (int)size.y;
+        int viewportX = (int) (width - size.x) / 2;
+        int viewportY = (int) (height - size.y) / 2;
+        int viewportWidth = (int) size.x;
+        int viewportHeight = (int) size.y;
 
-        coeffDimensionale = size.y/(float)Info.altezza;
+        coeffDimensionale = size.y / (float) Info.altezza;
 
-        if(newHeight > size.y )
-            barreNere = Math.abs((newHeight - size.y)/2);
+        if (newHeight > size.y)
+            barreNere = Math.abs((newHeight - size.y) / 2);
 
 
         Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);

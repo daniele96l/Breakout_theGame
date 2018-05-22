@@ -48,13 +48,16 @@ public class PauseScreen implements Screen {
 
         if(Gdx.input.justTouched()) {
             if (Gdx.input.getX() > (newWight / 2) - (menuButton.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (menuButton.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > 150 * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < 150 * coeffDimensionale + menuButton.getHeight() * coeffDimensionale + barreNere))) {
-                    Gdx.app.exit();
+                dispose();
+                Gdx.app.exit();
             }
             if (Gdx.input.getX() > (newWight / 2) - (menuButton.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (menuButton.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > 550 * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < 550 * coeffDimensionale + menuButton.getHeight() * coeffDimensionale + barreNere))) {
-                    game.setScreen(oldScreen);
+                dispose();
+                game.setScreen(oldScreen);
             }
             if (Gdx.input.getX() > (newWight / 2) - (menuButton.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (menuButton.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > 350 * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < 350 * coeffDimensionale + menuButton.getHeight() * coeffDimensionale + barreNere))) {
-                    game.setScreen(new MainMenuScreen(game));
+                dispose();
+                game.setScreen(new MainMenuScreen(game));
             }
         }
                 game.getBatch().end();
