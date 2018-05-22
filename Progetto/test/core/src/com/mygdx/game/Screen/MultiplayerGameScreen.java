@@ -45,34 +45,32 @@ public class MultiplayerGameScreen implements Screen {
     private ImageIcon nickIcon = new ImageIcon("nickIcon.png");
 
 
-
     public MultiplayerGameScreen(BreakGame game) {
-        palla=new Ball();
-        paddles=new ArrayList<Paddle>();
-        bricks=new ArrayList<AbstractBrick>();
-        powerUps=new ArrayList<PowerUp>();
-        playerNames=new ArrayList<String>();
-        scores=new ArrayList<String>();
-        lives=new ArrayList<String>();
+        palla = new Ball();
+        paddles = new ArrayList<Paddle>();
+        bricks = new ArrayList<AbstractBrick>();
+        powerUps = new ArrayList<PowerUp>();
+        playerNames = new ArrayList<String>();
+        scores = new ArrayList<String>();
+        lives = new ArrayList<String>();
         try {
-            address=InetAddress.getByName((String) JOptionPane.showInputDialog(null, "Enter the IP address", "Server IP", 1, ipIcon, null, "" ));
+            address = InetAddress.getByName((String) JOptionPane.showInputDialog(null, "Enter the IP address", "Server IP", 1, ipIcon, null, ""));
             playerName = (String) JOptionPane.showInputDialog(null, "Insert your Nickname", "Nickname", 1, nickIcon, null, "");
-            byte[] b=playerName.getBytes();
-            datagramSocket=new DatagramSocket();
-            DatagramPacket packet=new DatagramPacket(b, b.length, address, 4444);
+            byte[] b = playerName.getBytes();
+            datagramSocket = new DatagramSocket();
+            DatagramPacket packet = new DatagramPacket(b, b.length, address, 4444);
             datagramSocket.send(packet);
             b = new byte[1024];
-            DatagramPacket packet1=new DatagramPacket(b, b.length);
+            DatagramPacket packet1 = new DatagramPacket(b, b.length);
             datagramSocket.receive(packet1);
-            serverPort=Integer.parseInt(new String(packet1.getData(),0,packet1.getLength()));
+            serverPort = Integer.parseInt(new String(packet1.getData(), 0, packet1.getLength()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        thread=new ClientThread(address, serverPort, datagramSocket);
+        thread = new ClientThread(address, serverPort, datagramSocket);
         thread.start();
 
-        this.game=game;
+        this.game = game;
     }
 
     @Override
@@ -83,17 +81,27 @@ public class MultiplayerGameScreen implements Screen {
     @Override
     public void render(float delta) {
         game.getBatch().begin();
-        String m=thread.getMessage();
-        if(!m.equals(""))
-        {
+        String m = thread.getMessage();
+        if (!m.equals("")) {
             parseMessage(m);
 
-            game.getBatch().draw(bg,0,0);
+            boolean found = false;
+            for (String name : playerNames) {
+                if (name.equals(playerName)) {
+                    found = true;
+                }
+            }
+            if (!found) {
+                game.setScreen(new LoseGameScreen(game));
+            }
+
+
+            game.getBatch().draw(bg, 0, 0);
         }
 
         game.getBatch().end();
 
-        hud=new Hud(game.getBatch(),playerNames, scores, lives);
+        hud = new Hud(game.getBatch(), playerNames, scores, lives);
         hud.stage.draw();
 
         game.getBatch().begin();
@@ -102,10 +110,10 @@ public class MultiplayerGameScreen implements Screen {
             game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.brickresize, brick.getHeight() * Info.brickresize);
         }
 
-        for(PowerUp p:powerUps) {
-            game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth()*Info.powerUpResize, p.getHeight()*Info.powerUpResize);
+        for (PowerUp p : powerUps) {
+            game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth() * Info.powerUpResize, p.getHeight() * Info.powerUpResize);
         }
-        if(numeroPlayer>0) {
+        if (numeroPlayer > 0) {
             for (int i = 0; i < numeroPlayer; i++) {
                 game.getBatch().draw(paddles.get(i), paddles.get(i).getPosition().x, paddles.get(i).getPosition().y, paddles.get(i).getWidth() * Info.paddleresizex.get(i), paddles.get(i).getHeight() * Info.paddleresize);
             }
@@ -113,15 +121,12 @@ public class MultiplayerGameScreen implements Screen {
         game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.ballresize, palla.getHeight() * Info.ballresize);
         game.getBatch().end();
 
-
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             keyPressed(Input.Keys.LEFT);
-        }
-        else {
-            if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        } else {
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 keyPressed(Input.Keys.RIGHT);
-            }
-            else {
+            } else {
                 keyPressed(0);
             }
         }
@@ -129,87 +134,91 @@ public class MultiplayerGameScreen implements Screen {
 
     public void parseMessage(String message) { // si potrebbe implementare pure fabrication e fare un altra classe, che sarebbe anche HightCOesion
         int i;
-        String[] lines=message.split("\t"); //Separa le righe
+        if (message.length() < 10) {
+            game.setScreen(new LoseGameScreen(game));
+        } else {
+            String[] lines = message.split("\t"); //Separa le righe
 
-        palla.getPositionBall().x=Float.parseFloat(lines[0].split(" ")[0]);
-        palla.getPositionBall().y=Float.parseFloat(lines[0].split(" ")[1]);
+            palla.getPositionBall().x = Float.parseFloat(lines[0].split(" ")[0]);
+            palla.getPositionBall().y = Float.parseFloat(lines[0].split(" ")[1]);
 
-        numeroPlayer=lines[1].split(" ").length;
-        paddles.removeAll(paddles);
-        for(int j=0; j<numeroPlayer; j++) {
-            paddles.add(new Paddle(numeroPlayer, j+1));
-            Info.paddleresizex.add(0.5f);
-        }
+            numeroPlayer = lines[1].split(" ").length;
+            paddles.removeAll(paddles);
+            if (numeroPlayer > 0) {
+                for (int j = 0; j < numeroPlayer; j++) {
+                    paddles.add(new Paddle(numeroPlayer, j + 1));
+                    Info.paddleresizex.add(0.5f);
+                }
 
-        for(Paddle paddle:paddles) {
-            paddle.getPosition().x = Float.parseFloat(lines[1].split(" ")[paddles.indexOf(paddle)]);
-            Info.paddleresizex.set(paddles.indexOf(paddle), Float.parseFloat(lines[2].split(" ")[paddles.indexOf(paddle)]));
-        }
+                for (Paddle paddle : paddles) {
+                    paddle.getPosition().x = Float.parseFloat(lines[1].split(" ")[paddles.indexOf(paddle)]);
+                    Info.paddleresizex.set(paddles.indexOf(paddle), Float.parseFloat(lines[2].split(" ")[paddles.indexOf(paddle)]));
+                }
 
-        playerNames.removeAll(playerNames);
-        lives.removeAll(lives);
-        scores.removeAll(scores);
+                playerNames.removeAll(playerNames);
+                lives.removeAll(lives);
+                scores.removeAll(scores);
 
-        for(i=3;i<numeroPlayer+3; i++) {
-            playerNames.add(lines[i].split(" ")[0]);
-            scores.add(lines[i].split(" ")[1]);
-            lives.add(lines[i].split(" ")[2]);
+                for (i = 3; i < numeroPlayer + 3; i++) {
+                    playerNames.add(lines[i].split(" ")[0]);
+                    scores.add(lines[i].split(" ")[1]);
+                    lives.add(lines[i].split(" ")[2]);
 
-        }
+                }
 
-        bricks.removeAll(bricks);
 
-        while(i<lines.length-1) {
-            if(lines[i].split(" ")[2].equals("Brick") || lines[i].split(" ")[2].equals("Brick\n")  ) {
-                bricks.add(new Brick((int)Float.parseFloat(lines[i].split(" ")[0]),(int)Float.parseFloat(lines[i].split(" ")[1])));
-                i++;
-            }
-            else {
-                if (lines[i].split(" ")[2].equals("HardBrick") || lines[i].split(" ")[2].equals("HardBrick\n")) {
-                    bricks.add(new HardBrick((int)Float.parseFloat(lines[i].split(" ")[0]), (int)Float.parseFloat(lines[i].split(" ")[1])));
+                bricks.removeAll(bricks);
+
+                while (i < lines.length - 1) {
+                    if (lines[i].split(" ")[2].equals("Brick") || lines[i].split(" ")[2].equals("Brick\n")) {
+                        bricks.add(new Brick((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
+                        i++;
+                    } else {
+                        if (lines[i].split(" ")[2].equals("HardBrick") || lines[i].split(" ")[2].equals("HardBrick\n")) {
+                            bricks.add(new HardBrick((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
+                            i++;
+                        } else
+                            break;
+                    }
+                }
+
+                powerUps.removeAll(powerUps);
+
+                while (i < lines.length - 1) {
+                    if (lines[i].split(" ")[2].equals("ExtraLife")) {
+                        powerUps.add(new ExtraLife((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
+                    }
+                    if (lines[i].split(" ")[2].equals("LossLife")) {
+                        powerUps.add(new LossLife((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
+
+                    }
+                    if (lines[i].split(" ")[2].equals("LongPaddle")) {
+                        powerUps.add(new LongPaddle((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
+
+                    }
+                    if (lines[i].split(" ")[2].equals("ShortPaddle")) {
+                        powerUps.add(new ShortPaddle((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
+
+                    }
+
                     i++;
                 }
-                else
-                    break;
+
+                bg = new Texture(lines[i]);
             }
         }
-
-        powerUps.removeAll(powerUps);
-
-        while(i<lines.length-1) {
-            if(lines[i].split(" ")[2].equals("ExtraLife")){
-                powerUps.add(new ExtraLife((int)Float.parseFloat(lines[i].split(" ")[0]), (int)Float.parseFloat(lines[i].split(" ")[1])));
-            }
-            if(lines[i].split(" ")[2].equals("LossLife")) {
-                powerUps.add(new LossLife((int)Float.parseFloat(lines[i].split(" ")[0]), (int)Float.parseFloat(lines[i].split(" ")[1])));
-
-            }
-            if(lines[i].split(" ")[2].equals("LongPaddle")) {
-                powerUps.add(new LongPaddle((int)Float.parseFloat(lines[i].split(" ")[0]), (int)Float.parseFloat(lines[i].split(" ")[1])));
-
-            }
-            if(lines[i].split(" ")[2].equals("ShortPaddle")) {
-                powerUps.add(new ShortPaddle((int)Float.parseFloat(lines[i].split(" ")[0]), (int)Float.parseFloat(lines[i].split(" ")[1])));
-
-            }
-
-            i++;
-        }
-
-        bg=new Texture(lines[i]);
     }
 
     public void keyPressed(int key) {
-       String s=""+key;
-       byte[] b=s.getBytes();
-       DatagramPacket packet=new DatagramPacket(b, b.length, address, serverPort);
+        String s = "" + key;
+        byte[] b = s.getBytes();
+        DatagramPacket packet = new DatagramPacket(b, b.length, address, serverPort);
         try {
             datagramSocket.send(packet);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
 
     @Override
@@ -236,4 +245,6 @@ public class MultiplayerGameScreen implements Screen {
     public void dispose() {
 
     }
+
+
 }

@@ -88,17 +88,17 @@ public class Server extends Game {
 
     /**
      * Crea una nuova partita, istanziando gli N giocatori
+     *
      * @see:initServer()
      * @see:Info
      * @see:updateScene
      * @see:updateLevel
-     *
      */
 
     @Override
     public void create() {
 
-        numeroPlayer = (Integer.parseInt((String) JOptionPane.showInputDialog(null, "Enter the number of players", "Players", 1, icon, null, "" )));
+        numeroPlayer = (Integer.parseInt((String) JOptionPane.showInputDialog(null, "Enter the number of players", "Players", 1, icon, null, "")));
         players = new ArrayList<Player>();
         paddles = new ArrayList<Paddle>();
         date = new ArrayList<Date>();
@@ -136,16 +136,12 @@ public class Server extends Game {
     }
 
     /**
-     *
      * Si aggiorna 60 volte al secondo, e aggiorna le posizione degli oggetti
      * Gestisce i movimenti del player
      *
      * @see:writeMessage();
      * @see:gestisciCollisioni();
-     * @see:checktimerpowerup();
-     *
-     * Gestisce lo stato della partita
-     *
+     * @see:checktimerpowerup(); Gestisce lo stato della partita
      */
     public void render() {
         if (nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
@@ -228,58 +224,63 @@ public class Server extends Game {
     /**
      * Permette di scrivere il messaggio che verrà inviatro ai vari client
      * Il messaggio conterrà le posizioni degli oggetti
-     *
      */
 
     private void writeMessage() {
+
         String message = "";
-        message += palla.getPositionBall().x + " " + palla.getPositionBall().y + "\t";
-        for (Paddle paddle : paddles) {
-            message += paddle.getPosition().x + " ";
+        if(numeroPlayer == 0){
+            message = "Empty";
         }
-        message += "\t";
-
-        for (float f : Info.paddleresizex) {
-            message += f + " ";
-        }
-        message += "\t";
-
-        for (Player player:players) {
-            message += player.getPlayerName() + " ";
-            message+= player.getScore()+" ";
-            message+= player.getLives()+" ";
+        else {
+            message += palla.getPositionBall().x + " " + palla.getPositionBall().y + "\t";
+            for (Paddle paddle : paddles) {
+                message += paddle.getPosition().x + " ";
+            }
             message += "\t";
+
+            for (float f : Info.paddleresizex) {
+                message += f + " ";
+            }
+            message += "\t";
+
+            for (Player player : players) {
+                message += player.getPlayerName() + " ";
+                message += player.getScore() + " ";
+                message += player.getLives() + " ";
+                message += "\t";
+            }
+
+            for (AbstractBrick brick : bricks) {
+                message += brick.getPositionBrick().x + " " + brick.getPositionBrick().y + " ";
+                if (brick instanceof HardBrick) {
+                    message += "HardBrick\t";
+                } else {
+                    message += "Brick\t";
+                }
+            }
+            for (PowerUp powerUp : powerUps) {
+                message += powerUp.getPosition().x + " " + powerUp.getPosition().y + " ";
+                if (powerUp instanceof ExtraLife) {
+                    message += "ExtraLife\t";
+                }
+                if (powerUp instanceof LossLife) {
+                    message += "LossLife\t";
+                }
+                if (powerUp instanceof LongPaddle) {
+                    message += "LongPaddle\t";
+                }
+                if (powerUp instanceof ShortPaddle) {
+                    message += "ShortPaddle\t";
+                }
+            }
+
+            String bgPath = ((FileTextureData) bg.getTextureData()).getFileHandle().name();
+
+            message += bgPath + "\t";
+
+            message = message.substring(0, message.length() - 1);
         }
-
-        for (AbstractBrick brick : bricks) {
-            message += brick.getPositionBrick().x + " " + brick.getPositionBrick().y + " ";
-            if (brick instanceof HardBrick) {
-                message += "HardBrick\t";
-            } else {
-                message += "Brick\t";
-            }
-        }
-        for (PowerUp powerUp : powerUps) {
-            message += powerUp.getPosition().x + " " + powerUp.getPosition().y + " ";
-            if (powerUp instanceof ExtraLife) {
-                message += "ExtraLife\t";
-            }
-            if (powerUp instanceof LossLife) {
-                message += "LossLife\t";
-            }
-            if (powerUp instanceof LongPaddle) {
-                message += "LongPaddle\t";
-            }
-            if (powerUp instanceof ShortPaddle) {
-                message += "ShortPaddle\t";
-            }
-        }
-
-        String bgPath = ((FileTextureData) bg.getTextureData()).getFileHandle().name();
-
-        message += bgPath + "\t";
-
-        message = message.substring(0, message.length() - 1);
         byte[] bytes = message.getBytes();
 
         for (ServerThreadIn thread : threadsIn) {
@@ -291,12 +292,13 @@ public class Server extends Game {
             }
 
         }
-
+        if(numeroPlayer == 0) {
+            Gdx.app.exit();
+        }
     }
 
     /**
-     *  Imposta la scena ai valori di default
-     *
+     * Imposta la scena ai valori di default
      */
     private void updateScene() {
         palla.setDefaultState();
@@ -311,7 +313,6 @@ public class Server extends Game {
 
     /**
      * Permette di gestire il passaggio ai livelli successivi
-     *
      */
 
     private void updateLevel() {
@@ -325,6 +326,7 @@ public class Server extends Game {
 
     /**
      * Genera un numero casuale che servirà per la generazione dei power up in maniera pseudo casuale
+     *
      * @return String
      */
 
@@ -347,7 +349,6 @@ public class Server extends Game {
     }
 
     /**
-     *
      * Gestisce il tempo di caduta della pallina una volta che si perde
      *
      * @param durata
@@ -355,10 +356,10 @@ public class Server extends Game {
      * @return boolean
      */
     private boolean checktimer(int durata, Date datetmp) {
-            Date date2 = new Date();
-            if (date2.getTime() - datetmp.getTime() > durata) {
-                return true;
-            }
+        Date date2 = new Date();
+        if (date2.getTime() - datetmp.getTime() > durata) {
+            return true;
+        }
         return false;
     }
 
@@ -376,7 +377,7 @@ public class Server extends Game {
                 byte[] b = new byte[1024];
                 DatagramPacket packet = new DatagramPacket(b, b.length);
                 datagramSocket.receive(packet);
-                String playerName=new String(packet.getData());
+                String playerName = new String(packet.getData(), 0, packet.getLength());
                 int newPort = portaServer + threadsIn.size() + 1;
                 b = ((Integer) newPort).toString().getBytes();
                 DatagramPacket packetBack = new DatagramPacket(b, b.length, packet.getAddress(), packet.getPort());
@@ -401,10 +402,9 @@ public class Server extends Game {
      * Gestisce le collisioni
      * tra la pallina e il mattoncini e l'eliminazione degli stessi dalla scena
      * tra la paddle e i power up in modo da ottenere l'effetto
-     *
+     * <p>
      * //Secondo me si deve astrarre l'eliminazione dei mattoncini dal controllo della collisione
      * //Applicare quindi il pattern.
-     *
      */
     public void gestisciCollisioni() {
         float oldSpeedBallX = palla.getSpeedBall().x;
@@ -493,7 +493,6 @@ public class Server extends Game {
     }
 
     /**
-     *
      * Gestisce la perdita della vita nel caso in cui la pallina cada sotto una certa coordinata Y
      * e si trovi nel range di coordinate x gestite dal quel paddle in questione
      *
@@ -515,15 +514,12 @@ public class Server extends Game {
         }
 
         if (loser.getLives() < 0) {
-            if (players.get(0).equals(loser)) {
-                db.modify(ranGen(), playerName, players.get(0).getScore(), DropType.INSERT);
-                gameState = GameState.GAME_OVER;
-            } else {
-                int index = players.indexOf(loser);
-                players.remove(loser);
-                paddles.remove(index);
-                numeroPlayer--;
-            }
+            db.modify(ranGen(), playerName, loser.getScore(), DropType.INSERT);
+            gameState = GameState.GAME_OVER;
+            int index = players.indexOf(loser);
+            numeroPlayer--;
+            players.remove(loser);
+            paddles.remove(index);
         }
     }
 }
