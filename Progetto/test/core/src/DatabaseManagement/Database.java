@@ -37,6 +37,20 @@ public class Database {
         return empity;
     }
 
+    private String printTable () {
+        String s = "";
+        if (listaGiocatori.size() < 10) {
+            for (int i = 0; i < listaGiocatori.size(); i++) {
+                s += listaGiocatori.get(i);
+            }
+        } else {
+            for (int i = 0; i < 10; i++) {
+                s += listaGiocatori.get(i);
+            }
+        }
+        return s;
+    }
+
     public String start() {
         listaGiocatori = new ArrayList<String>();
         String s = "";
@@ -56,15 +70,7 @@ public class Database {
             while (rs.next()) {
                 listaGiocatori.add(rs.getString("NICKNAME") + "              " + rs.getString("POINTS") + "\n\n");
             }
-            if (listaGiocatori.size() < 10) {
-                for (int i = 0; i < listaGiocatori.size(); i++) {
-                    s += listaGiocatori.get(i);
-                }
-            } else {
-                for (int i = 0; i < 10; i++) {
-                    s += listaGiocatori.get(i);
-                }
-            }
+            return printTable();
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
             s = "There is a big problem!";
@@ -74,7 +80,6 @@ public class Database {
             s = "There is a huge problem!";
             return s;
         }
-        return s;
     }
 
     public void modify(String id, String name, int points, DropType type) {
