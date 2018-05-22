@@ -41,6 +41,9 @@ public class MultiplayerGameScreen implements Screen {
     private ArrayList<String> playerNames;
     private ArrayList<String> scores;
     private ArrayList<String> lives;
+    private ImageIcon ipIcon = new ImageIcon("ipIcon.png");
+    private ImageIcon nickIcon = new ImageIcon("nickIcon.png");
+
 
 
     public MultiplayerGameScreen(BreakGame game) {
@@ -52,8 +55,8 @@ public class MultiplayerGameScreen implements Screen {
         scores=new ArrayList<String>();
         lives=new ArrayList<String>();
         try {
-            address=InetAddress.getByName(JOptionPane.showInputDialog(null, "Insert IP address", "IP", 1));
-            playerName = JOptionPane.showInputDialog(null, "Insert Nickname", "Nickname", 1);
+            address=InetAddress.getByName((String) JOptionPane.showInputDialog(null, "Enter the IP address", "Server IP", 1, ipIcon, null, "" ));
+            playerName = (String) JOptionPane.showInputDialog(null, "Insert your Nickname", "Nickname", 1, nickIcon, null, "");
             byte[] b=playerName.getBytes();
             datagramSocket=new DatagramSocket();
             DatagramPacket packet=new DatagramPacket(b, b.length, address, 4444);

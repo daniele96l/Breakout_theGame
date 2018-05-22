@@ -17,7 +17,6 @@ import com.mygdx.game.Levels.GestoreLivelli;
 import com.mygdx.game.Player.HumanPlayer;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Player.RobotPlayer;
-import com.mygdx.game.State.WinLoseState;
 import com.mygdx.game.hud.Hud;
 import help.GameState;
 import help.Info;
@@ -57,7 +56,6 @@ public class OfflineGameScreen implements Screen {
     private Score score;
     private int newHeight, newWight;
     private static String playerName;
-    private WinLoseState winLoseState;
     private boolean loop;
     private Music music;
     private Music music2, music3, music4;
@@ -98,7 +96,6 @@ public class OfflineGameScreen implements Screen {
             music.setVolume(1);
             isFinished = false;
             livelloCorrente = 1;
-            winLoseState = new WinLoseState(game.getBatch(), gameState);
             nextLevel = false;
             isPaused = false;
 
@@ -177,6 +174,7 @@ public class OfflineGameScreen implements Screen {
         }
         if (commandPlayers.get(0).checkpause()) {
             music.pause();
+            dispose();
             game.setScreen(new PauseScreen(game, this));
         }
         gestisciCollisioni();
@@ -200,11 +198,11 @@ public class OfflineGameScreen implements Screen {
                 db.modify(ranGen(), playerName, players.get(0).getScore(), DropType.INSERT);
                 updateScene();
                 updateLevel(); /////////////SERVE UNO SCREEN DI FINE GIOCO
+                dispose();
                 game.setScreen(new FinishScreen(game));
             } else {
                 nextLevel = true;
-                winLoseState = new WinLoseState(game.getBatch(), gameState);
-                gameState = winLoseState.draw();
+                game.setScreen(new WinGameScreen(game,this,gameState));
                 updateScene();
                 updateLevel();
             }
@@ -215,11 +213,8 @@ public class OfflineGameScreen implements Screen {
             if(!loop)
             music2.play();
             loop = true;
-            winLoseState = new WinLoseState(game.getBatch(), gameState);
-            gameState = winLoseState.draw();
-            if(gameState==GameState.MENU) {
-                game.setScreen(new MainMenuScreen(game));
-            }
+            dispose();
+            game.setScreen(new LoseGameScreen(game));
         }
         if(gameState== GameState.WAIT) {
             Info.dt=0;
@@ -264,7 +259,6 @@ public class OfflineGameScreen implements Screen {
 
     @Override
     public void dispose() {
-        dispose();
 
     }
 
@@ -433,6 +427,8 @@ public class OfflineGameScreen implements Screen {
         }
     }
 
-
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
 }
 

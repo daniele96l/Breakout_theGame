@@ -11,6 +11,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * @author Ligato, Schillaci, Regna
+ *
+ * la classe gestisce i diversi livelli del gioco leggendo dai file in cui è specificata la struttura dei livelli
+ */
+
 public class GestoreLivelli { //quà c'è già il "pure fabrication"
     private ArrayList<Livello> livelli;
     private int startPosX;
@@ -40,6 +46,17 @@ public class GestoreLivelli { //quà c'è già il "pure fabrication"
         leggiFile(nomeFile);
     }
 
+    /**
+     * è il metodo che permette di creare il livello corrispondente leggendo dal file dei livelli che gli viene passato come parametro
+     *
+     * @param nomeFile
+     *
+     * @exception FileNotFoundException
+     * @exception IOException
+     * @exception IllegalBricksNumber
+     * @exception IllegalCharacter
+     *
+     */
     private void leggiFile(String nomeFile) {
         try {
             FileReader reader = new FileReader(nomeFile);

@@ -8,16 +8,30 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.game.BreakGame;
 
+/**
+ * @author ligato,schillaci, regna
+ *
+ * Gestisce la schermata di fine gioco
+ */
+
 public class FinishScreen implements Screen {
 
     BreakGame game;
     private Texture win;
     private int newHeight, newWight;
 
+    /**
+     *
+     * @param game oggetto Breack game
+     */
     public FinishScreen(BreakGame game) {
         this.game = game;
     }
 
+
+    /**
+     * quando vinci il gioco asegna la nuova texture che dovrà essere disegnata
+     */
 
     @Override
     public void show() {
@@ -25,6 +39,10 @@ public class FinishScreen implements Screen {
 
     }
 
+    /**
+     * Renderizza il back e disegna la texture che ti avvisa di aver vinto il gioco
+     * @param delta
+     */
     @Override
     public void render(float delta) {
         game.getBatch().begin();
@@ -32,11 +50,18 @@ public class FinishScreen implements Screen {
         game.getBatch().draw(win, 0, 0);
 
         if(Gdx.input.isKeyPressed(Input.Keys.ENTER))
+            dispose();
             game.setScreen(new MainMenuScreen(game));
 
         game.getBatch().end();
     }
 
+    /**
+     * Ci permetta di ridimensionare la finestra
+     *
+     * @param width larghezza della finestra
+     * @param height altezza della finestra
+     */
     @Override
     public void resize(int width, int height) {
 

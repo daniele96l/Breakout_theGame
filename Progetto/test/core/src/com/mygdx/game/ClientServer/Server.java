@@ -15,10 +15,10 @@ import com.mygdx.game.Levels.GestoreLivelli;
 import com.mygdx.game.Player.HumanPlayer;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Player.RobotPlayer;
-import com.mygdx.game.State.WinLoseState;
 import com.mygdx.game.hud.Hud;
 import help.GameState;
 import help.Info;
+
 import sprites.Ball;
 import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
@@ -27,13 +27,21 @@ import sprites.Paddle;
 import sprites.powerup.*;
 
 import javax.swing.*;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+
+/**
+ * @Autor Marco Mari, Marco Cotogni, Alessandro Oberti
+ *
+ * Definisce l'oggetto Server che permette di instanziare una connessione tra diversi client, che si connettono tramite un Socket
+ * alla porta definita.
+ * La connessione tra client prevede uno scambio di pacchetti tramite UDP.
+ *
+ */
 
 public class Server extends Game {
     private DatagramSocket datagramSocket;
@@ -64,7 +72,6 @@ public class Server extends Game {
     private Score score;
     private int newHeight, newWight;
     private static String playerName;
-    private WinLoseState winLoseState;
     private boolean pause;
     private Hud hud;
     private Player gameHolder;  //Giocatore che ha toccato la pallina per ultimo
@@ -76,11 +83,22 @@ public class Server extends Game {
     private Date datetmp;
     private ArrayList<Date> date;
     private Database db = new Database();
+    private Icon icon = new ImageIcon("playersIcon.png");
 
+
+    /**
+     * Crea una nuova partita, istanziando gli N giocatori
+     * @see:initServer()
+     * @see:Info
+     * @see:updateScene
+     * @see:updateLevel
+     *
+     */
 
     @Override
     public void create() {
-        numeroPlayer = (Integer.parseInt(JOptionPane.showInputDialog(null, "Number of player", "Enter the number of player ", 1)));
+
+        numeroPlayer = (Integer.parseInt((String) JOptionPane.showInputDialog(null, "Enter the number of players", "Players", 1, icon, null, "" )));
         players = new ArrayList<Player>();
         paddles = new ArrayList<Paddle>();
         date = new ArrayList<Date>();
@@ -117,6 +135,18 @@ public class Server extends Game {
         }
     }
 
+    /**
+     *
+     * Si aggiorna 60 volte al secondo, e aggiorna le posizione degli oggetti
+     * Gestisce i movimenti del player
+     *
+     * @see:writeMessage();
+     * @see:gestisciCollisioni();
+     * @see:checktimerpowerup();
+     *
+     * Gestisce lo stato della partita
+     *
+     */
     public void render() {
         if (nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
             bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//ritorno l'array adatto al nuovo livello
@@ -195,6 +225,12 @@ public class Server extends Game {
         }
     }
 
+    /**
+     * Permette di scrivere il messaggio che verrà inviatro ai vari client
+     * Il messaggio conterrà le posizioni degli oggetti
+     *
+     */
+
     private void writeMessage() {
         String message = "";
         message += palla.getPositionBall().x + " " + palla.getPositionBall().y + "\t";
@@ -258,6 +294,10 @@ public class Server extends Game {
 
     }
 
+    /**
+     *  Imposta la scena ai valori di default
+     *
+     */
     private void updateScene() {
         palla.setDefaultState();
         for (Paddle paddle : paddles) {
@@ -269,6 +309,11 @@ public class Server extends Game {
         }
     }
 
+    /**
+     * Permette di gestire il passaggio ai livelli successivi
+     *
+     */
+
     private void updateLevel() {
         gestoreLivelli = new GestoreLivelli("fileLivelli.txt");
         bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//laclasselivellosioccuperàdiritornarel'arraylistdeimattonciniadattiaquestolivello
@@ -278,12 +323,20 @@ public class Server extends Game {
         gameState = GameState.WAIT;
     }
 
+    /**
+     * Genera un numero casuale che servirà per la generazione dei power up in maniera pseudo casuale
+     * @return String
+     */
+
     private String ranGen() {
         Random n = new Random();
         String s = "" + n.nextInt(1000);
         return s;
     }
 
+    /**
+     * Gestisce la durata dell'effetto del power up
+     */
     private void checktimerpowerup() {
         if (date != null) {
             Date date2 = new Date();
@@ -293,6 +346,14 @@ public class Server extends Game {
         }
     }
 
+    /**
+     *
+     * Gestisce il tempo di caduta della pallina una volta che si perde
+     *
+     * @param durata
+     * @param datetmp
+     * @return boolean
+     */
     private boolean checktimer(int durata, Date datetmp) {
             Date date2 = new Date();
             if (date2.getTime() - datetmp.getTime() > durata) {
@@ -301,6 +362,10 @@ public class Server extends Game {
         return false;
     }
 
+    /**
+     * Inizializza il server, istanziando le variabili di cui farà uso
+     * E fa partire i Thread relativi ai client
+     */
 
     private void initServer() {
         try {
@@ -332,6 +397,15 @@ public class Server extends Game {
         }
     }
 
+    /**
+     * Gestisce le collisioni
+     * tra la pallina e il mattoncini e l'eliminazione degli stessi dalla scena
+     * tra la paddle e i power up in modo da ottenere l'effetto
+     *
+     * //Secondo me si deve astrarre l'eliminazione dei mattoncini dal controllo della collisione
+     * //Applicare quindi il pattern.
+     *
+     */
     public void gestisciCollisioni() {
         float oldSpeedBallX = palla.getSpeedBall().x;
         float oldSpeedBallY = palla.getSpeedBall().y;
@@ -418,7 +492,15 @@ public class Server extends Game {
         }
     }
 
-    private void lostLife(float positionX, boolean powerup) {
+    /**
+     *
+     * Gestisce la perdita della vita nel caso in cui la pallina cada sotto una certa coordinata Y
+     * e si trovi nel range di coordinate x gestite dal quel paddle in questione
+     *
+     * @param positionX
+     * @param powerup
+     */
+    private void lostLife(float positionX, boolean powerup) { ///Applicare il pattern Hight coesion
         int range = Info.larghezza / numeroPlayer;
         Player loser = new RobotPlayer("default", palla, paddles.get(0));
 

@@ -25,7 +25,6 @@ public class MainMenuScreen implements Screen {
     private int numeroPlayer;
     private float coeffDimensionale;
     float barreNere = 0;
-    private MainMenuHandler mainMenuHandler;
 
     private int playbutton = 510+20;
     private int onlinebutton = 390+20;
@@ -35,14 +34,11 @@ public class MainMenuScreen implements Screen {
 
     public MainMenuScreen(BreakGame game) {
         this.game = game;
-        this.mainMenuHandler = new MainMenuHandler();
 
     }
 
     @Override
     public void show() {
-
-        //Pattern creator: il menù istanzia i bottoni che gli serviranno
         menu = new Texture("menuscreen.jpg");
         playButton = new Texture("play.png");
         exitButton = new Texture("exit.png");
@@ -68,25 +64,29 @@ public class MainMenuScreen implements Screen {
         if(Gdx.input.justTouched()) {
 
             if (Gdx.input.getX() > (newWight / 2) - (score.getWidth() * coeffDimensionale) / 2 && (Gdx.input.getX() < newWight / 2 + (score.getWidth() * coeffDimensionale) / 2) && (newHeight - Gdx.input.getY() > scorebutton * coeffDimensionale+ barreNere) && (newHeight - Gdx.input.getY() < scorebutton * coeffDimensionale + score.getHeight() * coeffDimensionale +  barreNere)) {
-                mainMenuHandler.gestisciMenu(game);
-
+                    game.setScreen(new ScoreScreen(game));
             }
 
             if (Gdx.input.getX() > (newWight / 2) - (playButton.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (exitButton.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > exitbutton * coeffDimensionale +  barreNere&& (newHeight- Gdx.input.getY() < exitbutton * coeffDimensionale + exitButton.getHeight() * coeffDimensionale+  barreNere))) {
-                    mainMenuHandler.exit();
+                    Gdx.app.exit();
             }
 
             if (Gdx.input.getX() > (newWight/ 2) - (playButton.getWidth() / 2 * coeffDimensionale)  && (Gdx.input.getX() < newWight  + (playButton.getWidth()/ 2) * coeffDimensionale ) && (newHeight - Gdx.input.getY() > playbutton * coeffDimensionale +  barreNere&& (newHeight - Gdx.input.getY() < playbutton * coeffDimensionale + exitButton.getHeight() * coeffDimensionale+  barreNere))) {
-                  mainMenuHandler.singlePlayer(game);
+                    OfflineGameScreen.setPlayerName(JOptionPane.showInputDialog(null, "Enter a nickname", "Nickname ", 1));
+                    if (OfflineGameScreen.getPlayerName() != null && !OfflineGameScreen.getPlayerName().isEmpty()) {
+                        game.setScreen(new OfflineGameScreen(game, 1));
+                }
             }
             if (Gdx.input.getX() > (newWight/ 2) - (playButton.getWidth() / 2 * coeffDimensionale)  && (Gdx.input.getX() < newWight  + (playButton.getWidth()/ 2) * coeffDimensionale ) && (newHeight - Gdx.input.getY() > onlinebutton * coeffDimensionale+  barreNere && (newHeight - Gdx.input.getY() < onlinebutton * coeffDimensionale + exitButton.getHeight() * coeffDimensionale+  barreNere))) {
 
-                    mainMenuHandler.multiplayerOffline(game);
+                    OfflineGameScreen.setPlayerName(JOptionPane.showInputDialog(null, "Enter a nickname", "Nickname ", 1));
+                    numeroPlayer = (Integer.parseInt(JOptionPane.showInputDialog(null, "Number of player", "Enter the number of player ", 1)));
+                    game.setScreen(new OfflineGameScreen(game, numeroPlayer));
 
             }
 
             if (Gdx.input.getX() > (newWight/ 2) - (playButton.getWidth() / 2 * coeffDimensionale)  && (Gdx.input.getX() < newWight  + (playButton.getWidth()/ 2) * coeffDimensionale ) && (newHeight - Gdx.input.getY() > offlinebutton * coeffDimensionale +  barreNere&& (newHeight - Gdx.input.getY() < offlinebutton * coeffDimensionale + exitButton.getHeight() * coeffDimensionale+  barreNere))) {
-                    mainMenuHandler.multiplayerOnline(game);
+                    game.setScreen(new MultiplayerGameScreen(game));
             }
         }
 
