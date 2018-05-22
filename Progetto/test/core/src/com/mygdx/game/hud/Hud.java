@@ -13,10 +13,20 @@ import help.Info;
 
 import java.util.ArrayList;
 
+/**
+ * @Autor Alberto king scillachi
+ *  classe il cui compito è quello di mostrare le lablel di ogni giocatore dove indicano punteggio, vita e nome.
+ */
 public class Hud {
     public Stage stage;
     private Viewport viewport;
     Table table;
+
+    /**
+     *
+     * @param players array dei giocatori
+     * @param sb
+     */
 
     public Hud(ArrayList<Player> players, SpriteBatch sb) {
         viewport = new FitViewport(Info.larghezza, Info.altezza);

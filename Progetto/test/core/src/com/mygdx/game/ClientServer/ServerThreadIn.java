@@ -5,6 +5,12 @@ import sprites.Paddle;
 import java.io.*;
 import java.net.*;
 
+/**
+ * @Author Cotogni,Mari, Oberti
+ * questa classe definisce il thread del server per ricevere i pacchetti dai diversi thread
+ *
+ */
+
 public class ServerThreadIn extends Thread {
     private DatagramSocket socket;
     private InetAddress address;
@@ -20,6 +26,9 @@ public class ServerThreadIn extends Thread {
         socket.connect(address, port);
     }
 
+    /**
+     * Il metodo che viene chiamato quando viene fatto partire il thread
+     */
     @Override
     public void run()
     {
@@ -39,9 +48,18 @@ public class ServerThreadIn extends Thread {
 
     }
 
+    /**
+     *
+     * @return un intero che rappresenta il tasto schiacciato dal giocatore
+     */
     public int getKey() {
         return key;
     }
+
+    /**
+     *
+     * @return ritorna la socket
+     */
 
     public DatagramSocket getSocket() {
         return socket;

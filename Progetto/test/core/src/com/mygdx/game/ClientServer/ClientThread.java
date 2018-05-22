@@ -5,11 +5,25 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
 
+/**
+ * @Author Marco Mari, Marco Cotogni, Alessandro Oberti
+ * Definisce il comportamento del client nella connesione con il server
+ *
+ */
 public class ClientThread extends Thread {
     private DatagramSocket socket;
     private int port;
     private byte[] buf=new byte[4096];
     String message;
+
+    /**
+     *
+     * @param address indirizzo IP
+     * @param port porta per la connesione
+     * @param socket  La socket
+     *
+     *
+     */
 
     public ClientThread(InetAddress address, int port,  DatagramSocket socket) {
         message = "";
@@ -18,6 +32,9 @@ public class ClientThread extends Thread {
         socket.connect(address, port);
     }
 
+    /**
+     * Metodo che viene chiamato ogni volta che parte un Thread
+     */
     public void run() {
         while (true) {
             try {
@@ -31,6 +48,10 @@ public class ClientThread extends Thread {
         }
     }
 
+    /**
+     * Ritorna il messaggio
+     * @return Stringa
+     */
     public String getMessage() {
         return message;
     }
