@@ -73,6 +73,7 @@ public class OfflineGameScreen implements Screen {
     private Database db = new Database();
 
     public OfflineGameScreen(BreakGame game, int numeroPlayer) {
+        //Applicato pattern Creator
         this.numeroPlayer = numeroPlayer;
         this.game = game;
         players =new ArrayList<Player>(); //Pattern Expert, if Object A instanziate B it must have all the info to create it
@@ -80,6 +81,7 @@ public class OfflineGameScreen implements Screen {
         commandPlayers = new ArrayList<CommandPlayer>();//Pattern Expert, if Object A instanziate B it must have all the info to create it
         players.add(new HumanPlayer(playerName));//Pattern Expert, if Object A instanziate B it must have all the info to create it
         date = new ArrayList<Date>();
+        palla = new Ball();
         isFirstCalled=true;
     }
 
@@ -99,7 +101,7 @@ public class OfflineGameScreen implements Screen {
             winLoseState = new WinLoseState(game.getBatch(), gameState);
             nextLevel = false;
             isPaused = false;
-            palla = new Ball();
+
             tmpDT = Info.dt;
             date.add(new Date());
             paddles.add(new Paddle(numeroPlayer, 1));
