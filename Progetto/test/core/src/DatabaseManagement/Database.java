@@ -8,12 +8,24 @@ import java.util.ArrayList;
     You must have jdbc library in the same package of desktop launcher and db in assets folder!
  */
 
+/**
+ * @author Curcio
+ *
+ * Classe che implementa la gestione del database: nello specifico crea la connessione e inserisce o elimina singole o coppie di records
+ */
+
 public class Database {
     private ArrayList<String> listaGiocatori;
 
     public Database() {
+        listaGiocatori = new ArrayList<String>();
     }
 
+    /**
+     * Metodo che controlla se la table che si va a leggere sia vuota o meno
+     *
+     * @return
+     */
     private boolean check() {
         boolean empity = true;
         try {
@@ -37,6 +49,11 @@ public class Database {
         return empity;
     }
 
+    /**
+     * Stampa i primi dieci record letti in oridine di punteggio
+     *
+     * @return s -> contiene i nicknames
+     */
     private String printTable () {
         String s = "";
         if (listaGiocatori.size() < 10) {
@@ -51,13 +68,17 @@ public class Database {
         return s;
     }
 
+    /**
+     * Aggiunge all'arraylist i nicknames dei giocatori
+     * 
+     * @return printTable(), s
+     */
     public String start() {
-        listaGiocatori = new ArrayList<String>();
         String s = "";
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
-            //The main path is assets!
+            //The main path is asse
             String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
@@ -82,6 +103,14 @@ public class Database {
         }
     }
 
+    /**
+     * Metodo che permette di inserire i record nel database e di eliminarne uno o più
+     *
+     * @param id
+     * @param name
+     * @param points
+     * @param type
+     */
     public void modify(String id, String name, int points, DropType type) {
         String query;
         try {
