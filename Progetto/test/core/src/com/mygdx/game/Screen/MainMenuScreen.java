@@ -32,10 +32,12 @@ public class MainMenuScreen implements Screen {
     private int offlinebutton = 270+20;
     private int scorebutton = 150+20;
     private int exitbutton = 30+20;
+    private Drawer drawer;
 
     public MainMenuScreen(BreakGame game) {
         this.game = game;
         screenHandler = new ScreenHandler();
+        drawer=new Drawer();
 
     }
 
@@ -61,15 +63,7 @@ public class MainMenuScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        game.getBatch().begin();
-        game.getBatch().draw(menu, 0, 0);
-        game.getBatch().draw(playButton, Info.larghezza / 2 - playButton.getWidth() / 2, playbutton);//alpostodimetterlicosipossousaredellecostanti
-        game.getBatch().draw(exitButton, Info.larghezza / 2 - exitButton.getWidth() / 2, exitbutton);
-        game.getBatch().draw(multiplayeronlineButton, Info.larghezza / 2 - multiplayerofflineButton.getWidth() / 2, offlinebutton);//immaginibruttissime
-        game.getBatch().draw(score,Info.larghezza / 2 - score.getWidth() / 2, scorebutton );
-        game.getBatch().draw(multiplayerofflineButton,Info.larghezza / 2 - multiplayeronlineButton.getWidth() / 2, onlinebutton );
-
+        drawer.drawMainMenu(game,  menu,playButton, exitButton, multiplayerofflineButton, score, multiplayeronlineButton, playbutton, onlinebutton , offlinebutton, scorebutton, exitbutton);
         if(Gdx.input.justTouched()) {
 
             if (Gdx.input.getX() > (newWight / 2) - (score.getWidth() * coeffDimensionale) / 2 && (Gdx.input.getX() < newWight / 2 + (score.getWidth() * coeffDimensionale) / 2) && (newHeight - Gdx.input.getY() > scorebutton * coeffDimensionale+ barreNere) && (newHeight - Gdx.input.getY() < scorebutton * coeffDimensionale + score.getHeight() * coeffDimensionale +  barreNere)) {

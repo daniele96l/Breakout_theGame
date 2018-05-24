@@ -5,9 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.mygdx.game.BreakGame;
 
 import javax.swing.*;
-
-import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
-
 public class ScreenHandler
 {
     public ScreenHandler() {
@@ -36,37 +33,18 @@ public class ScreenHandler
         numeroPlayer = (Integer.parseInt(JOptionPane.showInputDialog(null, "Number of player", "Enter the number of player ", 1)));
         game.setScreen(new OfflineGameScreen(game, numeroPlayer));
     }
-    void pauseExit(){
-        try
-        {
-            dispose();
+    void pauseExit()
+    {
             Gdx.app.exit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
 
     }
     void mainMenu(BreakGame game)
     {
-        try {
-            dispose();
             game.setScreen(new MainMenuScreen(game));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
     void pauseResume(BreakGame game, OfflineGameScreen oldScreen)
     {
-        try
-        {
-            dispose();
             game.setScreen(oldScreen);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
 
     }
     void multiplayerOnline(BreakGame game)
