@@ -520,6 +520,11 @@ public class Server extends Game {
             numeroPlayer--;
             players.remove(loser);
             paddles.remove(index);
+
+            for(int i=0; i<numeroPlayer; i++) {
+                paddles.get(i).setGiocatore(i+1);
+
+            }
         }
     }
 }

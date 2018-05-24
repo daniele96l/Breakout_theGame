@@ -14,8 +14,8 @@ import help.Info;
 import java.util.ArrayList;
 
 /**
- * @author Alberto king scillachi
- *  classe il cui compito è quello di mostrare le lablel di ogni giocatore dove indicano punteggio, vita e nome.
+ * @author Alberto king schillaci
+ *  classe il cui compito è quello di mostrare le label di ogni giocatore dove indicano punteggio, vita e nome.
  */
 public class Hud {
     public Stage stage;
