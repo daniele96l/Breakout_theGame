@@ -41,7 +41,7 @@ public class MultiplayerGameScreen implements Screen {
     private ArrayList<String> playerNames;
     private ArrayList<String> scores;
     private ArrayList<String> lives;
-
+    private boolean error;
 
 
     public MultiplayerGameScreen(BreakGame game,InetAddress address, String playerName) {
@@ -52,6 +52,7 @@ public class MultiplayerGameScreen implements Screen {
         playerNames = new ArrayList<String>();
         scores = new ArrayList<String>();
         lives = new ArrayList<String>();
+        error = false;
         try {
             byte[] b = playerName.getBytes();
             datagramSocket = new DatagramSocket();
@@ -62,8 +63,8 @@ public class MultiplayerGameScreen implements Screen {
             datagramSocket.receive(packet1);
             serverPort = Integer.parseInt(new String(packet1.getData(), 0, packet1.getLength()));
         } catch (Exception e) {
+            error = true;
             JOptionPane.showMessageDialog(null, "Nerwork Error", "Network error", 1);
-            game.setScreen(new MainMenuScreen(game));
         }
 
         thread = new ClientThread(address, serverPort, datagramSocket);
@@ -80,6 +81,9 @@ public class MultiplayerGameScreen implements Screen {
     @Override
     public void render(float delta) {
         game.getBatch().begin();
+        if(error){
+            game.setScreen(new MainMenuScreen(game));
+        }
         String m = thread.getMessage();
         if (!m.equals("")) {
             parseMessage(m);
@@ -216,7 +220,6 @@ public class MultiplayerGameScreen implements Screen {
         try {
             datagramSocket.send(packet);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
