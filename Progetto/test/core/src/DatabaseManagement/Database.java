@@ -24,7 +24,7 @@ public class Database {
     /**
      * Metodo che controlla se la table che si va a leggere sia vuota o meno
      *
-     * @return
+     * @return empity -> false = pieno, true = vuoto
      */
     private boolean check() {
         boolean empity = true;
@@ -70,7 +70,7 @@ public class Database {
 
     /**
      * Aggiunge all'arraylist i nicknames dei giocatori
-     * 
+     *
      * @return printTable(), s
      */
     public String start() {
