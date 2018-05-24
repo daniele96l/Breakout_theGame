@@ -131,6 +131,7 @@ public class OfflineGameScreen implements Screen {
         if(gameState!=GameState.GAME_OVER && gameState!=GameState.YOU_WON) {
             music.play();
         }
+
         palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y * Info.dt);
         palla.getBoundsBall().setPosition(palla.getPositionBall());
         ArrayList<PowerUp> tmpPUps=new ArrayList<PowerUp>();
@@ -154,7 +155,7 @@ public class OfflineGameScreen implements Screen {
         game.getBatch().begin();
         for (AbstractBrick brick : bricks) {
             game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.brickresize, brick.getHeight() * Info.brickresize);
-//disegnoimattoncini
+        //disegnoimattoncini
         }
         for(PowerUp p:powerUps) {
             game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth()*Info.powerUpResize, p.getHeight()*Info.powerUpResize);
@@ -191,6 +192,7 @@ public class OfflineGameScreen implements Screen {
             lostLife(palla.getPositionBall().x,false);
             updateScene();
         }
+        //Qui si potrebbe applicare
         if (gameState == GameState.YOU_WON) {
             if (isFinished) {
                 livelloCorrente = 1;
