@@ -3,6 +3,12 @@ package com.mygdx.game.Player;
 import com.badlogic.gdx.Input;
 import help.Info;
 
+/**
+ * @Autor regna, ligato , schillaci
+ *
+ * La classe che identifica il giocatore con le sue rispettive caratteristiche come, nome,vite, e punteggio.
+ */
+
 public abstract class Player {
     protected String playerName;
     protected int lives;

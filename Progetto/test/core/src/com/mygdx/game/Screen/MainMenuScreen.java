@@ -13,6 +13,11 @@ import help.Info;
 
 import javax.swing.*;
 
+/**
+ * @autor ligato,schillaci, regna
+ * La classe che gestisce il memù principale con tutti i suoi bottoni
+ *
+ */
 public class MainMenuScreen implements Screen {
     private Texture menu;
     private Texture playButton;
@@ -38,6 +43,9 @@ public class MainMenuScreen implements Screen {
 
     }
 
+    /**
+     * Associa alle variabili le immagini che dovranno essere renderizate
+     */
     @Override
     public void show() {
         menu = new Texture("menuscreen.jpg");
@@ -48,11 +56,15 @@ public class MainMenuScreen implements Screen {
         score = new Texture("score.png");
     }
 
+
+    /**
+     * Disegna le parti grafiche che verranno visualizzate nel manù e si occupa di controllare se clicchi sopra alcune di queste, ovvero i bottoni
+     * @param delta
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 
         game.getBatch().begin();
         game.getBatch().draw(menu, 0, 0);
@@ -93,6 +105,12 @@ public class MainMenuScreen implements Screen {
 
 
     }
+
+    /**
+     * si occupa di ridimensionare la finestra
+     * @param width larghezza della finestra
+     * @param height altezza della finestra
+     */
 
     @Override
     public void resize(int width, int height) {
