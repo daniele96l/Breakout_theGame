@@ -20,6 +20,7 @@ public class PauseScreen implements Screen {
     private OfflineGameScreen oldScreen;
     private float newHeight, newWight, coeffDimensionale = 1;
     private float barreNere =0;
+    private ScreenHandler screenHandler;
 
 
     public PauseScreen(BreakGame game, OfflineGameScreen oldScreen) {
@@ -34,11 +35,12 @@ public class PauseScreen implements Screen {
         resumeButton = new Texture("resume.png");
         exitButton = new Texture("exit.png");
         resumeButton = new Texture("resume.png");
+        screenHandler=new ScreenHandler();
 
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float delta) { //Pattern Controller
 
         game.getBatch().begin();
         game.getBatch().draw(menu, 0, 0);
@@ -48,16 +50,13 @@ public class PauseScreen implements Screen {
 
         if(Gdx.input.justTouched()) {
             if (Gdx.input.getX() > (newWight / 2) - (menuButton.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (menuButton.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > 150 * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < 150 * coeffDimensionale + menuButton.getHeight() * coeffDimensionale + barreNere))) {
-                dispose();
-                Gdx.app.exit();
+                screenHandler.pauseExit();
             }
             if (Gdx.input.getX() > (newWight / 2) - (menuButton.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (menuButton.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > 550 * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < 550 * coeffDimensionale + menuButton.getHeight() * coeffDimensionale + barreNere))) {
-                dispose();
-                game.setScreen(oldScreen);
+                screenHandler.pauseResume(game,oldScreen);
             }
             if (Gdx.input.getX() > (newWight / 2) - (menuButton.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (menuButton.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > 350 * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < 350 * coeffDimensionale + menuButton.getHeight() * coeffDimensionale + barreNere))) {
-                dispose();
-                game.setScreen(new MainMenuScreen(game));
+                screenHandler.mainMenu(game);
             }
         }
                 game.getBatch().end();

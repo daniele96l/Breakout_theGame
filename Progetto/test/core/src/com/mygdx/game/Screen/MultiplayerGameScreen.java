@@ -41,11 +41,10 @@ public class MultiplayerGameScreen implements Screen {
     private ArrayList<String> playerNames;
     private ArrayList<String> scores;
     private ArrayList<String> lives;
-    private ImageIcon ipIcon = new ImageIcon("ipIcon.png");
-    private ImageIcon nickIcon = new ImageIcon("nickIcon.png");
+    private boolean error;
 
 
-    public MultiplayerGameScreen(BreakGame game) {
+    public MultiplayerGameScreen(BreakGame game,InetAddress address, String playerName) {
         palla = new Ball();
         paddles = new ArrayList<Paddle>();
         bricks = new ArrayList<AbstractBrick>();
@@ -53,9 +52,8 @@ public class MultiplayerGameScreen implements Screen {
         playerNames = new ArrayList<String>();
         scores = new ArrayList<String>();
         lives = new ArrayList<String>();
+        error = false;
         try {
-            address = InetAddress.getByName((String) JOptionPane.showInputDialog(null, "Enter the IP address", "Server IP", 1, ipIcon, null, ""));
-            playerName = (String) JOptionPane.showInputDialog(null, "Insert your Nickname", "Nickname", 1, nickIcon, null, "");
             byte[] b = playerName.getBytes();
             datagramSocket = new DatagramSocket();
             DatagramPacket packet = new DatagramPacket(b, b.length, address, 4444);
@@ -64,9 +62,11 @@ public class MultiplayerGameScreen implements Screen {
             DatagramPacket packet1 = new DatagramPacket(b, b.length);
             datagramSocket.receive(packet1);
             serverPort = Integer.parseInt(new String(packet1.getData(), 0, packet1.getLength()));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            error = true;
+            JOptionPane.showMessageDialog(null, "Nerwork Error", "Network error", 1);
         }
+
         thread = new ClientThread(address, serverPort, datagramSocket);
         thread.start();
 
@@ -81,45 +81,16 @@ public class MultiplayerGameScreen implements Screen {
     @Override
     public void render(float delta) {
         game.getBatch().begin();
-        String m = thread.getMessage();
-        if (!m.equals("")) {
-            parseMessage(m);
-
-            boolean found = false;
-            for (String name : playerNames) {
-                if (name.equals(playerName)) {
-                    found = true;
-                }
-            }
-            if (!found) {
-                game.setScreen(new LoseGameScreen(game));
-            }
-
-
-            game.getBatch().draw(bg, 0, 0);
+        if(error){
+            game.setScreen(new MainMenuScreen(game));
         }
-
+        String m = thread.getMessage();
+        controlMessage(m);
         game.getBatch().end();
-
         hud = new Hud(game.getBatch(), playerNames, scores, lives);
         hud.stage.draw();
-
         game.getBatch().begin();
-
-        for (AbstractBrick brick : bricks) {
-            game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.brickresize, brick.getHeight() * Info.brickresize);
-        }
-
-        for (PowerUp p : powerUps) {
-            game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth() * Info.powerUpResize, p.getHeight() * Info.powerUpResize);
-        }
-        if (numeroPlayer > 0) {
-            for (int i = 0; i < numeroPlayer; i++) {
-                game.getBatch().draw(paddles.get(i), paddles.get(i).getPosition().x, paddles.get(i).getPosition().y, paddles.get(i).getWidth() * Info.paddleresizex.get(i), paddles.get(i).getHeight() * Info.paddleresize);
-            }
-        }
-        game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.ballresize, palla.getHeight() * Info.ballresize);
-        game.getBatch().end();
+        Drawer.drawMultiplayer( bricks,  game,  powerUps,  numeroPlayer,  paddles,  palla);
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             keyPressed(Input.Keys.LEFT);
@@ -135,6 +106,7 @@ public class MultiplayerGameScreen implements Screen {
     public void parseMessage(String message) { // si potrebbe implementare pure fabrication e fare un altra classe, che sarebbe anche HightCOesion
         int i;
         if (message.length() < 10) {
+            thread.interrupt();
             game.setScreen(new LoseGameScreen(game));
         } else {
             String[] lines = message.split("\t"); //Separa le righe
@@ -209,6 +181,25 @@ public class MultiplayerGameScreen implements Screen {
         }
     }
 
+    public void controlMessage(String m)
+    {
+        if (!m.equals("")) {
+            parseMessage(m);
+
+            boolean found = false;
+            for (String name : playerNames) {
+                if (name.equals(playerName)) {
+                    found = true;
+                }
+            }
+            if (!found) {
+                game.setScreen(new LoseGameScreen(game));
+            }
+
+
+            game.getBatch().draw(bg, 0, 0);
+        }
+    }
     public void keyPressed(int key) {
         String s = "" + key;
         byte[] b = s.getBytes();
@@ -216,7 +207,6 @@ public class MultiplayerGameScreen implements Screen {
         try {
             datagramSocket.send(packet);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
