@@ -84,7 +84,6 @@ public class MultiplayerGameScreen implements Screen {
         String m = thread.getMessage();
         if (!m.equals("")) {
             parseMessage(m);
-            System.out.println(m);
 
             boolean found = false;
             for (String name : playerNames) {

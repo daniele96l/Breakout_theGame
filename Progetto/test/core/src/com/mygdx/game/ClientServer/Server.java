@@ -4,7 +4,6 @@ import DatabaseManagement.Database;
 import DatabaseManagement.Enum.DropType;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.math.Vector2;
@@ -172,7 +171,7 @@ public class Server extends Game {
 
         gestisciCollisioni();
 
-        checktimerpowerup(); // controlla il tempo
+        checkTimerPowerUp(); // controlla il tempo
 
 
         if (matEliminati == gestoreLivelli.getLivello(livelloCorrente - 1).getnMatMorbidi()) {
@@ -291,6 +290,13 @@ public class Server extends Game {
                 e.printStackTrace();
             }
 
+            for(int i=0; i<threadsIn.size(); i++) {
+                if(threadsIn.get(i).isDeletable()) {
+                    threadsIn.remove(threadsIn.get(i));
+                    i--;
+                }
+            }
+
         }
         if(numeroPlayer == 0) {
             Gdx.app.exit();
@@ -339,7 +345,7 @@ public class Server extends Game {
     /**
      * Gestisce la durata dell'effetto del power up
      */
-    private void checktimerpowerup() {
+    private void checkTimerPowerUp() {
         if (date != null) {
             Date date2 = new Date();
             for (int i = 0; i < numeroPlayer; i++)
@@ -520,10 +526,10 @@ public class Server extends Game {
             numeroPlayer--;
             players.remove(loser);
             paddles.remove(index);
+            threadsIn.get(index).setDeletable(true);
 
             for(int i=0; i<numeroPlayer; i++) {
                 paddles.get(i).setGiocatore(i+1);
-
             }
         }
     }

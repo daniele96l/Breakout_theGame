@@ -17,12 +17,14 @@ public class ServerThreadIn extends Thread {
     private int port;
     private int key=0;
     private String line;
+    private boolean deletable;
 
     public ServerThreadIn(DatagramSocket socket,InetAddress address, int port) {
 
         this.socket = socket;
         this.address = address;
         this.port=port;
+        deletable=false;
         socket.connect(address, port);
     }
 
@@ -71,5 +73,13 @@ public class ServerThreadIn extends Thread {
 
     public int getPort() {
         return port;
+    }
+
+    public boolean isDeletable() {
+        return deletable;
+    }
+
+    public void setDeletable(boolean deletable) {
+        this.deletable = deletable;
     }
 }
