@@ -84,7 +84,6 @@ public class MultiplayerGameScreen implements Screen {
         String m = thread.getMessage();
         if (!m.equals("")) {
             parseMessage(m);
-            System.out.println(m);
 
             boolean found = false;
             for (String name : playerNames) {
@@ -136,6 +135,7 @@ public class MultiplayerGameScreen implements Screen {
     public void parseMessage(String message) { // si potrebbe implementare pure fabrication e fare un altra classe, che sarebbe anche HightCOesion
         int i;
         if (message.length() < 10) {
+            thread.interrupt();
             game.setScreen(new LoseGameScreen(game));
         } else {
             String[] lines = message.split("\t"); //Separa le righe
