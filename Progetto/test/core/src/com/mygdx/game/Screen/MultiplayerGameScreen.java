@@ -41,11 +41,10 @@ public class MultiplayerGameScreen implements Screen {
     private ArrayList<String> playerNames;
     private ArrayList<String> scores;
     private ArrayList<String> lives;
-    private ImageIcon ipIcon = new ImageIcon("ipIcon.png");
-    private ImageIcon nickIcon = new ImageIcon("nickIcon.png");
 
 
-    public MultiplayerGameScreen(BreakGame game) {
+
+    public MultiplayerGameScreen(BreakGame game,InetAddress address, String playerName) {
         palla = new Ball();
         paddles = new ArrayList<Paddle>();
         bricks = new ArrayList<AbstractBrick>();
@@ -54,8 +53,6 @@ public class MultiplayerGameScreen implements Screen {
         scores = new ArrayList<String>();
         lives = new ArrayList<String>();
         try {
-            address = InetAddress.getByName((String) JOptionPane.showInputDialog(null, "Enter the IP address", "Server IP", 1, ipIcon, null, ""));
-            playerName = (String) JOptionPane.showInputDialog(null, "Insert your Nickname", "Nickname", 1, nickIcon, null, "");
             byte[] b = playerName.getBytes();
             datagramSocket = new DatagramSocket();
             DatagramPacket packet = new DatagramPacket(b, b.length, address, 4444);
@@ -64,9 +61,11 @@ public class MultiplayerGameScreen implements Screen {
             DatagramPacket packet1 = new DatagramPacket(b, b.length);
             datagramSocket.receive(packet1);
             serverPort = Integer.parseInt(new String(packet1.getData(), 0, packet1.getLength()));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Nerwork Error", "Network error", 1);
+            game.setScreen(new MainMenuScreen(game));
         }
+
         thread = new ClientThread(address, serverPort, datagramSocket);
         thread.start();
 
