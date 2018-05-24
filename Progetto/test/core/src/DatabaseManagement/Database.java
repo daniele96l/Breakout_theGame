@@ -1,80 +1,36 @@
 package DatabaseManagement;
 
 import DatabaseManagement.Enum.DropType;
+import DatabaseManagement.Enum.TableType;
 import java.sql.*;
 import java.util.ArrayList;
 
-/*
-    You must have jdbc library in the same package of desktop launcher and db in assets folder!
- */
-
 /**
- * @author Curcio
+ * Classe che implementa la gestione del database precedentemente creato. Il DBMS è sqlite. Questa classe mostra solo 3
+ * metodi: 2 per stampare i nicknames nella sezione score del gioco e il restante che serve per inserire o rimuovere tuple
+ * o coppie di tuple dal database.
  *
- * Classe che implementa la gestione del database: nello specifico crea la connessione e inserisce o elimina singole o coppie di records
+ * @author Curcio
  */
 
 public class Database {
-    private ArrayList<String> listaGiocatori;
+    private ArrayList<String> listaGiocatoriOff;
+    private ArrayList<String> listaGiocatoriOn;
 
     public Database() {
-        listaGiocatori = new ArrayList<String>();
+        listaGiocatoriOff = new ArrayList<String>();
+        listaGiocatoriOn = new ArrayList<String>();
     }
 
     /**
-     * Metodo che controlla se la table che si va a leggere sia vuota o meno
+     * In questo metodo viene interrogato il database. Viene caricato il driver JDBC precedentemente aggiunto alle librerie,
+     * creata la connessione ed eseguita la query. Successivamente i record letti verranno aggiunti ad un ArrayList in modo
+     * da stampare i primi dieci nella sezione "score". Le tuple vengono lette direttamente in ordine decrescente di punteggio.
+     * Sono gestite le eccezioni: SQLException e ClassNotFoundException.
      *
-     * @return empity -> false = pieno, true = vuoto
+     * @param tableType é un enum che serve a distinguere quali record, ONLINE o OFFLINE, si vogliono leggere.
      */
-    private boolean check() {
-        boolean empity = true;
-        try {
-            String driver = "org.sqlite.JDBC";
-            Class.forName(driver);
-            String url = "jdbc:sqlite:DB.sqlite";
-            Connection conn = DriverManager.getConnection(url);
-            Statement stmt = conn.createStatement();
-            //I use this query and not "SELECT COUNT..." because the last method returns always a result set, while
-            //now if there aren't tuple rs.next() is false!
-            String query = "SELECT * FROM GAMES";
-            ResultSet rs = stmt.executeQuery(query);
-            if (rs.next()) {
-                empity = false;
-            }
-        } catch (SQLException sqle) {
-            System.err.println(sqle.getMessage());
-        } catch (ClassNotFoundException cnfe) {
-            System.err.println(cnfe.getMessage());
-        }
-        return empity;
-    }
-
-    /**
-     * Stampa i primi dieci record letti in oridine di punteggio
-     *
-     * @return s -> contiene i nicknames
-     */
-    private String printTable () {
-        String s = "";
-        if (listaGiocatori.size() < 10) {
-            for (int i = 0; i < listaGiocatori.size(); i++) {
-                s += listaGiocatori.get(i);
-            }
-        } else {
-            for (int i = 0; i < 10; i++) {
-                s += listaGiocatori.get(i);
-            }
-        }
-        return s;
-    }
-
-    /**
-     * Aggiunge all'arraylist i nicknames dei giocatori
-     *
-     * @return printTable(), s
-     */
-    public String start() {
-        String s = "";
+    private void start(TableType tableType) {
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
@@ -82,34 +38,97 @@ public class Database {
             String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
-            if (check()) {
-                s += "NO SCORE";
-                return s;
+            switch (tableType) {
+                case ONLINE:
+                    String queryO = "SELECT * FROM ONLINE ORDER BY POINTS DESC";
+                    ResultSet rsO = stmt.executeQuery(queryO);
+                    while (rsO.next()) {
+                        listaGiocatoriOn.add(rsO.getString("NICKNAME") + "  " + rsO.getString("POINTS") + "\n\n");
+                    }
+                    break;
+                case OFFLINE:
+                    String query = "SELECT * FROM GAMES ORDER BY POINTS DESC";
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        listaGiocatoriOff.add(rs.getString("NICKNAME") + "              " + rs.getString("POINTS") + "\n\n");
+                    }
+                    break;
             }
-            String query = "SELECT * FROM GAMES ORDER BY POINTS DESC";
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                listaGiocatori.add(rs.getString("NICKNAME") + "              " + rs.getString("POINTS") + "\n\n");
-            }
-            return printTable();
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
-            s = "There is a big problem!";
-            return s;
         } catch (ClassNotFoundException cnfe) {
             System.err.println(cnfe.getMessage());
-            s = "There is a huge problem!";
-            return s;
         }
     }
 
     /**
-     * Metodo che permette di inserire i record nel database e di eliminarne uno o più
+     * Metodo che serve a stampare i primi dieci giocatori della modalità OFFLINE in ordine di punteggio. Se l'Arraylist
+     * è vuoto vuol dire che non ha ancora giocato nessuno e verrà visualizzato il relativo messaggio d'errore. Se la
+     * dimensione dell'ArrayList è maggiore di 10 memorizzo nella variabile che verrà visualizzata nella sezione score
+     * solo i primi 10.
      *
-     * @param id
-     * @param name
-     * @param points
-     * @param type
+     * @return sOff: è la stringa che contiene o i nicknames in ordine di punteggio o il messaggio di errore nel caso in cui
+     *               l'ArrayList risultasse vuoto.
+     */
+    public String printTableOff () {
+        start(TableType.OFFLINE);
+        String sOff = "";
+
+        if (listaGiocatoriOff.size() < 10) {
+            if (listaGiocatoriOff.size() == 0) {
+                sOff += "NO SCORE";
+            } else {
+                for (int i = 0; i < listaGiocatoriOff.size(); i++) {
+                    sOff += listaGiocatoriOff.get(i);
+                }
+            }
+        } else {
+            for (int i = 0; i < 10; i++) {
+                sOff += listaGiocatoriOff.get(i);
+            }
+        }
+        return sOff;
+    }
+
+    /**
+     * Metodo che serve a stampare i primi dieci giocatori della modalità ONLINE in ordine di punteggio. Se l'Arraylist
+     * è vuoto vuol dire che non ha ancora giocato nessuno e verrà visualizzato il relativo messaggio d'errore. Se la
+     * dimensione dell'ArrayList è maggiore di 10 memorizzo nella variabile che verrà visualizzata nella sezione score
+     * solo i primi 10.
+     *
+     * @return sOn: è la stringa che contiene o i nicknames in ordine di punteggio o il messaggio di errore nel caso in cui
+     *               l'ArrayList risultasse vuoto.
+     */
+    public String printTableOn () {
+        start(TableType.ONLINE);
+        String sOn = "";
+
+        if (listaGiocatoriOff.size() < 10) {
+            if (listaGiocatoriOff.size() == 0) {
+                sOn += "NO SCORE";
+            } else {
+                for (int i = 0; i < listaGiocatoriOff.size(); i++) {
+                    sOn += listaGiocatoriOff.get(i);
+                }
+            }
+        } else {
+            for (int i = 0; i < 10; i++) {
+                sOn += listaGiocatoriOff.get(i);
+            }
+        }
+        return sOn;
+    }
+
+
+    /**
+     * Metodo che dopo aver caricato il driver e creata la connessione permette di inserire o eliminare tuple o coppie di
+     * tuple.
+     *
+     * @param id: numero randomico compreso tra 0 e 1000 generato nella classe "offlinegamescreen" che serve a identificare
+     *            univocamnete le varie partite giocate.
+     * @param name: nome del giocatore
+     * @param points: punteggio del giocatore in questione
+     * @param type: parametro che serve a scegliere il tipo di operazione da eseguire
      */
     public void modify(String id, String name, int points, DropType type) {
         String query;

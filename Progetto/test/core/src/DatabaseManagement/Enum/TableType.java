@@ -1,8 +1,9 @@
 package DatabaseManagement.Enum;
 
 /**
+ * Classe che contiene i tipi di table del database.
+ *
  * @author Curcio
- * Classe che contiene i tipi di table del database
  */
 
 public enum TableType {

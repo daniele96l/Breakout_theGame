@@ -114,7 +114,7 @@ public class ScoreScreen implements Screen {
     }
 
     public void bestScores(SpriteBatch batch) {
-        bitmapFont.draw(batch, db.start(), 500, 704);
+        bitmapFont.draw(batch, db.printTableOff(), 500, 704);
 
     }
 }

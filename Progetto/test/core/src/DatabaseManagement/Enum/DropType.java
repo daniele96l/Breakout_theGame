@@ -1,8 +1,9 @@
 package DatabaseManagement.Enum;
 
 /**
+ * Classe che contiene i tipi di operazione che si possono eseguire interrogando il database.
+ *
  * @author Curcio
- * Classe che contiene i tipi di insert
  */
 
 public enum DropType {
