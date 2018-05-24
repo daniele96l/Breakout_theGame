@@ -228,10 +228,9 @@ public class Server extends Game {
     private void writeMessage() {
 
         String message = "";
-        if(numeroPlayer == 0){
+        if (numeroPlayer == 0) {
             message = "Empty";
-        }
-        else {
+        } else {
             message += palla.getPositionBall().x + " " + palla.getPositionBall().y + "\t";
             for (Paddle paddle : paddles) {
                 message += paddle.getPosition().x + " ";
@@ -290,19 +289,19 @@ public class Server extends Game {
                 e.printStackTrace();
             }
 
-            for(int i=0; i<threadsIn.size(); i++) {
-                if(threadsIn.get(i).isDeletable()) {
-                    threadsIn.remove(threadsIn.get(i));
-                    i--;
-                }
-            }
-
         }
-        if(numeroPlayer == 0) {
+        for (int i = 0; i < threadsIn.size(); i++) {
+            if (threadsIn.get(i).isDeletable()) {
+                threadsIn.remove(threadsIn.get(i));
+                i--;
+            }
+        }
+        if (numeroPlayer == 0) {
             Gdx.app.exit();
         }
-    }
 
+
+    }
     /**
      * Imposta la scena ai valori di default
      */
