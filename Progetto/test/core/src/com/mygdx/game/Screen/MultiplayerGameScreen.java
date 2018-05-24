@@ -85,44 +85,12 @@ public class MultiplayerGameScreen implements Screen {
             game.setScreen(new MainMenuScreen(game));
         }
         String m = thread.getMessage();
-        if (!m.equals("")) {
-            parseMessage(m);
-
-            boolean found = false;
-            for (String name : playerNames) {
-                if (name.equals(playerName)) {
-                    found = true;
-                }
-            }
-            if (!found) {
-                game.setScreen(new LoseGameScreen(game));
-            }
-
-
-            game.getBatch().draw(bg, 0, 0);
-        }
-
+        controlMessage(m);
         game.getBatch().end();
-
         hud = new Hud(game.getBatch(), playerNames, scores, lives);
         hud.stage.draw();
-
         game.getBatch().begin();
-
-        for (AbstractBrick brick : bricks) {
-            game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.brickresize, brick.getHeight() * Info.brickresize);
-        }
-
-        for (PowerUp p : powerUps) {
-            game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth() * Info.powerUpResize, p.getHeight() * Info.powerUpResize);
-        }
-        if (numeroPlayer > 0) {
-            for (int i = 0; i < numeroPlayer; i++) {
-                game.getBatch().draw(paddles.get(i), paddles.get(i).getPosition().x, paddles.get(i).getPosition().y, paddles.get(i).getWidth() * Info.paddleresizex.get(i), paddles.get(i).getHeight() * Info.paddleresize);
-            }
-        }
-        game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.ballresize, palla.getHeight() * Info.ballresize);
-        game.getBatch().end();
+        Drawer.drawMultiplayer( bricks,  game,  powerUps,  numeroPlayer,  paddles,  palla);
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             keyPressed(Input.Keys.LEFT);
@@ -213,6 +181,25 @@ public class MultiplayerGameScreen implements Screen {
         }
     }
 
+    public void controlMessage(String m)
+    {
+        if (!m.equals("")) {
+            parseMessage(m);
+
+            boolean found = false;
+            for (String name : playerNames) {
+                if (name.equals(playerName)) {
+                    found = true;
+                }
+            }
+            if (!found) {
+                game.setScreen(new LoseGameScreen(game));
+            }
+
+
+            game.getBatch().draw(bg, 0, 0);
+        }
+    }
     public void keyPressed(int key) {
         String s = "" + key;
         byte[] b = s.getBytes();

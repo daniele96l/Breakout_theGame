@@ -37,7 +37,6 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(BreakGame game) {
         this.game = game;
         screenHandler = new ScreenHandler();
-        drawer=new Drawer();
 
     }
 
@@ -63,7 +62,7 @@ public class MainMenuScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        drawer.drawMainMenu(game,  menu,playButton, exitButton, multiplayerofflineButton, score, multiplayeronlineButton, playbutton, onlinebutton , offlinebutton, scorebutton, exitbutton);
+        Drawer.drawMainMenu(game,  menu,playButton, exitButton, multiplayerofflineButton, score, multiplayeronlineButton, playbutton, onlinebutton , offlinebutton, scorebutton, exitbutton);
         if(Gdx.input.justTouched()) {
 
             if (Gdx.input.getX() > (newWight / 2) - (score.getWidth() * coeffDimensionale) / 2 && (Gdx.input.getX() < newWight / 2 + (score.getWidth() * coeffDimensionale) / 2) && (newHeight - Gdx.input.getY() > scorebutton * coeffDimensionale+ barreNere) && (newHeight - Gdx.input.getY() < scorebutton * coeffDimensionale + score.getHeight() * coeffDimensionale +  barreNere)) {
