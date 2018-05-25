@@ -9,6 +9,10 @@ import sprites.powerup.PowerUp;
 
 import java.io.Serializable;
 
+/**
+ * @author ligato
+ * Classe Astratta del mattoncino
+ */
 public  abstract class AbstractBrick  extends Sprite {
 
     protected Vector2 positionBrick;
@@ -24,6 +28,10 @@ public  abstract class AbstractBrick  extends Sprite {
         boundsBrick = new Rectangle(posX, posY, this.getWidth()* Info.brickresize, this.getHeight()* Info.brickresize );
     }
 
+    /**
+     * Assegna il power up al mattoncino e setta il boolean a True
+     * @param powerUp potenziamento che cadrà dal mattoncino
+     */
     public void setPowerUp(PowerUp powerUp) {
         this.powerUp = powerUp;
         hasPowerUp=true;

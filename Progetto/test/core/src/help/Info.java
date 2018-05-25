@@ -4,6 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
 
+/**
+ * @author Ligato
+ * Classe che contiene le costanti che verranno utilizzare durante il gioco
+ */
 public class Info {
     public static int altezza = 720;
     public static int larghezza = 1280;
@@ -30,12 +34,20 @@ public class Info {
         return velPaddle;
     }
 
+    /**
+     * classe che ritorna..
+     * @return la larghezza del mattoncino in funzione della texture
+     */
     public static int getBrickWidth () {
         Texture brick=new Texture("normalBrick.jpg");
         int brickWidth=(int)(brick.getWidth()*brickresize);
         return brickWidth;
     }
 
+    /**
+     * classe che ritorna..
+     * @return l altezza del mattoncino in funzione della texture
+     */
     public static int getBrickHeight() {
         Texture brick=new Texture("normalBrick.jpg");
         int brickHeight=(int)(brick.getHeight()*brickresize);

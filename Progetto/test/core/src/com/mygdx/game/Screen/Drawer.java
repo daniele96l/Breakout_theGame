@@ -13,8 +13,31 @@ import sprites.powerup.PowerUp;
 
 import java.util.ArrayList;
 
+/**
+ * @Author Cotogni, Ligato
+ *
+ * Questa classe si occupa solo di disegnare alcuni elementi necessari per il gioco, sia nel main menù, che nel gameplay
+ */
+
 public class Drawer
 {
+    /**
+     *
+     * @param game  ??????M
+     * @param menu la texture sfondo
+     * @param playButton la texture che rappresenta il bottone "play"
+     * @param exitButton la texture che rappresenta il bottone "exit"
+     * @param multiplayerofflineButton la texture che rappresenta il bottone "mul..."
+     * @param score la texture che rappresenta il bottone "score"
+     * @param multiplayeronlineButton  la texture che rappresenta il bottone "mul.."
+     * @param playbutton  l'altezza del bottone play
+     * @param onlinebutton l'altezza del bottone ...
+     * @param offlinebutton l'altezza del bottone ...
+     * @param scorebutton l'altezza del bottone e...
+     * @param exitbutton  l'altezza del bottone exit
+     *
+     * Questo metodo si occupa di disegnare le texture che servono al menu
+     */
     static void drawMainMenu(BreakGame game, Texture menu,Texture playButton,Texture exitButton,Texture multiplayerofflineButton,Texture score,Texture multiplayeronlineButton,int playbutton,int onlinebutton ,int offlinebutton,int scorebutton,int exitbutton)
     {
         game.getBatch().begin();
@@ -25,6 +48,19 @@ public class Drawer
         game.getBatch().draw(score,Info.larghezza / 2 - score.getWidth() / 2, scorebutton );
         game.getBatch().draw(multiplayerofflineButton,Info.larghezza / 2 - multiplayeronlineButton.getWidth() / 2, onlinebutton );
     }
+
+    /**
+     *
+     * @param bricks l'arrey list che contiene i miei mattoncini
+     * @param game  ???
+     * @param powerUps l'array list che contiene i miei power up
+     * @param numeroPlayer il numero dei giocatori della partita
+     * @param paddles l'array list dei player della partita
+     * @param palla l'oggetto palla
+     *
+     * Questa classe si occupa di disegnare gli oggetti mentre si gioce
+     *
+     */
     static void drawMultiplayer(ArrayList<AbstractBrick> bricks, BreakGame game, ArrayList<PowerUp> powerUps, int numeroPlayer, ArrayList<Paddle> paddles, Ball palla)
     {
         for (AbstractBrick brick : bricks) {

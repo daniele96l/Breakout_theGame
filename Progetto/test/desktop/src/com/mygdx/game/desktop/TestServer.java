@@ -6,6 +6,10 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.mygdx.game.ClientServer.Server;
 import help.Info;
 
+/**
+ * @author regna, schillaci
+ * Fa partire il server
+ */
 public class TestServer
 {
     public static void main(String[] args){

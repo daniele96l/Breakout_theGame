@@ -6,6 +6,11 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.mygdx.game.BreakGame;
 import help.Info;
 
+/**
+ * @author ligato,schillaci, regna
+ *
+ * Lancia il gioco, impostando le dimensioni della finestra ed il framerate
+ */
 
 public class DesktopLauncher {
 

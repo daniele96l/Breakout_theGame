@@ -8,6 +8,11 @@ import help.Info;
 
 import java.io.Serializable;
 
+/**
+ * @author Ligato
+ *
+ * Oggetto palla con cui il giocatore interagirà,
+ */
 
 public class Ball extends Sprite {
     private Texture palla;
@@ -25,6 +30,9 @@ public class Ball extends Sprite {
 
     }
 
+    /**
+     * Imposta la palla ad una posizione e velocità di defoult all'inizio del gioco oppure quando si perde
+     */
     public void setDefaultState() {
         speedBall=new Vector2(0,-Info.velBall);
         positionBall = new Vector2(Info.larghezza/2-palla.getWidth()*Info.ballresize/2, Info.altezza/3);

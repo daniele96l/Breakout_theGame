@@ -6,6 +6,11 @@ import help.GameState;
 import help.Info;
 import sprites.Paddle;
 
+/**
+ * @Author Regna, Schillaci, Ligato
+ * Si occupa di gestire i movimenti del Player
+ */
+
 public class CommandPlayer {
 
     private Paddle paddle;
@@ -13,21 +18,28 @@ public class CommandPlayer {
     int numeroGiocatori;
     int giocatore;
 
-
+    /**
+     * Salva i seguenti valori nei parametri
+     * @param paddle la mattonella che muoviamo
+     * @param player l'oggetto giocatore
+     * @param numeroGiocatori il numero dei giocatori
+     * @param giocatore il numero del giocatore che sta giocando
+     */
 
     public CommandPlayer(Paddle paddle, Player player, int numeroGiocatori, int giocatore){
         this.paddle = paddle;
         this.player=player;
         this.numeroGiocatori=numeroGiocatori;
         this.giocatore=giocatore;
-
     }
 
+    /**??????????????????????????????????????????????????????????????????????
+     * La classe che si occupa di muovere la paddle, secondo le frecce destra e sinistra
+     * controllo quindi che non vada oltre ai bordi destro e sinistro
+     */
 
     public void move()
     {
-
-
         if(player.keyPressed()==Input.Keys.LEFT){
             if(paddle.getPosition().x >(Info.larghezza/numeroGiocatori)*(giocatore-1)) { //controllo il range in cui la Paddle si può muovere
 
@@ -42,6 +54,11 @@ public class CommandPlayer {
             }
         }
     }
+
+    /**??????????????????????????????????????????????????????????????????????????????
+     * La classe che si occupa di muovere la paddle, secondo le frecce destra e sinistra
+     * controllo quindi che non vada oltre ai bordi destro e sinistro
+     */
 
     public void move(int key)
     {
@@ -60,6 +77,10 @@ public class CommandPlayer {
         }
     }
 
+    /**
+     * Controllo che il gioco sia in pausa
+     * @return un booleano che indica se si è in pausa o meno
+     */
     public boolean checkpause(){
         if(player.keyPressed()==Input.Keys.P){
             return true;

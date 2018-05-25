@@ -11,6 +11,11 @@ import sprites.Paddle;
 
 import java.io.Serializable;
 
+/**
+ * @Autor Schillaci
+ *
+ * Classe che crea l'oggetto astratto power up, ovvero un potenziamento che scenderà da un mattoncino appena rotto
+ */
 public abstract class PowerUp extends Sprite {
     protected Vector2 position;
     protected Vector2 speed;

@@ -4,6 +4,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import help.Info;
 
+/**
+ * @author ligato
+ * Classe che rappresenta l'oggetto mattoncino 'classico'
+ */
+
 public class Brick extends AbstractBrick{
 
     public Brick(int posX, int posY){

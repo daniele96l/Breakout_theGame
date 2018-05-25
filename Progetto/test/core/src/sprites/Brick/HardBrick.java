@@ -4,6 +4,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import help.Info;
 
+/**
+ * @author ligato
+ * Classe che rappresenta il mattoncino 'indistruttibile'
+ */
 public class HardBrick extends AbstractBrick {
 
     public HardBrick(int posX, int posY){

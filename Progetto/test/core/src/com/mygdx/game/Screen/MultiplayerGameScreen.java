@@ -22,6 +22,11 @@ import java.util.Date;
 
 //Da implementare i pattern
 
+/**
+ * @Author Renga, Schillaci
+ *
+ * DA CHIEDERE A LORO, IO NON SO CHE CAZZO FACCIA
+ */
 public class MultiplayerGameScreen implements Screen {
 
     private BreakGame game;
@@ -103,7 +108,7 @@ public class MultiplayerGameScreen implements Screen {
         }
     }
 
-    public void parseMessage(String message) { // si potrebbe implementare pure fabrication e fare un altra classe, che sarebbe anche HightCOesion
+    public void parseMessage(String message) { // si potrebbe implementare pure_fabrication e fare un altra classe, che sarebbe anche HightCOesion
         int i;
         if (message.length() < 10) {
             thread.interrupt();

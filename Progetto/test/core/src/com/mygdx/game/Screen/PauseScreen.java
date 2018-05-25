@@ -9,6 +9,13 @@ import com.mygdx.game.BreakGame;
 import help.GameState;
 import help.Info;
 
+/**
+ * @Author  Regna, Ligato, Schillaci
+ *
+ * Questa classe rappresenta la schermata di pausa con i relativi bottoni
+ *
+ */
+
 public class PauseScreen implements Screen {
 
     private BreakGame game;
@@ -23,11 +30,22 @@ public class PauseScreen implements Screen {
     private ScreenHandler screenHandler;
 
 
+    /**
+     *
+     * @param game ????
+     * @param oldScreen ????
+     *
+     * Prende i valori precedenti di game e old creen
+     */
     public PauseScreen(BreakGame game, OfflineGameScreen oldScreen) {
         this.game = game;
         this.oldScreen=oldScreen;
     }
 
+    /**
+     * Assegna le texture ai valori delle nostre variabili
+     *
+     */
     @Override
     public void show() {
         menu = new Texture("menuscreen.jpg");
@@ -38,6 +56,13 @@ public class PauseScreen implements Screen {
         screenHandler=new ScreenHandler();
 
     }
+
+    /**
+     * rendereizza a schermo tutte le texture necessarie e controlla dove clicca il cursore
+     * MA IL CONTROLLO SE IL CURSORE CLICCA NON PUO ESSERE GESTITO DA QUALCUN ALTRO?????????????
+     *
+     * @param delta il tempo di aggiornamento dei frame
+     */
 
     @Override
     public void render(float delta) { //Pattern Controller
@@ -62,6 +87,14 @@ public class PauseScreen implements Screen {
                 game.getBatch().end();
 
     }
+
+    /**
+     * Si occupa del resize della finestra
+     *
+     * @param width larghezza della finestra
+     *
+     * @param height altezza della finestra
+     */
 
     @Override
     public void resize(int width, int height) {

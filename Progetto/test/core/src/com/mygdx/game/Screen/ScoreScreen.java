@@ -19,6 +19,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * @Author Regna, Scillaci, Ligato
+ */
+
 public class ScoreScreen implements Screen {
 //Applicato HightCoesion
 
@@ -37,9 +41,17 @@ public class ScoreScreen implements Screen {
 
     private BreakGame game;
 
+    /**
+     *  Salva il parametro game
+     * @param game ???
+     */
     public ScoreScreen(BreakGame game) {
         this.game = game;
     }
+
+    /**
+     * Si occupa di salvare nei parametri i valori telle texture, Gli array list e impostare i Bitmap
+     */
 
     @Override
     public void show() {
@@ -49,6 +61,12 @@ public class ScoreScreen implements Screen {
         scores = new ArrayList<Score>();
         scoreScreen = new Texture("menuscreen.jpg");
     }
+
+    /**
+     *
+     *  Si occupa di renderizzare la finestra, quindi mostrate tutte le texture, e controllare se il bottone sia cliccato
+     * @param delta frequenza di aggiornamento frame
+     */
 
     @Override
     public void render(float delta) {
@@ -70,6 +88,13 @@ public class ScoreScreen implements Screen {
         game.getBatch().end();
     }
 
+
+    /**
+     * Si occupa di ridimensionare la finestra
+     *
+     * @param width larghezza finestra
+     * @param height altezza finestra
+     */
     @Override
     public void resize(int width, int height) {
 
@@ -113,6 +138,10 @@ public class ScoreScreen implements Screen {
 
     }
 
+    /**
+     * Inizia a disegnare i punteggi partenzo dall'altezza y
+     * @param batch
+     */
     public void bestScores(SpriteBatch batch) {
         bitmapFont.draw(batch, db.printTableOff(), 500, 704);
 

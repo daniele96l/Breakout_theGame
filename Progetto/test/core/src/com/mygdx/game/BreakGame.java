@@ -4,6 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Screen.MainMenuScreen;
 
+/**
+ * ?????????????
+ */
 public class BreakGame extends Game {
     private SpriteBatch batch;
 
