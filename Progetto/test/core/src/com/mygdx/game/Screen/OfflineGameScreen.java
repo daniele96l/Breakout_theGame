@@ -30,6 +30,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * @author ligato,schillaci, regna
+ * Questa classe gestisce la logica della partita quando si sta giocando offline
+ */
 public class OfflineGameScreen implements Screen {
 
     private BreakGame game;
@@ -83,6 +87,12 @@ public class OfflineGameScreen implements Screen {
         isFirstCalled=true;
     }
 
+    /**
+     * Il metodo show si occupa di preparare gli oggetti gli oggetti che serviranno
+     * durante la partita: Si selezionano le musifche, i boleani, la paddle, la scena e
+     * la informazioni che usciranno in alto (HUD)
+     */
+
     @Override
     public void show() {
         if(isFirstCalled) {
@@ -103,6 +113,7 @@ public class OfflineGameScreen implements Screen {
             date.add(new Date());
             paddles.add(new Paddle(numeroPlayer, 1));
             Info.paddleresizex.add(0.5f);
+
             if (numeroPlayer > 1) {
                 for (int i = 1; i < numeroPlayer; i++) {
                     paddles.add(new Paddle(numeroPlayer, i + 1));
@@ -119,6 +130,14 @@ public class OfflineGameScreen implements Screen {
             bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
         }
     }
+
+    /**
+     * Il metodo render aggiorna la schermata ogni frame e renderizza a schermo gli oggetti grafici:
+     * Prende i mattoncini e li renderizza, renderizza il background, seleziona la musica adatta allo stato e ne fa il play
+     * imposta la posizione della palla, gestisce l'arraylist dei powerUp (aggiungendoli o rimuovendoli), aggiorna la HUD
+     * e controlla lo stato corrente del gioco
+     * @param delta
+     */
 
     @Override
     public void render(float delta) { // si potrebbe astrattizzare
@@ -162,6 +181,7 @@ public class OfflineGameScreen implements Screen {
         }
         game.getBatch().draw(paddles.get(0), paddles.get(0).getPosition().x, paddles.get(0).getPosition().y, paddles.get(0).getWidth() * Info.paddleresizex.get(0), paddles.get(0).getHeight() * Info.paddleresize);
         game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.ballresize, palla.getHeight() * Info.ballresize);
+
         if (numeroPlayer > 1) {
             for (int i = 1; i < numeroPlayer; i++) {
                 game.getBatch().draw(paddles.get(i), paddles.get(i).getPosition().x, paddles.get(i).getPosition().y, paddles.get(i).getWidth() * Info.paddleresizex.get(i), paddles.get(i).getHeight() * Info.paddleresize);
@@ -229,6 +249,11 @@ public class OfflineGameScreen implements Screen {
     }
 
 
+    /**
+     * Si occupa di ridimensionare la finestra
+     * @param width
+     * @param height
+     */
     @Override
     public void resize(int width, int height) {
 
@@ -263,6 +288,11 @@ public class OfflineGameScreen implements Screen {
     public void dispose() {
 
     }
+
+    /**
+     * Questa classe si occupa di gestire le collisioni che avverranno tra la pallina e i mattoncini
+     *
+     */
 
     public void gestisciCollisioni() {//Questa classe va spostata secondo me, violerebbe il pattern Hight Coesion
         //Hight coesion; A measure of how focused the responsability of a class are
@@ -367,6 +397,11 @@ public class OfflineGameScreen implements Screen {
         return playerName;
     }
 
+    /**
+     * Se il giocatore ha preso il power up che fa perdere la vita, faccio agire l'effetto
+     * @param positionX
+     * @param powerup
+     */
     private void lostLife(float positionX,boolean powerup) {  //Questa classe va spostata secondo me, violerebbe il pattern Hight Coesion
         //Hight coesion; A measure of how focused the responsability of a class are
         int range=Info.larghezza/numeroPlayer;
@@ -395,6 +430,10 @@ public class OfflineGameScreen implements Screen {
         }
     }
 
+    /**
+     * Aggiorna la scena con la nuova posizione del player e della palla
+     */
+
     private void updateScene() {
         palla.setDefaultState();
         for(Paddle paddle:paddles) {
@@ -406,6 +445,9 @@ public class OfflineGameScreen implements Screen {
         }
     }
 
+    /**
+     * aggiorna l'arraylist dei mattoncini, con il layout del prossimo livello
+     */
     private void updateLevel() {
         gestoreLivelli = new GestoreLivelli("fileLivelli.txt");
         bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//laclasselivellosioccuperàdiritornarel'arraylistdeimattonciniadattiaquestolivello
@@ -414,12 +456,20 @@ public class OfflineGameScreen implements Screen {
         matEliminati = 0;
     }
 
+    /**
+     * Genere un numero casuale utile alla randomizzazione dei power up
+     * @return
+     */
+
     private String ranGen () {
         Random n = new Random();
         String s = "" + n.nextInt(1000);
         return s;
     }
 
+    /**
+     * Un timer che controlla il tempo, dato che i powet-Up hanno una durata limitata
+     */
     private void checktimer(){
         if(date != null){
             Date date2 = new Date();
