@@ -20,7 +20,7 @@ public class Info {
     public static float ballresize = 0.8f;
     public static int brickGapX=5;
     public static int brickGapY=3;
-    public static int defaultLivesNum=1;
+    public static int defaultLivesNum=5;
     public static int hudHeight=80;
     public static int powerUpSpeed=3;
     public static float powerUpResize=0.5f;

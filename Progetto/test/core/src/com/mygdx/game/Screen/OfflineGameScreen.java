@@ -19,13 +19,14 @@ import com.mygdx.game.Player.Player;
 import com.mygdx.game.Player.RobotPlayer;
 import com.mygdx.game.hud.Hud;
 import help.GameState;
-import help.Info;
+import help.*;
 import sprites.Ball;
 import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
 import sprites.Paddle;
 import sprites.powerup.PowerUp;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -73,6 +74,10 @@ public class OfflineGameScreen implements Screen {
     private boolean isFirstCalled;
     private ArrayList<Date> date;
     private Database db = new Database();
+    private RanNum ranNum;
+    private Timer timer;
+
+
 
     public OfflineGameScreen(BreakGame game, int numeroPlayer) {
         //Applicato pattern Creator
@@ -85,6 +90,10 @@ public class OfflineGameScreen implements Screen {
         date = new ArrayList<Date>();
         palla = new Ball();
         isFirstCalled=true;
+        ranNum = new RanNum();
+        timer = new Timer();
+
+
     }
 
     /**
@@ -292,6 +301,7 @@ public class OfflineGameScreen implements Screen {
     /**
      * Questa classe si occupa di gestire le collisioni che avverranno tra la pallina e i mattoncini
      *
+     * DEVE ESSERE TOLTA DA QUI
      */
 
     public void gestisciCollisioni() {//Questa classe va spostata secondo me, violerebbe il pattern Hight Coesion
@@ -447,36 +457,37 @@ public class OfflineGameScreen implements Screen {
 
     /**
      * aggiorna l'arraylist dei mattoncini, con il layout del prossimo livello
+     * POTREBBE ESSERE TOLTA
      */
     private void updateLevel() {
+
+
         gestoreLivelli = new GestoreLivelli("fileLivelli.txt");
         bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//laclasselivellosioccuperàdiritornarel'arraylistdeimattonciniadattiaquestolivello
         powerUps=new ArrayList<PowerUp>();
         bg=gestoreLivelli.getLivello(livelloCorrente-1).getBackground();
         matEliminati = 0;
+
+
     }
 
     /**
      * Genere un numero casuale utile alla randomizzazione dei power up
+     * il funzionamento è delegato ad una classe apposita coma consigliano i pattenr di HightCoesion
      * @return
      */
 
     private String ranGen () {
-        Random n = new Random();
-        String s = "" + n.nextInt(1000);
+        String s = ranNum.generate();
         return s;
     }
 
     /**
      * Un timer che controlla il tempo, dato che i powet-Up hanno una durata limitata
+     * il funzionamento è delegato ad una classe apposita coma consigliano i pattenr di HightCoesion
      */
     private void checktimer(){
-        if(date != null){
-            Date date2 = new Date();
-            for(int i =0; i < numeroPlayer;i++)
-            if(date2.getTime() - date.get(i).getTime() > Info.durataPowerUp)
-                Info.paddleresizex.set(i,Info.paddleresize);
-        }
+        timer.checkTimer(date, numeroPlayer );
     }
 
     public void setGameState(GameState gameState) {

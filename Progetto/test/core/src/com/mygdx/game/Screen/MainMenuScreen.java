@@ -33,7 +33,6 @@ public class MainMenuScreen implements Screen {
     private int scorebutton = 150+20;
     private int exitbutton = 30+20;
     private Drawer drawer;
-    private Click click;
 
     public MainMenuScreen(BreakGame game) {
         this.game = game;
