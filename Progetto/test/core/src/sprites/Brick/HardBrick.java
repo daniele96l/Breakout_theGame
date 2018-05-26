@@ -6,7 +6,9 @@ import help.Info;
 
 /**
  * @author ligato
- * Classe che rappresenta il mattoncino 'indistruttibile'
+ * Questa classe estende la classe astratta più generale AbstractBrick
+ * e definisce che è il mattoncino "indistruttibile", assegnandogli
+ * una posizione (x e y) e una immagine all'interno del gioco
  */
 public class HardBrick extends AbstractBrick {
 

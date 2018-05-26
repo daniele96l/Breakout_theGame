@@ -5,8 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import java.util.ArrayList;
 
 /**
- * @author Ligato
- * Classe che contiene le costanti che verranno utilizzare durante il gioco
+ * @author : Cristrian Regna, Alberto Schillaci, Daniele Ligato
+ * Il costruttore di questa classe contiene le variabili necessarie
+ * al corretto funzionamento del gioco
  */
 public class Info {
     public static int altezza = 720;
@@ -30,12 +31,18 @@ public class Info {
     public static int powerUpHeight=45;
     public static int durataPowerUp = 10000;
 
+
+    /**
+     * Questo metodo restituisce la velocità del paddle di gioco
+     * @return velocità del paddle
+     */
     public static int getVelPaddle() {
         return velPaddle;
     }
 
+
     /**
-     * classe che ritorna..
+     * Questo metodo restituisce la larghezza del mattonicino in funzione della texture
      * @return la larghezza del mattoncino in funzione della texture
      */
     public static int getBrickWidth () {
@@ -45,7 +52,7 @@ public class Info {
     }
 
     /**
-     * classe che ritorna..
+     * Questo metodo restituisce la altezza del mattonicino in funzione della texture
      * @return l altezza del mattoncino in funzione della texture
      */
     public static int getBrickHeight() {

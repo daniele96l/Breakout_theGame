@@ -5,8 +5,9 @@ import sprites.Ball;
 import sprites.Paddle;
 
 /**
- * @author regna, schillaci
- * Classe che rappresenta l'oggetto power up che fa perdere una vita al giocatore
+ * @author Cristian Regna, Alberto Schillaci
+ * Questa classe rappresenta l'oggetto PowerUp che toglie
+ * una vita al giocatore che lo prende
  */
 public class LossLife extends PowerUp{
     public LossLife(int posX, int posY) {
@@ -15,13 +16,13 @@ public class LossLife extends PowerUp{
 
     }
 
-    /**
-     * Rende effettivo l'effetto del power up dopo essere stato preso dal giocatore
-     * @param player il giocatore su cui avrà effetto
-     * @param paddle la paddle che ha preso il power up
-     * @param palla la palla che ha colpito il mattoncino che aveva il power up
-     */
 
+    /**
+     * Questo metodo rende effettivo l'effetto del PowerUp
+     * @param player il giocatore su cui il PowerUp ha effetto
+     * @param paddle la paddle che ha preso il PowerUp
+     * @param palla la palla che ha colpito il mattoncino contenente il PowerUp
+     */
     @Override
     public void effect(Player player, Paddle paddle, Ball palla) {
         player.setLives(player.getLives()-1);

@@ -1,12 +1,10 @@
 package sprites.Brick;
 
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import help.Info;
-
 /**
- * @author ligato
- * Classe che rappresenta l'oggetto mattoncino 'classico'
+ * @author Daniele Ligato
+ * Questa classe estende la classe astratta più generale AbstractBrick
+ * e definisce quello che è il mattoncino "classico", assegnandogli
+ * una posizione (x e y) e una immagine all'interno del gioco
  */
 
 public class Brick extends AbstractBrick{

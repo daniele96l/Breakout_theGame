@@ -4,11 +4,12 @@ import com.mygdx.game.Player.Player;
 import help.Info;
 import sprites.Ball;
 import sprites.Paddle;
-/**
- * @author regna, schillaci
- * Classe che rappresenta l'oggetto power up che restringe la paddle
- */
 
+
+/**
+ * @author Cristian Regna, Alberto Schillaci
+ * Questa classe rappresenta l'oggetto PowerUp che restringe il paddle
+ */
 public class ShortPaddle extends PowerUp{
 
 
@@ -18,10 +19,10 @@ public class ShortPaddle extends PowerUp{
     }
 
     /**
-     * Rende effettivo l'effetto del power up dopo essere stato preso dal giocatore
-     * @param player il giocatore su cui avrà effetto
-     * @param paddle la paddle che ha preso il power up
-     * @param palla la palla che ha colpito il mattoncino che aveva il power up
+     * Questo metodo rende effettivo l'effetto del PowerUp
+     * @param player il giocatore su cui il PowerUp ha effetto
+     * @param paddle la paddle che ha preso il PowerUp
+     * @param palla la palla che ha colpito il mattoncino contenente il PowerUp
      */
 
     @Override

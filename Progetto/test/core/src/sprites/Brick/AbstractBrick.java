@@ -10,10 +10,13 @@ import sprites.powerup.PowerUp;
 import java.io.Serializable;
 
 /**
- * @author ligato
- * Classe Astratta del mattoncino
+ * @author Daniele Ligato
+ * La classe astratta AbstractBrick extende la classe di libGDX
+ * chiama Sprite e contiene tutte le informazioni e variabili del "mattoncino base",
+ * quali per esempio la sua posizione.
+ *
  */
-public  abstract class AbstractBrick  extends Sprite {
+public  abstract class AbstractBrick extends Sprite {
 
     protected Vector2 positionBrick;
     protected Rectangle boundsBrick;
@@ -29,14 +32,20 @@ public  abstract class AbstractBrick  extends Sprite {
     }
 
     /**
-     * Assegna il power up al mattoncino e setta il boolean a True
-     * @param powerUp potenziamento che cadrà dal mattoncino
+     * Questo metodo assegna il PowerUp al mattoncino che l'ha colpito
+     * e setta la variabile booleana hasPowerUp a "vera".
+     * @param powerUp oggetto potenziamento che cade dal mattoncino
      */
     public void setPowerUp(PowerUp powerUp) {
         this.powerUp = powerUp;
         hasPowerUp=true;
     }
 
+
+    /**
+     * Questo metodo ritorna la variabile booleana hasPowerUp
+     * @return variabile booleana hasPowerUp
+     */
     public boolean hasPowerUp() {
         return hasPowerUp;
     }
