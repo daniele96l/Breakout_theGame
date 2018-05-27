@@ -63,6 +63,7 @@ public class Drawer
      */
     static void drawMultiplayer(ArrayList<AbstractBrick> bricks, BreakGame game, ArrayList<PowerUp> powerUps, int numeroPlayer, ArrayList<Paddle> paddles, Ball palla)
     {
+        game.getBatch().begin();
         for (AbstractBrick brick : bricks) {
             game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.brickresize, brick.getHeight() * Info.brickresize);
         }

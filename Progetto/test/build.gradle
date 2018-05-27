@@ -12,6 +12,10 @@ buildscript {
 
     }
 }
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
+
 
 allprojects {
     apply plugin: "eclipse"
@@ -58,6 +62,7 @@ project(":core") {
         
     }
 }
+
 
 tasks.eclipse.doLast {
     delete ".project"

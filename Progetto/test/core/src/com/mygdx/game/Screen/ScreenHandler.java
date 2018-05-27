@@ -102,7 +102,6 @@ public class ScreenHandler
             }
             else {
                 JOptionPane.showMessageDialog(null, "Invalid nickname", "Nickname error", 1);
-
             }
         } catch (UnknownHostException e) {
             JOptionPane.showMessageDialog(null, "Invalid address", "Address", 1);

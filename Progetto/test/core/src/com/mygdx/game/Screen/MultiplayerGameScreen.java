@@ -50,6 +50,8 @@ public class MultiplayerGameScreen implements Screen {
 
 
     public MultiplayerGameScreen(BreakGame game,InetAddress address, String playerName) {
+        this.playerName = playerName;
+        this.game = game;
         palla = new Ball();
         paddles = new ArrayList<Paddle>();
         bricks = new ArrayList<AbstractBrick>();
@@ -74,8 +76,6 @@ public class MultiplayerGameScreen implements Screen {
 
         thread = new ClientThread(address, serverPort, datagramSocket);
         thread.start();
-
-        this.game = game;
     }
 
     @Override
@@ -94,7 +94,6 @@ public class MultiplayerGameScreen implements Screen {
         game.getBatch().end();
         hud = new Hud(game.getBatch(), playerNames, scores, lives);
         hud.stage.draw();
-        game.getBatch().begin();
         Drawer.drawMultiplayer( bricks,  game,  powerUps,  numeroPlayer,  paddles,  palla);
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
