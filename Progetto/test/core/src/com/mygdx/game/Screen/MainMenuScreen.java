@@ -33,6 +33,8 @@ public class MainMenuScreen implements Screen {
     private int scorebutton = 150+20;
     private int exitbutton = 30+20;
     private Drawer drawer;
+    private Resizer resizer;
+    float tempVet[];
 
     public MainMenuScreen(BreakGame game) {
         this.game = game;
@@ -51,6 +53,8 @@ public class MainMenuScreen implements Screen {
         multiplayerofflineButton = new Texture("multiplayeroffline.png");
         multiplayeronlineButton = new Texture("multiplayeronline.png");
         score = new Texture("score.png");
+        resizer = new Resizer();
+        tempVet = new float[2];
        // click = new Click();
 
     }
@@ -96,26 +100,13 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
         this.newHeight = height;
         this.newWight = width;
-
-        barreNere = 0;
-
         Vector2 size = Scaling.fit.apply(1280, 720, width, height);
-        int viewportX = (int)(width - size.x) / 2;
-        int viewportY = (int)(height - size.y) / 2;
-        int viewportWidth = (int)size.x;
-        int viewportHeight = (int)size.y;
 
-        coeffDimensionale = size.y/(float)Info.altezza;
-
-        if(newHeight > size.y )
-            barreNere = Math.abs((newHeight - size.y)/2);
-
-
-
-        Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
+        tempVet = resizer.toResize(height, width, size);
+        barreNere = tempVet[0];
+        coeffDimensionale = tempVet[1];
 
     }
 
