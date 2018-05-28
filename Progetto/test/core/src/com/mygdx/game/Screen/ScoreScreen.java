@@ -38,8 +38,9 @@ public class ScoreScreen implements Screen {
     float barreNere = 0;
     int backbuttonx = 500;
     int backbuttony = 50;
-
+    private float tempVet[];
     private BreakGame game;
+    private Resizer resizer;
 
     /**
      *  Salva il parametro game
@@ -47,6 +48,8 @@ public class ScoreScreen implements Screen {
      */
     public ScoreScreen(BreakGame game) {
         this.game = game;
+        tempVet = new float[2];
+        resizer = new Resizer();
     }
 
     /**
@@ -71,7 +74,7 @@ public class ScoreScreen implements Screen {
     @Override
     public void render(float delta) {
         game.getBatch().begin();
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         backButton = new Texture("menu.png");
 
@@ -97,25 +100,12 @@ public class ScoreScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-
         this.newHeight = height;
         this.newWight = width;
-        barreNere = 0;
-        // System.out.println(newHeight);
 
-        Vector2 size = Scaling.fit.apply(1280, 720, width, height);
-        int viewportX = (int) (width - size.x) / 2;
-        int viewportY = (int) (height - size.y) / 2;
-        int viewportWidth = (int) size.x;
-        int viewportHeight = (int) size.y;
-
-        coeffDimensionale = size.y / (float) Info.altezza;
-
-        if (newHeight > size.y)
-            barreNere = Math.abs((newHeight - size.y) / 2);
-
-
-        Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
+        tempVet = resizer.toResize(height, width);
+        barreNere = tempVet[0];
+        coeffDimensionale = tempVet[1];
     }
 
     @Override

@@ -76,7 +76,7 @@ public class OfflineGameScreen implements Screen {
     private Database db = new Database();
     private RanNum ranNum;
     private Timer timer;
-
+    private Resizer resizer;
 
 
     public OfflineGameScreen(BreakGame game, int numeroPlayer) {
@@ -92,6 +92,7 @@ public class OfflineGameScreen implements Screen {
         isFirstCalled=true;
         ranNum = new RanNum();
         timer = new Timer();
+        resizer = new Resizer();
 
 
     }
@@ -269,12 +270,7 @@ public class OfflineGameScreen implements Screen {
         this.newHeight = height;
         this.newWight = width;
 
-        Vector2 size = Scaling.fit.apply(Info.larghezza, Info.altezza, width, height);
-        int viewportX = (int)(width - size.x) / 2;
-        int viewportY = (int)(height - size.y) / 2;
-        int viewportWidth = (int)size.x;
-        int viewportHeight = (int)size.y;
-        Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
+        resizer.toResize(height, width);
 
     }
 

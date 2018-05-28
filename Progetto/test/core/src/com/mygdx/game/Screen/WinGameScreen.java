@@ -20,7 +20,10 @@ public class WinGameScreen implements Screen {
     private BreakGame game;
     private OfflineGameScreen oldScreen;
     private GameState gameState;
-
+    private  int newHeight, newWight;
+    private float barreNere, coeffDimensionale;
+    private Resizer resizer;
+    private float tempVet[];
     /**
      *  Salva i parametri game, oldScreen, gameState
      *
@@ -32,6 +35,8 @@ public class WinGameScreen implements Screen {
         this.game = game;
         this.oldScreen = oldScreen;
         this.gameState = gameState;
+        resizer = new Resizer();
+        tempVet = new float[2];
     }
 
     /**
@@ -61,6 +66,13 @@ public class WinGameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+
+        this.newHeight = height;
+        this.newWight = width;
+
+        tempVet = resizer.toResize(height, width);
+        barreNere = tempVet[0];
+        coeffDimensionale = tempVet[1];
 
     }
 

@@ -3,6 +3,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.game.BreakGame;
 import com.mygdx.game.ClientServer.ClientThread;
 import com.mygdx.game.hud.Hud;
@@ -47,6 +49,9 @@ public class MultiplayerGameScreen implements Screen {
     private ArrayList<String> scores;
     private ArrayList<String> lives;
     private boolean error;
+    private int newHeight;
+    private int newWight;
+    private Resizer resizer;
 
 
     public MultiplayerGameScreen(BreakGame game,InetAddress address, String playerName) {
@@ -76,6 +81,7 @@ public class MultiplayerGameScreen implements Screen {
 
         thread = new ClientThread(address, serverPort, datagramSocket);
         thread.start();
+        resizer = new Resizer();
     }
 
     @Override
@@ -217,6 +223,11 @@ public class MultiplayerGameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        this.newHeight = height;
+        this.newWight = width;
+
+
+        resizer.toResize(height, width);
 
     }
 

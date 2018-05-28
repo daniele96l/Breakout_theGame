@@ -28,7 +28,8 @@ public class PauseScreen implements Screen {
     private float newHeight, newWight, coeffDimensionale = 1;
     private float barreNere =0;
     private ScreenHandler screenHandler;
-
+    private Resizer resizer;
+    private float tempVet[];
 
     /**
      *
@@ -40,6 +41,8 @@ public class PauseScreen implements Screen {
     public PauseScreen(BreakGame game, OfflineGameScreen oldScreen) {
         this.game = game;
         this.oldScreen=oldScreen;
+        resizer = new Resizer();
+        tempVet = new float[2];
     }
 
     /**
@@ -102,21 +105,10 @@ public class PauseScreen implements Screen {
         this.newHeight = height;
         this.newWight = width;
         barreNere = 0;
-        // System.out.println(newHeight);
 
-        Vector2 size = Scaling.fit.apply(1280, 720, width, height);
-        int viewportX = (int)(width - size.x) / 2;
-        int viewportY = (int)(height - size.y) / 2;
-        int viewportWidth = (int)size.x;
-        int viewportHeight = (int)size.y;
-
-        coeffDimensionale = size.y/(float)Info.altezza;
-
-        if(newHeight > size.y )
-            barreNere = Math.abs((newHeight - size.y)/2);
-
-
-        Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
+        tempVet = resizer.toResize(height, width);
+        barreNere = tempVet[0];
+        coeffDimensionale = tempVet[1];
 
     }
 
