@@ -1,7 +1,8 @@
 package help;
 
 /**
- * @Autor Regna
+ * @author Cristian Regna
+ * @version 1.0
  * Classe di tipo ENUM che contiene i possibili stati del gioco
  */
 public enum GameState {

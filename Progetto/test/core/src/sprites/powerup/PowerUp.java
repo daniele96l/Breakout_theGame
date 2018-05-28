@@ -12,9 +12,10 @@ import sprites.Paddle;
 import java.io.Serializable;
 
 /**
- * @Autor Schillaci
- *
- * Classe che crea l'oggetto astratto power up, ovvero un potenziamento che scenderà da un mattoncino appena rotto
+ * @author Alberto Schillaci
+ * Questa classe definisce l'oggetto astratto PowerUp, vale a dire un potenziamento/depotenziamento
+ * (es. aggiunge/toglie vite al giocatore, allarga/diminuisce la larghezza della paddle)
+ * che cade dal mattonicino appena colpito dal giocatore
  */
 public abstract class PowerUp extends Sprite {
     protected Vector2 position;
@@ -29,20 +30,47 @@ public abstract class PowerUp extends Sprite {
         this.bounds=new Rectangle(posX,posY,this.getWidth()*Info.powerUpResize, this.getHeight()*Info.powerUpResize);
     }
 
+    /**
+     * Questo metodo rende effettivo l'effetto del PowerUp
+     * @param player il giocatore su cui il PowerUp ha effetto
+     * @param paddle la paddle che ha preso il PowerUp
+     * @param palla la palla che ha colpito il mattoncino contenente il PowerUp
+     */
     public abstract void effect(Player player, Paddle paddle, Ball palla);
 
+
+    /**
+     *
+     * @return
+     */
     public Rectangle getBounds() {
         return bounds;
     }
 
+
+    /**
+     * Questo metodo ritorna il vettore posizione (x e y) del PowerUp
+     * @return il vettore posizione (x e y) del PowerUp
+     */
     public Vector2 getPosition() {
         return position;
     }
 
+    /**
+     * Questo metodo ritorna il vettore velocità (x e y) con cui
+     * cade il PowerUp dal mattonicino appena colpito
+     * @return il vettore velocità (x e y) con cui cade il PowerUp
+     */
     public Vector2 getSpeed() {
         return speed;
     }
 
+
+    /**
+     * Questo metodo ritorna la stringa del nome file
+     * che indica l'effetto sonoro associato a un determinato PowerUp
+     * @return la stringa del nome file che indica l'effetto sonoro associato a quel determinato PowerUp
+     */
     public String getSound(){
         return sound;
     }

@@ -83,6 +83,7 @@ public class Server extends Game {
     private ArrayList<Date> date;
     private Database db = new Database();
     private Icon icon = new ImageIcon("playersIcon.png");
+    private String address;
 
 
     /**
@@ -96,8 +97,13 @@ public class Server extends Game {
 
     @Override
     public void create() {
+        try {
+                address = Inet4Address.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
 
-        numeroPlayer = (Integer.parseInt((String) JOptionPane.showInputDialog(null, "Enter the number of players", "Players", 1, icon, null, "")));
+        numeroPlayer = (Integer.parseInt((String) JOptionPane.showInputDialog(null, "Enter the number of players\n Server IP: "+address, "Players", 1, icon, null, "")));
         players = new ArrayList<Player>();
         paddles = new ArrayList<Paddle>();
         date = new ArrayList<Date>();
