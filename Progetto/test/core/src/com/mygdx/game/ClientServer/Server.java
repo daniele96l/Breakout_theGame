@@ -80,6 +80,7 @@ public class Server extends Game {
     private Database db = new Database();
     private Icon icon = new ImageIcon("playersIcon.png");
     private String address;
+    private CheckGame checkGame = new CheckGame();
 
 
     /**
@@ -176,14 +177,7 @@ public class Server extends Game {
         checkTimerPowerUp(); // controlla il tempo
 
 
-        if (matEliminati == gestoreLivelli.getLivello(livelloCorrente - 1).getnMatMorbidi()) {
-            gameState = GameState.YOU_WON;
-
-            livelloCorrente++;
-            if (livelloCorrente > gestoreLivelli.getNumeroLivelli()) {
-                isFinished = true;
-            }
-        }
+        CheckGame.checkWin(matEliminati, gestoreLivelli, livelloCorrente, isFinished, gameState);
 
         if (palla.getPositionBall().y <= 0) {
             lostLife(palla.getPositionBall().x, false);
@@ -204,6 +198,8 @@ public class Server extends Game {
                 updateLevel();
             }
         }
+
+
         if (gameState == GameState.GAME_OVER) {
 
         }
