@@ -26,10 +26,8 @@ import sprites.Brick.Brick;
 import sprites.Paddle;
 import sprites.powerup.PowerUp;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 
 /**
  * @author ligato,schillaci, regna
@@ -62,8 +60,8 @@ public class OfflineGameScreen implements Screen {
     private int newHeight, newWight;
     private static String playerName;
     private boolean loop;
-    private Music music;
-    private Music music2, music3, music4;
+    private Music musicGame;
+    private Music musicGameOver, musicBrick, musicPowerUp;
     private boolean pause;
     private int numeroPlayer;
     private Hud hud;
@@ -76,7 +74,7 @@ public class OfflineGameScreen implements Screen {
     private Database db = new Database();
     private RanNum ranNum;
     private Timer timer;
-    private Resizer resizer;
+
 
 
     public OfflineGameScreen(BreakGame game, int numeroPlayer) {
@@ -92,7 +90,6 @@ public class OfflineGameScreen implements Screen {
         isFirstCalled=true;
         ranNum = new RanNum();
         timer = new Timer();
-        resizer = new Resizer();
 
 
     }
@@ -107,13 +104,13 @@ public class OfflineGameScreen implements Screen {
     public void show() {
         if(isFirstCalled) {
             isFirstCalled=false;
-            music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
-            music2 = Gdx.audio.newMusic(Gdx.files.internal("Untitled.mp3"));
-            music3 = Gdx.audio.newMusic(Gdx.files.internal("audio.mp3"));
-            music4 = Gdx.audio.newMusic(Gdx.files.internal("evil.mp3"));//deve essere inzializzato in qualche modo, poi si cambia
-            music3.setLooping(false);
-            music4.setLooping(false);
-            music.setVolume(1);
+            musicGame = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+            musicGameOver = Gdx.audio.newMusic(Gdx.files.internal("Untitled.mp3"));
+            musicBrick = Gdx.audio.newMusic(Gdx.files.internal("audio.mp3"));
+            musicPowerUp = Gdx.audio.newMusic(Gdx.files.internal("evil.mp3"));//deve essere inzializzato in qualche modo, poi si cambia
+            musicBrick.setLooping(false);
+            musicPowerUp.setLooping(false);
+            musicGame.setVolume(1);
             isFinished = false;
             livelloCorrente = 1;
             nextLevel = false;
@@ -159,7 +156,7 @@ public class OfflineGameScreen implements Screen {
             bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
         }
         if(gameState!=GameState.GAME_OVER && gameState!=GameState.YOU_WON) {
-            music.play();
+            musicGame.play();
         }
 
         palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y * Info.dt);
@@ -205,7 +202,7 @@ public class OfflineGameScreen implements Screen {
             commandPlayers.get(0).move();//mipermettedimuovereilgiocatore
         }
         if (commandPlayers.get(0).checkpause()) {
-            music.pause();
+            musicGame.pause();
             game.setScreen(new PauseScreen(game, this));
         }
         gestisciCollisioni();
@@ -238,12 +235,12 @@ public class OfflineGameScreen implements Screen {
                 updateScene();
                 updateLevel();
             }
-            music.stop();
+            musicGame.stop();
         }
         if (gameState == GameState.GAME_OVER) {
-            music.stop();
+            musicGame.stop();
             if(!loop)
-            music2.play();
+            musicGameOver.play();
             loop = true;
             dispose();
             game.setScreen(new LoseGameScreen(game));
@@ -270,7 +267,12 @@ public class OfflineGameScreen implements Screen {
         this.newHeight = height;
         this.newWight = width;
 
-        resizer.toResize(height, width);
+        Vector2 size = Scaling.fit.apply(Info.larghezza, Info.altezza, width, height);
+        int viewportX = (int)(width - size.x) / 2;
+        int viewportY = (int)(height - size.y) / 2;
+        int viewportWidth = (int)size.x;
+        int viewportHeight = (int)size.y;
+        Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
 
     }
 
@@ -326,8 +328,8 @@ public class OfflineGameScreen implements Screen {
                 if(collision.checkPowerUp(paddles.get(i), p)) {
                     tempPowerUps.add(p);
                     p.effect(players.get(paddles.indexOf(paddles.get(i))), paddles.get(i), palla);
-                    music4 = Gdx.audio.newMusic(Gdx.files.internal(p.getSound()));
-                    music4.play();
+                    musicPowerUp = Gdx.audio.newMusic(Gdx.files.internal(p.getSound()));
+                    musicPowerUp.play();
                     lostLife(palla.getPositionBall().x,true);
                     if(Info.paddleresizex.get(i) != Info.paddleresize){ // qua verifico che sia stato cambiato la resize una volta che prendo il powerup
                         date.set(i,new Date());
@@ -373,8 +375,8 @@ public class OfflineGameScreen implements Screen {
                         }
                         bricks.remove(brick);
                         matEliminati++;
-                        music3.stop();
-                        music3.play();
+                        musicBrick.stop();
+                        musicBrick.play();
                         players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore() + (int) Math.pow(2, brickCounter));
                         brickCounter++;
                     }
@@ -386,8 +388,8 @@ public class OfflineGameScreen implements Screen {
                     }
                     bricks.remove((int) indici.get(0));
                     matEliminati++;
-                    music3.stop();
-                    music3.play();
+                    musicBrick.stop();
+                    musicBrick.play();
                     players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore() + (int) Math.pow(2, brickCounter));
                     brickCounter++;
                 }
