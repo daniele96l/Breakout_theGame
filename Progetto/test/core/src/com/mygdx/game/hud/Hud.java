@@ -14,8 +14,8 @@ import help.Info;
 import java.util.ArrayList;
 
 /**
- * @author Alberto  schillaci
- * classe il cui compito è quello di mostrare le label di ogni giocatore dove indicano punteggio, vita e nome.
+ * @author Alberto Schillaci
+ * Classe il cui compito è quello di mostrare le label di ogni giocatore dove indicano punteggio, vita e nome.
  */
 public class Hud {
     public Stage stage;
@@ -23,7 +23,6 @@ public class Hud {
     Table table = new Table();
 
     /**
-     *
      * @param players array dei giocatori
      * @param sb
      */
@@ -34,6 +33,7 @@ public class Hud {
         FillTable.fillTable(players, table);
         stage.addActor(table);
     }
+
     public Hud(SpriteBatch sb,ArrayList<String> playerNames, ArrayList<String> scores, ArrayList<String> lives) {
         viewport = new FitViewport(Info.larghezza, Info.altezza);
         stage = new Stage(viewport, sb);
