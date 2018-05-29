@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.BreakGame;
+import com.mygdx.game.Player.Player;
+import com.mygdx.game.hud.Hud;
 import help.Info;
 import sprites.Ball;
 import sprites.Brick.AbstractBrick;
@@ -87,5 +89,28 @@ public class Drawer
             game.setScreen(new MainMenuScreen(game));
         }
         game.getBatch().end();
+    }
+    static void drawMultiplayerOffline(BreakGame game, Texture bg, ArrayList<AbstractBrick> bricks, ArrayList<Player> players,ArrayList<PowerUp> powerUps, ArrayList<Paddle> paddles, Ball palla,int numeroPlayer)
+    {
+        game.getBatch().draw(bg, 0, 0);
+        game.getBatch().end();
+
+        Hud hud=new Hud(players, game.getBatch());
+        hud.stage.draw();
+
+        game.getBatch().begin();
+
+
+        for (AbstractBrick brick : bricks) {
+            game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.brickresize, brick.getHeight() * Info.brickresize);
+            //disegnoimattoncini
+        }
+        for(PowerUp p:powerUps) {
+            game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth()*Info.powerUpResize, p.getHeight()*Info.powerUpResize);
+        }
+        game.getBatch().draw(paddles.get(0), paddles.get(0).getPosition().x, paddles.get(0).getPosition().y, paddles.get(0).getWidth() * Info.paddleresizex.get(0), paddles.get(0).getHeight() * Info.paddleresize);
+        game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.ballresize, palla.getHeight() * Info.ballresize);
+
+
     }
 }

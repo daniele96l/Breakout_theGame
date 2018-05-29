@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.BreakGame;
+import com.mygdx.game.logic.Resizer;
 
 /**
  * @autor ligato,schillaci, regna
