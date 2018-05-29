@@ -8,7 +8,8 @@ import com.mygdx.game.BreakGame;
 import com.mygdx.game.logic.Resizer;
 
 /**
- * @autor ligato,schillaci, regna
+ * @author Ligato, Schillaci, Regna
+ *
  * La classe che gestisce il memù principale con tutti i suoi bottoni
  *
  */
@@ -19,7 +20,7 @@ public class MainMenuScreen implements Screen {
     private Texture mulOfflineButtonText;
     private Texture scoreButtonText;
     private Texture mulOnlineButtonText;
-    private int newHeight, newWight;
+    private int newHeight, newWidth;
     BreakGame game;
     private float coeffDimensionale;
     float barreNere = 0;
@@ -45,7 +46,7 @@ public class MainMenuScreen implements Screen {
     }
 
     /**
-     * Associa alle variabili le immagini che dovranno essere renderizate
+     * Associa alle variabili le immagini che dovranno essere renderizate per essere visualizzate nella schermata
      */
     @Override
     public void show() {
@@ -62,8 +63,10 @@ public class MainMenuScreen implements Screen {
 
 
     /**
+     *
+     * @param delta è l'intervallo di tempo che intercorre tra ogni chiamata del metodo render
+     *
      * Disegna le parti grafiche che verranno visualizzate nel manù e si occupa di controllare se clicchi sopra alcune di queste, ovvero i bottoni
-     * @param delta
      */
     @Override
     public void render(float delta) {
@@ -72,37 +75,22 @@ public class MainMenuScreen implements Screen {
         Drawer.drawMainMenu(game, menu, playButtonText, exitButtonText, mulOfflineButtonText, scoreButtonText, mulOnlineButtonText, playbutton, onlinebutton, offlinebutton, scorebutton, exitbutton);
 
 
-        if (Gdx.input.justTouched()) {
-            if (Gdx.input.getX() > (newWight / 2) - (scoreButtonText.getWidth() * coeffDimensionale) / 2 && (Gdx.input.getX() < newWight / 2 + (scoreButtonText.getWidth() * coeffDimensionale) / 2) && (newHeight - Gdx.input.getY() > scorebutton * coeffDimensionale + barreNere) && (newHeight - Gdx.input.getY() < scorebutton * coeffDimensionale + scoreButtonText.getHeight() * coeffDimensionale + barreNere)) {
-                screenHandler.gestisciMenu(game);
-            }
-            if (Gdx.input.getX() > (newWight / 2) - (playButtonText.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (exitButtonText.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > exitbutton * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < exitbutton * coeffDimensionale + exitButtonText.getHeight() * coeffDimensionale + barreNere))) {
-                screenHandler.exit();
-            }
-            if (Gdx.input.getX() > (newWight / 2) - (playButtonText.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (playButtonText.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > playbutton * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < playbutton * coeffDimensionale + exitButtonText.getHeight() * coeffDimensionale + barreNere))) {
-                screenHandler.singlePlayer(game);
-            }
-            if (Gdx.input.getX() > (newWight / 2) - (playButtonText.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (playButtonText.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > onlinebutton * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < onlinebutton * coeffDimensionale + exitButtonText.getHeight() * coeffDimensionale + barreNere))) {
-
-                screenHandler.multiplayerOffline(game);
-            }
-            if (Gdx.input.getX() > (newWight / 2) - (playButtonText.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (playButtonText.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > offlinebutton * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < offlinebutton * coeffDimensionale + exitButtonText.getHeight() * coeffDimensionale + barreNere))) {
-                screenHandler.multiplayerOnline(game);
-            }
-        }
+        InputTouch.checkInputTouchMainMenu(newWidth, scoreButtonText,  game,  coeffDimensionale,  playButtonText,  screenHandler,  newHeight,  barreNere,  scorebutton,  exitbutton,  playbutton,  onlinebutton,  exitButtonText,  offlinebutton);
         game.getBatch().end();
     }
 
     /**
-     * si occupa di ridimensionare la finestra
+     *
      * @param width larghezza della finestra
      * @param height altezza della finestra
+     *
+     * si occupa di ridimensionare la finestra
      */
 
     @Override
     public void resize(int width, int height) {
         this.newHeight = height;
-        this.newWight = width;
+        this.newWidth = width;
 
         tempVet = resizer.toResize(height, width);
         barreNere = tempVet[0];

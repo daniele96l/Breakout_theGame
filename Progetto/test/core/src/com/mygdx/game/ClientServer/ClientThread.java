@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.*;
 
 /**
- * @Author Marco Mari, Marco Cotogni, Alessandro Oberti
+ * @author Marco Mari, Marco Cotogni, Alessandro Oberti
  * Definisce il comportamento del client nella connesione con il server
  *
  */
