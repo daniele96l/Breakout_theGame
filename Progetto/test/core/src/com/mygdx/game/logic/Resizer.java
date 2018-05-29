@@ -31,7 +31,7 @@ public class Resizer {
 
     public float[] toResize(int height, int width){
         barreNere = 0;
-        Vector2 size = Scaling.fit.apply(Info.larghezza, Info.altezza, width, height);
+        Vector2 size = Scaling.fit.apply(Info.getInstance().getLarghezza(), Info.getInstance().getAltezza(), width, height);
 
 
         this.size = size;
@@ -43,20 +43,16 @@ public class Resizer {
         int viewportWidth = (int)size.x;
         int viewportHeight = (int)size.y;
 
-        coeffDimensionale = size.y/(float)Info.altezza;
-        System.out.println("size:" +size.y + " " + "altezza: "+Info.altezza);
+        coeffDimensionale = size.y/(float)Info.getInstance().getAltezza();
 
         if(newHeight > size.y ) {
             barreNere = Math.abs((newHeight - size.y) / 2);
-            System.out.println(newHeight + " bbbbbbb" +size.y);
         }
 
         Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
 
         tempVet[0]  = barreNere;
         tempVet[1] = coeffDimensionale;
-
-
 
         return tempVet;
 

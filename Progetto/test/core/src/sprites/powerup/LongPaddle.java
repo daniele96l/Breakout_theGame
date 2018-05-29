@@ -27,6 +27,6 @@ public class LongPaddle extends PowerUp {
     @Override
     public void effect(Player player, Paddle paddle, Ball palla) {
 
-        Info.paddleresizex.set(paddle.getGiocatore() - 1, 0.7f);
+        Info.getInstance().getPaddleresizex().set(paddle.getGiocatore() - 1, 0.7f);
     }
 }

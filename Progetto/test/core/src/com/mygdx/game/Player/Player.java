@@ -21,7 +21,7 @@ public abstract class Player {
 
     public Player(String playerName) {
         this.playerName=playerName;
-        this.lives= Info.defaultLivesNum;
+        this.lives= Info.getInstance().getDefaultLivesNum();
         score=0;
     }
     public abstract int keyPressed();

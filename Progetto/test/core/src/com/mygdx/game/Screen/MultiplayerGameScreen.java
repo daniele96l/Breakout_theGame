@@ -153,12 +153,12 @@ public class MultiplayerGameScreen implements Screen {
             if (numeroPlayer > 0) {
                 for (int j = 0; j < numeroPlayer; j++) {
                     paddles.add(new Paddle(numeroPlayer, j + 1));
-                    Info.paddleresizex.add(0.5f);
+                    Info.getInstance().getPaddleresizex().add(0.5f);
                 }
 
                 for (Paddle paddle : paddles) {
                     paddle.getPosition().x = Float.parseFloat(lines[1].split(" ")[paddles.indexOf(paddle)]);
-                    Info.paddleresizex.set(paddles.indexOf(paddle), Float.parseFloat(lines[2].split(" ")[paddles.indexOf(paddle)]));
+                    Info.getInstance().getPaddleresizex().set(paddles.indexOf(paddle), Float.parseFloat(lines[2].split(" ")[paddles.indexOf(paddle)]));
                 }
 
                 playerNames.removeAll(playerNames);

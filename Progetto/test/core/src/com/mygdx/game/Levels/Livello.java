@@ -75,9 +75,9 @@ public class Livello {
                 default:
                     throw new IllegalCharacter(c);
             }
-            currentPosX += Info.getBrickWidth()+Info.brickGapX;
+            currentPosX += Info.getInstance().getBrickWidth()+Info.getInstance().getBrickGapX();
         }
-        currentPosY -= Info.getBrickHeight()+Info.brickGapY;
+        currentPosY -= Info.getInstance().getBrickHeight()+Info.getInstance().getBrickGapY();
     }
 
     /**
@@ -86,12 +86,12 @@ public class Livello {
      * @param brick
      */
     private void insertPowerUp(AbstractBrick brick) {
-        int posX=(int)(brick.getBoundsBrick().x+brick.getBoundsBrick().width/2-Info.powerUpWidth/2*Info.powerUpResize);
-        int posY=(int)(brick.getBoundsBrick().y+brick.getBoundsBrick().height/2-Info.powerUpHeight/2*Info.powerUpResize);
+        int posX=(int)(brick.getBoundsBrick().x+brick.getBoundsBrick().width/2-Info.getInstance().getPowerUpWidth()/2*Info.getInstance().getPowerUpResize());
+        int posY=(int)(brick.getBoundsBrick().y+brick.getBoundsBrick().height/2-Info.getInstance().getPowerUpHeight()/2*Info.getInstance().getPowerUpResize());
 
         float randNum=(float)(Math.random()*10);
-        if(randNum < Info.powerUpChance) {
-            float interval=Info.powerUpChance/(float)Info.numeroPowerUp;
+        if(randNum < Info.getInstance().getPowerUpChance()) {
+            float interval=Info.getInstance().getPowerUpChance()/(float)Info.getInstance().getNumeroPowerUp();
             if(randNum>=0 && randNum<interval) {
                 brick.setPowerUp(new ExtraLife(posX, posY));
             }

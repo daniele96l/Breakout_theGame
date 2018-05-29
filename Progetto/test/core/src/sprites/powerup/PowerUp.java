@@ -26,8 +26,8 @@ public abstract class PowerUp extends Sprite {
     public PowerUp(String image, int posX, int posY) {
         super(new Texture(image));
         this.position=new Vector2(posX, posY);
-        this.speed=new Vector2(0, -Info.powerUpSpeed);
-        this.bounds=new Rectangle(posX,posY,this.getWidth()*Info.powerUpResize, this.getHeight()*Info.powerUpResize);
+        this.speed=new Vector2(0, -Info.getInstance().getPowerUpSpeed());
+        this.bounds=new Rectangle(posX,posY,this.getWidth()*Info.getInstance().getPowerUpResize(), this.getHeight()*Info.getInstance().getPowerUpResize());
     }
 
     /**

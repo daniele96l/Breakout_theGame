@@ -25,11 +25,11 @@ public class RobotPlayer extends Player{
     @Override
     public int keyPressed() {
         if((palla.getBoundsBall().x+palla.getBoundsBall().getWidth()/2<paddle.getBounds().x+0.25*paddle.getBounds().getWidth())
-                && palla.getBoundsBall().y<Info.altezza*2/3) {
+                && palla.getBoundsBall().y<Info.getInstance().getAltezza()/2) {
             return Input.Keys.LEFT;
         }
         if((palla.getBoundsBall().x+palla.getBoundsBall().getWidth()/2>paddle.getBounds().x+0.75*paddle.getBounds().getWidth())
-                && palla.getBoundsBall().y<Info.altezza/6) {
+                && palla.getBoundsBall().y<Info.getInstance().getAltezza()/2) {
             return Input.Keys.RIGHT;
         }
         return Input.Keys.ANY_KEY;

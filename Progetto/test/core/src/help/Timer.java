@@ -12,8 +12,8 @@ public class Timer {
         if(date != null){
             Date date2 = new Date();
             for(int i =0; i < numeroPlayer;i++)
-                if(date2.getTime() - date.get(i).getTime() > Info.durataPowerUp)
-                    Info.paddleresizex.set(i,Info.paddleresize);
+                if(date2.getTime() - date.get(i).getTime() > Info.getInstance().getDurataPowerUp())
+                    Info.getInstance().getPaddleresizex().set(i,Info.getInstance().getPaddleresize());
         }
     }
 }

@@ -27,7 +27,7 @@ public class ShortPaddle extends PowerUp{
 
     @Override
     public void effect(Player player, Paddle paddle, Ball palla) {
-        Info.paddleresizex.set(paddle.getGiocatore()-1,0.3f);
+        Info.getInstance().getPaddleresizex().set(paddle.getGiocatore()-1,0.3f);
     }
 }
 

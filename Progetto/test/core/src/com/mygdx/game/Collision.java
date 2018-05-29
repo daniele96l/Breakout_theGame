@@ -23,8 +23,8 @@ public class Collision
 
     public Collision(Ball palla)
     {
-        int pallaX=(int)(palla.getBoundsBall().x+palla.getSpeedBall().x* Info.dt);
-        int pallaY=(int)(palla.getBoundsBall().y+palla.getSpeedBall().y*Info.dt);
+        int pallaX=(int)(palla.getBoundsBall().x+palla.getSpeedBall().x* Info.getInstance().getDt());
+        int pallaY=(int)(palla.getBoundsBall().y+palla.getSpeedBall().y*Info.getInstance().getDt());
         rectangle = new Rectangle(pallaX,pallaY,palla.getWidth(),palla.getHeight());
         this.palla=palla;
     }
@@ -82,9 +82,9 @@ public class Collision
     }
 
     public void checkBorderCollision(){
-        if(rectangle.x>Info.larghezza-palla.getWidth()*Info.ballresize)//controllocherimbalziadestra
+        if(rectangle.x>Info.getInstance().getLarghezza()-palla.getWidth()*Info.getInstance().getBallresize())//controllocherimbalziadestra
             palla.getSpeedBall().set(-palla.getSpeedBall().x,palla.getSpeedBall().y);
-        if(rectangle.y>Info.altezza-palla.getHeight()*Info.ballresize)//controllocherimbalzisu
+        if(rectangle.y>Info.getInstance().getAltezza()-palla.getHeight()*Info.getInstance().getBallresize())//controllocherimbalzisu
             palla.getSpeedBall().set(palla.getSpeedBall().x,-palla.getSpeedBall().y);
         if(rectangle.x<0)
             palla.getSpeedBall().set(-palla.getSpeedBall().x,palla.getSpeedBall().y);//controllocherimbalziasinistra
@@ -94,11 +94,11 @@ public class Collision
     public boolean checkSide(Paddle paddle){
 
         if(collides(palla.getBoundsBall(),paddle)){
-            float relativeIntersectX=-((paddle.getPosition().x+(paddle.getWidth()*Info.paddleresizex.get(paddle.getGiocatore()-1)/2))-(palla.getPositionBall().x+palla.getWidth()*Info.paddleresize/2));
-            float normalizedRelativeIntersectionX=(relativeIntersectX/((paddle.getTexture().getWidth()*Info.paddleresizex.get(paddle.getGiocatore()-1)/2)+palla.getWidth()/2));
+            float relativeIntersectX=-((paddle.getPosition().x+(paddle.getWidth()*Info.getInstance().getPaddleresizex().get(paddle.getGiocatore()-1)/2))-(palla.getPositionBall().x+palla.getWidth()*Info.getInstance().getPaddleresize()/2));
+            float normalizedRelativeIntersectionX=(relativeIntersectX/((paddle.getTexture().getWidth()*Info.getInstance().getPaddleresizex().get(paddle.getGiocatore()-1)/2)+palla.getWidth()/2));
             float bounceAngle=normalizedRelativeIntersectionX*(float)MAXBOUNCEANGLE;
-            float speedx=(float)Math.sqrt(2*Info.velBall*Info.velBall)*(float)(Math.sin(bounceAngle));
-            float speedy=(float)Math.sqrt(2*Info.velBall*Info.velBall)*(float)(Math.cos(bounceAngle));
+            float speedx=(float)Math.sqrt(2*Info.getInstance().getVelBall()*Info.getInstance().getVelBall())*(float)(Math.sin(bounceAngle));
+            float speedy=(float)Math.sqrt(2*Info.getInstance().getVelBall()*Info.getInstance().getVelBall())*(float)(Math.cos(bounceAngle));
             palla.getSpeedBall().set(speedx,speedy);
             return true;
         }
@@ -106,7 +106,7 @@ public class Collision
     }
 
     private boolean collides(Rectangle boundsBall,Paddle paddle){
-        if(boundsBall.y<3/4*paddle.getHeight()*Info.paddleresize)
+        if(boundsBall.y<3/4*paddle.getHeight()*Info.getInstance().getPaddleresize())
             return false;
         return boundsBall.overlaps(paddle.getBounds());
     }

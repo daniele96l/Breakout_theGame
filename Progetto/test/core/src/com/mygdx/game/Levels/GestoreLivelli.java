@@ -26,20 +26,20 @@ public class GestoreLivelli {
     private int numBrickY;
 
     public GestoreLivelli(String nomeFile) {
-        int remainder=Info.larghezza;
+        int remainder=Info.getInstance().getLarghezza();
         numBrickX=0;
-        while(remainder>=Info.getBrickWidth()+Info.brickGapX) {
+        while(remainder>=Info.getInstance().getBrickWidth()+Info.getInstance().getBrickGapX()) {
             numBrickX++;
-            remainder=Info.larghezza-(Info.getBrickWidth()+Info.brickGapX)*numBrickX;
+            remainder=Info.getInstance().getLarghezza()-(Info.getInstance().getBrickWidth()+Info.getInstance().getBrickGapX())*numBrickX;
         }
-        startPosX=(remainder+Info.brickGapX)/2;
-        remainder=Info.altezza/2;
+        startPosX=(remainder+Info.getInstance().getBrickGapX())/2;
+        remainder=Info.getInstance().getAltezza()/2;
         numBrickY=0;
-        while(remainder>=Info.getBrickHeight()+Info.brickGapY) {
+        while(remainder>=Info.getInstance().getBrickHeight()+Info.getInstance().getBrickGapY()) {
             numBrickY++;
-            remainder=Info.altezza/2-(Info.getBrickHeight()+Info.brickGapY)*numBrickY;
+            remainder=Info.getInstance().getAltezza()/2-(Info.getInstance().getBrickHeight()+Info.getInstance().getBrickGapY())*numBrickY;
         }
-        startPosY=Info.altezza-remainder/2-Info.getBrickHeight()-Info.hudHeight;
+        startPosY=Info.getInstance().getAltezza()-remainder/2-Info.getInstance().getBrickHeight()-Info.getInstance().getHudHeight();
 
         //Nel costruttore calcolo il numero massimo di mattoncini su entrambi gli assi;
 

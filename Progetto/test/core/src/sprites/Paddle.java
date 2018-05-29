@@ -23,12 +23,12 @@ public class Paddle extends Sprite{
 
     public Paddle(int numeroGiocatori, int giocatore) {
         super(new Texture("mattonalla curva.png"));
-        this.resize=Info.paddleresize;
+        this.resize=Info.getInstance().getPaddleresize();
         this.giocatore = giocatore;
-        positionM = new Vector2((Info.larghezza / numeroGiocatori) * (giocatore - 1) + Info.larghezza / (2 * numeroGiocatori) - this.getWidth() / 2 * Info.paddleresize, 0);
+        positionM = new Vector2((Info.getInstance().getLarghezza() / numeroGiocatori) * (giocatore - 1) + Info.getInstance().getLarghezza() / (2 * numeroGiocatori) - this.getWidth() / 2 * Info.getInstance().getPaddleresize(), 0);
         speed = new Vector2(0, 0);
         this.resize = resize;
-        bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.paddleresize, Paddle.this.getHeight() * Info.paddleresize);
+        bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.getInstance().getPaddleresize(), Paddle.this.getHeight() * Info.getInstance().getPaddleresize());
     }
 
 
@@ -39,11 +39,11 @@ public class Paddle extends Sprite{
      */
     public void setDefaultState(int numeroGiocatori) {
         for(int i = 0;i< numeroGiocatori; i++) {
-            Info.paddleresizex.set(i, Info.paddleresize);
+            Info.getInstance().getPaddleresizex().set(i, Info.getInstance().getPaddleresize());
         }
-        positionM = new Vector2((Info.larghezza / numeroGiocatori) * (giocatore - 1) + Info.larghezza / (2 * numeroGiocatori) - this.getWidth() / 2 * Info.paddleresize, 0);
+        positionM = new Vector2((Info.getInstance().getLarghezza() / numeroGiocatori) * (giocatore - 1) + Info.getInstance().getLarghezza() / (2 * numeroGiocatori) - this.getWidth() / 2 * Info.getInstance().getPaddleresize(), 0);
         speed = new Vector2(0, 0);
-        bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.paddleresize, Paddle.this.getHeight() * Info.paddleresize);
+        bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.getInstance().getPaddleresize(), Paddle.this.getHeight() * Info.getInstance().getPaddleresize());
     }
 
     /**
@@ -75,7 +75,7 @@ public class Paddle extends Sprite{
      * @return bounds: rettangolo che fa da contorno dell'oggetto paddle
      */
     public Rectangle getBounds() {
-        bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.paddleresizex.get(giocatore-1), Paddle.this.getHeight() * Info.paddleresize);
+        bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.getInstance().getPaddleresizex().get(giocatore-1), Paddle.this.getHeight() * Info.getInstance().getPaddleresize());
         return bounds;
     }
 

@@ -28,14 +28,14 @@ public class Hud {
      */
 
     public Hud(ArrayList<Player> players, SpriteBatch sb) {
-        viewport = new FitViewport(Info.larghezza, Info.altezza);
+        viewport = new FitViewport(Info.getInstance().getLarghezza(), Info.getInstance().getAltezza());
         stage = new Stage(viewport, sb);
         FillTable.fillTable(players, table);
         stage.addActor(table);
     }
 
     public Hud(SpriteBatch sb,ArrayList<String> playerNames, ArrayList<String> scores, ArrayList<String> lives) {
-        viewport = new FitViewport(Info.larghezza, Info.altezza);
+        viewport = new FitViewport(Info.getInstance().getLarghezza(), Info.getInstance().getAltezza());
         stage = new Stage(viewport, sb);
         FillTable.fillTable(playerNames,scores,lives, table);
         stage.addActor(table);

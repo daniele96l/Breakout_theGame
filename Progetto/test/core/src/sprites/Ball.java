@@ -24,10 +24,10 @@ public class Ball extends Sprite {
     public Ball(){
         super(new Texture("pallone-1.png"));
 
-        speedBall = new Vector2(0,-Info.velBall);
+        speedBall = new Vector2(0,-Info.getInstance().getVelBall());
         palla=new Texture("pallone-1.png");
-        positionBall = new Vector2(Info.larghezza/2-palla.getWidth()*Info.ballresize/2, Info.altezza/3);
-        boundsBall = new Rectangle(positionBall.x, positionBall.y, palla.getWidth() * Info.ballresize,palla.getHeight()* Info.ballresize);
+        positionBall = new Vector2(Info.getInstance().getLarghezza()/2-palla.getWidth()*Info.getInstance().getBallresize()/2, Info.getInstance().getAltezza()/3);
+        boundsBall = new Rectangle(positionBall.x, positionBall.y, palla.getWidth() * Info.getInstance().getBallresize(),palla.getHeight()* Info.getInstance().getBallresize());
 
     }
 
@@ -36,8 +36,8 @@ public class Ball extends Sprite {
      * all'inizio di ogni nuova partita o quando il giocatore perde
      */
     public void setDefaultState() {
-        speedBall=new Vector2(0,-Info.velBall);
-        positionBall = new Vector2(Info.larghezza/2-palla.getWidth()*Info.ballresize/2, Info.altezza/3);
+        speedBall=new Vector2(0,-Info.getInstance().getVelBall());
+        positionBall = new Vector2(Info.getInstance().getLarghezza()/2-palla.getWidth()*Info.getInstance().getBallresize()/2, Info.getInstance().getAltezza()/3);
        //  speedBall=new Vector2(-2,1);
         // positionBall = new Vector2(40, 630);
     }

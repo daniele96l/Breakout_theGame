@@ -72,9 +72,9 @@ public class PauseScreen implements Screen {
 
         game.getBatch().begin();
         game.getBatch().draw(menu, 0, 0);
-        game.getBatch().draw(resumeButton, Info.larghezza / 2 - resumeButton.getWidth() / 2, 550);//alpostodimetterlicosipossousaredellecostanti
-        game.getBatch().draw(exitButton, Info.larghezza / 2 - exitButton.getWidth() / 2, 150);
-        game.getBatch().draw(menuButton, Info.larghezza / 2 - menuButton.getWidth() / 2, 350);
+        game.getBatch().draw(resumeButton, Info.getInstance().getLarghezza() / 2 - resumeButton.getWidth() / 2, 550);//alpostodimetterlicosipossousaredellecostanti
+        game.getBatch().draw(exitButton, Info.getInstance().getLarghezza() / 2 - exitButton.getWidth() / 2, 150);
+        game.getBatch().draw(menuButton, Info.getInstance().getLarghezza() / 2 - menuButton.getWidth() / 2, 350);
 
         InputTouch.checkInputPauseScreen(newWidth, game, coeffDimensionale, screenHandler, newHeight, barreNere, menuButton, oldScreen);
         game.getBatch().end();

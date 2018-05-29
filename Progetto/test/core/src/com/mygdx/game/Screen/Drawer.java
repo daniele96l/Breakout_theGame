@@ -45,11 +45,11 @@ public class Drawer
     {
         game.getBatch().begin();
         game.getBatch().draw(menu, 0, 0);
-        game.getBatch().draw(playButton, Info.larghezza / 2 - playButton.getWidth() / 2, playbutton);//alpostodimetterlicosipossousaredellecostanti
-        game.getBatch().draw(exitButton, Info.larghezza / 2 - exitButton.getWidth() / 2, exitbutton);
-        game.getBatch().draw(multiplayeronlineButton, Info.larghezza / 2 - multiplayerofflineButton.getWidth() / 2, offlinebutton);//immaginibruttissime
-        game.getBatch().draw(score,Info.larghezza / 2 - score.getWidth() / 2, scorebutton );
-        game.getBatch().draw(multiplayerofflineButton,Info.larghezza / 2 - multiplayeronlineButton.getWidth() / 2, onlinebutton );
+        game.getBatch().draw(playButton, Info.getInstance().getLarghezza() / 2 - playButton.getWidth() / 2, playbutton);//alpostodimetterlicosipossousaredellecostanti
+        game.getBatch().draw(exitButton, Info.getInstance().getLarghezza() / 2 - exitButton.getWidth() / 2, exitbutton);
+        game.getBatch().draw(multiplayeronlineButton, Info.getInstance().getLarghezza() / 2 - multiplayerofflineButton.getWidth() / 2, offlinebutton);//immaginibruttissime
+        game.getBatch().draw(score,Info.getInstance().getLarghezza() / 2 - score.getWidth() / 2, scorebutton );
+        game.getBatch().draw(multiplayerofflineButton,Info.getInstance().getLarghezza() / 2 - multiplayeronlineButton.getWidth() / 2, onlinebutton );
     }
 
     /**
@@ -67,18 +67,18 @@ public class Drawer
     {
         game.getBatch().begin();
         for (AbstractBrick brick : bricks) {
-            game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.brickresize, brick.getHeight() * Info.brickresize);
+            game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.getInstance().getBrickresize(), brick.getHeight() * Info.getInstance().getBrickresize());
         }
 
         for (PowerUp p : powerUps) {
-            game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth() * Info.powerUpResize, p.getHeight() * Info.powerUpResize);
+            game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth() * Info.getInstance().getPowerUpResize(), p.getHeight() * Info.getInstance().getPowerUpResize());
         }
         if (numeroPlayer > 0) {
             for (int i = 0; i < numeroPlayer; i++) {
-                game.getBatch().draw(paddles.get(i), paddles.get(i).getPosition().x, paddles.get(i).getPosition().y, paddles.get(i).getWidth() * Info.paddleresizex.get(i), paddles.get(i).getHeight() * Info.paddleresize);
+                game.getBatch().draw(paddles.get(i), paddles.get(i).getPosition().x, paddles.get(i).getPosition().y, paddles.get(i).getWidth() * Info.getInstance().getPaddleresizex().get(i), paddles.get(i).getHeight() * Info.getInstance().getPaddleresize());
             }
         }
-        game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.ballresize, palla.getHeight() * Info.ballresize);
+        game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.getInstance().getBallresize(), palla.getHeight() * Info.getInstance().getBallresize());
         game.getBatch().end();
     }
 
@@ -123,14 +123,14 @@ public class Drawer
         game.getBatch().begin();
 
         for (AbstractBrick brick : bricks) {
-            game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.brickresize, brick.getHeight() * Info.brickresize);
+            game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.getInstance().getBrickresize(), brick.getHeight() * Info.getInstance().getBrickresize());
             //disegnoimattoncini
         }
         for(PowerUp p:powerUps) {
-            game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth()*Info.powerUpResize, p.getHeight()*Info.powerUpResize);
+            game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth()*Info.getInstance().getPowerUpResize(), p.getHeight()*Info.getInstance().getPowerUpResize());
         }
-        game.getBatch().draw(paddles.get(0), paddles.get(0).getPosition().x, paddles.get(0).getPosition().y, paddles.get(0).getWidth() * Info.paddleresizex.get(0), paddles.get(0).getHeight() * Info.paddleresize);
-        game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.ballresize, palla.getHeight() * Info.ballresize);
+        game.getBatch().draw(paddles.get(0), paddles.get(0).getPosition().x, paddles.get(0).getPosition().y, paddles.get(0).getWidth() * Info.getInstance().getPaddleresizex().get(0), paddles.get(0).getHeight() * Info.getInstance().getPaddleresize());
+        game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.getInstance().getBallresize(), palla.getHeight() * Info.getInstance().getBallresize());
 
     }
 }

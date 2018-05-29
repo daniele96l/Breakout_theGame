@@ -116,17 +116,17 @@ public class OfflineGameScreen implements Screen {
             nextLevel = false;
             isPaused = false;
 
-            Info.dt=1;
-            tmpDT = Info.dt;
+            Info.getInstance().setDt(1);
+            tmpDT = Info.getInstance().getDt();
             date.add(new Date());
             paddles.add(new Paddle(numeroPlayer, 1));
-            Info.paddleresizex.add(0.5f);
+            Info.getInstance().getPaddleresizex().add(0.5f);
 
             if (numeroPlayer > 1) {
                 for (int i = 1; i < numeroPlayer; i++) {
                     paddles.add(new Paddle(numeroPlayer, i + 1));
                     players.add(new RobotPlayer("Robot " + i, palla, paddles.get(i)));
-                    Info.paddleresizex.add(0.5f);
+                    Info.getInstance().getPaddleresizex().add(0.5f);
                     date.add(i,new Date());
                 }
             }
@@ -159,14 +159,14 @@ public class OfflineGameScreen implements Screen {
             musicGame.play();
         }
 
-        palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y * Info.dt);
+        palla.getPositionBall().add(palla.getSpeedBall().x * Info.getInstance().getDt(), palla.getSpeedBall().y * Info.getInstance().getDt());
         palla.getBoundsBall().setPosition(palla.getPositionBall());
         ArrayList<PowerUp> tmpPUps=new ArrayList<PowerUp>();
         for(PowerUp p:powerUps) {
-            if(p.getPosition().y+Info.powerUpHeight<0) {
+            if(p.getPosition().y+Info.getInstance().getPowerUpHeight()<0) {
                 tmpPUps.add(p);
             }
-            p.getPosition().add(p.getSpeed().x*Info.dt, p.getSpeed().y*Info.dt);
+            p.getPosition().add(p.getSpeed().x*Info.getInstance().getDt(), p.getSpeed().y*Info.getInstance().getDt());
             p.getBounds().setPosition(p.getPosition());
         }
         for(PowerUp p:tmpPUps) {
@@ -175,7 +175,7 @@ public class OfflineGameScreen implements Screen {
         Drawer.drawMultiplayerOffline( game,  bg, bricks, players, powerUps,  paddles,  palla, numeroPlayer);
         if (numeroPlayer > 1) {
             for (int i = 1; i < numeroPlayer; i++) {
-                game.getBatch().draw(paddles.get(i), paddles.get(i).getPosition().x, paddles.get(i).getPosition().y, paddles.get(i).getWidth() * Info.paddleresizex.get(i), paddles.get(i).getHeight() * Info.paddleresize);
+                game.getBatch().draw(paddles.get(i), paddles.get(i).getPosition().x, paddles.get(i).getPosition().y, paddles.get(i).getWidth() * Info.getInstance().getPaddleresizex().get(i), paddles.get(i).getHeight() * Info.getInstance().getPaddleresize());
                 if(!isPaused) {
                     commandPlayers.get(i).move();
                 }
@@ -230,9 +230,9 @@ public class OfflineGameScreen implements Screen {
             game.setScreen(new LoseGameScreen(game));
         }
         if(gameState== GameState.WAIT) {
-            Info.dt=0;
+            Info.getInstance().setDt(0);
             if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                Info.dt=tmpDT;
+                Info.getInstance().setDt(tmpDT);
                 gameState=GameState.ACTION;
             }
         }
@@ -251,7 +251,7 @@ public class OfflineGameScreen implements Screen {
         this.newHeight = height;
         this.newWight = width;
 
-        Vector2 size = Scaling.fit.apply(Info.larghezza, Info.altezza, width, height);
+        Vector2 size = Scaling.fit.apply(Info.getInstance().getLarghezza(), Info.getInstance().getAltezza(), width, height);
         int viewportX = (int)(width - size.x) / 2;
         int viewportY = (int)(height - size.y) / 2;
         int viewportWidth = (int)size.x;
@@ -315,7 +315,7 @@ public class OfflineGameScreen implements Screen {
                     musicPowerUp = Gdx.audio.newMusic(Gdx.files.internal(p.getSound()));
                     musicPowerUp.play();
                     lostLife(palla.getPositionBall().x,true);
-                    if(Info.paddleresizex.get(i) != Info.paddleresize){ // qua verifico che sia stato cambiato la resize una volta che prendo il powerup
+                    if(Info.getInstance().getPaddleresizex().get(i) != Info.getInstance().getPaddleresize()){ // qua verifico che sia stato cambiato la resize una volta che prendo il powerup
                         date.set(i,new Date());
                     }
                 }
@@ -392,7 +392,7 @@ public class OfflineGameScreen implements Screen {
      */
     private void lostLife(float positionX,boolean powerup) {  //Questa classe va spostata secondo me, violerebbe il pattern Hight Coesion
         //Hight coesion; A measure of how focused the responsability of a class are
-        int range=Info.larghezza/numeroPlayer;
+        int range=Info.getInstance().getLarghezza()/numeroPlayer;
         Player loser=new RobotPlayer("default", palla, paddles.get(0));
 
         for(int i=0; i<numeroPlayer; i++) {
