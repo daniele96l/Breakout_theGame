@@ -28,7 +28,7 @@ public class ScoreScreen implements Screen {
     private Score score;
     private GameState gameState;
     private Texture scoreScreen;
-    private float newHeight, newWight, coeffDimensionale = 1;
+    private float newHeight, newWidth, coeffDimensionale = 1;
     private static boolean drawn;
     private Database db = new Database();
     float barreNere = 0;
@@ -78,12 +78,7 @@ public class ScoreScreen implements Screen {
         game.getBatch().draw(backButton, backbuttonx, backbuttony);
         bestScores(game.getBatch());
 
-        if (Gdx.input.getX() > (newWight / 2) - (backButton.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (backButton.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > backbuttony * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < backbuttony * coeffDimensionale + backButton.getHeight() * coeffDimensionale + barreNere))) {
-            if (Gdx.input.justTouched()) {
-                dispose();
-                game.setScreen(new MainMenuScreen(game));
-            }
-        }
+        InputTouch.checkInputScoreScreen(newWidth, backButton, coeffDimensionale, game, newHeight, backbuttony, barreNere);
         game.getBatch().end();
     }
 
@@ -97,7 +92,7 @@ public class ScoreScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         this.newHeight = height;
-        this.newWight = width;
+        this.newWidth = width;
 
         tempVet = resizer.toResize(height, width);
         barreNere = tempVet[0];
@@ -130,6 +125,5 @@ public class ScoreScreen implements Screen {
      */
     public void bestScores(SpriteBatch batch) {
         bitmapFont.draw(batch, db.printTableOff(), 500, 704);
-
     }
 }
