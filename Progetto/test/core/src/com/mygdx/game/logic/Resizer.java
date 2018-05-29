@@ -1,4 +1,4 @@
-package com.mygdx.game.Screen;
+package com.mygdx.game.logic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;

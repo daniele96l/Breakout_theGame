@@ -54,7 +54,6 @@ public class MultiplayerGameScreen implements Screen {
     private int newWight;
     private Resizer resizer;
     private Music musicGame;
-    private Music musicBrick;
 
 
     public MultiplayerGameScreen(BreakGame game,InetAddress address, String playerName) {
@@ -69,7 +68,6 @@ public class MultiplayerGameScreen implements Screen {
         lives = new ArrayList<String>();
         error = false;
         musicGame=Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
-        musicBrick=Gdx.audio.newMusic(Gdx.files.internal("distr.mp3"));
         try {
             byte[] b = playerName.getBytes();
             datagramSocket = new DatagramSocket();
@@ -123,6 +121,7 @@ public class MultiplayerGameScreen implements Screen {
         int i;
         if (message.length() < 10) {
             thread.interrupt();
+            musicGame.stop();
             game.setScreen(new LoseGameScreen(game));
         } else {
             String[] lines = message.split("\t"); //Separa le righe
@@ -157,7 +156,7 @@ public class MultiplayerGameScreen implements Screen {
 
                 bricks.removeAll(bricks);
 
-                while (i < lines.length - 1) {
+                while (i < lines.length - 2) {
                     if (lines[i].split(" ")[2].equals("Brick") || lines[i].split(" ")[2].equals("Brick\n")) {
                         bricks.add(new Brick((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
                         i++;
@@ -172,7 +171,7 @@ public class MultiplayerGameScreen implements Screen {
 
                 powerUps.removeAll(powerUps);
 
-                while (i < lines.length - 1) {
+                while (i < lines.length - 2) {
                     if (lines[i].split(" ")[2].equals("ExtraLife")) {
                         powerUps.add(new ExtraLife((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
                     }
@@ -195,16 +194,9 @@ public class MultiplayerGameScreen implements Screen {
                 bg = new Texture(lines[i]);
                 i++;
 
-                if(lines.length > i) {
-                    if(lines[i].equals("brick")){
-                        musicBrick.stop();
-                        musicBrick.play();
-                    }
-                    else{
-                        Gdx.audio.newMusic(Gdx.files.internal(lines[i])).play();
-                    }
+                if(!lines[i].equals("none")) {
+                    Gdx.audio.newMusic(Gdx.files.internal(lines[i])).play();
                 }
-
 
             }
         }

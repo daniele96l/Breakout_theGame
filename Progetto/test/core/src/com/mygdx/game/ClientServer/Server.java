@@ -45,7 +45,7 @@ import java.util.Random;
 public class Server extends Game {
     private DatagramSocket datagramSocket;
     private int portaServer = 4444;
-    private String music;
+    private String music="none";
     private ArrayList<ServerThreadIn> threadsIn;
     private ArrayList<DatagramSocket> sockets;
     private ArrayList<Player> players;
@@ -416,7 +416,7 @@ public class Server extends Game {
      * //Applicare quindi il pattern.
      */
     public void gestisciCollisioni() {
-        music="";
+        music="none";
         float oldSpeedBallX = palla.getSpeedBall().x;
         float oldSpeedBallY = palla.getSpeedBall().y;
 
@@ -442,7 +442,6 @@ public class Server extends Game {
                     tempPowerUps.add(p);
                     p.effect(players.get(paddles.indexOf(paddles.get(i))), paddles.get(i), palla);
                     music=p.getSound();
-                    music+=" ";
                     lostLife(palla.getPositionBall().x, true);
                     if (Info.paddleresizex.get(i) != Info.paddleresize) { // qua verifico che sia stato cambiato la resize una volta che prendo il powerup
                         date.set(i, new Date());
@@ -485,7 +484,7 @@ public class Server extends Game {
                             powerUps.add(brick.getPowerUp());
                         }
                         bricks.remove(brick);
-                        music+="brick";
+                        music="audio.mp3";
                         matEliminati++;
                         players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore() + (int) Math.pow(2, brickCounter));
                         brickCounter++;
@@ -497,7 +496,7 @@ public class Server extends Game {
                         powerUps.add(bricks.get(indici.get(0)).getPowerUp());
                     }
                     bricks.remove((int) indici.get(0));
-                    music+="brick";
+                    music="audio.mp3";
                     matEliminati++;
                     players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore() + (int) Math.pow(2, brickCounter));
                     brickCounter++;
