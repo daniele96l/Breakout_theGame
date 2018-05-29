@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.game.BreakGame;
+import com.sun.org.apache.regexp.internal.RE;
 
 /**
  * @author ligato,schillaci, regna
@@ -19,6 +20,9 @@ public class FinishScreen implements Screen {
     BreakGame game;
     private Texture win;
     private int newHeight, newWight;
+    private float tempVet[];
+    private Resizer resizer;
+    private float coeffDimensionale, barreNere;
 
     /**
      *
@@ -26,6 +30,8 @@ public class FinishScreen implements Screen {
      */
     public FinishScreen(BreakGame game) {
         this.game = game;
+        resizer = new Resizer();
+        tempVet = new float[2];
     }
 
 
@@ -67,12 +73,10 @@ public class FinishScreen implements Screen {
 
         this.newHeight = height;
         this.newWight = width;
-        Vector2 size = Scaling.fit.apply(800, 850, width, height);
-        int viewportX = (int)(width - size.x) / 2;
-        int viewportY = (int)(height - size.y) / 2;
-        int viewportWidth = (int)size.x;
-        int viewportHeight = (int)size.y;
-        Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
+
+        tempVet = resizer.toResize(height, width);
+        barreNere = tempVet[0];
+        coeffDimensionale = tempVet[1];
 
     }
 

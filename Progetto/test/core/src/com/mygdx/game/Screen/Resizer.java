@@ -25,13 +25,14 @@ public class Resizer {
      * calcola i parametri necessari al funzionamento dell'interfaccia
      * @param height altezza della finestra
      * @param width larghezza della finestra
-     * @param size vettore dimensioni della finestra
      * @return ritorna i valori del coefficente dimensionale (un rapporto che indica quando si è ingrandita o diminuita la finestra)
      * e la dimensione della barre nere che dovranno essere messe ai lati per mantenere il rapporto costante
      */
 
-    public float[] toResize(int height, int width, Vector2 size){
+    public float[] toResize(int height, int width){
         barreNere = 0;
+        Vector2 size = Scaling.fit.apply(Info.larghezza, Info.altezza, width, height);
+
 
         this.size = size;
         this.newHeight = height;

@@ -102,9 +102,8 @@ public class MainMenuScreen implements Screen {
     public void resize(int width, int height) {
         this.newHeight = height;
         this.newWight = width;
-        Vector2 size = Scaling.fit.apply(1280, 720, width, height);
 
-        tempVet = resizer.toResize(height, width, size);
+        tempVet = resizer.toResize(height, width);
         barreNere = tempVet[0];
         coeffDimensionale = tempVet[1];
 
