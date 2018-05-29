@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.game.BreakGame;
 import com.mygdx.game.ClientServer.ClientThread;
 import com.mygdx.game.hud.Hud;
+import com.mygdx.game.logic.Resizer;
 import help.Info;
 import sprites.Ball;
 import sprites.Brick.AbstractBrick;

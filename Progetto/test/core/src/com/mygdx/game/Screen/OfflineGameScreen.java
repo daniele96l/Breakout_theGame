@@ -172,24 +172,7 @@ public class OfflineGameScreen implements Screen {
         for(PowerUp p:tmpPUps) {
             powerUps.remove(p);
         }
-
-        game.getBatch().draw(bg, 0, 0);
-        game.getBatch().end();
-
-        hud=new Hud(players, game.getBatch());
-        hud.stage.draw();
-
-        game.getBatch().begin();
-        for (AbstractBrick brick : bricks) {
-            game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.brickresize, brick.getHeight() * Info.brickresize);
-        //disegnoimattoncini
-        }
-        for(PowerUp p:powerUps) {
-            game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth()*Info.powerUpResize, p.getHeight()*Info.powerUpResize);
-        }
-        game.getBatch().draw(paddles.get(0), paddles.get(0).getPosition().x, paddles.get(0).getPosition().y, paddles.get(0).getWidth() * Info.paddleresizex.get(0), paddles.get(0).getHeight() * Info.paddleresize);
-        game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.ballresize, palla.getHeight() * Info.ballresize);
-
+        Drawer.drawMultiplayerOffline( game,  bg, bricks, players, powerUps,  paddles,  palla, numeroPlayer);
         if (numeroPlayer > 1) {
             for (int i = 1; i < numeroPlayer; i++) {
                 game.getBatch().draw(paddles.get(i), paddles.get(i).getPosition().x, paddles.get(i).getPosition().y, paddles.get(i).getWidth() * Info.paddleresizex.get(i), paddles.get(i).getHeight() * Info.paddleresize);
@@ -198,6 +181,7 @@ public class OfflineGameScreen implements Screen {
                 }
             }
         }
+
         if(!isPaused) {
             commandPlayers.get(0).move();//mipermettedimuovereilgiocatore
         }
