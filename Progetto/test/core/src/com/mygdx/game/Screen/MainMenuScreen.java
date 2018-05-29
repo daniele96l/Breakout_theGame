@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.game.BreakGame;
-import help.Info;
 
 /**
  * @autor ligato,schillaci, regna
@@ -16,29 +13,33 @@ import help.Info;
  */
 public class MainMenuScreen implements Screen {
     private Texture menu;
-    private Texture playButton;
-    private Texture exitButton;
-    private Texture multiplayerofflineButton;
-    private Texture score;
-    private Texture multiplayeronlineButton;
+    private Texture playButtonText;
+    private Texture exitButtonText;
+    private Texture mulOfflineButtonText;
+    private Texture scoreButtonText;
+    private Texture mulOnlineButtonText;
     private int newHeight, newWight;
     BreakGame game;
-    private int numeroPlayer;
     private float coeffDimensionale;
     float barreNere = 0;
     ScreenHandler screenHandler;
-    private int playbutton = 510+20;
-    private int onlinebutton = 390+20;
-    private int offlinebutton = 270+20;
-    private int scorebutton = 150+20;
-    private int exitbutton = 30+20;
-    private Drawer drawer;
+    private int playbutton;
+    private int onlinebutton;
+    private int offlinebutton;
+    private int scorebutton;
+    private int exitbutton;
     private Resizer resizer;
     float tempVet[];
 
     public MainMenuScreen(BreakGame game) {
         this.game = game;
         screenHandler = new ScreenHandler();
+        playbutton = 530;
+        onlinebutton=410;
+        offlinebutton=290;
+        scorebutton=170;
+        exitbutton=50;
+
 
     }
 
@@ -48,14 +49,13 @@ public class MainMenuScreen implements Screen {
     @Override
     public void show() {
         menu = new Texture("menuscreen.jpg");
-        playButton = new Texture("play.png");
-        exitButton = new Texture("exit.png");
-        multiplayerofflineButton = new Texture("multiplayeroffline.png");
-        multiplayeronlineButton = new Texture("multiplayeronline.png");
-        score = new Texture("score.png");
+        playButtonText = new Texture("play.png");
+        exitButtonText = new Texture("exit.png");
+        mulOfflineButtonText = new Texture("multiplayeroffline.png");
+        mulOnlineButtonText = new Texture("multiplayeronline.png");
+        scoreButtonText = new Texture("score.png");
         resizer = new Resizer();
         tempVet = new float[2];
-       // click = new Click();
 
     }
 
@@ -68,24 +68,24 @@ public class MainMenuScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Drawer.drawMainMenu(game, menu, playButton, exitButton, multiplayerofflineButton, score, multiplayeronlineButton, playbutton, onlinebutton, offlinebutton, scorebutton, exitbutton);
+        Drawer.drawMainMenu(game, menu, playButtonText, exitButtonText, mulOfflineButtonText, scoreButtonText, mulOnlineButtonText, playbutton, onlinebutton, offlinebutton, scorebutton, exitbutton);
 
 
         if (Gdx.input.justTouched()) {
-            if (Gdx.input.getX() > (newWight / 2) - (score.getWidth() * coeffDimensionale) / 2 && (Gdx.input.getX() < newWight / 2 + (score.getWidth() * coeffDimensionale) / 2) && (newHeight - Gdx.input.getY() > scorebutton * coeffDimensionale + barreNere) && (newHeight - Gdx.input.getY() < scorebutton * coeffDimensionale + score.getHeight() * coeffDimensionale + barreNere)) {
+            if (Gdx.input.getX() > (newWight / 2) - (scoreButtonText.getWidth() * coeffDimensionale) / 2 && (Gdx.input.getX() < newWight / 2 + (scoreButtonText.getWidth() * coeffDimensionale) / 2) && (newHeight - Gdx.input.getY() > scorebutton * coeffDimensionale + barreNere) && (newHeight - Gdx.input.getY() < scorebutton * coeffDimensionale + scoreButtonText.getHeight() * coeffDimensionale + barreNere)) {
                 screenHandler.gestisciMenu(game);
             }
-            if (Gdx.input.getX() > (newWight / 2) - (playButton.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (exitButton.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > exitbutton * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < exitbutton * coeffDimensionale + exitButton.getHeight() * coeffDimensionale + barreNere))) {
+            if (Gdx.input.getX() > (newWight / 2) - (playButtonText.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (exitButtonText.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > exitbutton * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < exitbutton * coeffDimensionale + exitButtonText.getHeight() * coeffDimensionale + barreNere))) {
                 screenHandler.exit();
             }
-            if (Gdx.input.getX() > (newWight / 2) - (playButton.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (playButton.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > playbutton * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < playbutton * coeffDimensionale + exitButton.getHeight() * coeffDimensionale + barreNere))) {
+            if (Gdx.input.getX() > (newWight / 2) - (playButtonText.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (playButtonText.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > playbutton * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < playbutton * coeffDimensionale + exitButtonText.getHeight() * coeffDimensionale + barreNere))) {
                 screenHandler.singlePlayer(game);
             }
-            if (Gdx.input.getX() > (newWight / 2) - (playButton.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (playButton.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > onlinebutton * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < onlinebutton * coeffDimensionale + exitButton.getHeight() * coeffDimensionale + barreNere))) {
+            if (Gdx.input.getX() > (newWight / 2) - (playButtonText.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (playButtonText.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > onlinebutton * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < onlinebutton * coeffDimensionale + exitButtonText.getHeight() * coeffDimensionale + barreNere))) {
 
                 screenHandler.multiplayerOffline(game);
             }
-            if (Gdx.input.getX() > (newWight / 2) - (playButton.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (playButton.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > offlinebutton * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < offlinebutton * coeffDimensionale + exitButton.getHeight() * coeffDimensionale + barreNere))) {
+            if (Gdx.input.getX() > (newWight / 2) - (playButtonText.getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (playButtonText.getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > offlinebutton * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < offlinebutton * coeffDimensionale + exitButtonText.getHeight() * coeffDimensionale + barreNere))) {
                 screenHandler.multiplayerOnline(game);
             }
         }
