@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.game.BreakGame;
 import com.mygdx.game.ClientServer.ClientThread;
 import com.mygdx.game.hud.Hud;
+import com.mygdx.game.logic.Resizer;
 import help.Info;
 import sprites.Ball;
 import sprites.Brick.AbstractBrick;
@@ -56,7 +57,7 @@ public class MultiplayerGameScreen implements Screen {
     private Music musicGame;
 
 
-    public MultiplayerGameScreen(BreakGame game,InetAddress address, String playerName) {
+    public MultiplayerGameScreen(BreakGame game, InetAddress address, String playerName) {
         this.playerName = playerName;
         this.game = game;
         palla = new Ball();
@@ -67,7 +68,7 @@ public class MultiplayerGameScreen implements Screen {
         scores = new ArrayList<String>();
         lives = new ArrayList<String>();
         error = false;
-        musicGame=Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+        musicGame = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         try {
             byte[] b = playerName.getBytes();
             datagramSocket = new DatagramSocket();
@@ -96,7 +97,7 @@ public class MultiplayerGameScreen implements Screen {
     public void render(float delta) {
         musicGame.play();
         game.getBatch().begin();
-        if(error){
+        if (error) {
             game.setScreen(new MainMenuScreen(game));
         }
         String m = thread.getMessage();
@@ -104,7 +105,7 @@ public class MultiplayerGameScreen implements Screen {
         game.getBatch().end();
         hud = new Hud(game.getBatch(), playerNames, scores, lives);
         hud.stage.draw();
-        Drawer.drawMultiplayer( bricks,  game,  powerUps,  numeroPlayer,  paddles,  palla);
+        Drawer.drawMultiplayer(bricks, game, powerUps, numeroPlayer, paddles, palla);
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             keyPressed(Input.Keys.LEFT);
@@ -154,9 +155,10 @@ public class MultiplayerGameScreen implements Screen {
                 }
 
 
+                int numeroBricks = bricks.size();
                 bricks.removeAll(bricks);
 
-                while (i < lines.length - 2) {
+                while (i < lines.length - 1) {
                     if (lines[i].split(" ")[2].equals("Brick") || lines[i].split(" ")[2].equals("Brick\n")) {
                         bricks.add(new Brick((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
                         i++;
@@ -169,9 +171,17 @@ public class MultiplayerGameScreen implements Screen {
                     }
                 }
 
+                if (bricks.size() < numeroBricks) {
+                    Gdx.audio.newMusic(Gdx.files.internal("audio.mp3")).play();
+                }
+
+                ArrayList<PowerUp> tmpPowerUp = (ArrayList<PowerUp>) powerUps.clone();
+
+                System.out.println(powerUps);
+                System.out.println(tmpPowerUp);
                 powerUps.removeAll(powerUps);
 
-                while (i < lines.length - 2) {
+                while (i < lines.length - 1) {
                     if (lines[i].split(" ")[2].equals("ExtraLife")) {
                         powerUps.add(new ExtraLife((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
                     }
@@ -191,19 +201,28 @@ public class MultiplayerGameScreen implements Screen {
                     i++;
                 }
 
+                if (tmpPowerUp.size() > powerUps.size()) {
+                    if (powerUps.size() == 0) {
+                        if (!(tmpPowerUp.get(0).getPosition().y < 0)) {
+                            Gdx.audio.newMusic(Gdx.files.internal("good.mp3")).play();
+                        }
+                    } else {
+                        if (!(tmpPowerUp.get(0).getPosition().y < 0)) {
+                            Gdx.audio.newMusic(Gdx.files.internal("good.mp3")).play();
+                        }
+                    }
+                }
+
+
                 bg = new Texture(lines[i]);
                 i++;
 
-                if(!lines[i].equals("none")) {
-                    Gdx.audio.newMusic(Gdx.files.internal(lines[i])).play();
-                }
 
             }
         }
     }
 
-    public void controlMessage(String m)
-    {
+    public void controlMessage(String m) {
         if (!m.equals("")) {
             parseMessage(m);
 
@@ -221,6 +240,7 @@ public class MultiplayerGameScreen implements Screen {
             game.getBatch().draw(bg, 0, 0);
         }
     }
+
     public void keyPressed(int key) {
         String s = "" + key;
         byte[] b = s.getBytes();
@@ -241,6 +261,7 @@ public class MultiplayerGameScreen implements Screen {
         resizer.toResize(height, width);
 
     }
+
 
     @Override
     public void pause() {
