@@ -45,7 +45,6 @@ import java.util.Random;
 public class Server extends Game {
     private DatagramSocket datagramSocket;
     private int portaServer = 4444;
-    private String music="none";
     private ArrayList<ServerThreadIn> threadsIn;
     private ArrayList<DatagramSocket> sockets;
     private ArrayList<Player> players;
@@ -156,7 +155,7 @@ public class Server extends Game {
         palla.getBoundsBall().setPosition(palla.getPositionBall());
         ArrayList<PowerUp> tmpPUps = new ArrayList<PowerUp>();
         for (PowerUp p : powerUps) {
-            if (p.getPosition().y + Info.powerUpHeight < 0) {
+            if (p.getPosition().y + Info.powerUpHeight < 30) {
                 tmpPUps.add(p);
             }
             p.getPosition().add(p.getSpeed().x * Info.dt, p.getSpeed().y * Info.dt);
@@ -170,9 +169,11 @@ public class Server extends Game {
             commandPlayers.get(i).move(threadsIn.get(i).getKey());//mipermettedimuovereilgiocatore
         }
 
+        gestisciCollisioni();
+
         writeMessage();
 
-        gestisciCollisioni();
+
 
         checkTimerPowerUp(); // controlla il tempo
 
@@ -275,7 +276,6 @@ public class Server extends Game {
 
             message += bgPath + "\t";
 
-            message += music + "\t";
 
             message = message.substring(0, message.length() - 1);
         }
@@ -412,7 +412,6 @@ public class Server extends Game {
      * //Applicare quindi il pattern.
      */
     public void gestisciCollisioni() {
-        music="none";
         float oldSpeedBallX = palla.getSpeedBall().x;
         float oldSpeedBallY = palla.getSpeedBall().y;
 
@@ -437,7 +436,6 @@ public class Server extends Game {
                 if (collision.checkPowerUp(paddles.get(i), p)) {
                     tempPowerUps.add(p);
                     p.effect(players.get(paddles.indexOf(paddles.get(i))), paddles.get(i), palla);
-                    music=p.getSound();
                     lostLife(palla.getPositionBall().x, true);
                     if (Info.paddleresizex.get(i) != Info.paddleresize) { // qua verifico che sia stato cambiato la resize una volta che prendo il powerup
                         date.set(i, new Date());
@@ -480,7 +478,6 @@ public class Server extends Game {
                             powerUps.add(brick.getPowerUp());
                         }
                         bricks.remove(brick);
-                        music="audio.mp3";
                         matEliminati++;
                         players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore() + (int) Math.pow(2, brickCounter));
                         brickCounter++;
@@ -492,7 +489,6 @@ public class Server extends Game {
                         powerUps.add(bricks.get(indici.get(0)).getPowerUp());
                     }
                     bricks.remove((int) indici.get(0));
-                    music="audio.mp3";
                     matEliminati++;
                     players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore() + (int) Math.pow(2, brickCounter));
                     brickCounter++;
