@@ -15,9 +15,10 @@ import java.util.ArrayList;
  * @author Ligato, Schillaci, Regna
  *
  * la classe gestisce i diversi livelli del gioco leggendo dai file in cui è specificata la struttura dei livelli
+ * PATTERN PURE FABRICATION
  */
 
-public class GestoreLivelli { //quà c'è già il "pure fabrication"
+public class GestoreLivelli {
     private ArrayList<Livello> livelli;
     private int startPosX;
     private int startPosY;

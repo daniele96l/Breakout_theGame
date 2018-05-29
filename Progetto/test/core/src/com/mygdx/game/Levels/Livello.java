@@ -110,11 +110,6 @@ public class Livello {
 
             }
             //////Inserire nuovi power up qua
-            /*
-            if(randNum>=interval && randNum<2*interval) {
-                brick.setPowerUp(new NuovoPowerUp(......));
-            }
-             */
         }
     }
 

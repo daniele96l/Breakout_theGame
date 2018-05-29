@@ -356,11 +356,7 @@ public class OfflineGameScreen implements Screen {
                     tempMatt.add(bricks.get(i));
 
                 }
-
-                if(contatore == 2 || contatore2 == 2) //per un eventuale debugging
-                    System.out.println("double hit from the side");
-                else
-                    System.out.println("double hif from the top/bottom");
+                
 
                 if(contatore ==1 && contatore2 == 1) /////////////NUOVO
                 palla.setSpeedBall(new Vector2(oldSpeedBallX, -oldSpeedBallY));
