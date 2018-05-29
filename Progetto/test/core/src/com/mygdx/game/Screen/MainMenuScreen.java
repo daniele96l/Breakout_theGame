@@ -8,7 +8,8 @@ import com.mygdx.game.BreakGame;
 import com.mygdx.game.logic.Resizer;
 
 /**
- * @autor ligato,schillaci, regna
+ * @author Ligato, Schillaci, Regna
+ *
  * La classe che gestisce il memù principale con tutti i suoi bottoni
  *
  */
@@ -45,7 +46,7 @@ public class MainMenuScreen implements Screen {
     }
 
     /**
-     * Associa alle variabili le immagini che dovranno essere renderizate
+     * Associa alle variabili le immagini che dovranno essere renderizate per essere visualizzate nella schermata
      */
     @Override
     public void show() {
@@ -62,8 +63,10 @@ public class MainMenuScreen implements Screen {
 
 
     /**
+     *
+     * @param delta è l'intervallo di tempo che intercorre tra ogni chiamata del metodo render
+     *
      * Disegna le parti grafiche che verranno visualizzate nel manù e si occupa di controllare se clicchi sopra alcune di queste, ovvero i bottoni
-     * @param delta
      */
     @Override
     public void render(float delta) {
@@ -77,9 +80,11 @@ public class MainMenuScreen implements Screen {
     }
 
     /**
-     * si occupa di ridimensionare la finestra
+     *
      * @param width larghezza della finestra
      * @param height altezza della finestra
+     *
+     * si occupa di ridimensionare la finestra
      */
 
     @Override

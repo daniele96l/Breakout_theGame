@@ -34,7 +34,7 @@ import java.util.Date;
 import java.util.Random;
 
 /**
- * @Autor Marco Mari, Marco Cotogni, Alessandro Oberti
+ * @author Marco Mari, Marco Cotogni, Alessandro Oberti
  *
  * Definisce l'oggetto Server che permette di instanziare una connessione tra diversi client, che si connettono tramite un Socket
  * alla porta definita.
@@ -85,11 +85,11 @@ public class Server extends Game {
     /**
      * Crea una nuova partita, istanziando gli N giocatori
      *
-     * @see:initServer()
-     * @see:Info
-     * @see:updateScene
-     * @see:updateLevel
+     * @see Info
+     * @see:updateScene()
+     * @see:updateLevel()
      */
+
 
     @Override
     public void create() {
@@ -220,7 +220,7 @@ public class Server extends Game {
     }
 
     /**
-     * Permette di scrivere il messaggio che verrà inviatro ai vari client
+     * Permette di scrivere il messaggio che verrà inviato ai vari client
      * Il messaggio conterrà le posizioni degli oggetti
      */
 
@@ -330,9 +330,11 @@ public class Server extends Game {
     }
 
     /**
-     * Genera un numero casuale che servirà per la generazione dei power up in maniera pseudo casuale
      *
      * @return String
+     *
+     * Genera un numero casuale che servirà per la generazione dei power up in maniera pseudo casuale
+     *
      */
 
     private String ranGen() {
@@ -342,6 +344,7 @@ public class Server extends Game {
     }
 
     /**
+     *
      * Gestisce la durata dell'effetto del power up
      */
     private void checkTimerPowerUp() {
@@ -354,11 +357,15 @@ public class Server extends Game {
     }
 
     /**
-     * Gestisce il tempo di caduta della pallina una volta che si perde
      *
-     * @param durata
-     * @param datetmp
+     * @param durata la durata temporale dell'effetto del power up
+     * @param datetmp variabile che serve per confrontare la durata del power up
      * @return boolean
+     *
+     * Gestisce il tempo di caduta della pallina una volta che si perde.
+     * Il metodo ritorna true se la l'effetto del power up è durata piu di un certo intervallo di tempo.
+     * Altrimenti ritorna false.
+     *
      */
     private boolean checktimer(int durata, Date datetmp) {
         Date date2 = new Date();
@@ -498,13 +505,17 @@ public class Server extends Game {
     }
 
     /**
-     * Gestisce la perdita della vita nel caso in cui la pallina cada sotto una certa coordinata Y
-     * e si trovi nel range di coordinate x gestite dal quel paddle in questione
      *
-     * @param positionX
+     * @param positionX è la posizione della pallina quando cade al di sotto del livello dei paddle
      * @param powerup
+     *
+     * Gestisce la perdita della vita nel caso in cui la pallina cada sotto una certa coordinata Y
+     * e si trovi nel range di coordinate x gestite dal quel paddle in questione.
+     * Se un giocatore perde tutte le vite, viene aggiornato nel database e nella classifica, viene inoltre
+     * aggiornato l'array contenente i giocatori eliminando colui che ha perso.
+     *
      */
-    private void lostLife(float positionX, boolean powerup) { ///Applicare il pattern Hight coesion
+    private void lostLife(float positionX, boolean powerup) { ///Applicare il pattern High coesion
         int range = Info.larghezza / numeroPlayer;
         Player loser = new RobotPlayer("default", palla, paddles.get(0));
 

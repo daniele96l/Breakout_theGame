@@ -4,15 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 /**
- * la classe definisce un giocatore che controlla il proprio paddle usando i tasti della keyboard
- *
  * @author Schillaci
  *
- * @see Player
+ * la classe definisce un giocatore che controlla il proprio paddle usando i tasti della keyboard
  *
  */
 
 public class HumanPlayer extends Player {
+
+    /**
+     *
+     * @param playerName è il nome del giocatore
+     */
 
     public HumanPlayer(String playerName) {
         super(playerName);
