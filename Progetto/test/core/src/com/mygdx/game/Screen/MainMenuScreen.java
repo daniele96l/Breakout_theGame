@@ -75,7 +75,7 @@ public class MainMenuScreen implements Screen {
         Drawer.drawMainMenu(game, menu, playButtonText, exitButtonText, mulOfflineButtonText, scoreButtonText, mulOnlineButtonText, playbutton, onlinebutton, offlinebutton, scorebutton, exitbutton);
 
 
-        InputTouch.checkInputTouch(newWidth, scoreButtonText,  game,  coeffDimensionale,  playButtonText,  screenHandler,  newHeight,  barreNere,  scorebutton,  exitbutton,  playbutton,  onlinebutton,  exitButtonText,  offlinebutton);
+        InputTouch.checkInputTouchMainMenu(newWidth, scoreButtonText,  game,  coeffDimensionale,  playButtonText,  screenHandler,  newHeight,  barreNere,  scorebutton,  exitbutton,  playbutton,  onlinebutton,  exitButtonText,  offlinebutton);
         game.getBatch().end();
     }
 
