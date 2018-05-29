@@ -2,9 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Input;
 import com.mygdx.game.Player.Player;
-import com.mygdx.game.Screen.MovePlayer;
-import help.GameState;
-import help.Info;
+import com.mygdx.game.logic.MovePlayer;
 import sprites.Paddle;
 
 /**
@@ -44,7 +42,20 @@ public class CommandPlayer {
     public void move()
     {
 
-        movePlayer.MoveRobot(numeroGiocatori, giocatore, paddle, player);
+        movePlayer.MoveRobot( numeroGiocatori, giocatore, paddle, player);
+        /*if(player.keyPressed()==Input.Keys.LEFT){
+            if(paddle.getPosition().x >(Info.larghezza/numeroGiocatori)*(giocatore-1)) { //controllo il range in cui la Paddle si può muovere
+
+                paddle.getPosition().add(-Info.getVelPaddle(), 0);
+                paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
+            }
+        }
+        if(player.keyPressed()==Input.Keys.RIGHT){
+            if(paddle.getPosition().x < ((Info.larghezza/numeroGiocatori)*(giocatore))- paddle.getWidth()* Info.paddleresizex.get(giocatore-1) ) {
+                paddle.getPosition().add(Info.getVelPaddle(), 0);//controllo il range in cui la Paddle si può muovere
+                paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
+            }
+        }*/
     }
 
     /**??????????????????????????????????????????????????????????????????????????????
@@ -55,8 +66,25 @@ public class CommandPlayer {
     public void move(int key)
     {
 
+
+
         movePlayer.MoveIt( key , numeroGiocatori, giocatore, paddle);
 
+       /*
+        if(key==Input.Keys.LEFT){
+            if(paddle.getPosition().x >(Info.larghezza/numeroGiocatori)*(giocatore-1)) { //controllo il range in cui la Paddle si può muovere
+
+                paddle.getPosition().add(-10, 0);
+                paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
+            }
+        }
+        if(key==Input.Keys.RIGHT){
+            if(paddle.getPosition().x < ((Info.larghezza/numeroGiocatori)*(giocatore))- paddle.getWidth()* Info.paddleresizex.get(giocatore-1) ) {
+                paddle.getPosition().add(10, 0);//controllo il range in cui la Paddle si può muovere
+                paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
+            }
+        }
+        */
     }
 
     /**
