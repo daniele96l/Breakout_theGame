@@ -118,6 +118,7 @@ public class OfflineGameScreen implements Screen {
             nextLevel = false;
             isPaused = false;
 
+            Info.dt=1;
             tmpDT = Info.dt;
             date.add(new Date());
             paddles.add(new Paddle(numeroPlayer, 1));
@@ -204,7 +205,6 @@ public class OfflineGameScreen implements Screen {
         }
         if (commandPlayers.get(0).checkpause()) {
             music.pause();
-            dispose();
             game.setScreen(new PauseScreen(game, this));
         }
         gestisciCollisioni();
