@@ -140,5 +140,10 @@ public class Drawer
         game.getBatch().draw(exitButton, Info.getInstance().getLarghezza() / 2 - exitButton.getWidth() / 2, 150);
         game.getBatch().draw(menuButton, Info.getInstance().getLarghezza() / 2 - menuButton.getWidth() / 2, 350);
     }
+    static void drawScoreScreen(BreakGame game,Texture scoreScreen,Texture backButton,int backbuttonx,int backbuttony)
+    {
+        game.getBatch().draw(scoreScreen, 0, 0);
+        game.getBatch().draw(backButton, backbuttonx, backbuttony);
+    }
 
 }

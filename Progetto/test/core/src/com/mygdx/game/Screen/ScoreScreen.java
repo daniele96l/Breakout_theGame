@@ -74,9 +74,7 @@ public class ScoreScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         backButton = new Texture("menu.png");
-
-        game.getBatch().draw(scoreScreen, 0, 0);
-        game.getBatch().draw(backButton, backbuttonx, backbuttony);
+        Drawer.drawScoreScreen(game, scoreScreen, backButton, backbuttonx, backbuttony);
         bestScores(game.getBatch());
 
         InputTouch.checkInputScoreScreen(newWidth, backButton, coeffDimensionale, game, newHeight, backbuttony, barreNere);
