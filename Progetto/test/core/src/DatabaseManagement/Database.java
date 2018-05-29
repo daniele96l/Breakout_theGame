@@ -130,34 +130,60 @@ public class Database {
      * @param points: punteggio del giocatore in questione
      * @param type: parametro che serve a scegliere il tipo di operazione da eseguire
      */
-    public void modify(String id, String name, int points, DropType type) {
+    public void modify(String id, String name, int points, DropType type, TableType tableType) {
         String query;
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
             String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
-            switch (type) {
-                case INSERT:
-                    PreparedStatement stmt = conn.prepareStatement("INSERT INTO GAMES VALUES (?, ?, ?)");
-                    stmt.setString(1, id);
-                    stmt.setString(2, name);
-                    stmt.setInt(3, points);
-                    stmt.executeUpdate();
-                    conn.close();
-                    break;
-                case DROP_PLAYER:
-                    Statement stm = conn.createStatement();
-                    query = "DELETE FROM GAMES WHERE NICKNAME = '" + name + "'";
-                    stm.executeUpdate(query);
-                    conn.close();
-                    break;
-                case DROP_ALL:
-                    Statement st = conn.createStatement();
-                    query = "DELETE FROM GAMES";
-                    st.executeUpdate(query);
-                    conn.close();
-                    break;
+            if (tableType.equals(TableType.OFFLINE)) {
+                switch (type) {
+                    case INSERT:
+                        PreparedStatement stmt = conn.prepareStatement("INSERT INTO GAMES VALUES (?, ?, ?)");
+                        stmt.setString(1, id);
+                        stmt.setString(2, name);
+                        stmt.setInt(3, points);
+                        stmt.executeUpdate();
+                        conn.close();
+                        break;
+                    case DROP_PLAYER:
+                        Statement stm = conn.createStatement();
+                        query = "DELETE FROM GAMES WHERE NICKNAME = '" + name + "'";
+                        stm.executeUpdate(query);
+                        conn.close();
+                        break;
+                    case DROP_ALL:
+                        Statement st = conn.createStatement();
+                        query = "DELETE FROM GAMES";
+                        st.executeUpdate(query);
+                        conn.close();
+                        break;
+                }
+            }
+            if (tableType.equals(TableType.ONLINE)) {
+                switch (type) {
+                    case INSERT:
+                        PreparedStatement stmt = conn.prepareStatement("INSERT INTO ONLINE VALUES (?, ?, ?)");
+                        stmt.setString(1, id);
+                        stmt.setString(2, name);
+                        stmt.setInt(3, points);
+                        stmt.executeUpdate();
+                        conn.close();
+                        break;
+                    case DROP_PLAYER:
+                        Statement stm = conn.createStatement();
+                        query = "DELETE FROM ONLINE WHERE NICKNAME = '" + name + "'";
+                        stm.executeUpdate(query);
+                        conn.close();
+                        break;
+                    case DROP_ALL:
+                        Statement st = conn.createStatement();
+                        query = "DELETE FROM ONLINE";
+                        st.executeUpdate(query);
+                        conn.close();
+                        break;
+                }
             }
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
