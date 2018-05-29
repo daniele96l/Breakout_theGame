@@ -2,6 +2,7 @@ package com.mygdx.game.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Scaling;
@@ -18,6 +19,7 @@ import sprites.powerup.*;
 
 import javax.swing.*;
 import java.io.*;
+import java.lang.reflect.GenericDeclaration;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,9 +27,8 @@ import java.util.Date;
 //Da implementare i pattern
 
 /**
- * @Author Renga, Schillaci
+ * @author Regna, Schillaci
  *
- * DA CHIEDERE A LORO, IO NON SO CHE CAZZO FACCIA
  */
 public class MultiplayerGameScreen implements Screen {
 
@@ -52,6 +53,8 @@ public class MultiplayerGameScreen implements Screen {
     private int newHeight;
     private int newWight;
     private Resizer resizer;
+    private Music musicGame;
+    private Music musicBrick;
 
 
     public MultiplayerGameScreen(BreakGame game,InetAddress address, String playerName) {
@@ -65,6 +68,8 @@ public class MultiplayerGameScreen implements Screen {
         scores = new ArrayList<String>();
         lives = new ArrayList<String>();
         error = false;
+        musicGame=Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+        musicBrick=Gdx.audio.newMusic(Gdx.files.internal("distr.mp3"));
         try {
             byte[] b = playerName.getBytes();
             datagramSocket = new DatagramSocket();
@@ -91,6 +96,7 @@ public class MultiplayerGameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        musicGame.play();
         game.getBatch().begin();
         if(error){
             game.setScreen(new MainMenuScreen(game));
@@ -187,6 +193,19 @@ public class MultiplayerGameScreen implements Screen {
                 }
 
                 bg = new Texture(lines[i]);
+                i++;
+
+                if(lines.length > i) {
+                    if(lines[i].equals("brick")){
+                        musicBrick.stop();
+                        musicBrick.play();
+                    }
+                    else{
+                        Gdx.audio.newMusic(Gdx.files.internal(lines[i])).play();
+                    }
+                }
+
+
             }
         }
     }
