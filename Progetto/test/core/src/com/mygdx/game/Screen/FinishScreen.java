@@ -8,7 +8,7 @@ import com.mygdx.game.BreakGame;
 import com.mygdx.game.logic.Resizer;
 
 /**
- * @author ligato,schillaci, regna
+ * @author Ligato, Schillaci, Regna
  *
  * Gestisce la schermata di fine gioco
  */
@@ -24,7 +24,8 @@ public class FinishScreen implements Screen {
 
     /**
      *
-     * @param game oggetto Breack game
+     * @param game la  partita corrente
+     *
      */
     public FinishScreen(BreakGame game) {
         this.game = game;
@@ -34,18 +35,20 @@ public class FinishScreen implements Screen {
 
 
     /**
-     * quando vinci il gioco asegna la nuova texture che dovrà essere disegnata
+     * il metodo assegna la nuova texture che dovrà essere disegnata quando vinci il livello, sulla quale sono presenti
+     * le istruzioni per poter giungere al livello successivo
      */
 
     @Override
     public void show() {
         win = new Texture("nextlevel.jpg");
-
     }
 
     /**
-     * Renderizza il back e disegna la texture che ti avvisa di aver vinto il gioco
-     * @param delta
+     *
+     * @param delta è l'itervallo di tempo che intercorre tra ogni chiamata del metodo render
+     *
+     * Renderizza il background e disegna la texture che ti avvisa di aver vinto il gioco
      */
     @Override
     public void render(float delta) {
@@ -61,10 +64,11 @@ public class FinishScreen implements Screen {
     }
 
     /**
-     * Ci permetta di ridimensionare la finestra
      *
      * @param width larghezza della finestra
      * @param height altezza della finestra
+     *
+     * Ci permetta di ridimensionare la finestra
      */
     @Override
     public void resize(int width, int height) {

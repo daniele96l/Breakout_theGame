@@ -30,6 +30,8 @@ import java.util.Date;
 /**
  * @author Regna, Schillaci
  *
+ * La classe si occupa di gestire la schermata della modalita di gioco "multiplayer online"
+ *
  */
 public class MultiplayerGameScreen implements Screen {
 
@@ -93,6 +95,13 @@ public class MultiplayerGameScreen implements Screen {
 
     }
 
+    /**
+     *
+     * @param delta è l'intervallo di tempo che intercorre tra ogni chiamata del metodo render
+     *
+     * disegna le parti grafiche dello scenario 60 volte al secondo facendo un controllo
+     * sul messaggio che gli viene passato dal server
+     */
     @Override
     public void render(float delta) {
         musicGame.play();
@@ -117,6 +126,15 @@ public class MultiplayerGameScreen implements Screen {
             }
         }
     }
+
+    /**
+     *
+     * @param message è il messaggio che arriva dal server
+     *
+     * il metodo permette di estrarre dal messaggio le informazioni necessarie per assegnare un valore alle variabili
+     * che rappresentano gli elementi dello scenario che vengono disegnati.
+     *
+     */
 
     public void parseMessage(String message) { // si potrebbe implementare pure_fabrication e fare un altra classe, che sarebbe anche HightCOesion
         int i;
@@ -222,6 +240,7 @@ public class MultiplayerGameScreen implements Screen {
         }
     }
 
+
     public void controlMessage(String m) {
         if (!m.equals("")) {
             parseMessage(m);
@@ -241,6 +260,13 @@ public class MultiplayerGameScreen implements Screen {
         }
     }
 
+    /**
+     *
+     * @param key è il valore che rappresenta il tasto premuto dal giocatore per spostare il suo paddle
+     * @throws IOException
+     *
+     * il metodo si occupa di costruire e inviare il datagramma al server
+     */
     public void keyPressed(int key) {
         String s = "" + key;
         byte[] b = s.getBytes();
@@ -251,6 +277,13 @@ public class MultiplayerGameScreen implements Screen {
         }
     }
 
+    /**
+     *
+     * @param width larghezza della finestra
+     * @param height altezza della finestra
+     *
+     * si occupa di ridimensionare la finestra
+     */
 
     @Override
     public void resize(int width, int height) {

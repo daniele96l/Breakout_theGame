@@ -6,7 +6,7 @@ import sprites.Ball;
 import sprites.Paddle;
 
 /**
- * @Autor Schillaci
+ * @author Schillaci
  * Gestisci il giocatore artificiale
  */
 public class RobotPlayer extends Player{
@@ -19,7 +19,6 @@ public class RobotPlayer extends Player{
     }
 
     /**
-     *
      *
      * @return il tasto premuto che darà la direzione alla paddle
      */

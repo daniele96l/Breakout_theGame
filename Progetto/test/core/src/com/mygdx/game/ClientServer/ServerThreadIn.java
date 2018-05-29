@@ -6,7 +6,7 @@ import java.io.*;
 import java.net.*;
 
 /**
- * @Author Cotogni,Mari, Oberti
+ * @author  Cotogni, Mari, Oberti
  * questa classe definisce il thread del server per ricevere i pacchetti dai diversi thread
  *
  */

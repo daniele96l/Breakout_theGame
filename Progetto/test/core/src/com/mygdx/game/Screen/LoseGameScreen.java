@@ -8,7 +8,8 @@ import com.mygdx.game.BreakGame;
 import com.mygdx.game.logic.Resizer;
 
 /**
- * @Autor regna, ligato,schillaci
+ * @author Regna, Ligato, Schillaci
+ *
  * Questa classe implementa la schermata che apparirà quando si perde
  *
  */
@@ -37,8 +38,9 @@ public class LoseGameScreen implements Screen {
     }
 
     /**
+     * @param delta è l'intervallo di tempo che intercorre tra ogni chiamata del metodo render
+     *
      * Gestisce il proseguimento del programma, dopo che compare la schermata di "Loose"
-     * @param delta
      */
     @Override
     public void render(float delta)
@@ -47,6 +49,13 @@ public class LoseGameScreen implements Screen {
 
     }
 
+    /**
+     *
+     * @param width larghezza della finestra
+     * @param height altezza della finestra
+     *
+     * Ci permetta di ridimensionare la finestra
+     */
     @Override
     public void resize(int width, int height) {
         this.newHeight = height;

@@ -5,7 +5,24 @@ import com.mygdx.game.Player.Player;
 import help.Info;
 import sprites.Paddle;
 
+
+/**
+ * @author Ligato
+ *
+ * Questa classe permette di gestire il movimento dei paddle, siano essi controllati da uno HumanPlayer o da un RobotPlayer
+ *
+ */
+
 public class MovePlayer {
+
+    /**
+     *
+     * @param key è un intero che rappresta il tasto premuto, cioè destra o sinistra.
+     * @param numeroGiocatori
+     * @param giocatore è il numero del gicatore, tra i partecipanti alla partita, che deve effettuare lo spostamento.
+     * @param paddle è il paddle appartenente a tale giocatore
+     */
+
 
     public void MoveIt(int key , int numeroGiocatori, int giocatore, Paddle paddle){
         if(key== Input.Keys.LEFT){
@@ -24,6 +41,16 @@ public class MovePlayer {
 
     }
 
+    /**
+     *
+     * I parametri sono gli stessi del metodo MoveIt(...)
+     * @param numeroGiocatori
+     * @param giocatore
+     * @param paddle
+     * @param player in questo caso verra passato un tipo RobotPlayer in modo tale che, con il metodo keyPressed(), si ottenga lo spostamento del Robot.
+     *
+     * @see com.mygdx.game.Player.RobotPlayer
+     */
     public void MoveRobot(int numeroGiocatori, int giocatore, Paddle paddle, Player player){
 
         if(player.keyPressed()==Input.Keys.LEFT){
