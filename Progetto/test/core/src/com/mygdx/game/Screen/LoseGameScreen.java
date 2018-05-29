@@ -40,14 +40,10 @@ public class LoseGameScreen implements Screen {
      * @param delta
      */
     @Override
-    public void render(float delta) {
-        game.getBatch().begin();
-        game.getBatch().draw(gameOver, 0, 0);
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            game.setScreen(new MainMenuScreen(game));
-        }
+    public void render(float delta)
+    {
+        Drawer.drawLoseScreen(game,gameOver);
 
-        game.getBatch().end();
     }
 
     @Override

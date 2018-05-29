@@ -356,7 +356,7 @@ public class OfflineGameScreen implements Screen {
                     tempMatt.add(bricks.get(i));
 
                 }
-                
+
 
                 if(contatore ==1 && contatore2 == 1) /////////////NUOVO
                 palla.setSpeedBall(new Vector2(oldSpeedBallX, -oldSpeedBallY));
