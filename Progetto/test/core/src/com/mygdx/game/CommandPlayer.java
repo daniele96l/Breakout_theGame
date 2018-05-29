@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Input;
 import com.mygdx.game.Player.Player;
+import com.mygdx.game.Screen.MovePlayer;
 import help.GameState;
 import help.Info;
 import sprites.Paddle;
@@ -17,6 +18,7 @@ public class CommandPlayer {
     private Player player;
     int numeroGiocatori;
     int giocatore;
+    private MovePlayer movePlayer;
 
     /**
      * Salva i seguenti valori nei parametri
@@ -31,6 +33,7 @@ public class CommandPlayer {
         this.player=player;
         this.numeroGiocatori=numeroGiocatori;
         this.giocatore=giocatore;
+        movePlayer = new MovePlayer();
     }
 
     /**??????????????????????????????????????????????????????????????????????
@@ -40,19 +43,8 @@ public class CommandPlayer {
 
     public void move()
     {
-        if(player.keyPressed()==Input.Keys.LEFT){
-            if(paddle.getPosition().x >(Info.larghezza/numeroGiocatori)*(giocatore-1)) { //controllo il range in cui la Paddle si può muovere
 
-                paddle.getPosition().add(-Info.getVelPaddle(), 0);
-                paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
-            }
-        }
-        if(player.keyPressed()==Input.Keys.RIGHT){
-            if(paddle.getPosition().x < ((Info.larghezza/numeroGiocatori)*(giocatore))- paddle.getWidth()* Info.paddleresizex.get(giocatore-1) ) {
-                paddle.getPosition().add(Info.getVelPaddle(), 0);//controllo il range in cui la Paddle si può muovere
-                paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
-            }
-        }
+        movePlayer.MoveRobot(numeroGiocatori, giocatore, paddle, player);
     }
 
     /**??????????????????????????????????????????????????????????????????????????????
@@ -62,19 +54,9 @@ public class CommandPlayer {
 
     public void move(int key)
     {
-        if(key==Input.Keys.LEFT){
-            if(paddle.getPosition().x >(Info.larghezza/numeroGiocatori)*(giocatore-1)) { //controllo il range in cui la Paddle si può muovere
 
-                paddle.getPosition().add(-10, 0);
-                paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
-            }
-        }
-        if(key==Input.Keys.RIGHT){
-            if(paddle.getPosition().x < ((Info.larghezza/numeroGiocatori)*(giocatore))- paddle.getWidth()* Info.paddleresizex.get(giocatore-1) ) {
-                paddle.getPosition().add(10, 0);//controllo il range in cui la Paddle si può muovere
-                paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
-            }
-        }
+        movePlayer.MoveIt( key , numeroGiocatori, giocatore, paddle);
+
     }
 
     /**
