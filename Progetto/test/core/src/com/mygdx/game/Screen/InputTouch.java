@@ -7,7 +7,6 @@ import com.mygdx.game.BreakGame;
 
 
 public class InputTouch {
-
     public static void checkInputTouchMainMenu(int newWight, Texture scoreButtonText, BreakGame game, float coeffDimensionale, Texture playButtonText, ScreenHandler screenHandler, int newHeight, float barreNere, int scorebutton, int exitbutton, int playbutton, int onlinebutton, Texture exitButtonText, int offlinebutton) {
         if (Gdx.input.justTouched()) {
             if (Gdx.input.getX() > (newWight / 2) - (scoreButtonText.getWidth() * coeffDimensionale) / 2 && (Gdx.input.getX() < newWight / 2 + (scoreButtonText.getWidth() * coeffDimensionale) / 2) && (newHeight - Gdx.input.getY() > scorebutton * coeffDimensionale + barreNere) && (newHeight - Gdx.input.getY() < scorebutton * coeffDimensionale + scoreButtonText.getHeight() * coeffDimensionale + barreNere)) {

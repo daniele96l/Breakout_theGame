@@ -71,11 +71,7 @@ public class PauseScreen implements Screen {
     public void render(float delta) { //Pattern Controller
 
         game.getBatch().begin();
-        game.getBatch().draw(menu, 0, 0);
-        game.getBatch().draw(resumeButton, Info.getInstance().getLarghezza() / 2 - resumeButton.getWidth() / 2, 550);//alpostodimetterlicosipossousaredellecostanti
-        game.getBatch().draw(exitButton, Info.getInstance().getLarghezza() / 2 - exitButton.getWidth() / 2, 150);
-        game.getBatch().draw(menuButton, Info.getInstance().getLarghezza() / 2 - menuButton.getWidth() / 2, 350);
-
+        Drawer.drawPauseScreen(game,menu,resumeButton,exitButton,menuButton);
         InputTouch.checkInputPauseScreen(newWidth, game, coeffDimensionale, screenHandler, newHeight, barreNere, menuButton, oldScreen);
         game.getBatch().end();
 

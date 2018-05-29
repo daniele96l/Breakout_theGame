@@ -133,5 +133,12 @@ public class Drawer
         game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.getInstance().getBallresize(), palla.getHeight() * Info.getInstance().getBallresize());
 
     }
+    static void drawPauseScreen(BreakGame game,Texture menu,Texture resumeButton,Texture exitButton, Texture menuButton)
+    {
+        game.getBatch().draw(menu, 0, 0);
+        game.getBatch().draw(resumeButton, Info.getInstance().getLarghezza() / 2 - resumeButton.getWidth() / 2, 550);//alpostodimetterlicosipossousaredellecostanti
+        game.getBatch().draw(exitButton, Info.getInstance().getLarghezza() / 2 - exitButton.getWidth() / 2, 150);
+        game.getBatch().draw(menuButton, Info.getInstance().getLarghezza() / 2 - menuButton.getWidth() / 2, 350);
+    }
 
 }
