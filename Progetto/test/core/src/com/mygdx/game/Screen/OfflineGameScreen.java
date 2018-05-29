@@ -2,6 +2,7 @@ package com.mygdx.game.Screen;
 
 import DatabaseManagement.Database;
 import DatabaseManagement.Enum.DropType;
+import DatabaseManagement.Enum.TableType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -208,7 +209,7 @@ public class OfflineGameScreen implements Screen {
             if (isFinished) {
                 livelloCorrente = 1;
                 isFinished = false;
-                db.modify(ranGen(), playerName, players.get(0).getScore(), DropType.INSERT);
+                db.modify(ranGen(), playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
                 updateScene();
                 updateLevel(); /////////////SERVE UNO SCREEN DI FINE GIOCO
                 dispose();
@@ -406,7 +407,7 @@ public class OfflineGameScreen implements Screen {
         }
         if(loser.getLives() < 0) {
             if(players.get(0).equals(loser)) {
-                db.modify(ranGen(), playerName, players.get(0).getScore(), DropType.INSERT);
+                db.modify(ranGen(), playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
                 gameState=GameState.GAME_OVER;
             }
             else {

@@ -1,6 +1,7 @@
 package com.mygdx.game.Screen;
 
 import DatabaseManagement.Database;
+import DatabaseManagement.Enum.TableType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -124,6 +125,6 @@ public class ScoreScreen implements Screen {
      * @param batch
      */
     public void bestScores(SpriteBatch batch) {
-        bitmapFont.draw(batch, db.printTableOff(), 500, 704);
+        bitmapFont.draw(batch, db.printTable(TableType.OFFLINE), 500, 704);
     }
 }

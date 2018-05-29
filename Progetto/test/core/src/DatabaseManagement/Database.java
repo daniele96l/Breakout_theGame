@@ -70,55 +70,45 @@ public class Database {
      * @return sOff: è la stringa che contiene o i nicknames in ordine di punteggio o il messaggio di errore nel caso in cui
      *               l'ArrayList risultasse vuoto.
      */
-    public String printTableOff () {
-        start(TableType.OFFLINE);
+    public String printTable (TableType tableType) {
+        start(tableType);
         String sOff = "";
+        String sOn = "";
 
-        if (listaGiocatoriOff.size() < 10) {
-            if (listaGiocatoriOff.size() == 0) {
-                sOff += "NO SCORE";
+        if (tableType.equals(TableType.OFFLINE)) {
+            if (listaGiocatoriOff.size() < 10) {
+                if (listaGiocatoriOff.size() == 0) {
+                    sOff += "NO SCORE";
+                } else {
+                    for (int i = 0; i < listaGiocatoriOff.size(); i++) {
+                        sOff += listaGiocatoriOff.get(i);
+                    }
+                }
             } else {
-                for (int i = 0; i < listaGiocatoriOff.size(); i++) {
+                for (int i = 0; i < 10; i++) {
                     sOff += listaGiocatoriOff.get(i);
                 }
             }
-        } else {
-            for (int i = 0; i < 10; i++) {
-                sOff += listaGiocatoriOff.get(i);
-            }
+            return sOff;
         }
-        return sOff;
-    }
-
-    /**
-     * Metodo che serve a stampare i primi dieci giocatori della modalità ONLINE in ordine di punteggio. Se l'Arraylist
-     * è vuoto vuol dire che non ha ancora giocato nessuno e verrà visualizzato il relativo messaggio d'errore. Se la
-     * dimensione dell'ArrayList è maggiore di 10 memorizzo nella variabile che verrà visualizzata nella sezione score
-     * solo i primi 10.
-     *
-     * @return sOn: è la stringa che contiene o i nicknames in ordine di punteggio o il messaggio di errore nel caso in cui
-     *               l'ArrayList risultasse vuoto.
-     */
-    public String printTableOn () {
-        start(TableType.ONLINE);
-        String sOn = "";
-
-        if (listaGiocatoriOff.size() < 10) {
-            if (listaGiocatoriOff.size() == 0) {
-                sOn += "NO SCORE";
+        if (tableType.equals(TableType.ONLINE)) {
+            if (listaGiocatoriOn.size() < 10) {
+                if (listaGiocatoriOn.size() == 0) {
+                    sOn += "NO SCORE";
+                } else {
+                    for (int i = 0; i < listaGiocatoriOn.size(); i++) {
+                        sOn += listaGiocatoriOn.get(i);
+                    }
+                }
             } else {
-                for (int i = 0; i < listaGiocatoriOff.size(); i++) {
-                    sOn += listaGiocatoriOff.get(i);
+                for (int i = 0; i < 10; i++) {
+                    sOn += listaGiocatoriOn.get(i);
                 }
             }
-        } else {
-            for (int i = 0; i < 10; i++) {
-                sOn += listaGiocatoriOff.get(i);
-            }
+            return sOn;
         }
-        return sOn;
+        return null;
     }
-
 
     /**
      * Metodo che dopo aver caricato il driver e creata la connessione permette di inserire o eliminare tuple o coppie di
