@@ -109,7 +109,7 @@ public class Server extends Game {
 
         for (int i = 0; i < numeroPlayer; i++) {
             paddles.add(new Paddle(numeroPlayer, i + 1));
-            Info.paddleresizex.add(0.5f);
+            Info.getInstance().getPaddleresizex().add(0.5f);
             commandPlayers.add(new CommandPlayer(paddles.get(i), players.get(i), numeroPlayer, i + 1));
         }
 
@@ -122,7 +122,7 @@ public class Server extends Game {
             nextLevel = false;
             isPaused = false;
             palla = new Ball();
-            tmpDT = Info.dt;
+            tmpDT = Info.getInstance().getDt();
 
             for (int i = 0; i < numeroPlayer; i++) {
                 date.add(new Date());
@@ -151,14 +151,14 @@ public class Server extends Game {
 
         }
 
-        palla.getPositionBall().add(palla.getSpeedBall().x * Info.dt, palla.getSpeedBall().y * Info.dt);
+        palla.getPositionBall().add(palla.getSpeedBall().x * Info.getInstance().getDt(), palla.getSpeedBall().y * Info.getInstance().getDt());
         palla.getBoundsBall().setPosition(palla.getPositionBall());
         ArrayList<PowerUp> tmpPUps = new ArrayList<PowerUp>();
         for (PowerUp p : powerUps) {
-            if (p.getPosition().y + Info.powerUpHeight < 30) {
+            if (p.getPosition().y + Info.getInstance().getPowerUpHeight() < 30) {
                 tmpPUps.add(p);
             }
-            p.getPosition().add(p.getSpeed().x * Info.dt, p.getSpeed().y * Info.dt);
+            p.getPosition().add(p.getSpeed().x * Info.getInstance().getDt(), p.getSpeed().y * Info.getInstance().getDt());
             p.getBounds().setPosition(p.getPosition());
         }
         for (PowerUp p : tmpPUps) {
@@ -206,13 +206,13 @@ public class Server extends Game {
         }
 
         if (gameState == GameState.WAIT) {
-            Info.dt = 0;
+            Info.getInstance().setDt(0);
             if (!creato) {
                 datetmp = new Date();
                 creato = true;
             }
             if (checktimer(3000, datetmp)) {
-                Info.dt = tmpDT;
+                Info.getInstance().setDt(tmpDT);
                 gameState = GameState.ACTION;
                 creato = false;
             }
@@ -236,7 +236,7 @@ public class Server extends Game {
             }
             message += "\t";
 
-            for (float f : Info.paddleresizex) {
+            for (float f : Info.getInstance().getPaddleresizex()) {
                 message += f + " ";
             }
             message += "\t";
@@ -348,8 +348,8 @@ public class Server extends Game {
         if (date != null) {
             Date date2 = new Date();
             for (int i = 0; i < numeroPlayer; i++)
-                if (date2.getTime() - date.get(i).getTime() > Info.durataPowerUp)
-                    Info.paddleresizex.set(i, Info.paddleresize);
+                if (date2.getTime() - date.get(i).getTime() > Info.getInstance().getDurataPowerUp())
+                    Info.getInstance().getPaddleresizex().set(i, Info.getInstance().getPaddleresize());
         }
     }
 
@@ -437,7 +437,7 @@ public class Server extends Game {
                     tempPowerUps.add(p);
                     p.effect(players.get(paddles.indexOf(paddles.get(i))), paddles.get(i), palla);
                     lostLife(palla.getPositionBall().x, true);
-                    if (Info.paddleresizex.get(i) != Info.paddleresize) { // qua verifico che sia stato cambiato la resize una volta che prendo il powerup
+                    if (Info.getInstance().getPaddleresizex().get(i) != Info.getInstance().getPaddleresize()) { // qua verifico che sia stato cambiato la resize una volta che prendo il powerup
                         date.set(i, new Date());
                     }
 
@@ -505,7 +505,7 @@ public class Server extends Game {
      * @param powerup
      */
     private void lostLife(float positionX, boolean powerup) { ///Applicare il pattern Hight coesion
-        int range = Info.larghezza / numeroPlayer;
+        int range = Info.getInstance().getLarghezza() / numeroPlayer;
         Player loser = new RobotPlayer("default", palla, paddles.get(0));
 
         for (int i = 0; i < numeroPlayer; i++) {
