@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Input;
 import com.mygdx.game.Player.Player;
-import com.mygdx.game.logic.MovePlayer;
+import help.Info;
 import sprites.Paddle;
 
 /**
@@ -16,7 +16,6 @@ public class CommandPlayer {
     private Player player;
     int numeroGiocatori;
     int giocatore;
-    private MovePlayer movePlayer;
 
     /**
      * Salva i seguenti valori nei parametri
@@ -31,58 +30,42 @@ public class CommandPlayer {
         this.player=player;
         this.numeroGiocatori=numeroGiocatori;
         this.giocatore=giocatore;
-        movePlayer = new MovePlayer();
     }
 
-    /**?
-     * La classe che si occupa di muovere la paddle, secondo le frecce destra e sinistra
-     * controllo quindi che non vada oltre ai bordi destro e sinistro
+    /**
+     * Metodo che si occupa di muovere la paddle, dato l'input da tastiera dell'utente
+     * @see: move(int key)
      */
 
     public void move()
     {
-
-        movePlayer.MoveRobot( numeroGiocatori, giocatore, paddle, player);
-        /*if(player.keyPressed()==Input.Keys.LEFT){
-            if(paddle.getPosition().x >(Info.larghezza/numeroGiocatori)*(giocatore-1)) { //controllo il range in cui la Paddle si può muovere
-
-                paddle.getPosition().add(-Info.getVelPaddle(), 0);
-                paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
-            }
-        }
-        if(player.keyPressed()==Input.Keys.RIGHT){
-            if(paddle.getPosition().x < ((Info.larghezza/numeroGiocatori)*(giocatore))- paddle.getWidth()* Info.paddleresizex.get(giocatore-1) ) {
-                paddle.getPosition().add(Info.getVelPaddle(), 0);//controllo il range in cui la Paddle si può muovere
-                paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
-            }
-        }*/
+        move(player.keyPressed());
     }
 
     /**
      * La classe che si occupa di muovere la paddle, secondo le frecce destra e sinistra
      * controllo quindi che non vada oltre ai bordi destro e sinistro
+     *
+     * @param key intero rappresentante l'input da tastiera
      */
 
     public void move(int key)
     {
 
-        movePlayer.MoveIt( key , numeroGiocatori, giocatore, paddle);
-
-       /*
         if(key==Input.Keys.LEFT){
-            if(paddle.getPosition().x >(Info.larghezza/numeroGiocatori)*(giocatore-1)) { //controllo il range in cui la Paddle si può muovere
+            if(paddle.getPosition().x >(Info.getInstance().getLarghezza()/numeroGiocatori)*(giocatore-1)) { //controllo il range in cui la Paddle si può muovere
 
-                paddle.getPosition().add(-10, 0);
+                paddle.getPosition().add(-Info.getInstance().getVelPaddle(), 0);
                 paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
             }
         }
         if(key==Input.Keys.RIGHT){
-            if(paddle.getPosition().x < ((Info.larghezza/numeroGiocatori)*(giocatore))- paddle.getWidth()* Info.paddleresizex.get(giocatore-1) ) {
-                paddle.getPosition().add(10, 0);//controllo il range in cui la Paddle si può muovere
+            if(paddle.getPosition().x < ((Info.getInstance().getLarghezza()/numeroGiocatori)*(giocatore))- paddle.getWidth()* Info.getInstance().getPaddleresizex().get(giocatore-1) ) {
+                paddle.getPosition().add(Info.getInstance().getVelPaddle(), 0);//controllo il range in cui la Paddle si può muovere
                 paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
             }
         }
-        */
+
     }
 
     /**

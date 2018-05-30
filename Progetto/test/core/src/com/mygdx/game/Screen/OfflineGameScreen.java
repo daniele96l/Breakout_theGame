@@ -82,10 +82,10 @@ public class OfflineGameScreen implements Screen {
         //Applicato pattern Creator
         this.numeroPlayer = numeroPlayer;
         this.game = game;
-        players =new ArrayList<Player>(); //Pattern Expert, if Object A instanziate B it must have all the info to create it
-        paddles = new ArrayList<Paddle>();//Pattern Expert, if Object A instanziate B it must have all the info to create it
-        commandPlayers = new ArrayList<CommandPlayer>();//Pattern Expert, if Object A instanziate B it must have all the info to create it
-        players.add(new HumanPlayer(playerName));//Pattern Expert, if Object A instanziate B it must have all the info to create it
+        players =new ArrayList<Player>(); //Pattern Expert, if Object A instanziates B it must have all the info to create it
+        paddles = new ArrayList<Paddle>();//Pattern Expert, if Object A instanziates B it must have all the info to create it
+        commandPlayers = new ArrayList<CommandPlayer>();//Pattern Expert, if Object A instanziates B it must have all the info to create it
+        players.add(new HumanPlayer(playerName));//Pattern Expert, if Object A instanziates B it must have all the info to create it
         date = new ArrayList<Date>();
         palla = new Ball();
         isFirstCalled=true;
@@ -97,8 +97,8 @@ public class OfflineGameScreen implements Screen {
 
     /**
      * Il metodo show si occupa di preparare gli oggetti gli oggetti che serviranno
-     * durante la partita: Si selezionano le musifche, i boleani, la paddle, la scena e
-     * la informazioni che usciranno in alto (HUD)
+     * durante la partita: Si selezionano le musifche, i booleani, la paddle, la scena e
+     * le informazioni che usciranno in alto (HUD)
      */
 
     @Override
@@ -184,7 +184,7 @@ public class OfflineGameScreen implements Screen {
         }
 
         if(!isPaused) {
-            commandPlayers.get(0).move();//mipermettedimuovereilgiocatore
+            commandPlayers.get(0).move();
         }
         if (commandPlayers.get(0).checkpause()) {
             musicGame.pause();
@@ -287,8 +287,8 @@ public class OfflineGameScreen implements Screen {
      * DEVE ESSERE TOLTA DA QUI
      */
 
-    public void gestisciCollisioni() {//Questa classe va spostata secondo me, violerebbe il pattern Hight Coesion
-        //Hight coesion; A measure of how focused the responsability of a class are
+    public void gestisciCollisioni() {//Questa classe va spostata secondo me, violerebbe il pattern High Coesion
+        //High coesion; A measure of how focused the responsability of a class are
         float oldSpeedBallX = palla.getSpeedBall().x;
         float oldSpeedBallY = palla.getSpeedBall().y;
 
@@ -391,8 +391,8 @@ public class OfflineGameScreen implements Screen {
      * @param positionX
      * @param powerup
      */
-    private void lostLife(float positionX,boolean powerup) {  //Questa classe va spostata secondo me, violerebbe il pattern Hight Coesion
-        //Hight coesion; A measure of how focused the responsability of a class are
+    private void lostLife(float positionX,boolean powerup) {  //Questa classe va spostata secondo me, violerebbe il pattern High Coesion
+        //High coesion; A measure of how focused the responsibility of a class are
         int range=Info.getInstance().getLarghezza()/numeroPlayer;
         Player loser=new RobotPlayer("default", palla, paddles.get(0));
 
@@ -451,8 +451,8 @@ public class OfflineGameScreen implements Screen {
     }
 
     /**
-     * Genere un numero casuale utile alla randomizzazione dei power up
-     * il funzionamento è delegato ad una classe apposita coma consigliano i pattenr di HightCoesion
+     * Genera un numero casuale utile alla randomizzazione dei power up
+     * il funzionamento è delegato ad una classe apposita come consigliano i pattern di HighCoesion
      * @return
      */
 
@@ -462,8 +462,8 @@ public class OfflineGameScreen implements Screen {
     }
 
     /**
-     * Un timer che controlla il tempo, dato che i powet-Up hanno una durata limitata
-     * il funzionamento è delegato ad una classe apposita coma consigliano i pattenr di HightCoesion
+     * Un timer che controlla il tempo, dato che i power-Up hanno una durata limitata
+     * il funzionamento è delegato ad una classe apposita come consigliano i pattern di HighCoesion
      */
     private void checktimer(){
         timer.checkTimer(date, numeroPlayer );
