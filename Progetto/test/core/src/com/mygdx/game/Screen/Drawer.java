@@ -1,3 +1,25 @@
+/*
+* DA FARE:
+*
+* non ha senso passare tutti quei parametri, essendo la classe fatta per questo scopo,
+* si deve supporre che i bottoni, le texture e le schermate siano creati all'interno di questa
+* pattern creator
+*
+* Oppure, se i parametri servono anche nella classe di provenienza, creare una classe intermedia
+* che abbia questi parametri e con il pattern information expert fornirli ad entrambe le classi
+* (Ad esempio, al posto di creare i bottoni in mainmenuscreen, li creo nell'information expert, e li passo a drawer
+* e a mainmenuscreen)
+*
+*
+*
+*
+*
+*
+*
+*
+* */
+
+
 package com.mygdx.game.Screen;
 
 import com.badlogic.gdx.Gdx;

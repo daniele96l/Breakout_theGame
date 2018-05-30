@@ -1,3 +1,13 @@
+/*
+* DA FARE:
+*
+* Trovare qualche pattern da implementare nel metodo insertPowerUp che sfrutti il polimorfismo
+*
+*
+*
+*
+* */
+
 package com.mygdx.game.Levels;
 
 import com.badlogic.gdx.graphics.Texture;

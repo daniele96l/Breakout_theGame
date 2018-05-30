@@ -1,3 +1,11 @@
+/*
+* DA FARE:
+*
+* Deve funzionare per ogni classe di tipo Screen, è da implementare
+*
+*
+* */
+
 package com.mygdx.game.logic;
 
 import com.badlogic.gdx.Gdx;

@@ -1,3 +1,11 @@
+/*
+* DA FARE:
+*
+* stesso discorso di Drawer: eliminare i parametri, fare information expert
+*
+* */
+
+
 package com.mygdx.game.Screen;
 
 import com.badlogic.gdx.Gdx;

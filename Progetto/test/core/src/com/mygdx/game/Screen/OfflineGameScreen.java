@@ -131,6 +131,7 @@ public class OfflineGameScreen implements Screen {
                     date.add(i,new Date());
                 }
             }
+            gestoreLivelli=new GestoreLivelli("fileLivelli.txt");
             updateScene();
             updateLevel();
             hud = new Hud(players, game.getBatch());
@@ -440,8 +441,6 @@ public class OfflineGameScreen implements Screen {
      */
     private void updateLevel() {
 
-
-        gestoreLivelli = new GestoreLivelli("fileLivelli.txt");
         bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//laclasselivellosioccuperàdiritornarel'arraylistdeimattonciniadattiaquestolivello
         powerUps=new ArrayList<PowerUp>();
         bg=gestoreLivelli.getLivello(livelloCorrente-1).getBackground();

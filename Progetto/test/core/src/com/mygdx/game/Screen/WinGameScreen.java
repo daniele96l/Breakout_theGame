@@ -1,3 +1,12 @@
+/*
+* DA FARE:
+*
+* mettere a posto la docum.
+*
+*
+*
+* */
+
 package com.mygdx.game.Screen;
 
 import com.badlogic.gdx.Gdx;

@@ -7,11 +7,11 @@ import java.net.*;
 
 /**
  * @author  Cotogni, Mari, Oberti
- * questa classe definisce il thread del server per ricevere i pacchetti dai diversi thread
+ * questa classe definisce il thread del server per ricevere i pacchetti dai diversi client
  *
  */
 
-public class ServerThreadIn extends Thread {
+public class ServerThread extends Thread {
     private DatagramSocket socket;
     private InetAddress address;
     private int port;
@@ -19,7 +19,7 @@ public class ServerThreadIn extends Thread {
     private String line;
     private boolean deletable;
 
-    public ServerThreadIn(DatagramSocket socket,InetAddress address, int port) {
+    public ServerThread(DatagramSocket socket, InetAddress address, int port) {
 
         this.socket = socket;
         this.address = address;
@@ -52,7 +52,7 @@ public class ServerThreadIn extends Thread {
 
     /**
      *
-     * @return un intero che rappresenta il tasto schiacciato dal giocatore
+     * @return un intero che rappresenta il tasto premuto dal giocatore
      */
     public int getKey() {
         return key;

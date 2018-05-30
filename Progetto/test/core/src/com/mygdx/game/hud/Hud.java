@@ -1,3 +1,16 @@
+/*
+ * DA FARE:
+ *
+ * Non avrei separato la fillTable da questa classe, dato che il compito di una hud è appunto quello di riempirsi
+ * non ha senso dare il compito a qualcun altro
+ *
+ *
+ *
+ *
+ *
+ * */
+
+
 package com.mygdx.game.hud;
 
 import com.badlogic.gdx.graphics.Color;

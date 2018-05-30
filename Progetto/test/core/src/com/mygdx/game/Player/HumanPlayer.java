@@ -24,7 +24,6 @@ public class HumanPlayer extends Player {
     /**
      * @return ritorna il numero corrispondente al tasto premuto dal giocatore
      *
-     * @see Input.Keys
      */
 
     @Override

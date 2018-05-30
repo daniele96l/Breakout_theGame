@@ -1,3 +1,18 @@
+/*
+* DA FARE:
+*
+* Generalizzare metodo writemessage() eliminando riferimenti a istanze
+*
+* Utilizzare classi di Timer per i DUE metodi che usano il timer. Usare il polimorfismo
+*
+* Usare la classe CheckGame in modo più generico, senza passare mille parametri, e che gestisca, in modo generico
+* più stati, altrimenti non vale la pena usarla
+*
+* Pensare se separare dalla classe i metodi gestioneCollisioni e lostLife
+*
+*
+*
+* */
 package com.mygdx.game.ClientServer;
 
 import DatabaseManagement.Database;
@@ -15,7 +30,6 @@ import com.mygdx.game.Levels.GestoreLivelli;
 import com.mygdx.game.Player.HumanPlayer;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Player.RobotPlayer;
-import com.mygdx.game.hud.Hud;
 import help.GameState;
 import help.Info;
 
@@ -46,7 +60,7 @@ import java.util.Random;
 public class Server extends Game {
     private DatagramSocket datagramSocket;
     private int portaServer = 4444;
-    private ArrayList<ServerThreadIn> threadsIn;
+    private ArrayList<ServerThread> threadsIn;
     private ArrayList<DatagramSocket> sockets;
     private ArrayList<Player> players;
     private ArrayList<Paddle> paddles;
@@ -128,6 +142,8 @@ public class Server extends Game {
             for (int i = 0; i < numeroPlayer; i++) {
                 date.add(new Date());
             }
+
+            gestoreLivelli = new GestoreLivelli("fileLivelli.txt");
 
             updateScene();
             updateLevel();
@@ -282,7 +298,7 @@ public class Server extends Game {
         }
         byte[] bytes = message.getBytes();
 
-        for (ServerThreadIn thread : threadsIn) {
+        for (ServerThread thread : threadsIn) {
             DatagramPacket packet = new DatagramPacket(bytes, bytes.length, thread.getAddress(), thread.getPort());
             try {
                 thread.getSocket().send(packet);
@@ -322,7 +338,6 @@ public class Server extends Game {
      */
 
     private void updateLevel() {
-        gestoreLivelli = new GestoreLivelli("fileLivelli.txt");
         bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//laclasselivellosioccuperàdiritornarel'arraylistdeimattonciniadattiaquestolivello
         powerUps = new ArrayList<PowerUp>();
         bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
@@ -377,7 +392,7 @@ public class Server extends Game {
     private void initServer() {
         try {
             datagramSocket = new DatagramSocket(portaServer);
-            threadsIn = new ArrayList<ServerThreadIn>();
+            threadsIn = new ArrayList<ServerThread>();
             sockets = new ArrayList<DatagramSocket>();
             while (threadsIn.size() < numeroPlayer) {
                 byte[] b = new byte[1024];
@@ -390,12 +405,12 @@ public class Server extends Game {
                 datagramSocket.send(packetBack);
                 sockets.add(new DatagramSocket(newPort));
                 players.add(new HumanPlayer(playerName));
-                threadsIn.add(new ServerThreadIn(sockets.get(sockets.size() - 1), packet.getAddress(), packet.getPort()));
+                threadsIn.add(new ServerThread(sockets.get(sockets.size() - 1), packet.getAddress(), packet.getPort()));
             }
 
             datagramSocket.close();
 
-            for (ServerThreadIn t : threadsIn) {
+            for (ServerThread t : threadsIn) {
                 t.start();
             }
 

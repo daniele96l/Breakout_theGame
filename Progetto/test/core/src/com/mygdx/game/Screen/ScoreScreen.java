@@ -17,11 +17,11 @@ import help.GameState;
 import java.util.ArrayList;
 
 /**
- * @Author Regna, Scillaci, Ligato
+ * @Author Regna, Schillaci, Ligato
  */
 
 public class ScoreScreen implements Screen {
-//Applicato HightCoesion
+//Applicato HighCoesion
 
     private Texture menu, backButton;
     BitmapFont bitmapFont;
@@ -119,7 +119,7 @@ public class ScoreScreen implements Screen {
     }
 
     /**
-     * Inizia a disegnare i punteggi partenzo dall'altezza y
+     * Inizia a disegnare i punteggi partendo dall'altezza y
      * @param batch
      */
     public void bestScores(SpriteBatch batch) {

@@ -25,7 +25,14 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.Date;
 
-//Da implementare i pattern
+/*
+* DA FARE:
+*
+* Polimorfismo nella parsemessage()
+*
+*
+*
+* */
 
 /**
  * @author Regna, Schillaci
@@ -263,7 +270,6 @@ public class MultiplayerGameScreen implements Screen {
     /**
      *
      * @param key è il valore che rappresenta il tasto premuto dal giocatore per spostare il suo paddle
-     * @throws IOException
      *
      * il metodo si occupa di costruire e inviare il datagramma al server
      */

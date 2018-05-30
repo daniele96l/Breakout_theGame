@@ -1,3 +1,16 @@
+/*
+* DA FARE:
+*
+* Valutare se ha senso metterla Singleton
+*
+* Non so se la documentazione sia completa
+*
+*
+*
+*
+*
+* */
+
 package com.mygdx.game.hud;
 
 import com.badlogic.gdx.graphics.Color;
@@ -13,32 +26,26 @@ public class FillTable {
      * metodo che permette di costruire la tabella dei punteggi ottenuti dai giocatori durante le partite offline
      *
      * @param players la lista dei giocatori
+     * @param table
+     *
+     * @see: filltable(ArrayList<String> playerNames, ArrayList<String> scores, ArrayList<String> lives, Table table)
      */
 
     public static void fillTable(ArrayList<Player> players, Table table) {
         table.top();
         table.setFillParent(true);
 
-        for (int i = 0; i < players.size(); i++) {
-            Player player = players.get(i);
+        ArrayList<String> playerNames=new ArrayList<String>();
+        ArrayList<String> scores=new ArrayList<String>();
+        ArrayList<String> lives=new ArrayList<String>();
 
-            if (players.size() > 1) {
-                Label label = new Label(String.format("PLAYER: %s\nSCORE: %d \nLIVES: %d", player.getPlayerName(), player.getScore(), player.getLives()),
-                        new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-                label.setFontScale(1f);
-                table.add(label).expandX();
-
-            }
-            if (players.size() == 1) {
-                Label label = new Label(String.format("PLAYER: %s                   SCORE: %d                  LIVES: %d", player.getPlayerName(), player.getScore(), player.getLives()),
-                        new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-                label.setFontScale(1f);
-                table.add(label).expandX();
-
-            }
-
-
+        for(Player player:players) {
+            playerNames.add(player.getPlayerName());
+            scores.add(""+player.getScore());
+            lives.add(""+player.getLives());
         }
+
+        fillTable(playerNames,scores,lives,table);
     }
 
     /**
