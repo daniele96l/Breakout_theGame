@@ -29,7 +29,6 @@ import help.Info;
 public class PauseScreen implements Screen {
 
     private BreakGame game;
-    private GameState gameState;
     private Texture menu;
     private Texture resumeButton;
     private Texture exitButton;

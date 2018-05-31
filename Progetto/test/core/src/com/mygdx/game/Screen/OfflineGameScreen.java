@@ -73,7 +73,6 @@ public class OfflineGameScreen implements Screen {
     private boolean isFirstCalled;
     private ArrayList<Date> date;
     private Database db = new Database();
-    private RanNum ranNum;
     private Timer timer;
 
 
@@ -89,7 +88,6 @@ public class OfflineGameScreen implements Screen {
         date = new ArrayList<Date>();
         palla = new Ball();
         isFirstCalled=true;
-        ranNum = new RanNum();
         timer = new Timer();
 
 
@@ -210,7 +208,7 @@ public class OfflineGameScreen implements Screen {
             if (isFinished) {
                 livelloCorrente = 1;
                 isFinished = false;
-                db.modify(ranGen(), playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
+                db.modify(""+(int)Math.random()*1000, playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
                 updateScene();
                 updateLevel(); /////////////SERVE UNO SCREEN DI FINE GIOCO
                 dispose();
@@ -408,7 +406,7 @@ public class OfflineGameScreen implements Screen {
         }
         if(loser.getLives() < 0) {
             if(players.get(0).equals(loser)) {
-                db.modify(ranGen(), playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
+                db.modify(""+(int)Math.random()*1000, playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
                 gameState=GameState.GAME_OVER;
             }
             else {
@@ -447,17 +445,6 @@ public class OfflineGameScreen implements Screen {
         matEliminati = 0;
 
 
-    }
-
-    /**
-     * Genera un numero casuale utile alla randomizzazione dei power up
-     * il funzionamento è delegato ad una classe apposita come consigliano i pattern di HighCoesion
-     * @return
-     */
-
-    private String ranGen () {
-        String s = ranNum.generate();
-        return s;
     }
 
     /**

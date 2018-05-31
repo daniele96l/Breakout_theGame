@@ -5,9 +5,6 @@
 *
 * Utilizzare classi di Timer per i DUE metodi che usano il timer. Usare il polimorfismo
 *
-* Usare la classe CheckGame in modo più generico, senza passare mille parametri, e che gestisca, in modo generico
-* più stati, altrimenti non vale la pena usarla
-*
 * Pensare se separare dalla classe i metodi gestioneCollisioni e lostLife
 *
 *
@@ -94,7 +91,6 @@ public class Server extends Game {
     private Database db = new Database();
     private Icon icon = new ImageIcon("playersIcon.png");
     private String address;
-    private CheckGame checkGame = new CheckGame();
 
 
     /**
@@ -194,8 +190,14 @@ public class Server extends Game {
 
         checkTimerPowerUp(); // controlla il tempo
 
+        if (matEliminati == gestoreLivelli.getLivello(livelloCorrente - 1).getnMatMorbidi()) {
+            gameState = GameState.YOU_WON;
 
-        CheckGame.checkWin(matEliminati, gestoreLivelli, livelloCorrente, isFinished, gameState);
+            livelloCorrente++;
+            if (livelloCorrente > gestoreLivelli.getNumeroLivelli()) {
+                isFinished = true;
+            }
+        }
 
         if (palla.getPositionBall().y <= 0) {
             lostLife(palla.getPositionBall().x, false);

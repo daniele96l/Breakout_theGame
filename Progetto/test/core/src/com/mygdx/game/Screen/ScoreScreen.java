@@ -57,7 +57,7 @@ public class ScoreScreen implements Screen {
     public void show() {
         bitmapFont = new BitmapFont();
         bitmapFont.setColor(Color.WHITE);
-        bitmapFont.getData().setScale(1.2f);
+        bitmapFont.getData().setScale(1.6f);
         scores = new ArrayList<Score>();
         scoreScreen = new Texture("menuscreen.jpg");
     }

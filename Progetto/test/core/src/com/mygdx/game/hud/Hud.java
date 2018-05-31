@@ -1,16 +1,3 @@
-/*
- * DA FARE:
- *
- * Non avrei separato la fillTable da questa classe, dato che il compito di una hud è appunto quello di riempirsi
- * non ha senso dare il compito a qualcun altro
- *
- *
- *
- *
- *
- * */
-
-
 package com.mygdx.game.hud;
 
 import com.badlogic.gdx.graphics.Color;
@@ -43,14 +30,71 @@ public class Hud {
     public Hud(ArrayList<Player> players, SpriteBatch sb) {
         viewport = new FitViewport(Info.getInstance().getLarghezza(), Info.getInstance().getAltezza());
         stage = new Stage(viewport, sb);
-        FillTable.fillTable(players, table);
+        fillTable(players, table);
         stage.addActor(table);
     }
 
     public Hud(SpriteBatch sb,ArrayList<String> playerNames, ArrayList<String> scores, ArrayList<String> lives) {
         viewport = new FitViewport(Info.getInstance().getLarghezza(), Info.getInstance().getAltezza());
         stage = new Stage(viewport, sb);
-        FillTable.fillTable(playerNames,scores,lives, table);
+        fillTable(playerNames,scores,lives, table);
         stage.addActor(table);
+    }
+
+    /**
+     * metodo che permette di costruire la tabella dei punteggi ottenuti dai giocatori durante le partite offline
+     *
+     * @param players la lista dei giocatori
+     * @param table
+     *
+     * @see: filltable(ArrayList<String> playerNames, ArrayList<String> scores, ArrayList<String> lives, Table table)
+     */
+
+    private void fillTable(ArrayList<Player> players, Table table) {
+        table.top();
+        table.setFillParent(true);
+
+        ArrayList<String> playerNames=new ArrayList<String>();
+        ArrayList<String> scores=new ArrayList<String>();
+        ArrayList<String> lives=new ArrayList<String>();
+
+        for(Player player:players) {
+            playerNames.add(player.getPlayerName());
+            scores.add(""+player.getScore());
+            lives.add(""+player.getLives());
+        }
+
+        fillTable(playerNames,scores,lives,table);
+    }
+
+    /**
+     * è il metodo corrispondente per le partite online: in particolare permette di assegnare ai client le informazioni relative ai punteggi
+     *
+     * @param playerNames
+     * @param scores
+     * @param lives
+     */
+
+    private void fillTable(ArrayList<String> playerNames, ArrayList<String> scores, ArrayList<String> lives, Table table) {
+        table.top();
+        table.setFillParent(true);
+
+        for (int i = 0; i < playerNames.size(); i++) {
+
+            if (playerNames.size() > 1) {
+                Label label = new Label(String.format("PLAYER: %s\nSCORE: %d \nLIVES: %d", playerNames.get(i), Integer.parseInt(scores.get(i)), Integer.parseInt(lives.get(i))),
+                        new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+                label.setFontScale(1f);
+                table.add(label).expandX();
+
+            }
+            if (playerNames.size() == 1) {
+                Label label = new Label(String.format("PLAYER: %s                   SCORE: %d                  LIVES: %d", playerNames.get(i), Integer.parseInt(scores.get(i)), Integer.parseInt(lives.get(i))),
+                        new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+                label.setFontScale(1f);
+                table.add(label).expandX();
+
+            }
+        }
     }
 }
