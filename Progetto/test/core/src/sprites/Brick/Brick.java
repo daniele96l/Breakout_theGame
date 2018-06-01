@@ -1,17 +1,41 @@
 package sprites.Brick;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import help.Info;
+import sprites.powerup.PowerUp;
+
+import java.io.Serializable;
+
 /**
  * @author Daniele Ligato
- * Questa classe estende la classe astratta più generale AbstractBrick
- * e definisce quello che è il mattoncino "classico", assegnandogli
- * una posizione (x e y) e una immagine all'interno del gioco
+ * La classe astratta Brick extende la classe di libGDX
+ * chiama Sprite e contiene tutte le informazioni e variabili del "mattoncino base",
+ * quali per esempio la sua posizione.
+ *
  */
+public interface Brick {
 
-public class Brick extends AbstractBrick{
 
-    public Brick(int posX, int posY){
-        super(posX, posY, "normalBrick.jpg");
-        //il boundBrick si riferiscono al rettangolo invisibile che costruirò intorno alla texture
-        //l'altezza e la larghezza sono della texture
-    }
+    void setPowerUp(PowerUp powerUp);
+
+    boolean hasPowerUp();
+
+    PowerUp getPowerUp();
+
+    Vector2 getPositionBrick();
+
+    void delete();
+
+    void setPositionBrick(Vector2 positionBrick);
+
+    void setBoundsBrick(Rectangle boundsBrick);
+
+    void setEliminato(boolean eliminato);
+
+    Rectangle getBoundsBrick();
+
+    boolean isEliminato();
 }
