@@ -13,14 +13,12 @@ package com.mygdx.game.Levels;
 import com.badlogic.gdx.graphics.Texture;
 import eccezioni.IllegalBricksNumber;
 import eccezioni.IllegalCharacter;
+import eccezioni.IllegalPowerUp;
 import help.Info;
-import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
+import sprites.Brick.NormalBrick;
 import sprites.Brick.HardBrick;
-import sprites.powerup.ExtraLife;
-import sprites.powerup.LongPaddle;
-import sprites.powerup.LossLife;
-import sprites.powerup.ShortPaddle;
+import sprites.SpriteFactory;
 
 import java.util.ArrayList;
 
@@ -31,7 +29,7 @@ import java.util.ArrayList;
  *
  */
 public class Livello {
-    private ArrayList<AbstractBrick> bricks;
+    private ArrayList<Brick> bricks;
     private int currentPosX;
     private int currentPosY;
     private int startPosX;
@@ -48,7 +46,7 @@ public class Livello {
         this.numBrickX=numBrickX;
         this.numBrickY=numBrickY;
 
-        bricks=new ArrayList<AbstractBrick>();
+        bricks=new ArrayList<Brick>();
         background=new Texture("bg.jpg");   //Scelta di default
 
         currentPosY=startPosY;
@@ -75,7 +73,7 @@ public class Livello {
                 case '.':
                     break;
                 case '-':
-                    bricks.add(new Brick(currentPosX, currentPosY));
+                    bricks.add(new NormalBrick(currentPosX, currentPosY));
                     insertPowerUp(bricks.get(bricks.size()-1));
                     nMatMorbidi++;
                     break;
@@ -95,35 +93,41 @@ public class Livello {
      *
      * @param brick
      */
-    private void insertPowerUp(AbstractBrick brick) {
+    private void insertPowerUp(Brick brick) {
         int posX=(int)(brick.getBoundsBrick().x+brick.getBoundsBrick().width/2-Info.getInstance().getPowerUpWidth()/2*Info.getInstance().getPowerUpResize());
         int posY=(int)(brick.getBoundsBrick().y+brick.getBoundsBrick().height/2-Info.getInstance().getPowerUpHeight()/2*Info.getInstance().getPowerUpResize());
 
         float randNum=(float)(Math.random()*10);
         if(randNum < Info.getInstance().getPowerUpChance()) {
             float interval=Info.getInstance().getPowerUpChance()/(float)Info.getInstance().getNumeroPowerUp();
-            if(randNum>=0 && randNum<interval) {
-                brick.setPowerUp(new ExtraLife(posX, posY));
+            try {
+                if (randNum >= 0 && randNum < interval) {
+                    brick.setPowerUp(SpriteFactory.getInstance().getPowerUp("ExtraLife", posX, posY));
+                }
+
+                if (randNum >= interval && randNum < 2 * interval) {
+                    brick.setPowerUp(SpriteFactory.getInstance().getPowerUp("LostLife", posX, posY));
+
+                }
+
+                if (randNum >= 2 * interval && randNum < 3 * interval) {
+                    brick.setPowerUp(SpriteFactory.getInstance().getPowerUp("LongPaddle", posX, posY));
+                }
+
+                if (randNum >= 3 * interval && randNum < 4 * interval) {
+                    brick.setPowerUp(SpriteFactory.getInstance().getPowerUp("ShortPaddle", posX, posY));
+
+                }
+                //////Inserire nuovi power up qua
             }
-
-            if(randNum>=interval && randNum<2*interval) {
-                brick.setPowerUp(new LossLife(posX,posY));
-
+            catch (IllegalPowerUp exc) {
+                System.err.println(exc.getMessage());
+                System.exit(-1);
             }
-
-            if(randNum>=2* interval && randNum< 3*interval) {
-                brick.setPowerUp(new LongPaddle(posX,posY));
-            }
-
-            if(randNum>=3* interval && randNum< 4*interval) {
-                brick.setPowerUp(new ShortPaddle(posX,posY));
-
-            }
-            //////Inserire nuovi power up qua
         }
     }
 
-    public ArrayList<AbstractBrick> getBricks() {
+    public ArrayList<Brick> getBricks() {
         return bricks;
     }
 

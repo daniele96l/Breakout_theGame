@@ -10,7 +10,7 @@ import sprites.Paddle;
  * @author Cristian Regna, Alberto Schillaci
  * Questa classe rappresenta l'oggetto PowerUp che restringe il paddle
  */
-public class ShortPaddle extends PowerUp{
+public class ShortPaddle extends AbstractPowerUp{
 
 
     public ShortPaddle(int posX, int posY) {

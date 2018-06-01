@@ -17,62 +17,15 @@ import java.io.Serializable;
  * (es. aggiunge/toglie vite al giocatore, allarga/diminuisce la larghezza della paddle)
  * che cade dal mattonicino appena colpito dal giocatore
  */
-public abstract class PowerUp extends Sprite {
-    protected Vector2 position;
-    protected Vector2 speed;
-    protected Rectangle bounds;
-    protected String sound;
+public interface PowerUp {
 
-    public PowerUp(String image, int posX, int posY) {
-        super(new Texture(image));
-        this.position=new Vector2(posX, posY);
-        this.speed=new Vector2(0, -Info.getInstance().getPowerUpSpeed());
-        this.bounds=new Rectangle(posX,posY,this.getWidth()*Info.getInstance().getPowerUpResize(), this.getHeight()*Info.getInstance().getPowerUpResize());
-    }
+    void effect(Player player, Paddle paddle, Ball palla);
 
-    /**
-     * Questo metodo rende effettivo l'effetto del PowerUp
-     * @param player il giocatore su cui il PowerUp ha effetto
-     * @param paddle la paddle che ha preso il PowerUp
-     * @param palla la palla che ha colpito il mattoncino contenente il PowerUp
-     */
-    public abstract void effect(Player player, Paddle paddle, Ball palla);
+    Rectangle getBounds();
 
+    Vector2 getPosition();
 
-    /**
-     *
-     * @return
-     */
-    public Rectangle getBounds() {
-        return bounds;
-    }
+    Vector2 getSpeed();
 
-
-    /**
-     * Questo metodo ritorna il vettore posizione (x e y) del PowerUp
-     * @return il vettore posizione (x e y) del PowerUp
-     */
-    public Vector2 getPosition() {
-        return position;
-    }
-
-    /**
-     * Questo metodo ritorna il vettore velocità (x e y) con cui
-     * cade il PowerUp dal mattonicino appena colpito
-     * @return il vettore velocità (x e y) con cui cade il PowerUp
-     */
-    public Vector2 getSpeed() {
-        return speed;
-    }
-
-
-    /**
-     * Questo metodo ritorna la stringa del nome file
-     * che indica l'effetto sonoro associato a un determinato PowerUp
-     * @return la stringa del nome file che indica l'effetto sonoro associato a quel determinato PowerUp
-     */
-    public String getSound(){
-        return sound;
-    }
-
+    String getSound();
 }

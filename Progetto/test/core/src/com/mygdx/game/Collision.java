@@ -1,14 +1,10 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.audio.Music;
 import help.Info;
 import sprites.Ball;
-import sprites.Brick.AbstractBrick;
+import sprites.Brick.Brick;
 
 import  com.badlogic.gdx.math.Rectangle;
-import help.Info;
-import sprites.Ball;
-import sprites.Brick.AbstractBrick;
 import sprites.Paddle;
 import sprites.powerup.PowerUp;
 
@@ -33,7 +29,7 @@ public class Collision
         eliminato=true;
     }
 
-    public boolean check(AbstractBrick brick){
+    public boolean check(Brick brick){
 
         if(collidesTopBottom(brick)){
             if((palla.getSpeedBall().y*(palla.getBoundsBall().y-(brick.getBoundsBrick().y+brick.getBoundsBrick().height/2))>=0)&&palla.getSpeedBall().y!=0){
@@ -62,7 +58,7 @@ public class Collision
         return false;
     }
 
-    private boolean collidesTopBottom(AbstractBrick brick){
+    private boolean collidesTopBottom(Brick brick){
         if(brick.getBoundsBrick().overlaps(rectangle)){
 
             if((palla.getBoundsBall().x+palla.getBoundsBall().width/2<=brick.getBoundsBrick().x+brick.getBoundsBrick().width)&&
@@ -74,7 +70,7 @@ public class Collision
     }
 
 
-    private boolean collidesSide(AbstractBrick brick){
+    private boolean collidesSide(Brick brick){
         if(brick.getBoundsBrick().overlaps(rectangle)){
             return true;
         }

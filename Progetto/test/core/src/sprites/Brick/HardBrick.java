@@ -1,12 +1,8 @@
 package sprites.Brick;
 
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import help.Info;
-
 /**
  * @author ligato
- * Questa classe estende la classe astratta più generale AbstractBrick
+ * Questa classe estende la classe astratta più generale Brick
  * e definisce che è il mattoncino "indistruttibile", assegnandogli
  * una posizione (x e y) e una immagine all'interno del gioco
  */

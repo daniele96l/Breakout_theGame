@@ -9,8 +9,8 @@ import sprites.Paddle;
  * Questa classe rappresenta l'oggetto PowerUp che toglie
  * una vita al giocatore che lo prende
  */
-public class LossLife extends PowerUp{
-    public LossLife(int posX, int posY) {
+public class LostLife extends AbstractPowerUp{
+    public LostLife(int posX, int posY) {
         super("losslife.png", posX, posY);
         this.sound="evil.mp3";
 

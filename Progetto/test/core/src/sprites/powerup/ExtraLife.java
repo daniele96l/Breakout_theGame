@@ -9,7 +9,7 @@ import sprites.Paddle;
  * Questa classe rappresenta l'oggetto PowerUp che aggiunge
  * una vita al giocatore che lo prende
  */
-public class ExtraLife extends PowerUp {
+public class ExtraLife extends AbstractPowerUp {
     public ExtraLife(int posX, int posY) {
         super("cuore.png", posX, posY);
         this.sound="good.mp3";

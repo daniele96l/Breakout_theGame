@@ -4,26 +4,25 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.game.BreakGame;
 import com.mygdx.game.ClientServer.ClientThread;
 import com.mygdx.game.hud.Hud;
 import com.mygdx.game.logic.Resizer;
+import eccezioni.IllegalBrick;
+import eccezioni.IllegalPowerUp;
 import help.Info;
 import sprites.Ball;
-import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
+import sprites.Brick.NormalBrick;
 import sprites.Brick.HardBrick;
 import sprites.Paddle;
+import sprites.SpriteFactory;
 import sprites.powerup.*;
 
 import javax.swing.*;
 import java.io.*;
-import java.lang.reflect.GenericDeclaration;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.Date;
 
 /*
 * DA FARE:
@@ -46,7 +45,7 @@ public class MultiplayerGameScreen implements Screen {
     private Ball palla;
     private int numeroPlayer;
     private ArrayList<Paddle> paddles;
-    private ArrayList<AbstractBrick> bricks;
+    private ArrayList<Brick> bricks;
     private ArrayList<PowerUp> powerUps;
     private Texture bg;
     private ClientThread thread;
@@ -71,7 +70,7 @@ public class MultiplayerGameScreen implements Screen {
         this.game = game;
         palla = new Ball();
         paddles = new ArrayList<Paddle>();
-        bricks = new ArrayList<AbstractBrick>();
+        bricks = new ArrayList<Brick>();
         powerUps = new ArrayList<PowerUp>();
         playerNames = new ArrayList<String>();
         scores = new ArrayList<String>();
@@ -184,15 +183,12 @@ public class MultiplayerGameScreen implements Screen {
                 bricks.removeAll(bricks);
 
                 while (i < lines.length - 1) {
-                    if (lines[i].split(" ")[2].equals("Brick") || lines[i].split(" ")[2].equals("Brick\n")) {
-                        bricks.add(new Brick((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
+                    try {
+                        bricks.add(SpriteFactory.getInstance().getBrick(lines[i].split(" ")[2], (int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
                         i++;
-                    } else {
-                        if (lines[i].split(" ")[2].equals("HardBrick") || lines[i].split(" ")[2].equals("HardBrick\n")) {
-                            bricks.add(new HardBrick((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
-                            i++;
-                        } else
-                            break;
+                    }
+                    catch (IllegalBrick exc) {
+                        break;
                     }
                 }
 
@@ -202,27 +198,17 @@ public class MultiplayerGameScreen implements Screen {
 
                 ArrayList<PowerUp> tmpPowerUp = (ArrayList<PowerUp>) powerUps.clone();
 
-                System.out.println(powerUps);
-                System.out.println(tmpPowerUp);
                 powerUps.removeAll(powerUps);
 
                 while (i < lines.length - 1) {
-                    if (lines[i].split(" ")[2].equals("ExtraLife")) {
-                        powerUps.add(new ExtraLife((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
+                    try {
+                        powerUps.add(SpriteFactory.getInstance().getPowerUp(lines[i].split(" ")[2], (int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
                     }
-                    if (lines[i].split(" ")[2].equals("LossLife")) {
-                        powerUps.add(new LossLife((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
-
+                    catch(IllegalPowerUp e) {
+                        System.out.println(message);
+                        System.err.println(e.getMessage());
+                        System.exit(-1);
                     }
-                    if (lines[i].split(" ")[2].equals("LongPaddle")) {
-                        powerUps.add(new LongPaddle((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
-
-                    }
-                    if (lines[i].split(" ")[2].equals("ShortPaddle")) {
-                        powerUps.add(new ShortPaddle((int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
-
-                    }
-
                     i++;
                 }
 

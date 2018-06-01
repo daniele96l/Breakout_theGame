@@ -9,7 +9,7 @@ import sprites.Paddle;
  * @author Cristian Regna, Alberto Schillaci
  * Questa classe rappresenta l'oggetto PowerUp che allarga il paddle
  */
-public class LongPaddle extends PowerUp {
+public class LongPaddle extends AbstractPowerUp {
 
     public LongPaddle(int posX, int posY) {
         super("big.png", posX, posY);

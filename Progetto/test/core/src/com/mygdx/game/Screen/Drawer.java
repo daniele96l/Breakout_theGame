@@ -33,6 +33,7 @@ import sprites.Ball;
 import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
 import sprites.Paddle;
+import sprites.powerup.AbstractPowerUp;
 import sprites.powerup.PowerUp;
 
 import java.util.ArrayList;
@@ -85,15 +86,17 @@ public class Drawer
      *
      * il metodo si occupa di disegnare lo scenario della partita mentre si sta giocando, ad ogni frame
      */
-    static void drawMultiplayer(ArrayList<AbstractBrick> bricks, BreakGame game, ArrayList<PowerUp> powerUps, int numeroPlayer, ArrayList<Paddle> paddles, Ball palla)
+    static void drawMultiplayer(ArrayList<Brick> bricks, BreakGame game, ArrayList<PowerUp> powerUps, int numeroPlayer, ArrayList<Paddle> paddles, Ball palla)
     {
         game.getBatch().begin();
-        for (AbstractBrick brick : bricks) {
+        for (Brick b : bricks) {
+            AbstractBrick brick=(AbstractBrick) b;
             game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.getInstance().getBrickresize(), brick.getHeight() * Info.getInstance().getBrickresize());
         }
 
         for (PowerUp p : powerUps) {
-            game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth() * Info.getInstance().getPowerUpResize(), p.getHeight() * Info.getInstance().getPowerUpResize());
+            AbstractPowerUp powerUp=(AbstractPowerUp)p;
+            game.getBatch().draw(powerUp, powerUp.getBounds().x, powerUp.getBounds().y, powerUp.getWidth() * Info.getInstance().getPowerUpResize(), powerUp.getHeight() * Info.getInstance().getPowerUpResize());
         }
         if (numeroPlayer > 0) {
             for (int i = 0; i < numeroPlayer; i++) {
@@ -133,7 +136,7 @@ public class Drawer
      *
      * il metodo si occupa di disegnare lo scenario della partita ad ogni frame quando si sceglie la modalità di gioco "MultiplayerOffline"
      */
-    static void drawMultiplayerOffline(BreakGame game, Texture bg, ArrayList<AbstractBrick> bricks, ArrayList<Player> players,ArrayList<PowerUp> powerUps, ArrayList<Paddle> paddles, Ball palla,int numeroPlayer)
+    static void drawMultiplayerOffline(BreakGame game, Texture bg, ArrayList<Brick> bricks, ArrayList<Player> players, ArrayList<PowerUp> powerUps, ArrayList<Paddle> paddles, Ball palla, int numeroPlayer)
     {
         // togliere il numeroPlayer dalla firma del metodo
         game.getBatch().draw(bg, 0, 0);
@@ -144,13 +147,14 @@ public class Drawer
 
         game.getBatch().begin();
 
-        for (AbstractBrick brick : bricks) {
+        for (Brick b : bricks) {
+            AbstractBrick brick=(AbstractBrick)b;
             game.getBatch().draw(brick, brick.getPositionBrick().x, brick.getPositionBrick().y, brick.getWidth() * Info.getInstance().getBrickresize(), brick.getHeight() * Info.getInstance().getBrickresize());
             //disegnoimattoncini
         }
         for(PowerUp p:powerUps) {
-            game.getBatch().draw(p, p.getBounds().x, p.getBounds().y, p.getWidth()*Info.getInstance().getPowerUpResize(), p.getHeight()*Info.getInstance().getPowerUpResize());
-        }
+            AbstractPowerUp powerUp=(AbstractPowerUp)p;
+            game.getBatch().draw(powerUp, powerUp.getBounds().x, powerUp.getBounds().y, powerUp.getWidth() * Info.getInstance().getPowerUpResize(), powerUp.getHeight() * Info.getInstance().getPowerUpResize());        }
         game.getBatch().draw(paddles.get(0), paddles.get(0).getPosition().x, paddles.get(0).getPosition().y, paddles.get(0).getWidth() * Info.getInstance().getPaddleresizex().get(0), paddles.get(0).getHeight() * Info.getInstance().getPaddleresize());
         game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.getInstance().getBallresize(), palla.getHeight() * Info.getInstance().getBallresize());
 

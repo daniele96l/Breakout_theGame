@@ -31,9 +31,8 @@ import help.GameState;
 import help.Info;
 
 import sprites.Ball;
-import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
-import sprites.Brick.HardBrick;
+import sprites.Brick.NormalBrick;
 import sprites.Paddle;
 import sprites.powerup.*;
 
@@ -64,7 +63,7 @@ public class Server extends Game {
     private ArrayList<CommandPlayer> commandPlayers;
     private int numeroPlayer = 1;
     private Collision collision;
-    private ArrayList<AbstractBrick> bricks = new ArrayList();
+    private ArrayList<Brick> bricks = new ArrayList();
     private Ball palla;
     int contatore;
     private Texture bg;
@@ -267,28 +266,13 @@ public class Server extends Game {
                 message += "\t";
             }
 
-            for (AbstractBrick brick : bricks) {
+            for (Brick brick : bricks) {
                 message += brick.getPositionBrick().x + " " + brick.getPositionBrick().y + " ";
-                if (brick instanceof HardBrick) {
-                    message += "HardBrick\t";
-                } else {
-                    message += "Brick\t";
-                }
+                message+=brick.getClass().getSimpleName()+"\t";
             }
             for (PowerUp powerUp : powerUps) {
                 message += powerUp.getPosition().x + " " + powerUp.getPosition().y + " ";
-                if (powerUp instanceof ExtraLife) {
-                    message += "ExtraLife\t";
-                }
-                if (powerUp instanceof LossLife) {
-                    message += "LossLife\t";
-                }
-                if (powerUp instanceof LongPaddle) {
-                    message += "LongPaddle\t";
-                }
-                if (powerUp instanceof ShortPaddle) {
-                    message += "ShortPaddle\t";
-                }
+                message+=powerUp.getClass().getSimpleName()+"\t";
             }
 
             String bgPath = ((FileTextureData) bg.getTextureData()).getFileHandle().name();
@@ -436,7 +420,7 @@ public class Server extends Game {
         collision = new Collision(palla);
 
         indici = new ArrayList<Integer>();
-        for (AbstractBrick brick : bricks) {
+        for (Brick brick : bricks) {
             if (collision.check(brick)) {
                 indici.add(bricks.indexOf(brick));
             }
@@ -472,7 +456,7 @@ public class Server extends Game {
             if (indici.size() >= 2) {
                 contatore = 0;
                 contatore2 = 0;
-                ArrayList<AbstractBrick> tempMatt = new ArrayList<sprites.Brick.AbstractBrick>();
+                ArrayList<Brick> tempMatt = new ArrayList<Brick>();
                 for (int i : indici) {
                     if (bricks.get(i).getPositionBrick().x < palla.getPositionBall().x) {
                         contatore++;
@@ -490,8 +474,8 @@ public class Server extends Game {
                     palla.setSpeedBall(new Vector2(-oldSpeedBallX, oldSpeedBallY)); /////////////NUOVO
 
 
-                for (AbstractBrick brick : tempMatt) {
-                    if (brick instanceof Brick) {
+                for (Brick brick : tempMatt) {
+                    if (brick instanceof NormalBrick) {
                         if (brick.hasPowerUp()) {
                             powerUps.add(brick.getPowerUp());
                         }
@@ -502,7 +486,7 @@ public class Server extends Game {
                     }
                 }
             } else {
-                if (bricks.get(indici.get(0)) instanceof Brick) {
+                if (bricks.get(indici.get(0)) instanceof NormalBrick) {
                     if (bricks.get(indici.get(0)).hasPowerUp()) {
                         powerUps.add(bricks.get(indici.get(0)).getPowerUp());
                     }

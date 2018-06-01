@@ -22,8 +22,8 @@ import com.mygdx.game.hud.Hud;
 import help.GameState;
 import help.*;
 import sprites.Ball;
-import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
+import sprites.Brick.NormalBrick;
 import sprites.Paddle;
 import sprites.powerup.PowerUp;
 
@@ -38,7 +38,7 @@ public class OfflineGameScreen implements Screen {
 
     private BreakGame game;
     private Collision collision;
-    private ArrayList<AbstractBrick> bricks = new ArrayList();
+    private ArrayList<Brick> bricks = new ArrayList();
     private Ball palla;
     int contatore;
     private ArrayList<Paddle> paddles;
@@ -294,7 +294,7 @@ public class OfflineGameScreen implements Screen {
         collision = new Collision(palla);
 
         indici = new ArrayList<Integer>();
-        for (AbstractBrick brick : bricks) {
+        for (Brick brick : bricks) {
             if (collision.check(brick)) {
                 indici.add(bricks.indexOf(brick));
             }
@@ -329,27 +329,27 @@ public class OfflineGameScreen implements Screen {
             if (indici.size() >= 2) {
                 contatore = 0;
                 contatore2 = 0;
-                ArrayList<AbstractBrick> tempMatt = new ArrayList<sprites.Brick.AbstractBrick>();
+                ArrayList<Brick> tempMatt = new ArrayList<Brick>();
                 for (int i : indici) {
-                    if(bricks.get(i).getPositionBrick().x < palla.getPositionBall().x ){ /////////////NUOVO
-                        contatore++; /////////////NUOVO
+                    if(bricks.get(i).getPositionBrick().x < palla.getPositionBall().x ){
+                        contatore++;
                     }
-                    if(bricks.get(i).getPositionBrick().x > palla.getPositionBall().x ){ /////////////NUOVO
-                        contatore2++; /////////////NUOVO
+                    if(bricks.get(i).getPositionBrick().x > palla.getPositionBall().x ){
+                        contatore2++;
                     }
                     tempMatt.add(bricks.get(i));
 
                 }
 
 
-                if(contatore ==1 && contatore2 == 1) /////////////NUOVO
+                if(contatore ==1 && contatore2 == 1)
                 palla.setSpeedBall(new Vector2(oldSpeedBallX, -oldSpeedBallY));
-                else /////////////NUOVO
-                    palla.setSpeedBall(new Vector2(-oldSpeedBallX, oldSpeedBallY)); /////////////NUOVO
+                else
+                    palla.setSpeedBall(new Vector2(-oldSpeedBallX, oldSpeedBallY));
 
 
-                for (AbstractBrick brick : tempMatt) {
-                    if (brick instanceof Brick) {
+                for (Brick brick : tempMatt) {
+                    if (brick instanceof NormalBrick) {
                         if (brick.hasPowerUp()) {
                             powerUps.add(brick.getPowerUp());
                         }
@@ -362,7 +362,7 @@ public class OfflineGameScreen implements Screen {
                     }
                 }
             } else {
-                if (bricks.get(indici.get(0)) instanceof Brick) {
+                if (bricks.get(indici.get(0)) instanceof NormalBrick) {
                     if (bricks.get(indici.get(0)).hasPowerUp()) {
                         powerUps.add(bricks.get(indici.get(0)).getPowerUp());
                     }
@@ -390,8 +390,7 @@ public class OfflineGameScreen implements Screen {
      * @param positionX
      * @param powerup
      */
-    private void lostLife(float positionX,boolean powerup) {  //Questa classe va spostata secondo me, violerebbe il pattern High Coesion
-        //High coesion; A measure of how focused the responsibility of a class are
+    private void lostLife(float positionX,boolean powerup) {
         int range=Info.getInstance().getLarghezza()/numeroPlayer;
         Player loser=new RobotPlayer("default", palla, paddles.get(0));
 
@@ -435,7 +434,6 @@ public class OfflineGameScreen implements Screen {
 
     /**
      * aggiorna l'arraylist dei mattoncini, con il layout del prossimo livello
-     * POTREBBE ESSERE TOLTA
      */
     private void updateLevel() {
 
