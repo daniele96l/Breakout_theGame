@@ -75,7 +75,6 @@ public class MultiplayerGameScreen implements Screen {
         playerNames = new ArrayList<String>();
         scores = new ArrayList<String>();
         lives = new ArrayList<String>();
-        error = false;
         musicGame = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         try {
             byte[] b = playerName.getBytes();
@@ -87,8 +86,8 @@ public class MultiplayerGameScreen implements Screen {
             datagramSocket.receive(packet1);
             serverPort = Integer.parseInt(new String(packet1.getData(), 0, packet1.getLength()));
         } catch (Exception e) {
-            error = true;
             JOptionPane.showMessageDialog(null, "Nerwork Error", "Network error", 1);
+            game.setScreen(new MainMenuScreen(game));
         }
 
         thread = new ClientThread(address, serverPort, datagramSocket);
@@ -110,11 +109,8 @@ public class MultiplayerGameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        musicGame.play();
         game.getBatch().begin();
-        if (error) {
-            game.setScreen(new MainMenuScreen(game));
-        }
+        musicGame.play();
         String m = thread.getMessage();
         controlMessage(m);
         game.getBatch().end();

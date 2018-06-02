@@ -35,7 +35,7 @@ public class Info {
     private Info() {
         altezza = 720;
         larghezza = 1280;
-        velBall = 9;
+        velBall = 7;
         velPaddle = 10;
         dt = 1;
         paddleresizex = new ArrayList<Float>();

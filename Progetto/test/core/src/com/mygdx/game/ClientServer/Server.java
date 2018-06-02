@@ -30,6 +30,7 @@ import com.mygdx.game.Player.RobotPlayer;
 import help.GameState;
 import help.Info;
 
+import help.Timer;
 import sprites.Ball;
 import sprites.Brick.Brick;
 import sprites.Brick.NormalBrick;
@@ -90,6 +91,7 @@ public class Server extends Game {
     private Database db = new Database();
     private Icon icon = new ImageIcon("playersIcon.png");
     private String address;
+    private Timer timer;
 
 
     /**
@@ -109,13 +111,26 @@ public class Server extends Game {
             e.printStackTrace();
         }
 
-        numeroPlayer = (Integer.parseInt((String) JOptionPane.showInputDialog(null, "Enter the number of players\n Server IP: "+address, "Players", 1, icon, null, "")));
+        String s=(String) JOptionPane.showInputDialog(null, "Enter the number of players\n Server IP: "+address, "Players", 1, icon, null, "");
+        if(s != null&& !s.isEmpty() && s.matches("[-+]?\\d*\\.?\\d+")) {
+            numeroPlayer=Integer.parseInt(s);
+            if(!(numeroPlayer>0 && numeroPlayer<5)) {
+                JOptionPane.showMessageDialog(null, "Choose a number between 1-4", "Error", 1);
+                System.exit(-1);
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Input must be a number", "Error", 1);
+            System.exit(-1);
+        }
         players = new ArrayList<Player>();
         paddles = new ArrayList<Paddle>();
         date = new ArrayList<Date>();
         commandPlayers = new ArrayList<CommandPlayer>();
         initServer();
         creato = false;
+
+        timer=new Timer();
 
         for (int i = 0; i < numeroPlayer; i++) {
             paddles.add(new Paddle(numeroPlayer, i + 1));
@@ -199,7 +214,7 @@ public class Server extends Game {
         }
 
         if (palla.getPositionBall().y <= 0) {
-            lostLife(palla.getPositionBall().x, false);
+            lostLife();
             updateScene();
         }
 
@@ -347,12 +362,7 @@ public class Server extends Game {
      * Gestisce la durata dell'effetto del power up
      */
     private void checkTimerPowerUp() {
-        if (date != null) {
-            Date date2 = new Date();
-            for (int i = 0; i < numeroPlayer; i++)
-                if (date2.getTime() - date.get(i).getTime() > Info.getInstance().getDurataPowerUp())
-                    Info.getInstance().getPaddleresizex().set(i, Info.getInstance().getPaddleresize());
-        }
+        timer.checkTimer(date, numeroPlayer );
     }
 
     /**
@@ -414,124 +424,63 @@ public class Server extends Game {
      * //Applicare quindi il pattern.
      */
     public void gestisciCollisioni() {
-        float oldSpeedBallX = palla.getSpeedBall().x;
-        float oldSpeedBallY = palla.getSpeedBall().y;
 
-        collision = new Collision(palla);
+        collision = new Collision(palla, bricks, powerUps, paddles, players);
 
-        indici = new ArrayList<Integer>();
-        for (Brick brick : bricks) {
-            if (collision.check(brick)) {
-                indici.add(bricks.indexOf(brick));
-            }
-        }
+        int numeroEliminati = collision.checkBrickCollision();
+        matEliminati+=numeroEliminati;
+        gameHolder.setScore(gameHolder.getScore()+numeroEliminati);
 
         collision.checkBorderCollision();
 
-        for (int i = 0; i < numeroPlayer; i++) {
-            if (collision.checkSide(paddles.get(i))) {
-                gameHolder = players.get(i);
-                brickCounter = 0;
-            }
-            ArrayList<PowerUp> tempPowerUps = new ArrayList<PowerUp>();
-            for (PowerUp p : powerUps) {
-                if (collision.checkPowerUp(paddles.get(i), p)) {
-                    tempPowerUps.add(p);
-                    p.effect(players.get(paddles.indexOf(paddles.get(i))), paddles.get(i), palla);
-                    lostLife(palla.getPositionBall().x, true);
-                    if (Info.getInstance().getPaddleresizex().get(i) != Info.getInstance().getPaddleresize()) { // qua verifico che sia stato cambiato la resize una volta che prendo il powerup
-                        date.set(i, new Date());
-                    }
-
-                }
-
-
-            }
-            for (PowerUp p : tempPowerUps) {
-                powerUps.remove(p);
-            }
+        Player newGameHolder =players.get(collision.checkPaddleCollision(players.indexOf(gameHolder)));
+        if(!newGameHolder.equals(gameHolder)) {
+            gameHolder=newGameHolder;
         }
 
-        if (!indici.isEmpty()) {
-            if (indici.size() >= 2) {
-                contatore = 0;
-                contatore2 = 0;
-                ArrayList<Brick> tempMatt = new ArrayList<Brick>();
-                for (int i : indici) {
-                    if (bricks.get(i).getPositionBrick().x < palla.getPositionBall().x) {
-                        contatore++;
-                    }
-                    if (bricks.get(i).getPositionBrick().x > palla.getPositionBall().x) {
-                        contatore2++;
-                    }
-                    tempMatt.add(bricks.get(i));
-
-                }
-
-                if (contatore == 1 && contatore2 == 1) /////////////NUOVO
-                    palla.setSpeedBall(new Vector2(oldSpeedBallX, -oldSpeedBallY));
-                else /////////////NUOVO
-                    palla.setSpeedBall(new Vector2(-oldSpeedBallX, oldSpeedBallY)); /////////////NUOVO
-
-
-                for (Brick brick : tempMatt) {
-                    if (brick instanceof NormalBrick) {
-                        if (brick.hasPowerUp()) {
-                            powerUps.add(brick.getPowerUp());
-                        }
-                        bricks.remove(brick);
-                        matEliminati++;
-                        players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore() + (int) Math.pow(2, brickCounter));
-                        brickCounter++;
-                    }
-                }
-            } else {
-                if (bricks.get(indici.get(0)) instanceof NormalBrick) {
-                    if (bricks.get(indici.get(0)).hasPowerUp()) {
-                        powerUps.add(bricks.get(indici.get(0)).getPowerUp());
-                    }
-                    bricks.remove((int) indici.get(0));
-                    matEliminati++;
-                    players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore() + (int) Math.pow(2, brickCounter));
-                    brickCounter++;
-                }
+        collision.checkPowerUpCollision(date);
+        ArrayList<Player> eliminabili=new ArrayList<Player>();
+        for(int i=0; i<numeroPlayer;i++) {
+            if(players.get(i).getLives()<0) {
+                eliminabili.add(players.get(i));
             }
+        }
+        for(Player player:eliminabili) {
+            deletePlayer(player);
         }
     }
 
     /**
-     * Gestisce la perdita della vita nel caso in cui la pallina cada sotto una certa coordinata Y
-     * e si trovi nel range di coordinate x gestite dal quel paddle in questione
-     *
-     * @param positionX
-     * @param powerup
+     * Se il giocatore ha preso il power up che fa perdere la vita, faccio agire l'effetto
      */
-    private void lostLife(float positionX, boolean powerup) { ///Applicare il pattern Hight coesion
-        int range = Info.getInstance().getLarghezza() / numeroPlayer;
-        Player loser = new RobotPlayer("default", palla, paddles.get(0));
+    private void lostLife() {
+        int range=Info.getInstance().getLarghezza()/numeroPlayer;
+        Player loser=new RobotPlayer("default", palla, paddles.get(0));
 
-        for (int i = 0; i < numeroPlayer; i++) {
-            if (positionX >= i * range && positionX < (i + 1) * range) {
-                loser = players.get(i);
+        for(int i=0; i<numeroPlayer; i++) {
+            if(palla.getPositionBall().x>=i*range && palla.getPositionBall().x<(i+1)*range) {
+                loser=players.get(i);
             }
         }
-        if (!powerup) {
-            loser.setLives(loser.getLives() - 1);
-            gameState = GameState.WAIT;
-        }
 
-        if (loser.getLives() < 0) {
-            db.modify(ranGen(), playerName, loser.getScore(), DropType.INSERT, TableType.OFFLINE);
-            gameState = GameState.GAME_OVER;
-            int index = players.indexOf(loser);
-            numeroPlayer--;
+        loser.setLives(loser.getLives()-1);
+        gameState=GameState.WAIT;
+
+        if(loser.getLives() < 0) {
+            deletePlayer(loser);
+        }
+    }
+
+    private void deletePlayer(Player loser) {
+        if(players.get(0).equals(loser)) {
+            db.modify(""+(int)Math.random()*1000, playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
+            gameState=GameState.GAME_OVER;
+        }
+        else {
+            int index=players.indexOf(loser);
             players.remove(loser);
             paddles.remove(index);
-            threadsIn.get(index).setDeletable(true);
-
-            for(int i=0; i<numeroPlayer; i++) {
-                paddles.get(i).setGiocatore(i+1);
-            }
+            numeroPlayer--;
         }
     }
 }

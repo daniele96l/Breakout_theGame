@@ -11,6 +11,7 @@ public class NormalBrick extends AbstractBrick {
 
     public NormalBrick(int posX, int posY){
         super(posX, posY, "normalBrick.jpg");
+        deletable=true;
         //il boundBrick si riferiscono al rettangolo invisibile che costruirò intorno alla texture
         //l'altezza e la larghezza sono della texture
     }

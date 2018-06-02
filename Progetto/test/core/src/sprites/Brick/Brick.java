@@ -27,6 +27,10 @@ public interface Brick {
 
     Vector2 getPositionBrick();
 
+    boolean isDeletable();
+
+    String getRelativePosition(Brick brick);
+
     void delete();
 
     void setPositionBrick(Vector2 positionBrick);

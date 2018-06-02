@@ -23,7 +23,6 @@ import help.GameState;
 import help.*;
 import sprites.Ball;
 import sprites.Brick.Brick;
-import sprites.Brick.NormalBrick;
 import sprites.Paddle;
 import sprites.powerup.PowerUp;
 
@@ -48,7 +47,7 @@ public class OfflineGameScreen implements Screen {
     private ArrayList<Player> players;
     private int contatore2 = 0;
     private boolean nextLevel;
-    private ArrayList<Integer> indici;
+    private ArrayList<Integer> brickIndexes;
     private ArrayList<PowerUp> powerUps;
     private int matEliminati;
     private GestoreLivelli gestoreLivelli;
@@ -62,7 +61,7 @@ public class OfflineGameScreen implements Screen {
     private static String playerName;
     private boolean loop;
     private Music musicGame;
-    private Music musicGameOver, musicBrick, musicPowerUp;
+    private Music musicGameOver;
     private boolean pause;
     private int numeroPlayer;
     private Hud hud;
@@ -105,10 +104,6 @@ public class OfflineGameScreen implements Screen {
             isFirstCalled=false;
             musicGame = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
             musicGameOver = Gdx.audio.newMusic(Gdx.files.internal("Untitled.mp3"));
-            musicBrick = Gdx.audio.newMusic(Gdx.files.internal("audio.mp3"));
-            musicPowerUp = Gdx.audio.newMusic(Gdx.files.internal("evil.mp3"));//deve essere inzializzato in qualche modo, poi si cambia
-            musicBrick.setLooping(false);
-            musicPowerUp.setLooping(false);
             musicGame.setVolume(1);
             isFinished = false;
             livelloCorrente = 1;
@@ -200,7 +195,7 @@ public class OfflineGameScreen implements Screen {
             }
         }
         if (palla.getPositionBall().y <= 0) {
-            lostLife(palla.getPositionBall().x,false);
+            lostLife();
             updateScene();
         }
         //Qui si potrebbe applicare
@@ -286,96 +281,33 @@ public class OfflineGameScreen implements Screen {
      * DEVE ESSERE TOLTA DA QUI
      */
 
-    public void gestisciCollisioni() {//Questa classe va spostata secondo me, violerebbe il pattern High Coesion
-        //High coesion; A measure of how focused the responsability of a class are
-        float oldSpeedBallX = palla.getSpeedBall().x;
-        float oldSpeedBallY = palla.getSpeedBall().y;
+    public void gestisciCollisioni() {
 
-        collision = new Collision(palla);
+        collision = new Collision(palla, bricks, powerUps, paddles, players);
 
-        indici = new ArrayList<Integer>();
-        for (Brick brick : bricks) {
-            if (collision.check(brick)) {
-                indici.add(bricks.indexOf(brick));
-            }
-        }
+        int numeroEliminati = collision.checkBrickCollision();
+        matEliminati+=numeroEliminati;
+        gameHolder.setScore(gameHolder.getScore()+numeroEliminati);
 
         collision.checkBorderCollision();
 
-        for (int i = 0; i < numeroPlayer; i++) {
-            if (collision.checkSide(paddles.get(i))) {
-                gameHolder = players.get(i);
-                brickCounter = 0;
-            }
-            ArrayList<PowerUp> tempPowerUps=new ArrayList<PowerUp>();
-            for(PowerUp p:powerUps) {
-                if(collision.checkPowerUp(paddles.get(i), p)) {
-                    tempPowerUps.add(p);
-                    p.effect(players.get(paddles.indexOf(paddles.get(i))), paddles.get(i), palla);
-                    musicPowerUp = Gdx.audio.newMusic(Gdx.files.internal(p.getSound()));
-                    musicPowerUp.play();
-                    lostLife(palla.getPositionBall().x,true);
-                    if(Info.getInstance().getPaddleresizex().get(i) != Info.getInstance().getPaddleresize()){ // qua verifico che sia stato cambiato la resize una volta che prendo il powerup
-                        date.set(i,new Date());
-                    }
-                }
-            }
-            for(PowerUp p:tempPowerUps) {
-                powerUps.remove(p);
-            }
+        Player newGameHolder =players.get(collision.checkPaddleCollision(players.indexOf(gameHolder)));
+        if(!newGameHolder.equals(gameHolder)) {
+            gameHolder=newGameHolder;
         }
 
-        if (!indici.isEmpty()) {
-            if (indici.size() >= 2) {
-                contatore = 0;
-                contatore2 = 0;
-                ArrayList<Brick> tempMatt = new ArrayList<Brick>();
-                for (int i : indici) {
-                    if(bricks.get(i).getPositionBrick().x < palla.getPositionBall().x ){
-                        contatore++;
-                    }
-                    if(bricks.get(i).getPositionBrick().x > palla.getPositionBall().x ){
-                        contatore2++;
-                    }
-                    tempMatt.add(bricks.get(i));
-
-                }
-
-
-                if(contatore ==1 && contatore2 == 1)
-                palla.setSpeedBall(new Vector2(oldSpeedBallX, -oldSpeedBallY));
-                else
-                    palla.setSpeedBall(new Vector2(-oldSpeedBallX, oldSpeedBallY));
-
-
-                for (Brick brick : tempMatt) {
-                    if (brick instanceof NormalBrick) {
-                        if (brick.hasPowerUp()) {
-                            powerUps.add(brick.getPowerUp());
-                        }
-                        bricks.remove(brick);
-                        matEliminati++;
-                        musicBrick.stop();
-                        musicBrick.play();
-                        players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore() + (int) Math.pow(2, brickCounter));
-                        brickCounter++;
-                    }
-                }
-            } else {
-                if (bricks.get(indici.get(0)) instanceof NormalBrick) {
-                    if (bricks.get(indici.get(0)).hasPowerUp()) {
-                        powerUps.add(bricks.get(indici.get(0)).getPowerUp());
-                    }
-                    bricks.remove((int) indici.get(0));
-                    matEliminati++;
-                    musicBrick.stop();
-                    musicBrick.play();
-                    players.get(players.indexOf(gameHolder)).setScore(gameHolder.getScore() + (int) Math.pow(2, brickCounter));
-                    brickCounter++;
-                }
+        collision.checkPowerUpCollision(date);
+        ArrayList<Player> eliminabili=new ArrayList<Player>();
+        for(int i=0; i<numeroPlayer;i++) {
+            if(players.get(i).getLives()<0) {
+                eliminabili.add(players.get(i));
             }
+        }
+        for(Player player:eliminabili) {
+            deletePlayer(player);
         }
     }
+
 
     public static void setPlayerName(String playerName) {
         OfflineGameScreen.playerName = playerName;
@@ -387,33 +319,35 @@ public class OfflineGameScreen implements Screen {
 
     /**
      * Se il giocatore ha preso il power up che fa perdere la vita, faccio agire l'effetto
-     * @param positionX
-     * @param powerup
      */
-    private void lostLife(float positionX,boolean powerup) {
+    private void lostLife() {
         int range=Info.getInstance().getLarghezza()/numeroPlayer;
         Player loser=new RobotPlayer("default", palla, paddles.get(0));
 
         for(int i=0; i<numeroPlayer; i++) {
-            if(positionX>=i*range && positionX<(i+1)*range) {
+            if(palla.getPositionBall().x>=i*range && palla.getPositionBall().x<(i+1)*range) {
                 loser=players.get(i);
             }
         }
-        if(!powerup) {
-            loser.setLives(loser.getLives() - 1);
-            gameState = GameState.WAIT;
-        }
+
+        loser.setLives(loser.getLives()-1);
+        gameState=GameState.WAIT;
+
         if(loser.getLives() < 0) {
-            if(players.get(0).equals(loser)) {
-                db.modify(""+(int)Math.random()*1000, playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
-                gameState=GameState.GAME_OVER;
-            }
-            else {
-                int index=players.indexOf(loser);
-                players.remove(loser);
-                paddles.remove(index);
-                numeroPlayer--;
-            }
+            deletePlayer(loser);
+        }
+    }
+
+    private void deletePlayer(Player loser) {
+        if(players.get(0).equals(loser)) {
+            db.modify(""+(int)Math.random()*1000, playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
+            gameState=GameState.GAME_OVER;
+        }
+        else {
+            int index=players.indexOf(loser);
+            players.remove(loser);
+            paddles.remove(index);
+            numeroPlayer--;
         }
     }
 

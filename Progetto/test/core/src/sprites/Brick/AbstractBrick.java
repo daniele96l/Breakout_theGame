@@ -23,6 +23,7 @@ public abstract class AbstractBrick extends Sprite implements Brick{
     protected boolean eliminato;
     protected PowerUp powerUp;
     protected boolean hasPowerUp;
+    protected boolean deletable;
 
     public AbstractBrick(int posX, int posY, String immagine) {
         super(new Texture(immagine));
@@ -42,6 +43,16 @@ public abstract class AbstractBrick extends Sprite implements Brick{
         hasPowerUp = true;
     }
 
+    @Override
+    public String getRelativePosition(Brick brick) {
+        if(this.getPositionBrick().y==brick.getPositionBrick().y) {
+            return "line";
+        }
+        else if(this.getPositionBrick().x==brick.getPositionBrick().x) {
+            return "column";
+        }
+        return "else";
+    }
 
     /**
      * Questo metodo ritorna la variabile booleana hasPowerUp
@@ -63,6 +74,8 @@ public abstract class AbstractBrick extends Sprite implements Brick{
     public void delete() {
         eliminato = true;
     }
+
+    public boolean isDeletable() {return deletable;}
 
     public void setPositionBrick(Vector2 positionBrick) {
         this.positionBrick = positionBrick;
