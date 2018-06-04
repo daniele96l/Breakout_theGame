@@ -12,8 +12,9 @@ import sprites.Ball;
 import sprites.Paddle;
 
 /**
+ * La classe crea e gestisce il giocatore artificiale
+ *
  * @author Schillaci
- * Gestisci il giocatore artificiale
  */
 public class RobotPlayer extends Player{
     private Ball palla;
@@ -25,6 +26,9 @@ public class RobotPlayer extends Player{
     }
 
     /**
+     * Il metodo ritorna un valore intero che corrisponde alla pressione, fittizia, del tasto LEFT o RIGHT:
+     * infatti il metodo gestisce lo spostamento del paddle controllato dal robot facendo un check sulla posizione
+     * della pallina.
      *
      * @return il tasto premuto che darà la direzione alla paddle
      */

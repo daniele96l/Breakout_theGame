@@ -34,10 +34,9 @@ import java.util.ArrayList;
 * */
 
 /**
- * @author Regna, Schillaci
- *
  * La classe si occupa di gestire la schermata della modalita di gioco "multiplayer online"
  *
+ * @author Regna, Schillaci
  */
 public class MultiplayerGameScreen implements Screen {
 
@@ -101,11 +100,10 @@ public class MultiplayerGameScreen implements Screen {
     }
 
     /**
-     *
-     * @param delta è l'intervallo di tempo che intercorre tra ogni chiamata del metodo render
-     *
      * disegna le parti grafiche dello scenario 60 volte al secondo facendo un controllo
      * sul messaggio che gli viene passato dal server
+     *
+     * @param delta è l'intervallo di tempo che intercorre tra ogni chiamata del metodo render
      */
     @Override
     public void render(float delta) {
@@ -130,12 +128,10 @@ public class MultiplayerGameScreen implements Screen {
     }
 
     /**
-     *
-     * @param message è il messaggio che arriva dal server
-     *
      * il metodo permette di estrarre dal messaggio le informazioni necessarie per assegnare un valore alle variabili
      * che rappresentano gli elementi dello scenario che vengono disegnati.
      *
+     * @param message è il messaggio che arriva dal server
      */
 
     public void parseMessage(String message) { // si potrebbe implementare pure_fabrication e fare un altra classe, che sarebbe anche HightCOesion
@@ -229,7 +225,13 @@ public class MultiplayerGameScreen implements Screen {
         }
     }
 
-
+    /**
+     *
+     * @param m è il messaggio
+     *
+     * il metodo fa un primo check sul messaggio. Se questo non è vuoto, vengono estratte le informazioni dello scenario
+     * con il metodo "parseMessage".
+     */
     public void controlMessage(String m) {
         if (!m.equals("")) {
             parseMessage(m);
@@ -250,10 +252,9 @@ public class MultiplayerGameScreen implements Screen {
     }
 
     /**
+     * il metodo si occupa di costruire e inviare il datagramma al server
      *
      * @param key è il valore che rappresenta il tasto premuto dal giocatore per spostare il suo paddle
-     *
-     * il metodo si occupa di costruire e inviare il datagramma al server
      */
     public void keyPressed(int key) {
         String s = "" + key;
@@ -266,11 +267,11 @@ public class MultiplayerGameScreen implements Screen {
     }
 
     /**
+     * si occupa di ridimensionare la finestra
      *
      * @param width larghezza della finestra
      * @param height altezza della finestra
      *
-     * si occupa di ridimensionare la finestra
      */
 
     @Override

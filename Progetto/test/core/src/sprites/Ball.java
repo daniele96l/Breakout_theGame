@@ -9,10 +9,11 @@ import help.Info;
 import java.io.Serializable;
 
 /**
- * @author: Daniele Ligato
  * La classe Ball contiene tutte le informazioni e variabili della palla bersaglio
  * per corretto il funzionamento del gioco, quali per esempio la sua texture, il suo
  * suo vettore posizione e la sua velocità
+ *
+ * @author Daniele Ligato
  */
 
 public class Ball extends Sprite {
@@ -44,21 +45,23 @@ public class Ball extends Sprite {
 
     /**
      * Questo metodo restituisce la texture della palla
-     * @return : texture della palla
+     *
+     * @return texture della palla
      */
     public Texture getPalla() { return palla; }
 
     /**
      * Questo metodo restituisce la velocità della palla
-     * @return : velocità della palla
+     *
+     * @return velocità della palla
      */
     public Vector2 getSpeedBall() {
         return speedBall;
     }
 
     /**
-     *  Questo metodo restituisce i contorni dell'oggetto palla
-     * @return : contorni dell'oggetto palla
+     * Questo metodo restituisce i contorni dell'oggetto palla
+     * @return contorni dell'oggetto palla
      */
     public Rectangle getBoundsBall() {
         return boundsBall;
@@ -66,7 +69,8 @@ public class Ball extends Sprite {
 
     /**
      * Questo metodo imposta la texture della palla
-     * @param palla : texture che si vuole applicare alla palla
+     *
+     * @param palla texture che si vuole applicare alla palla
      */
     public void setPalla(Texture palla) {
         this.palla = palla;
@@ -81,7 +85,8 @@ public class Ball extends Sprite {
 
     /**
      * Questo metodo imposta la velocità x e y della palla
-     * @param speedBall : vettore di due dimensioni (x e y) per la velocità della palla
+     *
+     * @param speedBall vettore di due dimensioni (x e y) per la velocità della palla
      */
     public void setSpeedBall(Vector2 speedBall) {
         this.speedBall = speedBall;
@@ -93,7 +98,8 @@ public class Ball extends Sprite {
 
     /**
      * Questo metodo restituisce la posizione x e y dell'oggetto palla
-     * @return : posizione x e y dell'oggetto palla
+     *
+     * @return posizione x e y dell'oggetto palla
      */
     public Vector2 getPositionBall() {
         return positionBall;

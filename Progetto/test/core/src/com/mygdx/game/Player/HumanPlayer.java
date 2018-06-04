@@ -4,10 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 /**
- * @author Schillaci
  *
  * la classe definisce un giocatore che controlla il proprio paddle usando i tasti della keyboard
  *
+ * @author Schillaci
  */
 
 public class HumanPlayer extends Player {
@@ -22,8 +22,11 @@ public class HumanPlayer extends Player {
     }
 
     /**
-     * @return ritorna il numero corrispondente al tasto premuto dal giocatore
+     * il metodo ritorna un valore intero che corrisponde al tasto LEFT, RIGHT oppure al tasto P, a seconda
+     * di quale di questi viene premuto.
      *
+     * @see Input.Keys
+     * @return ritorna il numero corrispondente al tasto premuto dal giocatore
      */
 
     @Override

@@ -30,7 +30,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * @author ligato,schillaci, regna
+ * @author Ligato, Schillaci, Regna
+ *
  * Questa classe gestisce la logica della partita quando si sta giocando offline
  */
 public class OfflineGameScreen implements Screen {
@@ -138,8 +139,9 @@ public class OfflineGameScreen implements Screen {
      * Il metodo render aggiorna la schermata ogni frame e renderizza a schermo gli oggetti grafici:
      * Prende i mattoncini e li renderizza, renderizza il background, seleziona la musica adatta allo stato e ne fa il play
      * imposta la posizione della palla, gestisce l'arraylist dei powerUp (aggiungendoli o rimuovendoli), aggiorna la HUD
-     * e controlla lo stato corrente del gioco
-     * @param delta
+     * e controlla lo stato corrente del gioco.
+     *
+     * @param delta è l'itervallo di temp che intercorre tra una chiamata e l'altra di questo metodo.
      */
 
     @Override
@@ -237,6 +239,7 @@ public class OfflineGameScreen implements Screen {
 
     /**
      * Si occupa di ridimensionare la finestra
+     *
      * @param width
      * @param height
      */

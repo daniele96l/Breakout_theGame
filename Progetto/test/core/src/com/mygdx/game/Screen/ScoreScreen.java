@@ -17,7 +17,9 @@ import help.GameState;
 import java.util.ArrayList;
 
 /**
- * @Author Regna, Schillaci, Ligato
+ * La classe gestisce la schermata della classifica
+ *
+ * @author Regna, Schillaci, Ligato
  */
 
 public class ScoreScreen implements Screen {
@@ -39,10 +41,6 @@ public class ScoreScreen implements Screen {
     private BreakGame game;
     private Resizer resizer;
 
-    /**
-     *  Salva il parametro game
-     * @param game ???
-     */
     public ScoreScreen(BreakGame game) {
         this.game = game;
         tempVet = new float[2];
@@ -63,8 +61,8 @@ public class ScoreScreen implements Screen {
     }
 
     /**
+     * Si occupa di renderizzare la finestra, quindi mostrate tutte le texture, e controllare se il bottone sia cliccato
      *
-     *  Si occupa di renderizzare la finestra, quindi mostrate tutte le texture, e controllare se il bottone sia cliccato
      * @param delta frequenza di aggiornamento frame
      */
 
@@ -98,6 +96,14 @@ public class ScoreScreen implements Screen {
         coeffDimensionale = tempVet[1];
     }
 
+    /**
+     * Inizia a disegnare i punteggi partendo dall'altezza y
+     *
+     * @param batch
+     */
+    public void bestScores(SpriteBatch batch) {
+        bitmapFont.draw(batch, db.printTable(TableType.OFFLINE), 500, 704);
+    }
     @Override
     public void pause() {
 
@@ -118,11 +124,4 @@ public class ScoreScreen implements Screen {
 
     }
 
-    /**
-     * Inizia a disegnare i punteggi partendo dall'altezza y
-     * @param batch
-     */
-    public void bestScores(SpriteBatch batch) {
-        bitmapFont.draw(batch, db.printTable(TableType.OFFLINE), 500, 704);
-    }
 }

@@ -1,9 +1,10 @@
 package eccezioni;
 
 /**
+ * Questa ecccezione viene lanciata se si imposta un numero di mattoncini non compatibili alla dimensione della finestra.
+ *
  * @author Alberto Schillaci
  * @version 1.0
- * Questa ecccezione viene lanciata se si imposta un numero di mattoncini non compatibili alla dimensione della finestra
  */
 
 public class IllegalBricksNumber extends Exception {

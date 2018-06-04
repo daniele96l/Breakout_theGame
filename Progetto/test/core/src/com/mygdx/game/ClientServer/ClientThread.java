@@ -6,8 +6,9 @@ import java.io.IOException;
 import java.net.*;
 
 /**
- * @author Marco Mari, Marco Cotogni, Alessandro Oberti
  * Definisce il comportamento del client nella connesione con il server
+ *
+ * @author Marco Mari, Marco Cotogni, Alessandro Oberti
  *
  */
 public class ClientThread extends Thread {

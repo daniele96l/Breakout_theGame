@@ -47,6 +47,8 @@ import java.util.ArrayList;
 public class Drawer
 {
     /**
+     *Questo metodo si occupa di disegnare le texture che servono al menu, per cui disegerà i bottoni per la selezione delle diverse modalità
+     * di gioco, per la visualizzazione della classifica o per uscire dal gioco.
      *
      * @param game la partita corrente
      * @param menu la texture sfondo
@@ -61,8 +63,6 @@ public class Drawer
      * @param scorebutton l'altezza del bottone "score"
      * @param exitbutton  l'altezza del bottone "exit"
      *
-     * Questo metodo si occupa di disegnare le texture che servono al menu, per cui disegerà i bottoni per la selezione delle diverse modalità
-     * di gioco, per la visualizzazione della classifica o per uscire dal gioco.
      */
     static void drawMainMenu(BreakGame game, Texture menu,Texture playButton,Texture exitButton,Texture multiplayerofflineButton,Texture score,Texture multiplayeronlineButton,int playbutton,int onlinebutton ,int offlinebutton,int scorebutton,int exitbutton)
     {
@@ -76,6 +76,7 @@ public class Drawer
     }
 
     /**
+     * il metodo si occupa di disegnare lo scenario della partita mentre si sta giocando, ad ogni frame
      *
      * @param bricks l'arrey list che contiene i miei mattoncini
      * @param game  la partita corrente
@@ -84,7 +85,6 @@ public class Drawer
      * @param paddles l'array list dei player della partita
      * @param palla l'oggetto palla
      *
-     * il metodo si occupa di disegnare lo scenario della partita mentre si sta giocando, ad ogni frame
      */
     static void drawMultiplayer(ArrayList<Brick> bricks, BreakGame game, ArrayList<PowerUp> powerUps, int numeroPlayer, ArrayList<Paddle> paddles, Ball palla)
     {
@@ -108,11 +108,11 @@ public class Drawer
     }
 
     /**
+     * il metodo permette di disegnare la schermata di game over quando tutte le vite vengono perse
      *
      * @param game la partita corrente
      * @param gameOver la texture della schermata di game over
      *
-     * il metodo permette di disegnare la schermata di game over quando tutte le vite vengono perse
      */
     static void drawLoseScreen(BreakGame game,Texture gameOver)
     {
@@ -125,6 +125,7 @@ public class Drawer
     }
 
     /**
+     * il metodo si occupa di disegnare lo scenario della partita ad ogni frame quando si sceglie la modalità di gioco "MultiplayerOffline"
      *
      * @param game la partita corrente
      * @param bg la texture che rappresenta lo sfondo che appare durante il gioco
@@ -134,7 +135,6 @@ public class Drawer
      * @param paddles array list che contiene i paddle che partecipano alla partita
      * @param palla
      *
-     * il metodo si occupa di disegnare lo scenario della partita ad ogni frame quando si sceglie la modalità di gioco "MultiplayerOffline"
      */
     static void drawMultiplayerOffline(BreakGame game, Texture bg, ArrayList<Brick> bricks, ArrayList<Player> players, ArrayList<PowerUp> powerUps, ArrayList<Paddle> paddles, Ball palla, int numeroPlayer)
     {

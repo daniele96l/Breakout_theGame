@@ -5,11 +5,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Screen.MainMenuScreen;
 
 /**
- * ?????????????
+ * La classe rappresenta la schermata di gioco visualizzata sullo schermo
+ *
+ * @author ?
  */
 public class BreakGame extends Game {
     private SpriteBatch batch;
 
+    /**
+     * il metodo crea la schermata di gioco.
+     * Inizialmente viene visualizzato il MainMenuScreen.
+     *
+     */
     @Override
     public void create() {
         batch = new SpriteBatch();

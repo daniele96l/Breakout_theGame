@@ -4,9 +4,9 @@ import com.badlogic.gdx.Input;
 import help.Info;
 
 /**
- * @author Regna, Ligato, Schillaci
+ * La classe che identifica il giocatore con le sue rispettive caratteristiche come, nome, vite e punteggio.
  *
- * La classe che identifica il giocatore con le sue rispettive caratteristiche come, nome,vite, e punteggio.
+ * @author Regna, Ligato, Schillaci
  */
 
 public abstract class Player {

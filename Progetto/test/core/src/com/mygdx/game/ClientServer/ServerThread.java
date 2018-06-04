@@ -7,8 +7,8 @@ import java.net.*;
 
 /**
  * @author  Cotogni, Mari, Oberti
- * questa classe definisce il thread del server per ricevere i pacchetti dai diversi client
  *
+ * questa classe definisce il thread del server per ricevere i pacchetti dai diversi client
  */
 
 public class ServerThread extends Thread {

@@ -8,9 +8,9 @@ import com.mygdx.game.BreakGame;
 import com.mygdx.game.logic.Resizer;
 
 /**
- * @author Ligato, Schillaci, Regna
- *
  * Gestisce la schermata di fine gioco
+ *
+ * @author Ligato, Schillaci, Regna
  */
 
 public class FinishScreen implements Screen {
@@ -45,10 +45,10 @@ public class FinishScreen implements Screen {
     }
 
     /**
+     * Renderizza il background e disegna la texture che ti avvisa di aver vinto il gioco
      *
      * @param delta è l'itervallo di tempo che intercorre tra ogni chiamata del metodo render
      *
-     * Renderizza il background e disegna la texture che ti avvisa di aver vinto il gioco
      */
     @Override
     public void render(float delta) {
@@ -64,11 +64,11 @@ public class FinishScreen implements Screen {
     }
 
     /**
+     * Ci permette di ridimensionare la finestra
      *
      * @param width larghezza della finestra
      * @param height altezza della finestra
      *
-     * Ci permetta di ridimensionare la finestra
      */
     @Override
     public void resize(int width, int height) {

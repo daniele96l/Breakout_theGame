@@ -1,10 +1,11 @@
 package com.mygdx.game.Leaderboard;
 
 /**
- * @author Daniele Ligato
  *
  * La classe definisce il punteggio e il nome del giocatore da inserire nella classifica.
- * Implementa Comparable per poter essere confrontabile
+ * Implementa Comparable per poter essere confrontabile.
+ *
+ * @author Daniele Ligato
  */
 
 public class Score implements Comparable {

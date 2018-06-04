@@ -18,9 +18,9 @@ import com.mygdx.game.logic.Resizer;
 import help.GameState;
 
 /**
- * @Author Regna, Scillaci, Ligato
- *
  * Si occupa della schermata di vittoria del gioco
+ *
+ * @author Regna, Scillaci, Ligato
  */
 
 public class WinGameScreen implements Screen {
@@ -34,9 +34,9 @@ public class WinGameScreen implements Screen {
     private Resizer resizer;
     private float tempVet[];
     /**
-     *  Salva i parametri game, oldScreen, gameState
+     * Salva i parametri game, oldScreen, gameState
      *
-     * @param game ????
+     * @param game è la schermata di gioco
      * @param oldScreen ????
      * @param gameState Lo stato del gioco in quel momento
      */
@@ -58,6 +58,7 @@ public class WinGameScreen implements Screen {
 
     /**
      * Renderizza lo sfondo del gioco e si occupa di andare avanti se si preme space
+     *
      * @param delta freq di aggiornamento frame
      */
     @Override
@@ -73,6 +74,12 @@ public class WinGameScreen implements Screen {
         game.getBatch().end();
     }
 
+    /**
+     * Si occupa del resize della finestra
+     *
+     * @param width larghezza della finestra
+     * @param height altezza della finestra
+     */
     @Override
     public void resize(int width, int height) {
 

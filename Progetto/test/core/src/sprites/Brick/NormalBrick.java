@@ -1,10 +1,11 @@
 package sprites.Brick;
 
 /**
- * @author Daniele Ligato
  * Questa classe estende la classe astratta più generale Brick
  * e definisce quello che è il mattoncino "classico", assegnandogli
  * una posizione (x e y) e una immagine all'interno del gioco
+ *
+ * @author Daniele Ligato
  */
 
 public class NormalBrick extends AbstractBrick {

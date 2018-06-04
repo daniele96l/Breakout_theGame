@@ -1,10 +1,11 @@
 package sprites.Brick;
 
 /**
- * @author ligato
  * Questa classe estende la classe astratta più generale Brick
  * e definisce che è il mattoncino "indistruttibile", assegnandogli
  * una posizione (x e y) e una immagine all'interno del gioco
+ *
+ * @author ligato
  */
 public class HardBrick extends AbstractBrick {
 

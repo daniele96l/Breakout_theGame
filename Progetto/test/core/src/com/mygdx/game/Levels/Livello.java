@@ -26,7 +26,6 @@ import java.util.ArrayList;
  * La classe permette di definire la struttura del livello instanziando gli oggetti che ne fanno parte
  *
  * @author Schillaci
- *
  */
 public class Livello {
     private ArrayList<Brick> bricks;
@@ -55,11 +54,18 @@ public class Livello {
     }
 
     /**
-     * aggiunge una riga di mattoncini
+     * aggiunge una riga di mattoncini.
+     * Il metodo divide la riga letta in caratteri e a seconda di questo istanzia un nuovo oggetto a meno che il carattere
+     * non corrisponda ad uno spazio vuoto (".").
+     * Quando pero la linea letta dal file contiene troppi caratteri oppure quando il numero di righe lette eccedono le dimensioni
+     * tollerate per le file di mattoncini previste, viene lanciata un'eccezione di "IllegalBricksNumber".
+     * Quando inoltre un carattere all'interno della linea letta non corrisponde a nessuna azione di creazione intesa come
+     * spazio vuoto o mattoncino di qualunque tipo, viene lanciata un'eccezione di "IllegalCharacter".
      *
-     * @param line
+     * @param line è la linea del file letta che contiene le informazione sulla tipologia di mattoncini da creare
      * @throws IllegalBricksNumber
      * @throws IllegalCharacter
+     *
      */
     public void addLine(String line) throws IllegalBricksNumber, IllegalCharacter {
         linesAdded++;
@@ -89,9 +95,11 @@ public class Livello {
     }
 
     /**
-     * aggiunge i power up in maniera casuale ai mattoncini del livello
+     * Il metodo aggiunge in maniera casuale un power up al mattoncino passato per parametro.
+     * In particolare a seconda del valore del numero casuale, viene scelto il potenziamento da assegnare.
      *
-     * @param brick
+     * @param brick il mattoncino su cui porre il power up
+     *
      */
     private void insertPowerUp(Brick brick) {
         int posX=(int)(brick.getBoundsBrick().x+brick.getBoundsBrick().width/2-Info.getInstance().getPowerUpWidth()/2*Info.getInstance().getPowerUpResize());

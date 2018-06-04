@@ -10,11 +10,11 @@ import sprites.powerup.PowerUp;
 import java.io.Serializable;
 
 /**
- * @author Daniele Ligato
  * La classe astratta Brick extende la classe di libGDX
  * chiama Sprite e contiene tutte le informazioni e variabili del "mattoncino base",
  * quali per esempio la sua posizione.
  *
+ * @author Daniele Ligato
  */
 public abstract class AbstractBrick extends Sprite implements Brick{
 

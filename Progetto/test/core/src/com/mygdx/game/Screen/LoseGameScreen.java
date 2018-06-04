@@ -38,9 +38,9 @@ public class LoseGameScreen implements Screen {
     }
 
     /**
-     * @param delta è l'intervallo di tempo che intercorre tra ogni chiamata del metodo render
-     *
      * Gestisce il proseguimento del programma, dopo che compare la schermata di "Loose"
+     *
+     * @param delta è l'intervallo di tempo che intercorre tra ogni chiamata del metodo render
      */
     @Override
     public void render(float delta)
@@ -50,11 +50,11 @@ public class LoseGameScreen implements Screen {
     }
 
     /**
+     * Ci permette di ridimensionare la finestra
      *
      * @param width larghezza della finestra
      * @param height altezza della finestra
      *
-     * Ci permetta di ridimensionare la finestra
      */
     @Override
     public void resize(int width, int height) {

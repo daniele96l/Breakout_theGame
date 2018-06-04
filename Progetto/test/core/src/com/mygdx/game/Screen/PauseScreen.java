@@ -20,10 +20,9 @@ import help.GameState;
 import help.Info;
 
 /**
- * @Author  Regna, Ligato, Schillaci
- *
  * Questa classe rappresenta la schermata di pausa con i relativi bottoni
  *
+ * @author  Regna, Ligato, Schillaci
  */
 
 public class PauseScreen implements Screen {
@@ -41,11 +40,11 @@ public class PauseScreen implements Screen {
     private float tempVet[];
 
     /**
+     * Prende i valori precedenti di game e old creen
      *
-     * @param game ????
+     * @param game
      * @param oldScreen ????
      *
-     * Prende i valori precedenti di game e old creen
      */
     public PauseScreen(BreakGame game, OfflineGameScreen oldScreen) {
         this.game = game;
@@ -90,7 +89,6 @@ public class PauseScreen implements Screen {
      * Si occupa del resize della finestra
      *
      * @param width larghezza della finestra
-     *
      * @param height altezza della finestra
      */
 

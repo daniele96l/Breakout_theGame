@@ -5,9 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import java.util.ArrayList;
 
 /**
- * @author : Cristian Regna, Alberto Schillaci, Daniele Ligato
  * Il costruttore di questa classe contiene le variabili necessarie
  * al corretto funzionamento del gioco
+ *
+ * @author Cristian Regna, Alberto Schillaci, Daniele Ligato
  */
 public class Info {
     static Info instance;
@@ -56,7 +57,7 @@ public class Info {
     }
 
     /**
-     *  Metodo di implementazione del pattern Singleton
+     * Metodo di implementazione del pattern Singleton
      *
      * @return istanza di info
      */

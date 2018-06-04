@@ -8,10 +8,21 @@ import sprites.Brick.HardBrick;
 import sprites.Brick.NormalBrick;
 import sprites.powerup.*;
 
+/**
+ * Descrizione generale classe
+ *
+ * @author
+ */
+
 public class SpriteFactory {
 
     static SpriteFactory instance;
 
+    /**
+     * descrizione metodo
+     *
+     * @return
+     */
     public static synchronized SpriteFactory getInstance() {
         if (instance == null) {
             instance = new SpriteFactory();
@@ -19,6 +30,15 @@ public class SpriteFactory {
         return instance;
     }
 
+    /**
+     * descrizione metodo
+     *
+     * @param powerUp
+     * @param posX
+     * @param posY
+     * @return
+     * @throws IllegalPowerUp
+     */
     public static PowerUp getPowerUp(String powerUp, int posX, int posY) throws IllegalPowerUp {
         if(powerUp==null) {
             throw new IllegalPowerUp();
@@ -38,6 +58,15 @@ public class SpriteFactory {
         else throw new IllegalPowerUp();
     }
 
+    /**
+     * descrizione metodo
+     *
+     * @param powerUp
+     * @param posX
+     * @param posY
+     * @return
+     * @throws IllegalBrick
+     */
     public static Brick getBrick(String powerUp, int posX, int posY) throws IllegalBrick {
         if(powerUp==null) {
             throw new IllegalBrick();

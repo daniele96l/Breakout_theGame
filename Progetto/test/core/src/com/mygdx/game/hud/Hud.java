@@ -24,7 +24,7 @@ public class Hud {
 
     /**
      * @param players array dei giocatori
-     * @param sb
+     * @param sb batch
      */
 
     public Hud(ArrayList<Player> players, SpriteBatch sb) {
@@ -45,9 +45,8 @@ public class Hud {
      * metodo che permette di costruire la tabella dei punteggi ottenuti dai giocatori durante le partite offline
      *
      * @param players la lista dei giocatori
-     * @param table
+     * @param table la tabella
      *
-     * @see: filltable(ArrayList<String> playerNames, ArrayList<String> scores, ArrayList<String> lives, Table table)
      */
 
     private void fillTable(ArrayList<Player> players, Table table) {
@@ -68,11 +67,16 @@ public class Hud {
     }
 
     /**
-     * è il metodo corrispondente per le partite online: in particolare permette di assegnare ai client le informazioni relative ai punteggi
+     * è il metodo corrispondente per le partite online: in particolare permette di assegnare ai client
+     * le informazioni relative ai punteggi.
+     * Il metodo permette di tenere traccia dello stato dei giocatori. In particolare se i giocatori sono più di uno
+     * vengono disposte le informazioni di ogni singolo giocatore una sotto l'altra a partire dal nome.
+     * Quando invece il giocatore è solo uno, il metodo dispone le sue informazioni su una riga sola.
      *
-     * @param playerNames
-     * @param scores
-     * @param lives
+     * @param playerNames ArrayList contenente i nomi dei giocatori partecipanti
+     * @param scores ArrayList contenente i punteggi che ottengono i giocatori
+     * @param lives ArrayList che contine il numero di vite che resta ai giocatori
+     * @param table la classifica
      */
 
     private void fillTable(ArrayList<String> playerNames, ArrayList<String> scores, ArrayList<String> lives, Table table) {

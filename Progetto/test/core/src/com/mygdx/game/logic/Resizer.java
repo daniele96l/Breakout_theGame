@@ -14,9 +14,11 @@ import com.badlogic.gdx.utils.Scaling;
 import help.Info;
 
 /**
- * @author  Ligato
+ *
  * Questa classe si occupa del ridimensionamento della finestra, più precisamete, del calcolo dei parametri
- * necessario per adattare i punti di 'click' al nuovo formato della finestra
+ * necessario per adattare i punti di 'click' al nuovo formato della finestra.
+ *
+ * @author Ligato
  */
 
 public class Resizer {
@@ -31,10 +33,12 @@ public class Resizer {
     /**
      * Il metodo toResize viene chiamato in ogni Screen ogni volta che viene ridimensionata la finestra
      * calcola i parametri necessari al funzionamento dell'interfaccia
+     *
      * @param height altezza della finestra
      * @param width larghezza della finestra
      * @return ritorna i valori del coefficente dimensionale (un rapporto che indica quando si è ingrandita o diminuita la finestra)
      * e la dimensione della barre nere che dovranno essere messe ai lati per mantenere il rapporto costante
+     *
      */
 
     public float[] toResize(int height, int width){

@@ -7,10 +7,11 @@ import com.badlogic.gdx.math.Vector2;
 import help.Info;
 
 /**
- * @author: Alberto Schillaci, Daniele Ligato, Cristian Regna
  * La classe Ball contiene tutte le informazioni e variabili del paddle
  * per corretto il funzionamento del gioco, quali per esempio la sua texture, il suo
  * suo vettore posizione, la sua velocità, la dimensione e quale giocatore ne è in posseso
+ *
+ * @author Alberto Schillaci, Daniele Ligato, Cristian Regna
  */
 
 
@@ -35,7 +36,8 @@ public class Paddle extends Sprite{
     /**
      * Questo metodo imposta la dimensione della paddle in base al numero
      * di giocatori che partecipano alla partita
-     * @param numeroGiocatori : numero di partecipanti alla partita
+     *
+     * @param numeroGiocatori numero di partecipanti alla partita
      */
     public void setDefaultState(int numeroGiocatori) {
         for(int i = 0;i< numeroGiocatori; i++) {
@@ -48,7 +50,8 @@ public class Paddle extends Sprite{
 
     /**
      * Questo metodo restituisce il vettore poszione (x e y) del paddle
-     * @return positionM : vettore di due dimensioni del paddle
+     *
+     * @return positionM vettore di due dimensioni del paddle
      */
     public Vector2 getPosition() {
         return positionM;
@@ -56,7 +59,8 @@ public class Paddle extends Sprite{
 
     /**
      * Questo metodo restituisce la velocità del paddle
-     * @return speed : velocità del paddle
+     *
+     * @return speed velocità del paddle
      */
     public Vector2 getSpeed() {
         return speed;
@@ -64,7 +68,8 @@ public class Paddle extends Sprite{
 
     /**
      * Questo metodo imposta la posizione x della paddle (non si può muovere lungo l'asse y)
-     * @param x : valore della posizione x da impostare al paddle
+     *
+     * @param x valore della posizione x da impostare al paddle
      */
     public void setPositionM(float x) {
         this.positionM.x = x;
@@ -72,7 +77,8 @@ public class Paddle extends Sprite{
 
     /**
      * Questo metodo resitituisce i contorni dell'oggetto paddle
-     * @return bounds: rettangolo che fa da contorno dell'oggetto paddle
+     *
+     * @return bounds rettangolo che fa da contorno dell'oggetto paddle
      */
     public Rectangle getBounds() {
         bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.getInstance().getPaddleresizex().get(giocatore-1), Paddle.this.getHeight() * Info.getInstance().getPaddleresize());
@@ -82,7 +88,8 @@ public class Paddle extends Sprite{
     /**
      * Questo metodo imposta il numero del giocatore
      * proprietario del corrispondente paddle
-     * @param giocatore : intero che indica l'id del giocatore proprietario del paddle
+     *
+     * @param giocatore intero che indica l'id del giocatore proprietario del paddle
      */
     public void setGiocatore(int giocatore) {
         this.giocatore = giocatore;
@@ -91,7 +98,8 @@ public class Paddle extends Sprite{
     /**
      * Questo metodo restituisce il numero del giocatore
      * proprietario del corrispondente paddle
-     * @return giocatore : intero che indica l'id del giocatore proprietario del paddle
+     *
+     * @return giocatore intero che indica l'id del giocatore proprietario del paddle
      */
     public int getGiocatore() {
         return giocatore;

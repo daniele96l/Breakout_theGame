@@ -5,9 +5,10 @@ import sprites.Ball;
 import sprites.Paddle;
 
 /**
- * @author Cristian Regna, Alberto Schillaci
  * Questa classe rappresenta l'oggetto PowerUp che toglie
  * una vita al giocatore che lo prende
+ *
+ * @author Cristian Regna, Alberto Schillaci
  */
 public class LostLife extends AbstractPowerUp{
     public LostLife(int posX, int posY) {

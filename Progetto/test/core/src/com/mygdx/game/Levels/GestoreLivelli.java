@@ -12,10 +12,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * @author Ligato, Schillaci, Regna
  *
  * la classe gestisce i diversi livelli del gioco leggendo dai file in cui è specificata la struttura dei livelli
  * PATTERN PURE FABRICATION
+ *
+ * @author Ligato, Schillaci, Regna
  */
 
 public class GestoreLivelli {
@@ -57,13 +58,15 @@ public class GestoreLivelli {
      * @exception IllegalBricksNumber
      * @exception IllegalCharacter
      *
+     *
+     *
      */
     private void leggiFile(String nomeFile) {
         try {
             FileReader reader = new FileReader(nomeFile);
-            BufferedReader bufferedReader=new BufferedReader(reader);
+            BufferedReader bufferedReader = new BufferedReader(reader);
             String buffer;
-            Livello livello=new Livello(startPosX, startPosY, numBrickX, numBrickY);
+            Livello livello = new Livello(startPosX, startPosY, numBrickX, numBrickY);
             while((buffer=bufferedReader.readLine())!=null) {
                 String[] bufferSplit=buffer.split(" ");
                 if(bufferSplit[0].equals("background")) {

@@ -6,8 +6,9 @@ import help.Info;
 import sprites.Paddle;
 
 /**
- * @Author Regna, Schillaci, Ligato
  * Si occupa di gestire i movimenti del Player
+ *
+ * @author Regna, Schillaci,
  */
 
 public class CommandPlayer {
@@ -19,6 +20,7 @@ public class CommandPlayer {
 
     /**
      * Salva i seguenti valori nei parametri
+     *
      * @param paddle la mattonella che muoviamo
      * @param player l'oggetto giocatore
      * @param numeroGiocatori il numero dei giocatori
@@ -33,8 +35,9 @@ public class CommandPlayer {
     }
 
     /**
-     * Metodo che si occupa di muovere la paddle, dato l'input da tastiera dell'utente
-     * @see: move(int key)
+     * Metodo che si occupa di muovere la paddle, dato l'input da tastiera dell'utente.
+     *
+     * @see Player per risalire al metodo keyPressed().
      */
 
     public void move()
@@ -43,8 +46,8 @@ public class CommandPlayer {
     }
 
     /**
-     * La classe che si occupa di muovere la paddle, secondo le frecce destra e sinistra
-     * controllo quindi che non vada oltre ai bordi destro e sinistro
+     * La classe che si occupa di muovere la paddle, secondo le frecce destra e sinistra.
+     * Si controlla quindi che non vada oltre ai bordi dello spazio disponibile per il paddle.
      *
      * @param key intero rappresentante l'input da tastiera
      */
@@ -70,7 +73,8 @@ public class CommandPlayer {
 
     /**
      * Controllo che il gioco sia in pausa
-     * @return un booleano che indica se si è in pausa o meno
+     *
+     * @return boolean che indica se si è in pausa o meno
      */
     public boolean checkpause(){
         if(player.keyPressed()==Input.Keys.P){

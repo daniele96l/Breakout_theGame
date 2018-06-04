@@ -9,6 +9,12 @@ import javax.swing.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+/**
+ * @author ?
+ *
+ * La classe gestisce alcuni eventi delle schermate permettendo la visualizzazione di alcune finestre di
+ * dialogo per l'iserimento di informazioni varie
+ */
 
 public class ScreenHandler
 {
@@ -19,6 +25,11 @@ public class ScreenHandler
 
     }
 
+    /**
+     *
+     * @param game è la schermata di gioco
+     *
+     */
     void gestisciMenu(BreakGame game) {
         game.setScreen(new ScoreScreen(game));
     }
@@ -27,6 +38,15 @@ public class ScreenHandler
         Gdx.app.exit();
     }
 
+    /**
+     * @param game è la scherata di gioco
+     *
+     * il metodo si occupa di far comparire una finestra di dialogo con l'utente che ha selezionato la modalità
+     * di gioco "Single Player" in cui viene chiesto il nickName con cui vuole giocare.
+     * Una volta che l'utente ha inserito il nickname, viene creata la schermata di gioco offline.
+     * Se l'utente non inserisce il nome, compare una schermata di errore.
+     *
+     */
     void singlePlayer(BreakGame game)
     {
         OfflineGameScreen.setPlayerName(JOptionPane.showInputDialog(null, "Enter a nickname", "Nickname ", 1));
@@ -37,6 +57,17 @@ public class ScreenHandler
         }
     }
 
+    /**
+     * @param game è la schermata di gioco
+     *
+     * Il metodo si occupa di far comparire una finestra di dialogo con l'utente che ha selezionato la modalità
+     * di gioco "Multiplayer Offline" in cui viene richiesto il nickname con cui l'utente vuole giocare. Se l'utente
+     * non inserisce il nome, compare una finestra di errore. Viene poi  fatta comparire una finestra di dialogo
+     * in cui viene richiesto il numero di giocatori con cui con cui l'utente intende giocare. Ancora una volta viene
+     * mostrata una finestra di errore se l'utente non inserisce nulla o se inserisce un numero errato o qualcosa di
+     * diverso da un numero.
+     *
+     */
     void multiplayerOffline(BreakGame game)
     {
         String numeroPlayer;
@@ -60,6 +91,10 @@ public class ScreenHandler
             }
         }
     }
+
+    /**
+     * il metodo si occupa della chiusura della schermata quando viene premuto il tasto "EXIT" nella schermata di pausa.
+     */
     void pauseExit(){
         try
         {
@@ -70,6 +105,13 @@ public class ScreenHandler
 
 
     }
+
+    /**
+     * @param game è la schermata di gioco
+     *
+     * il metodo si occupa di far visualizzare il menù principale sulla schermata di gioco
+     *
+     */
     void mainMenu(BreakGame game)
     {
         try {
@@ -79,6 +121,12 @@ public class ScreenHandler
         }
 
     }
+
+    /**
+     * ??????
+     * @param game
+     * @param oldScreen
+     */
     void pauseResume(BreakGame game, OfflineGameScreen oldScreen)
     {
         try
@@ -90,6 +138,16 @@ public class ScreenHandler
 
 
     }
+
+    /**
+     * il metodo si occupa di far comparire una finestra di dialogo con l'utente che ha selezionato la modalità di
+     * gioco "Multiplayer Online" in cui viene richesto l'indirizzo IP del server a cui ci si deve connettere per
+     * giocare. Qualora la connessione vada a buon fine, viene richiesto all'utente il nickname con cui intende giocare.
+     * Per entrambe le finestre di dialogo, viene visualizzato un messaggio di errore se l'utente non inserisce
+     * correttamente le informazioni richieste.
+     *
+     * @param game è la schermata di gioco
+     */
     void multiplayerOnline(BreakGame game)
     {
 
@@ -109,7 +167,12 @@ public class ScreenHandler
         }
     }
 
-
+    /**
+     * descrizione: ...??
+     *
+     * @param s
+     * @return
+     */
     private boolean isNumeric(String s) {
         return s != null && s.matches("[-+]?\\d*\\.?\\d+");
     }

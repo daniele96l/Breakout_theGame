@@ -15,10 +15,13 @@ import sprites.powerup.PowerUp;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Collision
+/**
+ *
+ * @author ??
+ *
+ */
 
-
-{
+public class Collision {
     private Ball palla;
     private ArrayList<Brick> bricks;
     private ArrayList<PowerUp> powerUps;
@@ -28,8 +31,7 @@ public class Collision
     private Rectangle rectangle;
     private Music musicBrick;
 
-    public Collision(Ball palla, ArrayList<Brick> bricks, ArrayList<PowerUp> powerUps, ArrayList<Paddle> paddles, ArrayList<Player> players)
-    {
+    public Collision(Ball palla, ArrayList<Brick> bricks, ArrayList<PowerUp> powerUps, ArrayList<Paddle> paddles, ArrayList<Player> players) {
         this.musicBrick = Gdx.audio.newMusic(Gdx.files.internal("audio.mp3"));
         int pallaX=(int)(palla.getBoundsBall().x+palla.getSpeedBall().x* Info.getInstance().getDt());
         int pallaY=(int)(palla.getBoundsBall().y+palla.getSpeedBall().y*Info.getInstance().getDt());
@@ -41,13 +43,17 @@ public class Collision
         this.players=players;
     }
 
+    /**
+     * @return
+     *
+     *  ?? ??
+     */
     public int checkBrickCollision() {
 
         ArrayList<Brick> eliminabili = new ArrayList<Brick>();
         int matEliminati=0;
 
         for (Brick brick : bricks) {
-
             if (brick.getBoundsBrick().overlaps(rectangle)) {
                 eliminabili.add(brick);
             }
@@ -110,7 +116,7 @@ public class Collision
     }
 
 
-    public void checkBorderCollision(){
+    public void checkBorderCollision() {
         if(rectangle.x>Info.getInstance().getLarghezza()-palla.getWidth()*Info.getInstance().getBallresize())//controllocherimbalziadestra
             palla.getSpeedBall().set(-palla.getSpeedBall().x,palla.getSpeedBall().y);
         if(rectangle.y>Info.getInstance().getAltezza()-palla.getHeight()*Info.getInstance().getBallresize())//controllocherimbalzisu
@@ -120,7 +126,7 @@ public class Collision
     }
 
 
-    public int checkPaddleCollision(int gameHolder){
+    public int checkPaddleCollision(int gameHolder) {
 
         for(Paddle paddle:paddles) {
             if (collides(palla.getBoundsBall(), paddle)) {
@@ -136,7 +142,7 @@ public class Collision
         return gameHolder;
     }
 
-    private boolean collides(Rectangle boundsBall,Paddle paddle){
+    private boolean collides(Rectangle boundsBall,Paddle paddle) {
         if(boundsBall.y<3/4*paddle.getHeight()*Info.getInstance().getPaddleresize())
             return false;
         return boundsBall.overlaps(paddle.getBounds());

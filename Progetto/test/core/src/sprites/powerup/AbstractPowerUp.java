@@ -12,10 +12,11 @@ import sprites.Paddle;
 import java.io.Serializable;
 
 /**
- * @author Alberto Schillaci
  * Questa classe definisce l'oggetto astratto PowerUp, vale a dire un potenziamento/depotenziamento
  * (es. aggiunge/toglie vite al giocatore, allarga/diminuisce la larghezza della paddle)
  * che cade dal mattonicino appena colpito dal giocatore
+ *
+ * @author Alberto Schillaci
  */
 public abstract class AbstractPowerUp extends Sprite implements PowerUp {
     protected Vector2 position;
@@ -38,11 +39,6 @@ public abstract class AbstractPowerUp extends Sprite implements PowerUp {
      */
     public abstract void effect(Player player, Paddle paddle, Ball palla);
 
-
-    /**
-     *
-     * @return
-     */
     public Rectangle getBounds() {
         return bounds;
     }

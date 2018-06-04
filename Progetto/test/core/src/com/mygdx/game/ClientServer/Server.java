@@ -349,7 +349,7 @@ public class Server extends Game {
     /**
      * Genera un numero casuale che servirà per la generazione dei power up in maniera pseudo casuale
      *
-     * @return String
+     * @return String che è il numero casuale generato
      */
 
     private String ranGen() {

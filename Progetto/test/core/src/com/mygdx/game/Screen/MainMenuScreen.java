@@ -8,10 +8,9 @@ import com.mygdx.game.BreakGame;
 import com.mygdx.game.logic.Resizer;
 
 /**
- * @author Ligato, Schillaci, Regna
- *
  * La classe che gestisce il memù principale con tutti i suoi bottoni
  *
+ * @author Ligato, Schillaci, Regna
  */
 public class MainMenuScreen implements Screen {
     private Texture menu;
@@ -63,10 +62,9 @@ public class MainMenuScreen implements Screen {
 
 
     /**
+     * Disegna le parti grafiche che verranno visualizzate nel manù e si occupa di controllare se clicchi sopra alcune di queste, ovvero i bottoni
      *
      * @param delta è l'intervallo di tempo che intercorre tra ogni chiamata del metodo render
-     *
-     * Disegna le parti grafiche che verranno visualizzate nel manù e si occupa di controllare se clicchi sopra alcune di queste, ovvero i bottoni
      */
     @Override
     public void render(float delta) {
@@ -80,11 +78,11 @@ public class MainMenuScreen implements Screen {
     }
 
     /**
+     * si occupa di ridimensionare la finestra
      *
      * @param width larghezza della finestra
      * @param height altezza della finestra
      *
-     * si occupa di ridimensionare la finestra
      */
 
     @Override
