@@ -39,7 +39,7 @@ public class ScreenHandler
     }
 
     /**
-     * @param game è la scherata di gioco
+     * @param game è la schermata di gioco
      *
      * il metodo si occupa di far comparire una finestra di dialogo con l'utente che ha selezionato la modalità
      * di gioco "Single Player" in cui viene chiesto il nickName con cui vuole giocare.

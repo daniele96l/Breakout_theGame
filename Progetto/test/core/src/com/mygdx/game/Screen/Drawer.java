@@ -64,7 +64,7 @@ public class Drawer
      * @param exitbutton  l'altezza del bottone "exit"
      *
      */
-    static void drawMainMenu(BreakGame game, Texture menu,Texture playButton,Texture exitButton,Texture multiplayerofflineButton,Texture score,Texture multiplayeronlineButton,int playbutton,int onlinebutton ,int offlinebutton,int scorebutton,int exitbutton)
+    public static void drawMainMenu(BreakGame game, Texture menu,Texture playButton,Texture exitButton,Texture multiplayerofflineButton,Texture score,Texture multiplayeronlineButton,int playbutton,int onlinebutton ,int offlinebutton,int scorebutton,int exitbutton)
     {
         game.getBatch().begin();
         game.getBatch().draw(menu, 0, 0);
@@ -86,7 +86,7 @@ public class Drawer
      * @param palla l'oggetto palla
      *
      */
-    static void drawMultiplayer(ArrayList<Brick> bricks, BreakGame game, ArrayList<PowerUp> powerUps, int numeroPlayer, ArrayList<Paddle> paddles, Ball palla)
+    public static void drawMultiplayer(ArrayList<Brick> bricks, BreakGame game, ArrayList<PowerUp> powerUps, int numeroPlayer, ArrayList<Paddle> paddles, Ball palla)
     {
         game.getBatch().begin();
         for (Brick b : bricks) {
@@ -114,7 +114,7 @@ public class Drawer
      * @param gameOver la texture della schermata di game over
      *
      */
-    static void drawLoseScreen(BreakGame game,Texture gameOver)
+    public static void drawLoseScreen(BreakGame game,Texture gameOver)
     {
         game.getBatch().begin();
         game.getBatch().draw(gameOver, 0, 0);
@@ -136,7 +136,7 @@ public class Drawer
      * @param palla
      *
      */
-    static void drawMultiplayerOffline(BreakGame game, Texture bg, ArrayList<Brick> bricks, ArrayList<Player> players, ArrayList<PowerUp> powerUps, ArrayList<Paddle> paddles, Ball palla, int numeroPlayer)
+    public static void drawMultiplayerOffline(BreakGame game, Texture bg, ArrayList<Brick> bricks, ArrayList<Player> players, ArrayList<PowerUp> powerUps, ArrayList<Paddle> paddles, Ball palla, int numeroPlayer)
     {
         // togliere il numeroPlayer dalla firma del metodo
         game.getBatch().draw(bg, 0, 0);
@@ -159,14 +159,14 @@ public class Drawer
         game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.getInstance().getBallresize(), palla.getHeight() * Info.getInstance().getBallresize());
 
     }
-    static void drawPauseScreen(BreakGame game,Texture menu,Texture resumeButton,Texture exitButton, Texture menuButton)
+    public static void drawPauseScreen(BreakGame game,Texture menu,Texture resumeButton,Texture exitButton, Texture menuButton)
     {
         game.getBatch().draw(menu, 0, 0);
         game.getBatch().draw(resumeButton, Info.getInstance().getLarghezza() / 2 - resumeButton.getWidth() / 2, 550);//alpostodimetterlicosipossousaredellecostanti
         game.getBatch().draw(exitButton, Info.getInstance().getLarghezza() / 2 - exitButton.getWidth() / 2, 150);
         game.getBatch().draw(menuButton, Info.getInstance().getLarghezza() / 2 - menuButton.getWidth() / 2, 350);
     }
-    static void drawScoreScreen(BreakGame game,Texture scoreScreen,Texture backButton,int backbuttonx,int backbuttony)
+    public static void drawScoreScreen(BreakGame game,Texture scoreScreen,Texture backButton,int backbuttonx,int backbuttony)
     {
         game.getBatch().draw(scoreScreen, 0, 0);
         game.getBatch().draw(backButton, backbuttonx, backbuttony);

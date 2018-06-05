@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import help.Info;
 
 /**
- * La classe Ball contiene tutte le informazioni e variabili del paddle
+ * La classe Paddle contiene tutte le informazioni e variabili del paddle
  * per corretto il funzionamento del gioco, quali per esempio la sua texture, il suo
  * suo vettore posizione, la sua velocità, la dimensione e quale giocatore ne è in posseso
  *
