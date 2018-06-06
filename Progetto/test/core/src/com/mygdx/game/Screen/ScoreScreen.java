@@ -1,19 +1,8 @@
 package com.mygdx.game.Screen;
 
-import DatabaseManagement.Database;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.BreakGame;
-import com.mygdx.game.Leaderboard.Score;
 import com.mygdx.game.logic.Resizer;
-import help.GameState;
-
-import java.util.ArrayList;
 
 /**
  * La classe gestisce la schermata della classifica
