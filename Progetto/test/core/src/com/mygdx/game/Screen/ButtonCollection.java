@@ -24,8 +24,8 @@ public class ButtonCollection {
 
         menuButtons.add(new Button("play.png", 530 ));
         menuButtons.add(new Button("exit.png", 50 ));
-        menuButtons.add(new Button("multiplayeroffline.png", 290 ));
-        menuButtons.add(new Button("multiplayeronline.png", 410 ));
+        menuButtons.add(new Button("multiplayeroffline.png", 410 ));
+        menuButtons.add(new Button("multiplayeronline.png", 290 ));
         menuButtons.add(new Button("score.png", 170 ));
 
         pauseButtons.add(new Button("resume.png", 550));

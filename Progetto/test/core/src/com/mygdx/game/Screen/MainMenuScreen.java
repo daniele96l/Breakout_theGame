@@ -13,35 +13,19 @@ import com.mygdx.game.logic.Resizer;
  * @author Ligato, Schillaci, Regna
  */
 public class MainMenuScreen implements Screen {
-    private Texture menu;
-    private Texture playButtonText;
-    private Texture exitButtonText;
-    private Texture mulOfflineButtonText;
-    private Texture scoreButtonText;
-    private Texture mulOnlineButtonText;
+
     private int newHeight, newWidth;
     BreakGame game;
     private float coeffDimensionale;
-    float barreNere = 0;
-    ScreenHandler screenHandler;
-    private int playbutton;
-    private int onlinebutton;
-    private int offlinebutton;
-    private int scorebutton;
-    private int exitbutton;
+    private float barreNere = 0;
+    private ScreenHandler screenHandler;
+
     private Resizer resizer;
-    float tempVet[];
+    private float tempVet[];
 
     public MainMenuScreen(BreakGame game) {
         this.game = game;
         screenHandler = new ScreenHandler();
-        playbutton = 530;
-        onlinebutton=410;
-        offlinebutton=290;
-        scorebutton=170;
-        exitbutton=50;
-
-
     }
 
     /**
@@ -49,12 +33,6 @@ public class MainMenuScreen implements Screen {
      */
     @Override
     public void show() {
-        menu = new Texture("menuscreen.jpg");
-        playButtonText = new Texture("play.png");
-        exitButtonText = new Texture("exit.png");
-        mulOfflineButtonText = new Texture("multiplayeroffline.png");
-        mulOnlineButtonText = new Texture("multiplayeronline.png");
-        scoreButtonText = new Texture("score.png");
         resizer = new Resizer();
         tempVet = new float[2];
 
@@ -71,7 +49,7 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Drawer.drawMainMenu(game);
-        InputTouch.checkInputTouchMainMenu(newWidth, scoreButtonText,  game,  coeffDimensionale,  playButtonText,  screenHandler,  newHeight,  barreNere,  scorebutton,  exitbutton,  playbutton,  onlinebutton,  exitButtonText,  offlinebutton);
+        InputTouch.checkInputTouchMainMenu(newWidth,  game,  coeffDimensionale, screenHandler,  newHeight,  barreNere);
     }
 
     /**

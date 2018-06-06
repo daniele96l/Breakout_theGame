@@ -28,7 +28,6 @@ import help.Info;
 public class PauseScreen implements Screen {
 
     private BreakGame game;
-    private Texture menuButton;
     private OfflineGameScreen oldScreen;
     private float newHeight, newWidth, coeffDimensionale = 1;
     private float barreNere =0;
@@ -56,7 +55,6 @@ public class PauseScreen implements Screen {
      */
     @Override
     public void show() {
-        menuButton = new Texture("menu.png");
         screenHandler=new ScreenHandler();
 
     }
@@ -72,7 +70,7 @@ public class PauseScreen implements Screen {
     public void render(float delta) { //Pattern Controller
 
         Drawer.drawPauseScreen(game);
-        InputTouch.checkInputPauseScreen(newWidth, game, coeffDimensionale, screenHandler, newHeight, barreNere, menuButton, oldScreen);
+        InputTouch.checkInputPauseScreen(newWidth, game, coeffDimensionale, screenHandler, newHeight, barreNere, oldScreen);
 
     }
 

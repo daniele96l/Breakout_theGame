@@ -25,12 +25,8 @@ import java.util.ArrayList;
 public class ScoreScreen implements Screen {
 //Applicato HighCoesion
 
-    private Texture menu, backButton;
-    BitmapFont bitmapFont;
     private float newHeight, newWidth, coeffDimensionale = 1;
-    float barreNere = 0;
-    int backbuttonx = 500;
-    int backbuttony = 50;
+    private float barreNere = 0;
     private float tempVet[];
     private BreakGame game;
     private Resizer resizer;
@@ -59,7 +55,7 @@ public class ScoreScreen implements Screen {
     public void render(float delta) {
         Drawer.drawScoreScreen(game);
 
-        InputTouch.checkInputScoreScreen(newWidth, backButton, coeffDimensionale, game, newHeight, backbuttony, barreNere);
+        InputTouch.checkInputScoreScreen(newWidth, coeffDimensionale, game, newHeight, barreNere);
     }
 
 
