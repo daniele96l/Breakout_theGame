@@ -38,7 +38,7 @@ public class SpriteFactory {
      * @return
      * @throws IllegalPowerUp
      */
-    public static PowerUp getPowerUp(String powerUp, int posX, int posY) throws IllegalPowerUp {
+    public PowerUp getPowerUp(String powerUp, int posX, int posY) throws IllegalPowerUp {
         if(powerUp==null) {
             throw new IllegalPowerUp();
         }
@@ -60,20 +60,20 @@ public class SpriteFactory {
     /**
      * descrizione metodo
      *
-     * @param powerUp
+     * @param brick
      * @param posX
      * @param posY
      * @return
      * @throws IllegalBrick
      */
-    public static Brick getBrick(String powerUp, int posX, int posY) throws IllegalBrick {
-        if(powerUp==null) {
+    public Brick getBrick(String brick, int posX, int posY) throws IllegalBrick {
+        if(brick==null) {
             throw new IllegalBrick();
         }
-        else if(powerUp.equals("NormalBrick")) {
+        else if(brick.equals("NormalBrick")) {
             return new NormalBrick(posX, posY);
         }
-        else if(powerUp.equals("HardBrick")) {
+        else if(brick.equals("HardBrick")) {
             return new HardBrick(posX, posY);
         }
         else throw new IllegalBrick();
