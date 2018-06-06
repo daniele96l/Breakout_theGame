@@ -10,10 +10,10 @@ package com.mygdx.game.logic;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.BreakGame;
-import com.mygdx.game.Graphics.Screen.ButtonCollection;
-import com.mygdx.game.Graphics.Screen.MainMenuScreen;
-import com.mygdx.game.Graphics.Screen.OfflineGameScreen;
-import com.mygdx.game.Graphics.sprites.Button;
+import com.mygdx.game.graphics.sprites.Button.ButtonCollection;
+import com.mygdx.game.graphics.Screen.MainMenuScreen;
+import com.mygdx.game.graphics.Screen.OfflineGameScreen;
+import com.mygdx.game.graphics.sprites.Button.Button;
 
 import java.util.ArrayList;
 

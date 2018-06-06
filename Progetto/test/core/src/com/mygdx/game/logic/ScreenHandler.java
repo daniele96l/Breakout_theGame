@@ -2,10 +2,10 @@ package com.mygdx.game.logic;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.BreakGame;
-import com.mygdx.game.Graphics.Screen.MainMenuScreen;
-import com.mygdx.game.Graphics.Screen.MultiplayerGameScreen;
-import com.mygdx.game.Graphics.Screen.OfflineGameScreen;
-import com.mygdx.game.Graphics.Screen.ScoreScreen;
+import com.mygdx.game.graphics.Screen.MainMenuScreen;
+import com.mygdx.game.graphics.Screen.MultiplayerGameScreen;
+import com.mygdx.game.graphics.Screen.OfflineGameScreen;
+import com.mygdx.game.graphics.Screen.ScoreScreen;
 
 import javax.swing.*;
 

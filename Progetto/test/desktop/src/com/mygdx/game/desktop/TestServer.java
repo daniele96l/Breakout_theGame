@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.ClientServer.Server;
+import com.mygdx.game.clientserver.Server;
 
 /**
  * @author regna, schillaci

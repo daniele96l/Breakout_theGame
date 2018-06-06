@@ -3,14 +3,14 @@ package com.mygdx.game.logic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Player.Player;
+import com.mygdx.game.logic.Player.Player;
 import com.mygdx.game.help.Info;
-import com.mygdx.game.Graphics.sprites.Ball;
-import com.mygdx.game.Graphics.sprites.Brick.Brick;
+import com.mygdx.game.graphics.sprites.Ball;
+import com.mygdx.game.graphics.sprites.Brick.Brick;
 
 import  com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.Graphics.sprites.Paddle;
-import com.mygdx.game.Graphics.sprites.powerup.PowerUp;
+import com.mygdx.game.graphics.sprites.Paddle;
+import com.mygdx.game.graphics.sprites.powerup.PowerUp;
 
 import java.util.ArrayList;
 import java.util.Date;

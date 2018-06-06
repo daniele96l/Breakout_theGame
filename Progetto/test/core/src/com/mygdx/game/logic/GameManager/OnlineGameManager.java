@@ -2,18 +2,18 @@ package com.mygdx.game.logic.GameManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
-import com.mygdx.game.ClientServer.Server;
-import com.mygdx.game.Player.CommandPlayer;
+import com.mygdx.game.clientserver.Server;
+import com.mygdx.game.logic.Player.CommandPlayer;
 import com.mygdx.game.logic.Levels.GestoreLivelli;
-import com.mygdx.game.Player.HumanPlayer;
-import com.mygdx.game.Player.Player;
+import com.mygdx.game.logic.Player.HumanPlayer;
+import com.mygdx.game.logic.Player.Player;
 import com.mygdx.game.help.GameState;
 import com.mygdx.game.help.Info;
 import com.mygdx.game.help.Timer;
-import com.mygdx.game.Graphics.sprites.Ball;
-import com.mygdx.game.Graphics.sprites.Brick.Brick;
-import com.mygdx.game.Graphics.sprites.Paddle;
-import com.mygdx.game.Graphics.sprites.powerup.PowerUp;
+import com.mygdx.game.graphics.sprites.Ball;
+import com.mygdx.game.graphics.sprites.Brick.Brick;
+import com.mygdx.game.graphics.sprites.Paddle;
+import com.mygdx.game.graphics.sprites.powerup.PowerUp;
 import java.util.ArrayList;
 import java.util.Date;
 

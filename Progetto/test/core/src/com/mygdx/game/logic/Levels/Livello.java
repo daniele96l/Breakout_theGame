@@ -15,10 +15,10 @@ import com.mygdx.game.eccezioni.IllegalBricksNumber;
 import com.mygdx.game.eccezioni.IllegalCharacter;
 import com.mygdx.game.eccezioni.IllegalPowerUp;
 import com.mygdx.game.help.Info;
-import com.mygdx.game.Graphics.sprites.Brick.Brick;
-import com.mygdx.game.Graphics.sprites.Brick.NormalBrick;
-import com.mygdx.game.Graphics.sprites.Brick.HardBrick;
-import com.mygdx.game.Graphics.sprites.SpriteFactory;
+import com.mygdx.game.graphics.sprites.Brick.Brick;
+import com.mygdx.game.graphics.sprites.Brick.NormalBrick;
+import com.mygdx.game.graphics.sprites.Brick.HardBrick;
+import com.mygdx.game.graphics.sprites.SpriteFactory;
 
 import java.util.ArrayList;
 
