@@ -1,35 +1,13 @@
 package com.mygdx.game.Screen;
 
-import DatabaseManagement.Database;
-import DatabaseManagement.Enum.DropType;
-import DatabaseManagement.Enum.TableType;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Scaling;
 import com.mygdx.game.BreakGame;
-import com.mygdx.game.Collision;
-import com.mygdx.game.CommandPlayer;
-import com.mygdx.game.GameManager.GameManager;
 import com.mygdx.game.GameManager.OfflineGameManager;
-import com.mygdx.game.Leaderboard.Score;
-import com.mygdx.game.Levels.GestoreLivelli;
-import com.mygdx.game.Player.HumanPlayer;
-import com.mygdx.game.Player.Player;
-import com.mygdx.game.Player.RobotPlayer;
-import com.mygdx.game.hud.Hud;
 import help.GameState;
 import help.*;
-import sprites.Ball;
-import sprites.Brick.Brick;
-import sprites.Paddle;
-import sprites.powerup.PowerUp;
-
-import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * @author Ligato, Schillaci, Regna

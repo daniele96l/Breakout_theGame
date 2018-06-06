@@ -2,7 +2,6 @@ package com.mygdx.game.GameManager;
 
 import DatabaseManagement.Database;
 import DatabaseManagement.Enum.DropType;
-import DatabaseManagement.Enum.TableType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
@@ -141,7 +140,7 @@ public class OfflineGameManager extends GameManager {
             if (isFinished) {
                 livelloCorrente = 1;
                 isFinished = false;
-                db.modify(""+(int)Math.random()*1000, playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
+                db.modify(""+(int)Math.random()*1000, playerName, players.get(0).getScore(), DropType.INSERT);
                 updateScene();
                 updateLevel();
                 game.setScreen(new FinishScreen(game));
@@ -172,7 +171,7 @@ public class OfflineGameManager extends GameManager {
 
     protected void deletePlayer(Player loser) {
         if(players.get(0).equals(loser)) {
-            db.modify(""+(int)Math.random()*1000, playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
+            db.modify(""+(int)Math.random()*1000, playerName, players.get(0).getScore(), DropType.INSERT);
             gameState=GameState.GAME_OVER;
         }
         else {

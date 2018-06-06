@@ -1,7 +1,6 @@
 package com.mygdx.game.Screen;
 
 import DatabaseManagement.Database;
-import DatabaseManagement.Enum.TableType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
