@@ -7,9 +7,9 @@
 package com.mygdx.game.Player;
 
 import com.badlogic.gdx.Input;
-import help.Info;
-import sprites.Ball;
-import sprites.Paddle;
+import com.mygdx.game.help.Info;
+import com.mygdx.game.Graphics.sprites.Ball;
+import com.mygdx.game.Graphics.sprites.Paddle;
 
 /**
  * La classe crea e gestisce il giocatore artificiale

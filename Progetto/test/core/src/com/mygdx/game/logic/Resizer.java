@@ -11,7 +11,7 @@ package com.mygdx.game.logic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Scaling;
-import help.Info;
+import com.mygdx.game.help.Info;
 
 /**
  *
@@ -69,4 +69,5 @@ public class Resizer {
         return tempVet;
 
     }
+
 }

@@ -1,7 +1,5 @@
 package com.mygdx.game.ClientServer;
 
-import sprites.Paddle;
-
 import java.io.*;
 import java.net.*;
 

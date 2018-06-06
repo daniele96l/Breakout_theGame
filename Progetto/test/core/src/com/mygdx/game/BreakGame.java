@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Screen.MainMenuScreen;
+import com.mygdx.game.Graphics.Screen.MainMenuScreen;
 
 /**
  * La classe rappresenta la schermata di gioco visualizzata sullo schermo

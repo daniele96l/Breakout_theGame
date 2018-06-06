@@ -1,8 +1,8 @@
 
 package com.mygdx.game.ClientServer;
 import com.badlogic.gdx.Game;
-import com.mygdx.game.CommandPlayer;
-import com.mygdx.game.GameManager.OnlineGameManager;
+import com.mygdx.game.Player.CommandPlayer;
+import com.mygdx.game.logic.GameManager.OnlineGameManager;
 import javax.swing.*;
 
 import java.io.IOException;

@@ -4,7 +4,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import com.mygdx.game.BreakGame;
-import help.Info;
+import com.mygdx.game.help.Info;
 
 /**
  * @author ligato,schillaci, regna

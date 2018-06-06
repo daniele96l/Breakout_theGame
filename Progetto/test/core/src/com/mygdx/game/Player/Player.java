@@ -1,7 +1,6 @@
 package com.mygdx.game.Player;
 
-import com.badlogic.gdx.Input;
-import help.Info;
+import com.mygdx.game.help.Info;
 
 /**
  * La classe che identifica il giocatore con le sue rispettive caratteristiche come numero di vite, nome, vite e punteggio.
