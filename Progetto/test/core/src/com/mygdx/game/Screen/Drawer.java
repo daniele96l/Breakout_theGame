@@ -53,11 +53,11 @@ import java.util.ArrayList;
 public class Drawer
 {
     /**
-     *Questo metodo si occupa di disegnare le texture che servono al menu, per cui disegerà i bottoni per la selezione delle diverse modalità
+     * Questo metodo si occupa di disegnare le texture che servono al menu, per cui disegerà i bottoni per la selezione delle diverse modalità.
      * di gioco, per la visualizzazione della classifica o per uscire dal gioco.
-     *ntj
+     *
      * @param game la partita corrente
-     *      *
+     *
      */
     public static void drawMainMenu(BreakGame game)
     {
@@ -72,7 +72,7 @@ public class Drawer
     }
 
     /**
-     * il metodo si occupa di disegnare lo scenario della partita mentre si sta giocando, ad ogni frame
+     * Il metodo si occupa di disegnare lo scenario della partita mentre si sta giocando, ad ogni frame.
      *
      * @param bricks l'arrey list che contiene i miei mattoncini
      * @param game  la partita corrente
@@ -104,13 +104,12 @@ public class Drawer
     }
 
     /**
-     * il metodo permette di disegnare la schermata di game over quando tutte le vite vengono perse
+     * Il metodo permette di disegnare la schermata di game over quando tutte le vite vengono perse.
      *
      * @param game la partita corrente
      *
      */
-    public static void drawLoseScreen(BreakGame game)
-    {
+    public static void drawLoseScreen(BreakGame game) {
         Texture gameOver=new Texture("gameover.jpg");
         game.getBatch().begin();
         game.getBatch().draw(gameOver, 0, 0);
@@ -118,7 +117,7 @@ public class Drawer
     }
 
     /**
-     * il metodo si occupa di disegnare lo scenario della partita ad ogni frame quando si sceglie la modalità di gioco "MultiplayerOffline"
+     * Il metodo si occupa di disegnare lo scenario della partita ad ogni frame quando si sceglie la modalità di gioco "MultiplayerOffline".
      *
      * @param game la partita corrente
      * @param bg la texture che rappresenta lo sfondo che appare durante il gioco
@@ -129,8 +128,7 @@ public class Drawer
      * @param palla
      *
      */
-    public static void drawMultiplayerOffline(BreakGame game, Texture bg, ArrayList<Brick> bricks, ArrayList<Player> players, ArrayList<PowerUp> powerUps, ArrayList<Paddle> paddles, Ball palla)
-    {
+    public static void drawMultiplayerOffline(BreakGame game, Texture bg, ArrayList<Brick> bricks, ArrayList<Player> players, ArrayList<PowerUp> powerUps, ArrayList<Paddle> paddles, Ball palla)  {
         // togliere il numeroPlayer dalla firma del metodo
         game.getBatch().draw(bg, 0, 0);
         game.getBatch().end();
@@ -152,8 +150,7 @@ public class Drawer
         game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.getInstance().getBallresize(), palla.getHeight() * Info.getInstance().getBallresize());
 
     }
-    public static void drawPauseScreen(BreakGame game)
-    {
+    public static void drawPauseScreen(BreakGame game) {
         Texture menuScreen=new Texture("menuscreen.jpg");
         ArrayList<Button> pauseButtons=ButtonCollection.getInstance().getPauseButtons();
 
@@ -165,19 +162,16 @@ public class Drawer
         }
         game.getBatch().end();
     }
-    public static void drawScoreScreen(BreakGame game)
-    {
+    public static void drawScoreScreen(BreakGame game) {
         Database db=new Database();
         Texture menuScreen=new Texture("menuscreen.jpg");
         ArrayList<Button> scoreButtons=ButtonCollection.getInstance().getScoreButtons();
         BitmapFont bitmapFont = new BitmapFont();
         bitmapFont.setColor(Color.WHITE);
         bitmapFont.getData().setScale(1.6f);
-
         game.getBatch().begin();
         game.getBatch().draw(menuScreen, 0, 0);
         bitmapFont.draw(game.getBatch(), db.printTable(TableType.OFFLINE), 500, 704);
-        ;
         for(Button b:scoreButtons) {
             game.getBatch().draw(b, b.getX(), b.getY(), b.getWidth(), b.getHeight());
         }

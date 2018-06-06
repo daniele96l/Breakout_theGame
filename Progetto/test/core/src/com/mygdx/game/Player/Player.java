@@ -4,7 +4,7 @@ import com.badlogic.gdx.Input;
 import help.Info;
 
 /**
- * La classe che identifica il giocatore con le sue rispettive caratteristiche come, nome, vite e punteggio.
+ * La classe che identifica il giocatore con le sue rispettive caratteristiche come numero di vite, nome, vite e punteggio.
  *
  * @author Regna, Ligato, Schillaci
  */
@@ -15,7 +15,6 @@ public abstract class Player {
     protected int score;
 
     /**
-     *
      * @param playerName è il nome del giocatore
      */
 

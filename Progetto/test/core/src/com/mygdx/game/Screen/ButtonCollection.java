@@ -5,6 +5,12 @@ import sprites.Button;
 
 import java.util.ArrayList;
 
+
+/**
+ * Classe che crea e contiene gli arraylist dei pulsanti presenti nel main menu.
+ *
+ * @author Schillaci
+ */
 public class ButtonCollection {
     static ButtonCollection instance;
     private ArrayList<Button> menuButtons;
@@ -29,6 +35,12 @@ public class ButtonCollection {
         scoreButtons.add(new Button("menu.png", 50));
     }
 
+
+    /**
+     * Metodo che controlla e restituisce il tipo di pulsante
+     *
+     * @return instance
+     */
     public static ButtonCollection getInstance() {
         if (instance == null) {
             instance = new ButtonCollection();
