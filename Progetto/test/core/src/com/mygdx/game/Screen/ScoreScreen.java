@@ -27,13 +27,7 @@ public class ScoreScreen implements Screen {
 
     private Texture menu, backButton;
     BitmapFont bitmapFont;
-    private ArrayList<Score> scores;
-    private Score score;
-    private GameState gameState;
-    private Texture scoreScreen;
     private float newHeight, newWidth, coeffDimensionale = 1;
-    private static boolean drawn;
-    private Database db = new Database();
     float barreNere = 0;
     int backbuttonx = 500;
     int backbuttony = 50;
@@ -53,11 +47,6 @@ public class ScoreScreen implements Screen {
 
     @Override
     public void show() {
-        bitmapFont = new BitmapFont();
-        bitmapFont.setColor(Color.WHITE);
-        bitmapFont.getData().setScale(1.6f);
-        scores = new ArrayList<Score>();
-        scoreScreen = new Texture("menuscreen.jpg");
     }
 
     /**
@@ -68,15 +57,9 @@ public class ScoreScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        game.getBatch().begin();
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        backButton = new Texture("menu.png");
-        Drawer.drawScoreScreen(game, scoreScreen, backButton, backbuttonx, backbuttony);
-        bestScores(game.getBatch());
+        Drawer.drawScoreScreen(game);
 
         InputTouch.checkInputScoreScreen(newWidth, backButton, coeffDimensionale, game, newHeight, backbuttony, barreNere);
-        game.getBatch().end();
     }
 
 
@@ -94,15 +77,6 @@ public class ScoreScreen implements Screen {
         tempVet = resizer.toResize(height, width);
         barreNere = tempVet[0];
         coeffDimensionale = tempVet[1];
-    }
-
-    /**
-     * Inizia a disegnare i punteggi partendo dall'altezza y
-     *
-     * @param batch
-     */
-    public void bestScores(SpriteBatch batch) {
-        bitmapFont.draw(batch, db.printTable(TableType.OFFLINE), 500, 704);
     }
     @Override
     public void pause() {

@@ -70,11 +70,8 @@ public class MainMenuScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Drawer.drawMainMenu(game, menu, playButtonText, exitButtonText, mulOfflineButtonText, scoreButtonText, mulOnlineButtonText, playbutton, onlinebutton, offlinebutton, scorebutton, exitbutton);
-
-
+        Drawer.drawMainMenu(game);
         InputTouch.checkInputTouchMainMenu(newWidth, scoreButtonText,  game,  coeffDimensionale,  playButtonText,  screenHandler,  newHeight,  barreNere,  scorebutton,  exitbutton,  playbutton,  onlinebutton,  exitButtonText,  offlinebutton);
-        game.getBatch().end();
     }
 
     /**

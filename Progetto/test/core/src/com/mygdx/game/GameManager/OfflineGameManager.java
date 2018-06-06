@@ -106,7 +106,7 @@ public class OfflineGameManager extends GameManager {
         for(PowerUp p:tmpPUps) {
             powerUps.remove(p);
         }
-        Drawer.drawMultiplayerOffline( game,  bg, bricks, players, powerUps,  paddles,  palla, numeroPlayer);
+        Drawer.drawMultiplayerOffline( game,  bg, bricks, players, powerUps,  paddles,  palla);
         if (numeroPlayer > 1) {
             for (int i = 1; i < numeroPlayer; i++) {
                 game.getBatch().draw(paddles.get(i), paddles.get(i).getPosition().x, paddles.get(i).getPosition().y, paddles.get(i).getWidth() * Info.getInstance().getPaddleresizex().get(i), paddles.get(i).getHeight() * Info.getInstance().getPaddleresize());

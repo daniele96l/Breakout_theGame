@@ -22,9 +22,13 @@
 
 package com.mygdx.game.Screen;
 
+import DatabaseManagement.Database;
+import DatabaseManagement.Enum.TableType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.game.BreakGame;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.hud.Hud;
@@ -32,10 +36,12 @@ import help.Info;
 import sprites.Ball;
 import sprites.Brick.AbstractBrick;
 import sprites.Brick.Brick;
+import sprites.Button;
 import sprites.Paddle;
 import sprites.powerup.AbstractPowerUp;
 import sprites.powerup.PowerUp;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 
 /**
@@ -49,30 +55,20 @@ public class Drawer
     /**
      *Questo metodo si occupa di disegnare le texture che servono al menu, per cui disegerà i bottoni per la selezione delle diverse modalità
      * di gioco, per la visualizzazione della classifica o per uscire dal gioco.
-     *
+     *ntj
      * @param game la partita corrente
-     * @param menu la texture sfondo
-     * @param playButton la texture che rappresenta il bottone "play"
-     * @param exitButton la texture che rappresenta il bottone "exit"
-     * @param multiplayerofflineButton la texture che rappresenta il bottone "multiplayer offline"
-     * @param score la texture che rappresenta il bottone "score"
-     * @param multiplayeronlineButton  la texture che rappresenta il bottone "multiplayer online"
-     * @param playbutton  l'altezza del bottone play
-     * @param onlinebutton l'altezza del bottone "multiplayer online"
-     * @param offlinebutton l'altezza del bottone "multiplayer offline"
-     * @param scorebutton l'altezza del bottone "score"
-     * @param exitbutton  l'altezza del bottone "exit"
-     *
+     *      *
      */
-    public static void drawMainMenu(BreakGame game, Texture menu,Texture playButton,Texture exitButton,Texture multiplayerofflineButton,Texture score,Texture multiplayeronlineButton,int playbutton,int onlinebutton ,int offlinebutton,int scorebutton,int exitbutton)
+    public static void drawMainMenu(BreakGame game)
     {
+        ArrayList<Button> menuButtons=ButtonCollection.getInstance().getMenuButtons();
+        Texture menuTexture=new Texture("menuscreen.jpg");
         game.getBatch().begin();
-        game.getBatch().draw(menu, 0, 0);
-        game.getBatch().draw(playButton, Info.getInstance().getLarghezza() / 2 - playButton.getWidth() / 2, playbutton);//alpostodimetterlicosipossousaredellecostanti
-        game.getBatch().draw(exitButton, Info.getInstance().getLarghezza() / 2 - exitButton.getWidth() / 2, exitbutton);
-        game.getBatch().draw(multiplayeronlineButton, Info.getInstance().getLarghezza() / 2 - multiplayerofflineButton.getWidth() / 2, offlinebutton);//immaginibruttissime
-        game.getBatch().draw(score,Info.getInstance().getLarghezza() / 2 - score.getWidth() / 2, scorebutton );
-        game.getBatch().draw(multiplayerofflineButton,Info.getInstance().getLarghezza() / 2 - multiplayeronlineButton.getWidth() / 2, onlinebutton );
+        game.getBatch().draw(menuTexture,0,0);
+        for(Button b:menuButtons) {
+            game.getBatch().draw(b, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+        }
+        game.getBatch().end();
     }
 
     /**
@@ -111,16 +107,13 @@ public class Drawer
      * il metodo permette di disegnare la schermata di game over quando tutte le vite vengono perse
      *
      * @param game la partita corrente
-     * @param gameOver la texture della schermata di game over
      *
      */
-    public static void drawLoseScreen(BreakGame game,Texture gameOver)
+    public static void drawLoseScreen(BreakGame game)
     {
+        Texture gameOver=new Texture("gameover.jpg");
         game.getBatch().begin();
         game.getBatch().draw(gameOver, 0, 0);
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            game.setScreen(new MainMenuScreen(game));
-        }
         game.getBatch().end();
     }
 
@@ -136,7 +129,7 @@ public class Drawer
      * @param palla
      *
      */
-    public static void drawMultiplayerOffline(BreakGame game, Texture bg, ArrayList<Brick> bricks, ArrayList<Player> players, ArrayList<PowerUp> powerUps, ArrayList<Paddle> paddles, Ball palla, int numeroPlayer)
+    public static void drawMultiplayerOffline(BreakGame game, Texture bg, ArrayList<Brick> bricks, ArrayList<Player> players, ArrayList<PowerUp> powerUps, ArrayList<Paddle> paddles, Ball palla)
     {
         // togliere il numeroPlayer dalla firma del metodo
         game.getBatch().draw(bg, 0, 0);
@@ -159,17 +152,36 @@ public class Drawer
         game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.getInstance().getBallresize(), palla.getHeight() * Info.getInstance().getBallresize());
 
     }
-    public static void drawPauseScreen(BreakGame game,Texture menu,Texture resumeButton,Texture exitButton, Texture menuButton)
+    public static void drawPauseScreen(BreakGame game)
     {
-        game.getBatch().draw(menu, 0, 0);
-        game.getBatch().draw(resumeButton, Info.getInstance().getLarghezza() / 2 - resumeButton.getWidth() / 2, 550);//alpostodimetterlicosipossousaredellecostanti
-        game.getBatch().draw(exitButton, Info.getInstance().getLarghezza() / 2 - exitButton.getWidth() / 2, 150);
-        game.getBatch().draw(menuButton, Info.getInstance().getLarghezza() / 2 - menuButton.getWidth() / 2, 350);
+        Texture menuScreen=new Texture("menuscreen.jpg");
+        ArrayList<Button> pauseButtons=ButtonCollection.getInstance().getPauseButtons();
+
+        game.getBatch().begin();
+        game.getBatch().draw(menuScreen, 0, 0);
+
+        for(Button b:pauseButtons) {
+            game.getBatch().draw(b, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+        }
+        game.getBatch().end();
     }
-    public static void drawScoreScreen(BreakGame game,Texture scoreScreen,Texture backButton,int backbuttonx,int backbuttony)
+    public static void drawScoreScreen(BreakGame game)
     {
-        game.getBatch().draw(scoreScreen, 0, 0);
-        game.getBatch().draw(backButton, backbuttonx, backbuttony);
+        Database db=new Database();
+        Texture menuScreen=new Texture("menuscreen.jpg");
+        ArrayList<Button> scoreButtons=ButtonCollection.getInstance().getScoreButtons();
+        BitmapFont bitmapFont = new BitmapFont();
+        bitmapFont.setColor(Color.WHITE);
+        bitmapFont.getData().setScale(1.6f);
+
+        game.getBatch().begin();
+        game.getBatch().draw(menuScreen, 0, 0);
+        bitmapFont.draw(game.getBatch(), db.printTable(TableType.OFFLINE), 500, 704);
+        ;
+        for(Button b:scoreButtons) {
+            game.getBatch().draw(b, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+        }
+        game.getBatch().end();
     }
 
 }
