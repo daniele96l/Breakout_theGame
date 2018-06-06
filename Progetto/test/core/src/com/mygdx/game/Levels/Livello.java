@@ -11,6 +11,7 @@
 package com.mygdx.game.Levels;
 
 import com.badlogic.gdx.graphics.Texture;
+import eccezioni.IllegalBrick;
 import eccezioni.IllegalBricksNumber;
 import eccezioni.IllegalCharacter;
 import eccezioni.IllegalPowerUp;
@@ -75,19 +76,24 @@ public class Livello {
         for (int i = 0; i < line.length(); i++) {
             char c = line.charAt(i);
 
-            switch (c) {
-                case '.':
-                    break;
-                case '-':
-                    bricks.add(new NormalBrick(currentPosX, currentPosY));
-                    insertPowerUp(bricks.get(bricks.size()-1));
-                    nMatMorbidi++;
-                    break;
-                case '#':
-                    bricks.add(new HardBrick(currentPosX, currentPosY));
-                    break;
-                default:
-                    throw new IllegalCharacter(c);
+            try {
+                switch (c) {
+                    case '.':
+                        break;
+                    case '-':
+                        bricks.add(SpriteFactory.getInstance().getBrick("NormalBrick", currentPosX, currentPosY));
+                        insertPowerUp(bricks.get(bricks.size() - 1));
+                        nMatMorbidi++;
+                        break;
+                    case '#':
+                        bricks.add(SpriteFactory.getInstance().getBrick("HardBrick", currentPosX, currentPosY));
+                        break;
+                    default:
+                        throw new IllegalCharacter(c);
+                }
+            }
+            catch (IllegalBrick e) {
+                System.err.println(e.getMessage());
             }
             currentPosX += Info.getInstance().getBrickWidth()+Info.getInstance().getBrickGapX();
         }

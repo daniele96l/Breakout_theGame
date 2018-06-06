@@ -26,24 +26,24 @@ import java.util.ArrayList;
 public class InputTouch {
 
 
-    public static void checkInputTouchMainMenu(int newWight, BreakGame game, float coeffDimensionale, ScreenHandler screenHandler, int newHeight, float barreNere) {
+    public static void checkInputTouchMainMenu(int newWidth, BreakGame game, float coeffDimensionale, ScreenHandler screenHandler, int newHeight, float barreNere) {
         ArrayList<Button> menuButtons=ButtonCollection.getInstance().getMenuButtons();
 
         if (Gdx.input.justTouched()) {
-            if (Gdx.input.getX() > (newWight / 2) - ( menuButtons.get(4).getWidth() * coeffDimensionale) / 2 && (Gdx.input.getX() < newWight / 2 + (menuButtons.get(4).getWidth() * coeffDimensionale) / 2) && (newHeight - Gdx.input.getY() > menuButtons.get(4).getY() * coeffDimensionale + barreNere) && (newHeight - Gdx.input.getY() < menuButtons.get(4).getY() * coeffDimensionale + menuButtons.get(4).getHeight() * coeffDimensionale + barreNere)) {
+            if (Gdx.input.getX() > (newWidth / 2) - ( menuButtons.get(4).getWidth() * coeffDimensionale) / 2 && (Gdx.input.getX() < newWidth / 2 + (menuButtons.get(4).getWidth() * coeffDimensionale) / 2) && (newHeight - Gdx.input.getY() > menuButtons.get(4).getY() * coeffDimensionale + barreNere) && (newHeight - Gdx.input.getY() < menuButtons.get(4).getY() * coeffDimensionale + menuButtons.get(4).getHeight() * coeffDimensionale + barreNere)) {
                 screenHandler.gestisciMenu(game);
             }
-            if (Gdx.input.getX() > (newWight / 2) - (menuButtons.get(1).getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (menuButtons.get(1).getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > menuButtons.get(1).getY() * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < menuButtons.get(1).getY() * coeffDimensionale + menuButtons.get(1).getHeight() * coeffDimensionale + barreNere))) {
+            if (Gdx.input.getX() > (newWidth / 2) - (menuButtons.get(1).getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWidth + (menuButtons.get(1).getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > menuButtons.get(1).getY() * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < menuButtons.get(1).getY() * coeffDimensionale + menuButtons.get(1).getHeight() * coeffDimensionale + barreNere))) {
                 screenHandler.exit();
             }
-            if (Gdx.input.getX() > (newWight / 2) - (menuButtons.get(0).getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (menuButtons.get(0).getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > menuButtons.get(0).getY() * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < menuButtons.get(0).getY() * coeffDimensionale + menuButtons.get(0).getHeight() * coeffDimensionale + barreNere))) {
+            if (Gdx.input.getX() > (newWidth / 2) - (menuButtons.get(0).getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWidth + (menuButtons.get(0).getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > menuButtons.get(0).getY() * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < menuButtons.get(0).getY() * coeffDimensionale + menuButtons.get(0).getHeight() * coeffDimensionale + barreNere))) {
                 screenHandler.singlePlayer(game);
             }
-            if (Gdx.input.getX() > (newWight / 2) - (menuButtons.get(2).getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (menuButtons.get(2).getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > menuButtons.get(2).getY() * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < menuButtons.get(2).getY() * coeffDimensionale + menuButtons.get(2).getHeight() * coeffDimensionale + barreNere))) {
+            if (Gdx.input.getX() > (newWidth / 2) - (menuButtons.get(2).getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWidth + (menuButtons.get(2).getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > menuButtons.get(2).getY() * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < menuButtons.get(2).getY() * coeffDimensionale + menuButtons.get(2).getHeight() * coeffDimensionale + barreNere))) {
 
                 screenHandler.multiplayerOffline(game);
             }
-            if (Gdx.input.getX() > (newWight / 2) - (menuButtons.get(3).getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWight + (menuButtons.get(3).getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > menuButtons.get(3).getY() * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < menuButtons.get(3).getY() * coeffDimensionale + menuButtons.get(3).getHeight() * coeffDimensionale + barreNere))) {
+            if (Gdx.input.getX() > (newWidth / 2) - (menuButtons.get(3).getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWidth + (menuButtons.get(3).getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > menuButtons.get(3).getY() * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < menuButtons.get(3).getY() * coeffDimensionale + menuButtons.get(3).getHeight() * coeffDimensionale + barreNere))) {
                 screenHandler.multiplayerOnline(game);
             }
         }
