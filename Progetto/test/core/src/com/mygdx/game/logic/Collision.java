@@ -17,7 +17,7 @@ import java.util.Date;
 
 /**
  *
- * @author ??
+ * @author schillaci, regna, ligato
  *
  */
 

@@ -17,6 +17,8 @@ import java.net.UnknownHostException;
  *
  * La classe gestisce alcuni eventi delle schermate permettendo la visualizzazione di alcune finestre di
  * dialogo per l'iserimento di informazioni varie
+ *
+ * Questa classe è l'implementazione del pattern  CONTROLLER in quanto si occupa di far comunicare la logica e la grafica
  */
 
 public class ScreenHandler

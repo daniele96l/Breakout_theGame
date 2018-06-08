@@ -19,6 +19,14 @@ import java.util.Date;
 
 public class OnlineGameManager extends GameManager {
 
+
+    /**
+     * @author  schillaci, regna
+     *
+     * Questa classe si occupa di gestire il gioco quando lo si sta usando in modalità Online, gestisce infatti
+     * come si dovrà comportare l'interfaccia a seconda degli avvenimenti, come il numero di giocatori, o le
+     * interazioni con i mattoncini
+     */
     private boolean creato;
     private Date datetmp;
     private Server server;

@@ -28,6 +28,14 @@ import java.util.Date;
 
 public class OfflineGameManager extends GameManager {
 
+    /**
+     * @author ligato, schillaci, regna
+     *
+     * Questa classe si occupa di gestire il gioco quando lo si sta usando in modalità Offline, gestisce infatti
+     * come si dovrà comportare l'interfaccia a seconda degli avvenimenti, come il numero di giocatori, o le
+     * interazioni con i mattoncini
+     */
+
     private static String playerName;
     private boolean loop;
     private Music musicGame;
@@ -35,6 +43,11 @@ public class OfflineGameManager extends GameManager {
     private Hud hud;
     private boolean isPaused;
     private Database db = new Database();
+
+    /**
+     * Questa classe potrebbe pure fungere da pattern CREATOR(?)
+     * Dato che si occupa sia degli avvenimenti della logica sia  di mandare il comando ala grafica
+     */
 
 
     private OfflineGameScreen screen;
@@ -82,6 +95,12 @@ public class OfflineGameManager extends GameManager {
         bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
     }
 
+
+    /**
+     * Il metodo rendere mostra con aggiornamenti di 60fps i cambiamenti che verranno mostrati nell'interfaccia
+     * più precisamente controlla lo stato attuale in cui si trova il gioco, controlla il numero di giocatori correnti
+     * gestisce la posizione della pallina, i mattoncini ed i power up.
+     */
     @Override
     public void render() {
         game.getBatch().begin();
@@ -171,6 +190,12 @@ public class OfflineGameManager extends GameManager {
         game.getBatch().end();
     }
 
+    /**
+     * Questo metodo si occupa di controllare quando un giocatore ha perso, ed eventualmente eliminarlo della schermata,
+     * se il giocatore era uno, fa terminare il gioco.
+     *
+     * @param loser
+     */
     protected void deletePlayer(Player loser) {
         if(players.get(0).equals(loser)) {
             db.modify(""+(int)Math.random()*1000, playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
