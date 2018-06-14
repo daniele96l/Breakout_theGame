@@ -8,21 +8,20 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 public class InfoTest
 {
-    Info info = new Info();
     @Test
     public void testGetBrickWidth()
     {
-        assertEquals(720,info.getAltezza());
+        assertEquals(720,Info.getInstance().getBrickWidth());
     }
     @Test
     public void testGetVelPaddle()
     {
-        assertEquals(10,info.getVelPaddle());
+        assertEquals(10,Info.getInstance().getVelPaddle());
     }
     @Test
     public void testGetBrickHeight()
     {
-        assertEquals(1280,info.getLarghezza());
+        assertEquals(1280,Info.getInstance().getBrickHeight());
     }
 
 

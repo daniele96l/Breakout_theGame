@@ -33,7 +33,7 @@ public class Info {
     private int powerUpHeight;
     private int durataPowerUp;
 
-    public Info() {
+    private Info() {
         altezza = 720;
         larghezza = 1280;
         velBall = 7;
