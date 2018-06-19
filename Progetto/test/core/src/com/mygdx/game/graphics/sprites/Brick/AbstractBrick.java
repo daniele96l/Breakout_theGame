@@ -18,7 +18,6 @@ public abstract class AbstractBrick extends Sprite implements Brick{
 
     private Vector2 positionBrick;
     private Rectangle boundsBrick;
-    private boolean eliminato;
     private PowerUp powerUp;
     private boolean hasPowerUp;
     boolean deletable;
@@ -69,29 +68,10 @@ public abstract class AbstractBrick extends Sprite implements Brick{
         return positionBrick;
     }
 
-    public void delete() {
-        eliminato = true;
-    }
-
     public boolean isDeletable() {return deletable;}
-
-    public void setPositionBrick(Vector2 positionBrick) {
-        this.positionBrick = positionBrick;
-    }
-
-    public void setBoundsBrick(Rectangle boundsBrick) {
-        this.boundsBrick = boundsBrick;
-    }
-
-    public void setEliminato(boolean eliminato) {
-        this.eliminato = eliminato;
-    }
 
     public Rectangle getBoundsBrick() {
         return boundsBrick;
     }
 
-    public boolean isEliminato() {
-        return eliminato;
-    }
 }

@@ -76,7 +76,6 @@ public class OnlineGameManager extends GameManager {
      * @see:gestisciCollisioni();
      * @see:checktimerpowerup(); Gestisce lo stato della partita
      */
-    @Override
     public void render() {
         if (nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
             bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//ritorno l'array adatto al nuovo livello

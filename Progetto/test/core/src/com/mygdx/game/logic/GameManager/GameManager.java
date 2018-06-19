@@ -40,16 +40,6 @@ abstract class GameManager {
     ArrayList<Date> date;
     Timer timer;
 
-    /**
-     * Il metodo render aggiorna la schermata ogni frame e renderizza a schermo gli oggetti grafici:
-     * Prende i mattoncini e li renderizza, renderizza il background, seleziona la musica adatta allo stato e ne fa il play
-     * imposta la posizione della palla, gestisce l'arraylist dei powerUp (aggiungendoli o rimuovendoli), aggiorna la HUD
-     * e controlla lo stato corrente del gioco.
-     *
-     */
-
-    public abstract void render();
-
     protected abstract void deletePlayer(Player loser);
 
     void gestisciCollisioni() {

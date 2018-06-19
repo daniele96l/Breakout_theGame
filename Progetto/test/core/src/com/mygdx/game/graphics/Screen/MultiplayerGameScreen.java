@@ -47,7 +47,6 @@ public class MultiplayerGameScreen implements Screen {
     private ArrayList<PowerUp> powerUps;
     private Texture bg;
     private ClientThread thread;
-    private int key;
     private DatagramSocket datagramSocket;
     private int serverPort;
     private InetAddress address;
@@ -55,7 +54,6 @@ public class MultiplayerGameScreen implements Screen {
     private ArrayList<String> playerNames;
     private ArrayList<String> scores;
     private ArrayList<String> lives;
-    private boolean error;
     private Resizer resizer;
     private Music musicGame;
 

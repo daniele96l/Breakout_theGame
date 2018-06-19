@@ -54,7 +54,6 @@ public class OfflineGameManager extends GameManager {
     private OfflineGameScreen screen;
 
    public OfflineGameManager(BreakGame game, OfflineGameScreen screen, int numeroPlayer) {
-       hud.stage=new Stage();
         this.numeroPlayer = numeroPlayer;
         this.game=game;
         this.screen=screen;
@@ -103,7 +102,6 @@ public class OfflineGameManager extends GameManager {
      * più precisamente controlla lo stato attuale in cui si trova il gioco, controlla il numero di giocatori correnti
      * gestisce la posizione della pallina, i mattoncini ed i power up.
      */
-    @Override
     public void render() {
         game.getBatch().begin();
 

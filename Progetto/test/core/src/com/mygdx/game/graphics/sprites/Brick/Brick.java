@@ -26,15 +26,6 @@ public interface Brick {
 
     String getRelativePosition(Brick brick);
 
-    void delete();
-
-    void setPositionBrick(Vector2 positionBrick);
-
-    void setBoundsBrick(Rectangle boundsBrick);
-
-    void setEliminato(boolean eliminato);
-
     Rectangle getBoundsBrick();
 
-    boolean isEliminato();
 }

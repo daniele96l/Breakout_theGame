@@ -13,9 +13,6 @@ import com.mygdx.game.clientserver.Server;
 
 public class TestServer {
 
-    private Texture serverTexture;
-    private Game game;
-
     public static void main(String[] args) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.foregroundFPS = 60;

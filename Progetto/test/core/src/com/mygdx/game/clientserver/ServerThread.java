@@ -77,7 +77,4 @@ public class ServerThread extends Thread {
         return deletable;
     }
 
-    public void setDeletable(boolean deletable) {
-        this.deletable = deletable;
-    }
 }

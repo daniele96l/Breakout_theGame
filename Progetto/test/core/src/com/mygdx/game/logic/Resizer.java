@@ -25,8 +25,6 @@ public class Resizer {
     private float barreNere;
     private float coeffDimensionale;
     private int newHeight;
-    private int newWight;
-    private Vector2 size;
 
     private float[] tempVet = new float[2];
 
@@ -46,9 +44,7 @@ public class Resizer {
         Vector2 size = Scaling.fit.apply(Info.getInstance().getLarghezza(), Info.getInstance().getAltezza(), width, height);
 
 
-        this.size = size;
         this.newHeight = height;
-        this.newWight = width;
 
         int viewportX = (int)(width - size.x) / 2;
         int viewportY = (int)(height - size.y) / 2;

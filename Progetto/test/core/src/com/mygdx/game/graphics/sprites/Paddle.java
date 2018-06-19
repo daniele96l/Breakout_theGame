@@ -17,7 +17,6 @@ import com.mygdx.game.help.Info;
 
 public class Paddle extends Sprite{
     private Vector2 positionM;
-    private Vector2 speed;
     private Rectangle bounds;
     private int giocatore;
 
@@ -26,8 +25,6 @@ public class Paddle extends Sprite{
         float resize = Info.getInstance().getPaddleresize();
         this.giocatore = giocatore;
         positionM = new Vector2((Info.getInstance().getLarghezza() / numeroGiocatori) * (giocatore - 1) + Info.getInstance().getLarghezza() / (2 * numeroGiocatori) - this.getWidth() / 2 * Info.getInstance().getPaddleresize(), 0);
-        speed = new Vector2(0, 0);
-        resize = resize;
         bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.getInstance().getPaddleresize(), Paddle.this.getHeight() * Info.getInstance().getPaddleresize());
     }
 
@@ -43,7 +40,6 @@ public class Paddle extends Sprite{
             Info.getInstance().getPaddleresizex().set(i, Info.getInstance().getPaddleresize());
         }
         positionM = new Vector2((Info.getInstance().getLarghezza() / numeroGiocatori) * (giocatore - 1) + Info.getInstance().getLarghezza() / (2 * numeroGiocatori) - this.getWidth() / 2 * Info.getInstance().getPaddleresize(), 0);
-        speed = new Vector2(0, 0);
         bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.getInstance().getPaddleresize(), Paddle.this.getHeight() * Info.getInstance().getPaddleresize());
     }
 
@@ -57,24 +53,6 @@ public class Paddle extends Sprite{
     }
 
     /**
-     * Questo metodo restituisce la velocità del paddle
-     *
-     * @return speed velocità del paddle
-     */
-    public Vector2 getSpeed() {
-        return speed;
-    }
-
-    /**
-     * Questo metodo imposta la posizione x della paddle (non si può muovere lungo l'asse y)
-     *
-     * @param x valore della posizione x da impostare al paddle
-     */
-    public void setPositionM(float x) {
-        this.positionM.x = x;
-    }
-
-    /**
      * Questo metodo resitituisce i contorni dell'oggetto paddle
      *
      * @return bounds rettangolo che fa da contorno dell'oggetto paddle
@@ -82,16 +60,6 @@ public class Paddle extends Sprite{
     public Rectangle getBounds() {
         bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.getInstance().getPaddleresizex().get(giocatore-1), Paddle.this.getHeight() * Info.getInstance().getPaddleresize());
         return bounds;
-    }
-
-    /**
-     * Questo metodo imposta il numero del giocatore
-     * proprietario del corrispondente paddle
-     *
-     * @param giocatore intero che indica l'id del giocatore proprietario del paddle
-     */
-    public void setGiocatore(int giocatore) {
-        this.giocatore = giocatore;
     }
 
     /**

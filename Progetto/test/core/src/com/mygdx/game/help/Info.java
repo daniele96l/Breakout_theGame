@@ -104,14 +104,6 @@ public class Info {
         this.dt = dt;
     }
 
-    public void setPaddleresizex(ArrayList<Float> paddleresizex) {
-        this.paddleresizex = paddleresizex;
-    }
-
-    public void setPaddleresize(float paddleresize) {
-        this.paddleresize = paddleresize;
-    }
-
     public int getAltezza() {
         return altezza;
     }

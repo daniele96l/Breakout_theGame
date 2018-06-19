@@ -42,13 +42,6 @@ public class Ball extends Sprite {
     }
 
     /**
-     * Questo metodo restituisce la texture della palla
-     *
-     * @return texture della palla
-     */
-    public Texture getPalla() { return palla; }
-
-    /**
      * Questo metodo restituisce la velocità della palla
      *
      * @return velocità della palla
@@ -66,32 +59,12 @@ public class Ball extends Sprite {
     }
 
     /**
-     * Questo metodo imposta la texture della palla
-     *
-     * @param palla texture che si vuole applicare alla palla
-     */
-    public void setPalla(Texture palla) {
-        this.palla = palla;
-    }
-
-    /**
-     * Questo metodo imposta la posizione di default della palla al centro dello schermo
-     */
-    public void setPositionBall() {
-        this.positionBall = positionBall;
-    }
-
-    /**
      * Questo metodo imposta la velocità x e y della palla
      *
      * @param speedBall vettore di due dimensioni (x e y) per la velocità della palla
      */
     public void setSpeedBall(Vector2 speedBall) {
         this.speedBall = speedBall;
-    }
-
-    public void setBoundsBall(Rectangle boundsBall) {
-        this.boundsBall = boundsBall;
     }
 
     /**

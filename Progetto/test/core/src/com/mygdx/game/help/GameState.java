@@ -7,5 +7,5 @@ package com.mygdx.game.help;
  * @version 1.0
  */
 public enum GameState {
-    ACTION, GAME_OVER, YOU_WON, MENU, PAUSE, MULTIPLAYER, SCORE, WAIT
+    ACTION, GAME_OVER, YOU_WON, WAIT
 }
