@@ -19,13 +19,24 @@ import java.util.ArrayList;
 
 /**
  *
- * @author ?
- *SCRIVERE INDICE DEI BOTTONI DEGLI ARRAYLIST
- * ? ? ? ?
+ * @author regna
+ *
+ * questa classe si occupa di controllare quali e quando sono stati toccati i bottoni
+ *
  */
 
 
 public class InputTouch {
+
+    /**
+     * Questo metodo cotrolla i click sui bottoni del Menu Principale
+     * @param newWight
+     * @param game
+     * @param coeffDimensionale
+     * @param screenHandler
+     * @param newHeight
+     * @param barreNere
+     */
 
     public static void checkInputTouchMainMenu(int newWight, BreakGame game, float coeffDimensionale, ScreenHandler screenHandler, int newHeight, float barreNere) {
         ArrayList<Button> menuButtons=ButtonCollection.getInstance().getMenuButtons();
@@ -50,6 +61,17 @@ public class InputTouch {
         }
     }
 
+    /**
+     * Questo metodo controlla i click sui bottoni del menu di pausa
+     * @param newWidth
+     * @param game
+     * @param coeffDimensionale
+     * @param screenHandler
+     * @param newHeight
+     * @param barreNere
+     * @param oldScreen
+     */
+
     public static void checkInputPauseScreen(float newWidth, BreakGame game, float coeffDimensionale, ScreenHandler screenHandler, float newHeight, float barreNere, OfflineGameScreen oldScreen) {
         ArrayList<Button> pauseButtons=ButtonCollection.getInstance().getPauseButtons();
 
@@ -65,6 +87,15 @@ public class InputTouch {
             }
         }
     }
+
+    /**
+     * questo metodo controlla i click sul bottone del menù dei punteggi
+     * @param newWidth
+     * @param coeffDimensionale
+     * @param game
+     * @param newHeight
+     * @param barreNere
+     */
 
     public static void checkInputScoreScreen(float newWidth, float coeffDimensionale, BreakGame game, float newHeight, float barreNere) {
         ArrayList<Button> scoreButtons=ButtonCollection.getInstance().getScoreButtons();

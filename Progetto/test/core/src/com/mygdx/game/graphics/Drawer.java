@@ -126,7 +126,6 @@ public class Drawer
      *
      */
     public static void drawMultiplayerOffline(BreakGame game, Texture bg, ArrayList<Brick> bricks, ArrayList<Player> players, ArrayList<PowerUp> powerUps, ArrayList<Paddle> paddles, Ball palla)  {
-        // togliere il numeroPlayer dalla firma del metodo
         game.getBatch().draw(bg, 0, 0);
         game.getBatch().end();
 
