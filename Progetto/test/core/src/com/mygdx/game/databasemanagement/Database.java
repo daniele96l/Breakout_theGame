@@ -72,42 +72,39 @@ public class Database {
      */
     public String printTable (TableType tableType) {
         start(tableType);
-        String sOff = "";
-        String sOn = "";
+        StringBuilder sOff = new StringBuilder();
+        StringBuilder sOn = new StringBuilder();
 
         if (tableType.equals(TableType.OFFLINE)) {
-            if (listaGiocatoriOff.size() < 10) {
-                if (listaGiocatoriOff.size() == 0) {
-                    sOff += "NO SCORE";
-                } else {
-                    for (int i = 0; i < listaGiocatoriOff.size(); i++) {
-                        sOff += listaGiocatoriOff.get(i);
-                    }
-                }
-            } else {
-                for (int i = 0; i < 10; i++) {
-                    sOff += listaGiocatoriOff.get(i);
-                }
-            }
-            return sOff;
+            check(sOff);
+            return sOff.toString();
         }
         if (tableType.equals(TableType.ONLINE)) {
-            if (listaGiocatoriOn.size() < 10) {
-                if (listaGiocatoriOn.size() == 0) {
-                    sOn += "NO SCORE";
-                } else {
-                    for (int i = 0; i < listaGiocatoriOn.size(); i++) {
-                        sOn += listaGiocatoriOn.get(i);
-                    }
-                }
-            } else {
-                for (int i = 0; i < 10; i++) {
-                    sOn += listaGiocatoriOn.get(i);
-                }
-            }
-            return sOn;
+            check(sOn);
+            return sOn.toString();
         }
         return null;
+    }
+
+    /**
+     *
+     * @param sb: StringBuilder da utilizzare
+     */
+
+    private void check(StringBuilder sb) {
+        if (listaGiocatoriOff.size() < 10) {
+            if (listaGiocatoriOff.size() == 0) {
+                sb.append("NO SCORE");
+            } else {
+                for (int i = 0; i < listaGiocatoriOff.size(); i++) {
+                    sb.append(listaGiocatoriOff.get(i));
+                }
+            }
+        } else {
+            for (int i = 0; i < 10; i++) {
+                sb.append(listaGiocatoriOff.get(i));
+            }
+        }
     }
 
     /**

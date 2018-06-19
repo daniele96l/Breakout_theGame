@@ -147,45 +147,45 @@ public class OnlineGameManager extends GameManager {
     private void writeMessage() {
 
         System.out.println("A");
-        String message = "";
+        StringBuilder message = new StringBuilder();
         if (numeroPlayer == 0) {
-            message = "Empty";
+            message = new StringBuilder("Empty");
         } else {
-            message += palla.getPositionBall().x + " " + palla.getPositionBall().y + "\t";
+            message.append(palla.getPositionBall().x).append(" ").append(palla.getPositionBall().y).append("\t");
             for (Paddle paddle : paddles) {
-                message += paddle.getPosition().x + " ";
+                message.append(paddle.getPosition().x).append(" ");
             }
-            message += "\t";
+            message.append("\t");
 
             for (float f : Info.getInstance().getPaddleresizex()) {
-                message += f + " ";
+                message.append(f).append(" ");
             }
-            message += "\t";
+            message.append("\t");
 
             for (Player player : players) {
-                message += player.getPlayerName() + " ";
-                message += player.getScore() + " ";
-                message += player.getLives() + " ";
-                message += "\t";
+                message.append(player.getPlayerName()).append(" ");
+                message.append(player.getScore()).append(" ");
+                message.append(player.getLives()).append(" ");
+                message.append("\t");
             }
 
             for (Brick brick : bricks) {
-                message += brick.getPositionBrick().x + " " + brick.getPositionBrick().y + " ";
-                message += brick.getClass().getSimpleName() + "\t";
+                message.append(brick.getPositionBrick().x).append(" ").append(brick.getPositionBrick().y).append(" ");
+                message.append(brick.getClass().getSimpleName()).append("\t");
             }
             for (PowerUp powerUp : powerUps) {
-                message += powerUp.getPosition().x + " " + powerUp.getPosition().y + " ";
-                message += powerUp.getClass().getSimpleName() + "\t";
+                message.append(powerUp.getPosition().x).append(" ").append(powerUp.getPosition().y).append(" ");
+                message.append(powerUp.getClass().getSimpleName()).append("\t");
             }
 
             String bgPath = ((FileTextureData) bg.getTextureData()).getFileHandle().name();
 
-            message += bgPath + "\t";
+            message.append(bgPath).append("\t");
 
 
-            message = message.substring(0, message.length() - 1);
+            message = new StringBuilder(message.substring(0, message.length() - 1));
         }
-        byte[] bytes = message.getBytes();
+        byte[] bytes = message.toString().getBytes();
 
         server.sendMessage(bytes);
 
