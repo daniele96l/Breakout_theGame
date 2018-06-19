@@ -29,8 +29,6 @@ public class WinGameScreen implements Screen {
     private BreakGame game;
     private OfflineGameScreen oldScreen;
     private GameState gameState;
-    private  int newHeight, newWight;
-    private float barreNere, coeffDimensionale;
     private Resizer resizer;
     private float tempVet[];
     /**
@@ -83,12 +81,12 @@ public class WinGameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
 
-        this.newHeight = height;
-        this.newWight = width;
+        int newHeight = height;
+        int newWight = width;
 
         tempVet = resizer.toResize(height, width);
-        barreNere = tempVet[0];
-        coeffDimensionale = tempVet[1];
+        float barreNere = tempVet[0];
+        float coeffDimensionale = tempVet[1];
 
     }
 

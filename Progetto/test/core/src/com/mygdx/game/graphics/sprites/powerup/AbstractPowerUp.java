@@ -17,12 +17,12 @@ import com.mygdx.game.graphics.sprites.Paddle;
  * @author Alberto Schillaci
  */
 public abstract class AbstractPowerUp extends Sprite implements PowerUp {
-    protected Vector2 position;
-    protected Vector2 speed;
-    protected Rectangle bounds;
-    protected String sound;
+    private Vector2 position;
+    private Vector2 speed;
+    private Rectangle bounds;
+    String sound;
 
-    public AbstractPowerUp(String image, int posX, int posY) {
+    AbstractPowerUp(String image, int posX, int posY) {
         super(new Texture(image));
         this.position=new Vector2(posX, posY);
         this.speed=new Vector2(0, -Info.getInstance().getPowerUpSpeed());

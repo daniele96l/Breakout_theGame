@@ -1,5 +1,6 @@
 package com.mygdx.game.logic.GameManager;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.databasemanagement.Database;
 import com.mygdx.game.databasemanagement.Enum.DropType;
 import com.mygdx.game.databasemanagement.Enum.TableType;
@@ -53,6 +54,7 @@ public class OfflineGameManager extends GameManager {
     private OfflineGameScreen screen;
 
    public OfflineGameManager(BreakGame game, OfflineGameScreen screen, int numeroPlayer) {
+       hud.stage=new Stage();
         this.numeroPlayer = numeroPlayer;
         this.game=game;
         this.screen=screen;

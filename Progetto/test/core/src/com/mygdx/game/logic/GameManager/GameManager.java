@@ -18,27 +18,27 @@ import com.mygdx.game.graphics.sprites.powerup.PowerUp;
 import java.util.ArrayList;
 import java.util.Date;
 
-public abstract class GameManager {
-    protected BreakGame game;
-    protected Collision collision;
-    protected ArrayList<Brick> bricks;
-    protected Ball palla;
-    protected ArrayList<Paddle> paddles;
-    protected Texture bg;
-    protected GameState gameState;
-    protected ArrayList<CommandPlayer> commandPlayers;
-    protected ArrayList<Player> players;
-    protected boolean nextLevel;
-    protected ArrayList<PowerUp> powerUps;
-    protected int matEliminati;
-    protected GestoreLivelli gestoreLivelli;
-    protected int livelloCorrente;
-    protected boolean isFinished;
-    protected int numeroPlayer;
-    protected Player gameHolder;  //Giocatore che ha toccato la pallina per ultimo
-    protected int tmpDT;
-    protected ArrayList<Date> date;
-    protected Timer timer;
+abstract class GameManager {
+    BreakGame game;
+    private Collision collision;
+    ArrayList<Brick> bricks;
+    Ball palla;
+    ArrayList<Paddle> paddles;
+    Texture bg;
+    GameState gameState;
+    ArrayList<CommandPlayer> commandPlayers;
+    ArrayList<Player> players;
+    boolean nextLevel;
+    ArrayList<PowerUp> powerUps;
+    int matEliminati;
+    GestoreLivelli gestoreLivelli;
+    int livelloCorrente;
+    boolean isFinished;
+    int numeroPlayer;
+    Player gameHolder;  //Giocatore che ha toccato la pallina per ultimo
+    int tmpDT;
+    ArrayList<Date> date;
+    Timer timer;
 
     /**
      * Il metodo render aggiorna la schermata ogni frame e renderizza a schermo gli oggetti grafici:
@@ -52,7 +52,7 @@ public abstract class GameManager {
 
     protected abstract void deletePlayer(Player loser);
 
-    public void gestisciCollisioni() {
+    void gestisciCollisioni() {
 
         collision = new Collision(palla, bricks, powerUps, paddles, players);
 
@@ -79,7 +79,7 @@ public abstract class GameManager {
         }
     }
 
-    protected void lostLife() {
+    void lostLife() {
         int range=Info.getInstance().getLarghezza()/numeroPlayer;
         Player loser=new RobotPlayer("default", palla, paddles.get(0));
 
@@ -101,7 +101,7 @@ public abstract class GameManager {
      * Aggiorna la scena con la nuova posizione del player e della palla
      */
 
-    protected void updateScene() {
+    void updateScene() {
         palla.setDefaultState();
         for(Paddle paddle:paddles) {
             paddle.setDefaultState(numeroPlayer);
@@ -115,7 +115,7 @@ public abstract class GameManager {
     /**
      * aggiorna l'arraylist dei mattoncini, con il layout del prossimo livello
      */
-    protected void updateLevel() {
+    void updateLevel() {
 
         bricks = gestoreLivelli.getLivello(livelloCorrente - 1).getBricks();//laclasselivellosioccuperàdiritornarel'arraylistdeimattonciniadattiaquestolivello
         powerUps=new ArrayList<PowerUp>();
@@ -124,7 +124,7 @@ public abstract class GameManager {
 
     }
 
-    protected void checkTimerPowerUp() {
+    void checkTimerPowerUp() {
         timer.checkTimer(date, numeroPlayer );
     }
 }

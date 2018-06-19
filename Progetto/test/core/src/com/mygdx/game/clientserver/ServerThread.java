@@ -14,7 +14,6 @@ public class ServerThread extends Thread {
     private InetAddress address;
     private int port;
     private int key=0;
-    private String line;
     private boolean deletable;
 
     public ServerThread(DatagramSocket socket, InetAddress address, int port) {
@@ -37,7 +36,7 @@ public class ServerThread extends Thread {
                 byte[] bytes=new byte[1024];
                 DatagramPacket packet=new DatagramPacket(bytes, bytes.length);
                 socket.receive(packet);
-                line=new String(packet.getData(), 0, packet.getLength());
+                String line = new String(packet.getData(), 0, packet.getLength());
                 key=Integer.parseInt(line);
             } catch (EOFException e) {
                 e.printStackTrace();

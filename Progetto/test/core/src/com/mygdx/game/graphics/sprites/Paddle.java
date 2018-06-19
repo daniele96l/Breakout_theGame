@@ -19,16 +19,15 @@ public class Paddle extends Sprite{
     private Vector2 positionM;
     private Vector2 speed;
     private Rectangle bounds;
-    private float resize;
     private int giocatore;
 
     public Paddle(int numeroGiocatori, int giocatore) {
         super(new Texture("mattonalla curva.png"));
-        this.resize=Info.getInstance().getPaddleresize();
+        float resize = Info.getInstance().getPaddleresize();
         this.giocatore = giocatore;
         positionM = new Vector2((Info.getInstance().getLarghezza() / numeroGiocatori) * (giocatore - 1) + Info.getInstance().getLarghezza() / (2 * numeroGiocatori) - this.getWidth() / 2 * Info.getInstance().getPaddleresize(), 0);
         speed = new Vector2(0, 0);
-        this.resize = resize;
+        resize = resize;
         bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.getInstance().getPaddleresize(), Paddle.this.getHeight() * Info.getInstance().getPaddleresize());
     }
 

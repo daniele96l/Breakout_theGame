@@ -11,9 +11,8 @@ import java.net.*;
  */
 public class ClientThread extends Thread {
     private DatagramSocket socket;
-    private int port;
     private byte[] buf=new byte[4096];
-    String message;
+    private String message;
 
     /**
      *
@@ -26,7 +25,7 @@ public class ClientThread extends Thread {
 
     public ClientThread(InetAddress address, int port,  DatagramSocket socket) {
         message = "";
-        this.port = port;
+        int port1 = port;
         this.socket = socket;
         socket.connect(address, port);
     }

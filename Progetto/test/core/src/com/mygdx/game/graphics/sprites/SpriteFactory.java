@@ -15,7 +15,7 @@ import com.mygdx.game.graphics.sprites.powerup.*;
 
 public class SpriteFactory {
 
-    static SpriteFactory instance;
+    private static SpriteFactory instance;
 
     /**
      * descrizione metodo

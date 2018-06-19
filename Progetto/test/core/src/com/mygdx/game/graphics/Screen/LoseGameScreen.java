@@ -16,10 +16,7 @@ import com.mygdx.game.logic.Resizer;
  */
 public class LoseGameScreen implements Screen {
 
-    private Texture gameOver;
     private BreakGame game;
-    private int newHeight, newWight;
-    private float coeffDimensionale, barreNere;
     private float tempVet[];
     private Resizer resizer;
 
@@ -35,7 +32,7 @@ public class LoseGameScreen implements Screen {
 
     @Override
     public void show() {
-        gameOver = new Texture("gameover.jpg");
+        Texture gameOver = new Texture("gameover.jpg");
     }
 
     /**
@@ -61,12 +58,12 @@ public class LoseGameScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-        this.newHeight = height;
-        this.newWight = width;
+        int newHeight = height;
+        int newWight = width;
 
         tempVet = resizer.toResize(height, width);
-        barreNere = tempVet[0];
-        coeffDimensionale = tempVet[1];
+        float barreNere = tempVet[0];
+        float coeffDimensionale = tempVet[1];
 
     }
 

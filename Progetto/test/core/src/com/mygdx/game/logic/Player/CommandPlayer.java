@@ -14,8 +14,8 @@ public class CommandPlayer {
 
     private Paddle paddle;
     private Player player;
-    int numeroGiocatori;
-    int giocatore;
+    private int numeroGiocatori;
+    private int giocatore;
 
     /**
      * Salva i seguenti valori nei parametri

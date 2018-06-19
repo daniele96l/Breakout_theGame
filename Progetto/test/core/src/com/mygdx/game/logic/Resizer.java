@@ -22,13 +22,13 @@ import com.mygdx.game.help.Info;
  */
 
 public class Resizer {
-    float barreNere;
-    float coeffDimensionale;
-    int newHeight;
-    int newWight;
-    Vector2 size;
+    private float barreNere;
+    private float coeffDimensionale;
+    private int newHeight;
+    private int newWight;
+    private Vector2 size;
 
-    float tempVet[] = new float[2];
+    private float[] tempVet = new float[2];
 
     /**
      * Il metodo toResize viene chiamato in ogni Screen ogni volta che viene ridimensionata la finestra

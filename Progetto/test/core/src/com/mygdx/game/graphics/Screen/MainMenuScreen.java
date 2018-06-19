@@ -17,7 +17,7 @@ import com.mygdx.game.logic.ScreenHandler;
 public class MainMenuScreen implements Screen {
 
     private int newHeight, newWidth;
-    BreakGame game;
+    private BreakGame game;
     private float coeffDimensionale;
     private float barreNere = 0;
     private ScreenHandler screenHandler;

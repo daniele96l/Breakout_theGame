@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Schillaci
  */
 public class ButtonCollection {
-    static ButtonCollection instance;
+    private static ButtonCollection instance;
     private ArrayList<Button> menuButtons;
     private ArrayList<Button> pauseButtons;
     private ArrayList<Button> scoreButtons;
