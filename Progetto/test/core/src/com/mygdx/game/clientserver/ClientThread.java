@@ -25,7 +25,6 @@ public class ClientThread extends Thread {
 
     public ClientThread(InetAddress address, int port,  DatagramSocket socket) {
         message = "";
-        int port1 = port;
         this.socket = socket;
         socket.connect(address, port);
     }

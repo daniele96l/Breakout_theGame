@@ -153,7 +153,6 @@ public class OnlineGameManager extends GameManager {
 
     private void writeMessage() {
 
-        System.out.println("A");
         StringBuilder message = new StringBuilder();
         if (numeroPlayer == 0) {
             message = new StringBuilder("Empty");
@@ -203,10 +202,7 @@ public class OnlineGameManager extends GameManager {
 
     private boolean checktimer(int durata, Date datetmp) {
         Date date2 = new Date();
-        if (date2.getTime() - datetmp.getTime() > durata) {
-            return true;
-        }
-        return false;
+        return date2.getTime() - datetmp.getTime() > durata;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.mygdx.game.logic.GameManager;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.databasemanagement.Database;
 import com.mygdx.game.databasemanagement.Enum.DropType;
 import com.mygdx.game.databasemanagement.Enum.TableType;
@@ -41,7 +40,6 @@ public class OfflineGameManager extends GameManager {
     private boolean loop;
     private Music musicGame;
     private Music musicGameOver;
-    private Hud hud;
     private boolean isPaused;
     private Database db = new Database();
 
@@ -91,7 +89,7 @@ public class OfflineGameManager extends GameManager {
         gestoreLivelli=new GestoreLivelli("fileLivelli.txt");
         updateScene();
         updateLevel();
-        hud = new Hud(players, game.getBatch());
+       Hud hud = new Hud(players, game.getBatch());
         gameHolder = players.get(0);
         bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
     }

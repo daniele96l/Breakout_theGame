@@ -78,9 +78,6 @@ public class WinGameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
 
-        int newHeight = height;
-        int newWight = width;
-
         tempVet = resizer.toResize(height, width);
         float barreNere = tempVet[0];
         float coeffDimensionale = tempVet[1];

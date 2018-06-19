@@ -1,9 +1,7 @@
 package com.mygdx.game.desktop;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.clientserver.Server;
 
 /**
@@ -11,7 +9,7 @@ import com.mygdx.game.clientserver.Server;
  * Fa partire il server
  */
 
-public class TestServer {
+public class ServerLauncher {
 
     public static void main(String[] args) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();

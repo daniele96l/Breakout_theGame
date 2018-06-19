@@ -22,9 +22,6 @@ import com.mygdx.game.help.Info;
  */
 
 public class Resizer {
-    private float barreNere;
-    private float coeffDimensionale;
-    private int newHeight;
 
     private float[] tempVet = new float[2];
 
@@ -40,18 +37,18 @@ public class Resizer {
      */
 
     public float[] toResize(int height, int width){
-        barreNere = 0;
+        float barreNere = 0;
         Vector2 size = Scaling.fit.apply(Info.getInstance().getLarghezza(), Info.getInstance().getAltezza(), width, height);
 
 
-        this.newHeight = height;
+        int newHeight = height;
 
         int viewportX = (int)(width - size.x) / 2;
         int viewportY = (int)(height - size.y) / 2;
         int viewportWidth = (int)size.x;
         int viewportHeight = (int)size.y;
 
-        coeffDimensionale = size.y/(float)Info.getInstance().getAltezza();
+        float coeffDimensionale = size.y / (float) Info.getInstance().getAltezza();
 
         if(newHeight > size.y ) {
             barreNere = Math.abs((newHeight - size.y) / 2);

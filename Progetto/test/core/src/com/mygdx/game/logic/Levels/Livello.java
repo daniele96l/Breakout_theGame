@@ -39,7 +39,6 @@ public class Livello {
 
     public Livello(int startPosX, int startPosY, int numBrickX, int numBrickY) {
         this.startPosX = startPosX;
-        int startPosY1 = startPosY;
         this.numBrickX=numBrickX;
         this.numBrickY=numBrickY;
 

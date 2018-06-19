@@ -45,7 +45,7 @@ public class Info {
         ballresize = 0.8f;
         brickGapX = 5;
         brickGapY = 3;
-        defaultLivesNum = 1;
+        defaultLivesNum = 3;
         hudHeight = 80;
         powerUpSpeed = 3;
         powerUpResize = 0.5f;

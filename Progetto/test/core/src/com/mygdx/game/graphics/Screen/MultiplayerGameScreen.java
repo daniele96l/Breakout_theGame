@@ -271,8 +271,6 @@ public class MultiplayerGameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        int newHeight = height;
-        int newWight = width;
 
 
         resizer.toResize(height, width);

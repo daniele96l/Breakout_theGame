@@ -107,11 +107,8 @@ public class Collision {
 
     private boolean collidesTopBottom(Brick brick) {
 
-        if ((palla.getBoundsBall().x + palla.getBoundsBall().width / 2 <= brick.getBoundsBrick().x + brick.getBoundsBrick().width) &&
-                (palla.getBoundsBall().x + palla.getBoundsBall().width / 2 >= brick.getBoundsBrick().x)) {
-            return true;
-        }
-        return false;
+        return (palla.getBoundsBall().x + palla.getBoundsBall().width / 2 <= brick.getBoundsBrick().x + brick.getBoundsBrick().width) &&
+                (palla.getBoundsBall().x + palla.getBoundsBall().width / 2 >= brick.getBoundsBrick().x);
     }
 
 

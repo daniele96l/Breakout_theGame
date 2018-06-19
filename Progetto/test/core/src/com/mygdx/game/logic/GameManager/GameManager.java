@@ -20,7 +20,6 @@ import java.util.Date;
 
 abstract class GameManager {
     BreakGame game;
-    private Collision collision;
     ArrayList<Brick> bricks;
     Ball palla;
     ArrayList<Paddle> paddles;
@@ -44,7 +43,7 @@ abstract class GameManager {
 
     void gestisciCollisioni() {
 
-        collision = new Collision(palla, bricks, powerUps, paddles, players);
+        Collision collision = new Collision(palla, bricks, powerUps, paddles, players);
 
         int numeroEliminati = collision.checkBrickCollision();
         matEliminati+=numeroEliminati;

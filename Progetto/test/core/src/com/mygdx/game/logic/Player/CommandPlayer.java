@@ -76,9 +76,6 @@ public class CommandPlayer {
      * @return boolean che indica se si è in pausa o meno
      */
     public boolean checkpause(){
-        if(player.keyPressed()==Input.Keys.P){
-            return true;
-        }
-        return false;
+        return player.keyPressed() == Input.Keys.P;
     }
 }
