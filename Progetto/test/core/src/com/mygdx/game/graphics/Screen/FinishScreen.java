@@ -15,12 +15,10 @@ import com.mygdx.game.logic.Resizer;
 
 public class FinishScreen implements Screen {
 
-    BreakGame game;
+    private BreakGame game;
     private Texture win;
-    private int newHeight, newWight;
     private float tempVet[];
     private Resizer resizer;
-    private float coeffDimensionale, barreNere;
 
     /**
      *
@@ -73,12 +71,9 @@ public class FinishScreen implements Screen {
     @Override
     public void resize(int width, int height) {
 
-        this.newHeight = height;
-        this.newWight = width;
-
         tempVet = resizer.toResize(height, width);
-        barreNere = tempVet[0];
-        coeffDimensionale = tempVet[1];
+        float barreNere = tempVet[0];
+        float coeffDimensionale = tempVet[1];
 
     }
 

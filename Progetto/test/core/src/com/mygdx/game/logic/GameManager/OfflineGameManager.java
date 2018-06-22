@@ -40,7 +40,6 @@ public class OfflineGameManager extends GameManager {
     private boolean loop;
     private Music musicGame;
     private Music musicGameOver;
-    private Hud hud;
     private boolean isPaused;
     private Database db = new Database();
 
@@ -90,7 +89,7 @@ public class OfflineGameManager extends GameManager {
         gestoreLivelli=new GestoreLivelli("fileLivelli.txt");
         updateScene();
         updateLevel();
-        hud = new Hud(players, game.getBatch());
+       Hud hud = new Hud(players, game.getBatch());
         gameHolder = players.get(0);
         bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
     }
@@ -101,7 +100,6 @@ public class OfflineGameManager extends GameManager {
      * più precisamente controlla lo stato attuale in cui si trova il gioco, controlla il numero di giocatori correnti
      * gestisce la posizione della pallina, i mattoncini ed i power up.
      */
-    @Override
     public void render() {
         game.getBatch().begin();
 
@@ -161,7 +159,7 @@ public class OfflineGameManager extends GameManager {
             if (isFinished) {
                 livelloCorrente = 1;
                 isFinished = false;
-                db.modify(""+(int)Math.random()*1000, playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
+                db.modify(""+(int)(Math.random()*1000), playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
                 updateScene();
                 updateLevel();
                 game.setScreen(new FinishScreen(game));
@@ -198,7 +196,7 @@ public class OfflineGameManager extends GameManager {
      */
     protected void deletePlayer(Player loser) {
         if(players.get(0).equals(loser)) {
-            db.modify(""+(int)Math.random()*1000, playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
+            db.modify(""+(int)(Math.random()*1000), playerName, players.get(0).getScore(), DropType.INSERT, TableType.OFFLINE);
             gameState=GameState.GAME_OVER;
         }
         else {

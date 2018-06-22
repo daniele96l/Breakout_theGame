@@ -16,14 +16,13 @@ import com.mygdx.game.graphics.sprites.powerup.PowerUp;
  */
 public abstract class AbstractBrick extends Sprite implements Brick{
 
-    protected Vector2 positionBrick;
-    protected Rectangle boundsBrick;
-    protected boolean eliminato;
-    protected PowerUp powerUp;
-    protected boolean hasPowerUp;
-    protected boolean deletable;
+    private Vector2 positionBrick;
+    private Rectangle boundsBrick;
+    private PowerUp powerUp;
+    private boolean hasPowerUp;
+    boolean deletable;
 
-    public AbstractBrick(int posX, int posY, String immagine) {
+    AbstractBrick(int posX, int posY, String immagine) {
         super(new Texture(immagine));
         hasPowerUp = false;
         positionBrick = new Vector2(posX, posY);
@@ -69,29 +68,10 @@ public abstract class AbstractBrick extends Sprite implements Brick{
         return positionBrick;
     }
 
-    public void delete() {
-        eliminato = true;
-    }
-
     public boolean isDeletable() {return deletable;}
-
-    public void setPositionBrick(Vector2 positionBrick) {
-        this.positionBrick = positionBrick;
-    }
-
-    public void setBoundsBrick(Rectangle boundsBrick) {
-        this.boundsBrick = boundsBrick;
-    }
-
-    public void setEliminato(boolean eliminato) {
-        this.eliminato = eliminato;
-    }
 
     public Rectangle getBoundsBrick() {
         return boundsBrick;
     }
 
-    public boolean isEliminato() {
-        return eliminato;
-    }
 }

@@ -17,7 +17,7 @@ import java.util.Date;
 
 /**
  *
- * @author schillaci, regna, ligato
+ * @author ??
  *
  */
 
@@ -27,7 +27,6 @@ public class Collision {
     private ArrayList<PowerUp> powerUps;
     private ArrayList<Paddle> paddles;
     private ArrayList<Player> players;
-    private double MAXBOUNCEANGLE=Math.PI/3;
     private Rectangle rectangle;
     private Music musicBrick;
 
@@ -108,11 +107,8 @@ public class Collision {
 
     private boolean collidesTopBottom(Brick brick) {
 
-        if ((palla.getBoundsBall().x + palla.getBoundsBall().width / 2 <= brick.getBoundsBrick().x + brick.getBoundsBrick().width) &&
-                (palla.getBoundsBall().x + palla.getBoundsBall().width / 2 >= brick.getBoundsBrick().x)) {
-            return true;
-        }
-        return false;
+        return (palla.getBoundsBall().x + palla.getBoundsBall().width / 2 <= brick.getBoundsBrick().x + brick.getBoundsBrick().width) &&
+                (palla.getBoundsBall().x + palla.getBoundsBall().width / 2 >= brick.getBoundsBrick().x);
     }
 
 
@@ -133,6 +129,7 @@ public class Collision {
                 gameHolder=paddles.indexOf(paddle);
                 float relativeIntersectX = -((paddle.getPosition().x + (paddle.getWidth() * Info.getInstance().getPaddleresizex().get(paddle.getGiocatore() - 1) / 2)) - (palla.getPositionBall().x + palla.getWidth() * Info.getInstance().getPaddleresize() / 2));
                 float normalizedRelativeIntersectionX = (relativeIntersectX / ((paddle.getTexture().getWidth() * Info.getInstance().getPaddleresizex().get(paddle.getGiocatore() - 1) / 2) + palla.getWidth() / 2));
+                double MAXBOUNCEANGLE = Math.PI / 3;
                 float bounceAngle = normalizedRelativeIntersectionX * (float) MAXBOUNCEANGLE;
                 float speedx = (float) Math.sqrt(2 * Info.getInstance().getVelBall() * Info.getInstance().getVelBall()) * (float) (Math.sin(bounceAngle));
                 float speedy = (float) Math.sqrt(2 * Info.getInstance().getVelBall() * Info.getInstance().getVelBall()) * (float) (Math.cos(bounceAngle));

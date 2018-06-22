@@ -22,13 +22,8 @@ import com.mygdx.game.help.Info;
  */
 
 public class Resizer {
-    float barreNere;
-    float coeffDimensionale;
-    int newHeight;
-    int newWight;
-    Vector2 size;
 
-    float tempVet[] = new float[2];
+    private float[] tempVet = new float[2];
 
     /**
      * Il metodo toResize viene chiamato in ogni Screen ogni volta che viene ridimensionata la finestra
@@ -42,20 +37,18 @@ public class Resizer {
      */
 
     public float[] toResize(int height, int width){
-        barreNere = 0;
+        float barreNere = 0;
         Vector2 size = Scaling.fit.apply(Info.getInstance().getLarghezza(), Info.getInstance().getAltezza(), width, height);
 
 
-        this.size = size;
-        this.newHeight = height;
-        this.newWight = width;
+        int newHeight = height;
 
         int viewportX = (int)(width - size.x) / 2;
         int viewportY = (int)(height - size.y) / 2;
         int viewportWidth = (int)size.x;
         int viewportHeight = (int)size.y;
 
-        coeffDimensionale = size.y/(float)Info.getInstance().getAltezza();
+        float coeffDimensionale = size.y / (float) Info.getInstance().getAltezza();
 
         if(newHeight > size.y ) {
             barreNere = Math.abs((newHeight - size.y) / 2);

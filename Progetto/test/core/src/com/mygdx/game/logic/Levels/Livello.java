@@ -29,10 +29,8 @@ import java.util.ArrayList;
  */
 public class Livello {
     private ArrayList<Brick> bricks;
-    private int currentPosX;
     private int currentPosY;
     private int startPosX;
-    private int startPosY;
     private int numBrickX;
     private int numBrickY;
     private int linesAdded;
@@ -41,7 +39,6 @@ public class Livello {
 
     public Livello(int startPosX, int startPosY, int numBrickX, int numBrickY) {
         this.startPosX = startPosX;
-        this.startPosY = startPosY;
         this.numBrickX=numBrickX;
         this.numBrickY=numBrickY;
 
@@ -71,7 +68,7 @@ public class Livello {
         linesAdded++;
         if (linesAdded > numBrickY || line.length() != numBrickX)
             throw new IllegalBricksNumber(numBrickX, numBrickY);
-        currentPosX = startPosX;
+        int currentPosX = startPosX;
         for (int i = 0; i < line.length(); i++) {
             char c = line.charAt(i);
 

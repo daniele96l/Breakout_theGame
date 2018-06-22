@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author Cristian Regna, Alberto Schillaci, Daniele Ligato
  */
 public class Info {
-    static Info instance;
+    private static Info instance;
     private int altezza;
     private int larghezza;
     private int velBall;
@@ -45,7 +45,7 @@ public class Info {
         ballresize = 0.8f;
         brickGapX = 5;
         brickGapY = 3;
-        defaultLivesNum = 1;
+        defaultLivesNum = 3;
         hudHeight = 80;
         powerUpSpeed = 3;
         powerUpResize = 0.5f;
@@ -87,8 +87,7 @@ public class Info {
      */
     public int getBrickWidth() {
         Texture brick = new Texture("normalBrick.jpg");
-        int brickWidth = (int) (brick.getWidth() * brickresize);
-        return brickWidth;
+        return (int) (brick.getWidth() * brickresize);
     }
 
     /**
@@ -98,20 +97,11 @@ public class Info {
      */
     public int getBrickHeight() {
         Texture brick = new Texture("normalBrick.jpg");
-        int brickHeight = (int) (brick.getHeight() * brickresize);
-        return brickHeight;
+        return (int) (brick.getHeight() * brickresize);
     }
 
     public void setDt(int dt) {
         this.dt = dt;
-    }
-
-    public void setPaddleresizex(ArrayList<Float> paddleresizex) {
-        this.paddleresizex = paddleresizex;
-    }
-
-    public void setPaddleresize(float paddleresize) {
-        this.paddleresize = paddleresize;
     }
 
     public int getAltezza() {

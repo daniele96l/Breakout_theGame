@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class Hud {
     public Stage stage;
     private Viewport viewport;
-    Table table = new Table();
+    private Table table = new Table();
 
     /**
      * @param players array dei giocatori

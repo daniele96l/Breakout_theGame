@@ -14,8 +14,8 @@ public class CommandPlayer {
 
     private Paddle paddle;
     private Player player;
-    int numeroGiocatori;
-    int giocatore;
+    private int numeroGiocatori;
+    private int giocatore;
 
     /**
      * Salva i seguenti valori nei parametri
@@ -76,9 +76,6 @@ public class CommandPlayer {
      * @return boolean che indica se si è in pausa o meno
      */
     public boolean checkpause(){
-        if(player.keyPressed()==Input.Keys.P){
-            return true;
-        }
-        return false;
+        return player.keyPressed() == Input.Keys.P;
     }
 }

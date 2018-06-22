@@ -47,23 +47,19 @@ public class MultiplayerGameScreen implements Screen {
     private ArrayList<PowerUp> powerUps;
     private Texture bg;
     private ClientThread thread;
-    private int key;
     private DatagramSocket datagramSocket;
     private int serverPort;
     private InetAddress address;
     private String playerName;
-    private Hud hud;
     private ArrayList<String> playerNames;
     private ArrayList<String> scores;
     private ArrayList<String> lives;
-    private boolean error;
-    private int newHeight;
-    private int newWight;
     private Resizer resizer;
     private Music musicGame;
 
 
     public MultiplayerGameScreen(BreakGame game, InetAddress address, String playerName) {
+        this.address=address;
         this.playerName = playerName;
         this.game = game;
         palla = new Ball();
@@ -111,7 +107,7 @@ public class MultiplayerGameScreen implements Screen {
         String m = thread.getMessage();
         controlMessage(m);
         game.getBatch().end();
-        hud = new Hud(game.getBatch(), playerNames, scores, lives);
+        Hud hud = new Hud(game.getBatch(), playerNames, scores, lives);
         hud.stage.draw();
         Drawer.drawMultiplayer(bricks, game, powerUps, numeroPlayer, paddles, palla);
 
@@ -133,7 +129,7 @@ public class MultiplayerGameScreen implements Screen {
      * @param message è il messaggio che arriva dal server
      */
 
-    public void parseMessage(String message) { // si potrebbe implementare pure_fabrication e fare un altra classe, che sarebbe anche HightCOesion
+    private void parseMessage(String message) { // si potrebbe implementare pure_fabrication e fare un altra classe, che sarebbe anche HightCOesion
         int i;
         if (message.length() < 10) {
             thread.interrupt();
@@ -231,7 +227,7 @@ public class MultiplayerGameScreen implements Screen {
      * il metodo fa un primo check sul messaggio. Se questo non è vuoto, vengono estratte le informazioni dello scenario
      * con il metodo "parseMessage".
      */
-    public void controlMessage(String m) {
+    private void controlMessage(String m) {
         if (!m.equals("")) {
             parseMessage(m);
 
@@ -255,7 +251,7 @@ public class MultiplayerGameScreen implements Screen {
      *
      * @param key è il valore che rappresenta il tasto premuto dal giocatore per spostare il suo paddle
      */
-    public void keyPressed(int key) {
+    private void keyPressed(int key) {
         String s = "" + key;
         byte[] b = s.getBytes();
         DatagramPacket packet = new DatagramPacket(b, b.length, address, serverPort);
@@ -275,8 +271,6 @@ public class MultiplayerGameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        this.newHeight = height;
-        this.newWight = width;
 
 
         resizer.toResize(height, width);

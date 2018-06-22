@@ -9,24 +9,20 @@ import com.mygdx.game.help.Info;
  */
 
 public abstract class Player {
-    protected String playerName;
-    protected int lives;
-    protected int score;
+    private String playerName;
+    private int lives;
+    private int score;
 
     /**
      * @param playerName è il nome del giocatore
      */
 
-    public Player(String playerName) {
+    Player(String playerName) {
         this.playerName=playerName;
         this.lives= Info.getInstance().getDefaultLivesNum();
         score=0;
     }
     public abstract int keyPressed();
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
 
     public String getPlayerName() {
         return playerName;
