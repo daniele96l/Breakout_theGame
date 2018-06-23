@@ -51,22 +51,27 @@ public class CommandPlayer {
      * @param key intero rappresentante l'input da tastiera
      */
 
-    public void move(int key)
+    public int move(int key)
     {
 
-        if(key==Input.Keys.LEFT){
+        if(key==Input.Keys.LEFT)
+        {
             if(paddle.getPosition().x >(Info.getInstance().getLarghezza()/numeroGiocatori)*(giocatore-1)) { //controllo il range in cui la Paddle si può muovere
 
                 paddle.getPosition().add(-Info.getInstance().getVelPaddle(), 0);
                 paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
             }
+            return 1;
         }
-        if(key==Input.Keys.RIGHT){
+        if(key==Input.Keys.RIGHT)
+        {
             if(paddle.getPosition().x < ((Info.getInstance().getLarghezza()/numeroGiocatori)*(giocatore))- paddle.getWidth()* Info.getInstance().getPaddleresizex().get(giocatore-1) ) {
                 paddle.getPosition().add(Info.getInstance().getVelPaddle(), 0);//controllo il range in cui la Paddle si può muovere
                 paddle.getBounds().setPosition(paddle.getPosition().x, paddle.getPosition().y);
             }
+            return 0;
         }
+        return 0;
 
     }
 

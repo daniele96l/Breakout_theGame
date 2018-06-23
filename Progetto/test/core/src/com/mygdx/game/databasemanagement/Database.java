@@ -117,7 +117,7 @@ public class Database {
      * @param points: punteggio del giocatore in questione
      * @param type: parametro che serve a scegliere il tipo di operazione da eseguire
      */
-    public void modify(String id, String name, int points, DropType type, TableType tableType) {
+    public String modify(String id, String name, int points, DropType type, TableType tableType) {
         String query;
         try {
             String driver = "org.sqlite.JDBC";
@@ -133,19 +133,19 @@ public class Database {
                         stmt.setInt(3, points);
                         stmt.executeUpdate();
                         conn.close();
-                        break;
+                        return "Insert";
                     case DROP_PLAYER:
                         Statement stm = conn.createStatement();
                         query = "DELETE FROM GAMES WHERE NICKNAME = '" + name + "'";
                         stm.executeUpdate(query);
                         conn.close();
-                        break;
+                        return "Eliminato";
                     case DROP_ALL:
                         Statement st = conn.createStatement();
                         query = "DELETE FROM GAMES";
                         st.executeUpdate(query);
                         conn.close();
-                        break;
+                        return "Eliminati";
                 }
             }
             if (tableType.equals(TableType.ONLINE)) {
@@ -157,19 +157,19 @@ public class Database {
                         stmt.setInt(3, points);
                         stmt.executeUpdate();
                         conn.close();
-                        break;
+                        return "Inserito";
                     case DROP_PLAYER:
                         Statement stm = conn.createStatement();
                         query = "DELETE FROM ONLINE WHERE NICKNAME = '" + name + "'";
                         stm.executeUpdate(query);
                         conn.close();
-                        break;
+                        return "Eliminato";
                     case DROP_ALL:
                         Statement st = conn.createStatement();
                         query = "DELETE FROM ONLINE";
                         st.executeUpdate(query);
                         conn.close();
-                        break;
+                        return "Eliminati";
                 }
             }
         } catch (SQLException sqle) {
@@ -177,5 +177,6 @@ public class Database {
         } catch (ClassNotFoundException cnfe) {
             System.err.println(cnfe.getMessage());
         }
+        return "Error";
     }
 }

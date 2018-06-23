@@ -13,7 +13,8 @@ public abstract class Player {
     private int lives;
     private int score;
 
-    Player(String playerName) {
+    Player(String playerName)
+    {
         this.playerName=playerName;
         this.lives= Info.getInstance().getDefaultLivesNum();
         score=0;
