@@ -62,7 +62,6 @@ public class Livello {
      * @param line è la linea del file letta che contiene le informazione sulla tipologia di mattoncini da creare
      * @throws IllegalBricksNumber
      * @throws IllegalCharacter
-     *
      */
     public void addLine(String line) throws IllegalBricksNumber, IllegalCharacter {
         linesAdded++;
@@ -123,7 +122,6 @@ public class Livello {
                     brick.setPowerUp(SpriteFactory.getInstance().getPowerUp("ShortPaddle", posX, posY));
 
                 }
-                //////Inserire nuovi power up qua
             }
             catch (IllegalPowerUp exc) {
                 System.err.println(exc.getMessage());

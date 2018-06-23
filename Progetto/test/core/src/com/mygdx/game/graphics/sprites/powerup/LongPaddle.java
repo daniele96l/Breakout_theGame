@@ -18,7 +18,6 @@ public class LongPaddle extends AbstractPowerUp {
 
     }
 
-
     /**
      * Questo metodo rende effettivo l'effetto del PowerUp
      *

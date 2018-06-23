@@ -41,37 +41,18 @@ public class Ball extends Sprite {
         // positionBall = new Vector2(40, 630);
     }
 
-    /**
-     * Questo metodo restituisce la velocità della palla
-     *
-     * @return velocità della palla
-     */
     public Vector2 getSpeedBall() {
         return speedBall;
     }
 
-    /**
-     * Questo metodo restituisce i contorni dell'oggetto palla
-     * @return contorni dell'oggetto palla
-     */
     public Rectangle getBoundsBall() {
         return boundsBall;
     }
 
-    /**
-     * Questo metodo imposta la velocità x e y della palla
-     *
-     * @param speedBall vettore di due dimensioni (x e y) per la velocità della palla
-     */
     public void setSpeedBall(Vector2 speedBall) {
         this.speedBall = speedBall;
     }
 
-    /**
-     * Questo metodo restituisce la posizione x e y dell'oggetto palla
-     *
-     * @return posizione x e y dell'oggetto palla
-     */
     public Vector2 getPositionBall() {
         return positionBall;
     }

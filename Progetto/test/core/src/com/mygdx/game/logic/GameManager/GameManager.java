@@ -39,25 +39,36 @@ abstract class GameManager {
     ArrayList<Date> date;
     Timer timer;
 
+    /**
+     * il metodo permette di eliminare il giocatore passato per parametro che ha perso tutte le sue vite.
+     *
+     * @param loser il giocatore in questione
+     */
     protected abstract void deletePlayer(Player loser);
 
+    /**
+     * il metodo permette di controllare il numero di mattoncini eliminati da chi ha toccato per ultimo la palla.
+     * Permette poi di capire chi è il nuovo game holder, cioè chi ha toccato per ultimo la palla.
+     * Fa un check dei power up. Inoltre permette di eliminare dal gioco tutti i giocatori che non hanno più vite.
+     *
+     */
     void gestisciCollisioni() {
 
         Collision collision = new Collision(palla, bricks, powerUps, paddles, players);
 
         int numeroEliminati = collision.checkBrickCollision();
-        matEliminati+=numeroEliminati;
+        matEliminati += numeroEliminati;
         gameHolder.setScore(gameHolder.getScore()+numeroEliminati);
 
         collision.checkBorderCollision();
 
-        Player newGameHolder =players.get(collision.checkPaddleCollision(players.indexOf(gameHolder)));
+        Player newGameHolder = players.get(collision.checkPaddleCollision(players.indexOf(gameHolder)));
         if(!newGameHolder.equals(gameHolder)) {
-            gameHolder=newGameHolder;
+            gameHolder = newGameHolder;
         }
 
         collision.checkPowerUpCollision(date);
-        ArrayList<Player> eliminabili=new ArrayList<Player>();
+        ArrayList<Player> eliminabili = new ArrayList<Player>();
         for(int i=0; i<numeroPlayer;i++) {
             if(players.get(i).getLives()<0) {
                 eliminabili.add(players.get(i));
@@ -68,18 +79,25 @@ abstract class GameManager {
         }
     }
 
+    /**
+     * il metodo permette di capire chi tra i giocatori in gioco nello scenario corrente ha perso la vita.
+     * Il concetto è che i giocatori si dividono lo spazio a disposizione delle paddle in ugual modo,
+     * se la pallina cade nel range di appartenenza dell'i-esimo paddle, il giocatore che lo controlla allora
+     * perderà una vita. Se tale giocatore ha perso tutte le vite, allora viene eliminato dal gioco.
+     */
+
     void lostLife() {
-        int range=Info.getInstance().getLarghezza()/numeroPlayer;
-        Player loser=new RobotPlayer("default", palla, paddles.get(0));
+        int range = Info.getInstance().getLarghezza()/numeroPlayer;
+        Player loser = new RobotPlayer("default", palla, paddles.get(0));
 
         for(int i=0; i<numeroPlayer; i++) {
-            if(palla.getPositionBall().x>=i*range && palla.getPositionBall().x<(i+1)*range) {
-                loser=players.get(i);
+            if(palla.getPositionBall().x >= i*range && palla.getPositionBall().x<(i+1)*range) {
+                loser = players.get(i);
             }
         }
 
         loser.setLives(loser.getLives()-1);
-        gameState=GameState.WAIT;
+        gameState = GameState.WAIT;
 
         if(loser.getLives() < 0) {
             deletePlayer(loser);
@@ -113,7 +131,10 @@ abstract class GameManager {
 
     }
 
+    /**
+     * il metodo controlla la durata temporale dei power up.
+     */
     void checkTimerPowerUp() {
-        timer.checkTimer(date, numeroPlayer );
+        timer.checkTimer(date, numeroPlayer);
     }
 }

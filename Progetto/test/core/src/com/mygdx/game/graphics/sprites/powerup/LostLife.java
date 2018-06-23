@@ -17,7 +17,6 @@ public class LostLife extends AbstractPowerUp{
 
     }
 
-
     /**
      * Questo metodo rende effettivo l'effetto del PowerUp
      * @param player il giocatore su cui il PowerUp ha effetto

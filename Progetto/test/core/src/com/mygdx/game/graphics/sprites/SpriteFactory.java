@@ -8,9 +8,11 @@ import com.mygdx.game.graphics.sprites.Brick.NormalBrick;
 import com.mygdx.game.graphics.sprites.powerup.*;
 
 /**
- * Descrizione generale classe
+ * La classe viene utilizzata per fare alcuni controlli durante la creazione dello scenario. In particolare permette
+ * di controllare che cio che si intende creare sia corretto sintatticamente.
+ * Vengono pertanto effettuati check sulla tipologia di powerUp su quella di mattoncini.
  *
- * @author
+ * @author schillaci
  */
 
 public class SpriteFactory {
@@ -18,9 +20,11 @@ public class SpriteFactory {
     private static SpriteFactory instance;
 
     /**
-     * descrizione metodo
+     * Metodo che controlla e restituisce il tipo di Sprite.
+     * Metodo per l'implementazione del pattern Singleton.
      *
-     * @return
+     * @return instance il tipo di Sprite in questione
+     *
      */
     public static synchronized SpriteFactory getInstance() {
         if (instance == null) {
@@ -30,13 +34,16 @@ public class SpriteFactory {
     }
 
     /**
-     * descrizione metodo
+     * il metodo permette di fare un controllo sulla tipologia di power up nel momento in cui uno di essi viene
+     * aggiunto ai mattoncini dello scenario in fase di creazione dello stesso.
      *
-     * @param powerUp
-     * @param posX
-     * @param posY
-     * @return
-     * @throws IllegalPowerUp
+     * @param powerUp il power up su cui fare il check
+     * @param posX coordinata x
+     * @param posY coordinata y
+     * le coordinate servono per poter rendere effettivo il power up.
+     *
+     * @return la tipologia di power up corrispondente a quella passata per parametro, se questa passa il check
+     * @throws IllegalPowerUp se non viene passato nessuno dei check, oppure se inizialmente la stringa era vuota.
      */
     public PowerUp getPowerUp(String powerUp, int posX, int posY) throws IllegalPowerUp {
         if(powerUp==null) {
@@ -58,13 +65,13 @@ public class SpriteFactory {
     }
 
     /**
-     * descrizione metodo
+     * i metodo fa un check sulla tipologia di mattoncino che deve essere creato.
      *
-     * @param brick
-     * @param posX
-     * @param posY
-     * @return
-     * @throws IllegalBrick
+     * @param brick una stringa che specifica la tipologia di mattoncino e sulla quale si fa il controllo
+     * @param posX la coordinata x in cui verra creato il mattoncino
+     * @param posY la coordinata y in cui verra creato il mattoncino
+     * @return l'oggetto mattoncino da creare se la stringa passa il check
+     * @throws IllegalBrick se la stringa non passa alcun check oppure se era inizialmente vuota.
      */
     public Brick getBrick(String brick, int posX, int posY) throws IllegalBrick {
         if(brick==null) {

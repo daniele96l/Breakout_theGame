@@ -33,13 +33,6 @@ public class PauseScreen implements Screen {
     private Resizer resizer;
     private float tempVet[];
 
-    /**
-     * Prende i valori precedenti di game e old creen
-     *
-     * @param game
-     * @param oldScreen ????
-     *
-     */
     public PauseScreen(BreakGame game, OfflineGameScreen oldScreen) {
         this.game = game;
         this.oldScreen=oldScreen;
@@ -54,14 +47,15 @@ public class PauseScreen implements Screen {
     @Override
     public void show() {
         screenHandler=new ScreenHandler();
-
     }
 
     /**
      * rendereizza a schermo tutte le texture necessarie e controlla dove clicca il cursore
-     * MA IL CONTROLLO SE IL CURSORE CLICCA NON PUO ESSERE GESTITO DA QUALCUN ALTRO?????????????
      *
      * @param delta il tempo di aggiornamento dei frame
+     *
+     * @see Drawer per il metodo "drawPauseScreen()"
+     * @see InputTouch per il metodo "checkInputPauseScreen()"
      */
 
     @Override
@@ -81,7 +75,6 @@ public class PauseScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
         this.newHeight = height;
         this.newWidth = width;
         barreNere = 0;
@@ -89,26 +82,17 @@ public class PauseScreen implements Screen {
         tempVet = resizer.toResize(height, width);
         barreNere = tempVet[0];
         coeffDimensionale = tempVet[1];
-
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() {}
 }

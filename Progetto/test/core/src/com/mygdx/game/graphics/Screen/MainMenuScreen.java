@@ -37,7 +37,6 @@ public class MainMenuScreen implements Screen {
     public void show() {
         resizer = new Resizer();
         tempVet = new float[2];
-
     }
 
 
@@ -66,30 +65,20 @@ public class MainMenuScreen implements Screen {
     public void resize(int width, int height) {
         this.newHeight = height;
         this.newWidth = width;
-
         tempVet = resizer.toResize(height, width);
         barreNere = tempVet[0];
         coeffDimensionale = tempVet[1];
-
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() {}
 }

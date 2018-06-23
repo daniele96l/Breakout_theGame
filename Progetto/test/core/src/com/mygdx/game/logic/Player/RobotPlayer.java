@@ -19,6 +19,7 @@ import com.mygdx.game.graphics.sprites.Paddle;
 public class RobotPlayer extends Player{
     private Ball palla;
     private Paddle paddle;
+
     public RobotPlayer(String playerName,Ball palla, Paddle paddle) {
         super(playerName);
         this.palla=palla;

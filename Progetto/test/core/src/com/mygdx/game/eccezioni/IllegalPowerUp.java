@@ -3,7 +3,7 @@ package com.mygdx.game.eccezioni;
 /**
  * Eccezione di tipologia di power up non valida
  *
- * @author ?
+ * @author Alberto Schillaci
  */
 
 public class IllegalPowerUp extends Exception {

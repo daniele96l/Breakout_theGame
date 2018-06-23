@@ -15,11 +15,11 @@ public class ClientThread extends Thread {
     private String message;
 
     /**
+     * Definisce un nuovo oggetto clientThread.
      *
      * @param address indirizzo IP
      * @param port porta per la connesione
      * @param socket  La socket
-     *
      *
      */
 
@@ -30,25 +30,20 @@ public class ClientThread extends Thread {
     }
 
     /**
-     * Metodo che viene chiamato ogni volta che parte un Thread
+     * Metodo che viene chiamato ogni volta che parte il Thread
      */
     public void run() {
         while (true) {
             try {
                 DatagramPacket packet=new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
-                message=new String(packet.getData(),0,packet.getLength());
-
+                message = new String(packet.getData(),0,packet.getLength());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    /**
-     * Ritorna il messaggio
-     * @return Stringa
-     */
     public String getMessage() {
         return message;
     }

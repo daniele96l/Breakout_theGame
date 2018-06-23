@@ -43,11 +43,7 @@ public class Paddle extends Sprite{
         bounds = new Rectangle(positionM.x, positionM.y, Paddle.this.getWidth() * Info.getInstance().getPaddleresize(), Paddle.this.getHeight() * Info.getInstance().getPaddleresize());
     }
 
-    /**
-     * Questo metodo restituisce il vettore poszione (x e y) del paddle
-     *
-     * @return positionM vettore di due dimensioni del paddle
-     */
+
     public Vector2 getPosition() {
         return positionM;
     }
@@ -62,12 +58,6 @@ public class Paddle extends Sprite{
         return bounds;
     }
 
-    /**
-     * Questo metodo restituisce il numero del giocatore
-     * proprietario del corrispondente paddle
-     *
-     * @return giocatore intero che indica l'id del giocatore proprietario del paddle
-     */
     public int getGiocatore() {
         return giocatore;
     }

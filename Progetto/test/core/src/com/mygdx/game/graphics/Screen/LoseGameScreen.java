@@ -58,30 +58,20 @@ public class LoseGameScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-
         tempVet = resizer.toResize(height, width);
         float barreNere = tempVet[0];
         float coeffDimensionale = tempVet[1];
-
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() {}
 }

@@ -12,11 +12,6 @@ import com.badlogic.gdx.Input;
 
 public class HumanPlayer extends Player {
 
-    /**
-     *
-     * @param playerName è il nome del giocatore
-     */
-
     public HumanPlayer(String playerName) {
         super(playerName);
     }

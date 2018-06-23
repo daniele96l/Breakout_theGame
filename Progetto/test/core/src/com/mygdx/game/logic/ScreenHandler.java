@@ -13,12 +13,13 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * @author ?
  *
  * La classe gestisce alcuni eventi delle schermate permettendo la visualizzazione di alcune finestre di
- * dialogo per l'iserimento di informazioni varie
+ * dialogo per l'iserimento di informazioni varie.
+ * Questa classe è l'implementazione del pattern  CONTROLLER in quanto si occupa di far comunicare la logica
+ * e la grafica.
  *
- * Questa classe è l'implementazione del pattern  CONTROLLER in quanto si occupa di far comunicare la logica e la grafica
+ * @author Regna
  */
 
 public class ScreenHandler
@@ -31,26 +32,28 @@ public class ScreenHandler
     }
 
     /**
+     * il metodo disegna sulla schermata di gioco passata per parametro il menù della classifica.
      *
      * @param game è la schermata di gioco
-     *
      */
     void gestisciMenu(BreakGame game) {
         game.setScreen(new ScoreScreen(game));
     }
 
+    /**
+     * il metodo permette di uscire definitivamente dalla schermata di gioco.
+     */
     void exit() {
         Gdx.app.exit();
     }
 
     /**
-     * @param game è la schermata di gioco
-     *
      * il metodo si occupa di far comparire una finestra di dialogo con l'utente che ha selezionato la modalità
      * di gioco "Single Player" in cui viene chiesto il nickName con cui vuole giocare.
      * Una volta che l'utente ha inserito il nickname, viene creata la schermata di gioco offline.
      * Se l'utente non inserisce il nome, compare una schermata di errore.
      *
+     * @param game è la schermata di gioco
      */
     void singlePlayer(BreakGame game)
     {
@@ -63,8 +66,6 @@ public class ScreenHandler
     }
 
     /**
-     * @param game è la schermata di gioco
-     *
      * Il metodo si occupa di far comparire una finestra di dialogo con l'utente che ha selezionato la modalità
      * di gioco "Multiplayer Offline" in cui viene richiesto il nickname con cui l'utente vuole giocare. Se l'utente
      * non inserisce il nome, compare una finestra di errore. Viene poi  fatta comparire una finestra di dialogo
@@ -72,6 +73,7 @@ public class ScreenHandler
      * mostrata una finestra di errore se l'utente non inserisce nulla o se inserisce un numero errato o qualcosa di
      * diverso da un numero.
      *
+     * @param game è la schermata di gioco
      */
     void multiplayerOffline(BreakGame game)
     {
@@ -91,7 +93,6 @@ public class ScreenHandler
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Insert a valid number of player (1-4)", "Error number of player ", 1);
-
                 }
             }
         }
@@ -107,15 +108,12 @@ public class ScreenHandler
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     /**
-     * @param game è la schermata di gioco
-     *
      * il metodo si occupa di far visualizzare il menù principale sulla schermata di gioco
      *
+     * @param game è la schermata di gioco
      */
     void mainMenu(BreakGame game)
     {
@@ -124,13 +122,13 @@ public class ScreenHandler
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**
-     * ??????
-     * @param game
-     * @param oldScreen
+     * il metodo permette di ritornare dalla schermata di pausa allo scenario di gioco precedente, cioè prima di
+     * aver richiesto la schermata di pausa.
+     * @param game la schermata di gioco.
+     * @param oldScreen lo scenario di gioco precedente alla pausa.
      */
     void pauseResume(BreakGame game, OfflineGameScreen oldScreen)
     {
@@ -140,8 +138,6 @@ public class ScreenHandler
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     /**
@@ -155,7 +151,6 @@ public class ScreenHandler
      */
     void multiplayerOnline(BreakGame game)
     {
-
         InetAddress address = null;
         try {
             address = InetAddress.getByName((String) JOptionPane.showInputDialog(null, "Enter the IP address", "Server IP", 1, ipIcon, null, ""));
@@ -168,15 +163,14 @@ public class ScreenHandler
             }
         } catch (UnknownHostException e) {
             JOptionPane.showMessageDialog(null, "Invalid address", "Address", 1);
-
         }
     }
 
     /**
-     * descrizione: ...??
+     * il metodo permete di capire se la stringa s passata per parametro è o meno un numero.
      *
-     * @param s
-     * @return
+     * @param s la stringa in questione
+     * @return true se s è un numero, false se non lo è.
      */
     private boolean isNumeric(String s) {
         return s != null && s.matches("[-+]?\\d*\\.?\\d+");

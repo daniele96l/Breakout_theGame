@@ -40,6 +40,17 @@ public abstract class AbstractBrick extends Sprite implements Brick{
         hasPowerUp = true;
     }
 
+    /**
+     * il metodo permette di ottenere la posizione relativa all'oggetto brick che chiama il metodo rispetto
+     * al mattoncino passato per parametro. In particolare se l'oggetto e il parametro hanno la stessa coordinata y,
+     * viene indicata la posizione relativa come "line", se invece hanno la stessa coordinata x allora la posizione
+     * relativa viene indicata come "column". Se non si verifica nessuna delle due condizioni precedenti, la posizione
+     * relativa è "else".
+     *
+     * @param brick il mattoncino con cui confrontarsi.
+     * @return una striga che indica la posizione relativa.
+     */
+
     @Override
     public String getRelativePosition(Brick brick) {
         if(this.getPositionBrick().y==brick.getPositionBrick().y) {
@@ -51,11 +62,6 @@ public abstract class AbstractBrick extends Sprite implements Brick{
         return "else";
     }
 
-    /**
-     * Questo metodo ritorna la variabile booleana hasPowerUp
-     *
-     * @return variabile booleana hasPowerUp
-     */
     public boolean hasPowerUp() {
         return hasPowerUp;
     }

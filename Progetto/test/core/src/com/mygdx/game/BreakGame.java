@@ -7,7 +7,7 @@ import com.mygdx.game.graphics.Screen.MainMenuScreen;
 /**
  * La classe rappresenta la schermata di gioco visualizzata sullo schermo
  *
- * @author ?
+ * @author Oberti, Mari
  */
 public class BreakGame extends Game {
     private SpriteBatch batch;

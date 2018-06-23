@@ -42,29 +42,15 @@ public abstract class AbstractPowerUp extends Sprite implements PowerUp {
     }
 
 
-    /**
-     * Questo metodo ritorna il vettore posizione (x e y) del PowerUp
-     * @return il vettore posizione (x e y) del PowerUp
-     */
     public Vector2 getPosition() {
         return position;
     }
 
-    /**
-     * Questo metodo ritorna il vettore velocità (x e y) con cui
-     * cade il PowerUp dal mattonicino appena colpito
-     * @return il vettore velocità (x e y) con cui cade il PowerUp
-     */
     public Vector2 getSpeed() {
         return speed;
     }
 
 
-    /**
-     * Questo metodo ritorna la stringa del nome file
-     * che indica l'effetto sonoro associato a un determinato PowerUp
-     * @return la stringa del nome file che indica l'effetto sonoro associato a quel determinato PowerUp
-     */
     public String getSound(){
         return sound;
     }

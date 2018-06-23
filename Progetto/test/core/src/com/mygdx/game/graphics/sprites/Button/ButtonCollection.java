@@ -32,11 +32,11 @@ public class ButtonCollection {
         scoreButtons.add(new Button("menu.png", 50));
     }
 
-
     /**
-     * Metodo che controlla e restituisce il tipo di pulsante
+     * Metodo che controlla e restituisce il tipo di pulsante.
+     * Metodo per l'implementazione del pattern Singleton.
      *
-     * @return instance
+     * @return instance il tipo di pulsante in questione
      */
     public static ButtonCollection getInstance() {
         if (instance == null) {

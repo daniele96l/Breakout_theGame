@@ -18,28 +18,28 @@ import com.mygdx.game.graphics.sprites.Button.Button;
 import java.util.ArrayList;
 
 /**
- *
- * @author regna
- *
  * questa classe si occupa di controllare quali e quando sono stati toccati i bottoni
  *
+ * @author regna
  */
 
 
 public class InputTouch {
 
     /**
-     * Questo metodo cotrolla i click sui bottoni del Menu Principale
+     * Questo metodo cotrolla i click sui bottoni del Menu Principale e a sceonda di quale bottone è stato premuto
+     * viene disegnato lo scenario corrispondente sulla schermata di gioco passata per paramentro.
+     *
      * @param newWight
-     * @param game
+     * @param game la schermata di gioco in questione
      * @param coeffDimensionale
-     * @param screenHandler
+     * @param screenHandler è il gestore della schermata che permette di disegnare le corrispettive schermate.
      * @param newHeight
      * @param barreNere
      */
 
     public static void checkInputTouchMainMenu(int newWight, BreakGame game, float coeffDimensionale, ScreenHandler screenHandler, int newHeight, float barreNere) {
-        ArrayList<Button> menuButtons=ButtonCollection.getInstance().getMenuButtons();
+        ArrayList<Button> menuButtons = ButtonCollection.getInstance().getMenuButtons();
 
         if (Gdx.input.justTouched()) {
             if (Gdx.input.getX() > (newWight / 2) - ( menuButtons.get(4).getWidth() * coeffDimensionale) / 2 && (Gdx.input.getX() < newWight / 2 + (menuButtons.get(4).getWidth() * coeffDimensionale) / 2) && (newHeight - Gdx.input.getY() > menuButtons.get(4).getY() * coeffDimensionale + barreNere) && (newHeight - Gdx.input.getY() < menuButtons.get(4).getY() * coeffDimensionale + menuButtons.get(4).getHeight() * coeffDimensionale + barreNere)) {
@@ -62,18 +62,21 @@ public class InputTouch {
     }
 
     /**
-     * Questo metodo controlla i click sui bottoni del menu di pausa
+     * Questo metodo controlla i click sui bottoni del menu di pausa. Permette di capire le intenzioni del giocatore
+     * durante la pausa e, grazie allo screenHandler passato per parametro, è possibile ritornare a giocare, tornare
+     * al menù principale oppure uscire dal gioco.
+     *
      * @param newWidth
-     * @param game
+     * @param game la schermata di gioco.
      * @param coeffDimensionale
-     * @param screenHandler
+     * @param screenHandler il gestore delle schermate.
      * @param newHeight
      * @param barreNere
-     * @param oldScreen
+     * @param oldScreen lo scenario di gioco precedente alla pressione del tasto per la pausa.
      */
 
     public static void checkInputPauseScreen(float newWidth, BreakGame game, float coeffDimensionale, ScreenHandler screenHandler, float newHeight, float barreNere, OfflineGameScreen oldScreen) {
-        ArrayList<Button> pauseButtons=ButtonCollection.getInstance().getPauseButtons();
+        ArrayList<Button> pauseButtons = ButtonCollection.getInstance().getPauseButtons();
 
         if(Gdx.input.justTouched()) {
             if (Gdx.input.getX() > (newWidth / 2) - (pauseButtons.get(1).getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWidth + (pauseButtons.get(1).getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > pauseButtons.get(1).getY() * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < pauseButtons.get(1).getY() * coeffDimensionale + pauseButtons.get(1).getHeight() * coeffDimensionale + barreNere))) {
@@ -89,16 +92,18 @@ public class InputTouch {
     }
 
     /**
-     * questo metodo controlla i click sul bottone del menù dei punteggi
+     * questo metodo controlla i click sul bottone del menù dei punteggi e permette di disegnare sulla schermata di
+     * gioco passata per parametro la classifica.
+     *
      * @param newWidth
      * @param coeffDimensionale
-     * @param game
+     * @param game la schermata di gioco.
      * @param newHeight
      * @param barreNere
      */
 
     public static void checkInputScoreScreen(float newWidth, float coeffDimensionale, BreakGame game, float newHeight, float barreNere) {
-        ArrayList<Button> scoreButtons=ButtonCollection.getInstance().getScoreButtons();
+        ArrayList<Button> scoreButtons = ButtonCollection.getInstance().getScoreButtons();
 
         if (Gdx.input.getX() > (newWidth / 2) - (scoreButtons.get(0).getWidth() / 2 * coeffDimensionale) && (Gdx.input.getX() < newWidth + (scoreButtons.get(0).getWidth() / 2) * coeffDimensionale) && (newHeight - Gdx.input.getY() > scoreButtons.get(0).getY() * coeffDimensionale + barreNere && (newHeight - Gdx.input.getY() < scoreButtons.get(0).getY() * coeffDimensionale + scoreButtons.get(0).getHeight() * coeffDimensionale + barreNere))) {
             if (Gdx.input.justTouched()) {

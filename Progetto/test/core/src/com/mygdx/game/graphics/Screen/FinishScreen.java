@@ -20,17 +20,11 @@ public class FinishScreen implements Screen {
     private float tempVet[];
     private Resizer resizer;
 
-    /**
-     *
-     * @param game la  partita corrente
-     *
-     */
     public FinishScreen(BreakGame game) {
         this.game = game;
         resizer = new Resizer();
         tempVet = new float[2];
     }
-
 
     /**
      * il metodo assegna la nuova texture che dovrà essere disegnata quando vinci il livello, sulla quale sono presenti
@@ -70,30 +64,20 @@ public class FinishScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-
         tempVet = resizer.toResize(height, width);
         float barreNere = tempVet[0];
         float coeffDimensionale = tempVet[1];
-
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() {}
 }

@@ -8,15 +8,13 @@ import javax.swing.*;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
-
-
 /**
- * @Autor Marco Mari, Marco Cotogni, Alessandro Oberti
  *
  * Definisce l'oggetto Server che permette di instanziare una connessione tra diversi client, che si connettono tramite un Socket
  * alla porta definita.
  * La connessione tra client prevede uno scambio di pacchetti tramite UDP.
  *
+ * @author Marco Mari, Marco Cotogni, Alessandro Oberti
  */
 
 public class Server extends Game {
@@ -26,15 +24,13 @@ public class Server extends Game {
     private String address;
     private ArrayList<String> names;
     private OnlineGameManager gameManager;
-
-
     /**
-     * Crea una nuova partita, istanziando gli N giocatori
      *
-     * @see:initServer()
-     * @see:Info
-     * @see:updateScene
-     * @see:updateLevel
+     * Crea una nuova partita, istanziando gli N giocatori. A tale scopo viene richiesto all'utente che ha creato il server,
+     * attraverso una finestra di dialogo, il numero di giocatori con cui intende giocare. Il numero deve essere compreso tra
+     * 1 e 4, in caso contrario viene visualizzato un messaggio di errore.
+     * Nel farlo, il metodo richiama un altro metodo della classe che permette di inizializzare il server.
+     *
      */
 
     @Override
@@ -62,10 +58,20 @@ public class Server extends Game {
         gameManager = new OnlineGameManager(names, this);
     }
 
-
+    /**
+     * ridisegna lo scenario di gioco con una frequenza predefinita
+     * @see com.mygdx.game.logic.GameManager.GameManager per il metodo "render()"
+     */
     public void render() {
         gameManager.render();
     }
+
+    /**
+     * questo metodo serve per inizializzare il server inserendo il numero di porta e istanziando gli oggetti du cui fara uso.
+     * Il metodo inoltre permette di riempire un array di stringhe contenente i nomi dei giocatori che si connettono.
+     * Si occupa infine di fare iniziare il thread per i client connessi.
+     *
+     */
 
     private void initServer() {
         try {
@@ -98,10 +104,26 @@ public class Server extends Game {
         }
     }
 
+    /**
+     * il metodo permette di dare il comando del movimento di un giocatore
+     *
+     * @param commandPlayer il giocatore che comanda il paddle
+     * @param index l'indice del thread corrispondente al client
+     *
+     * @see CommandPlayer per il metodo "move(int key)"
+     *
+     */
     public void movePlayer(CommandPlayer commandPlayer, int index) {
         commandPlayer.move(threadsIn.get(index).getKey());
     }
 
+    /**
+     * Il metodo permette di inviare i messaggi ai client sotto forma di datagrammi, avendo stabilito una connessione UDP.
+     * Il messaggio viene "scomposto", per così dire, in bytes.
+     *
+     * @param bytes è un array di byte che contine il messaggio da inviare ai client con un datagramma.
+     *
+     */
     public void sendMessage(byte[] bytes) {
         for (ServerThread thread : threadsIn) {
             DatagramPacket packet = new DatagramPacket(bytes, bytes.length, thread.getAddress(), thread.getPort());
@@ -110,7 +132,6 @@ public class Server extends Game {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
         for (int i = 0; i < threadsIn.size(); i++) {
             if (threadsIn.get(i).isDeletable()) {

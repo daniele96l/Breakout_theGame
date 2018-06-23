@@ -26,15 +26,16 @@ import com.mygdx.game.graphics.sprites.powerup.PowerUp;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class OfflineGameManager extends GameManager {
 
-    /**
-     * @author ligato, schillaci, regna
-     *
-     * Questa classe si occupa di gestire il gioco quando lo si sta usando in modalità Offline, gestisce infatti
-     * come si dovrà comportare l'interfaccia a seconda degli avvenimenti, come il numero di giocatori, o le
-     * interazioni con i mattoncini
-     */
+/**
+ * Questa classe si occupa di gestire il gioco quando lo si sta usando in modalità Offline, gestisce infatti
+ * come si dovrà comportare l'interfaccia a seconda degli avvenimenti, come il numero di giocatori, o le
+ * interazioni con i mattoncini
+ *
+ * @author ligato, schillaci, regna
+ */
+
+public class OfflineGameManager extends GameManager {
 
     private static String playerName;
     private boolean loop;
@@ -43,15 +44,10 @@ public class OfflineGameManager extends GameManager {
     private boolean isPaused;
     private Database db = new Database();
 
-    /**
-     * Questa classe potrebbe pure fungere da pattern CREATOR(?)
-     * Dato che si occupa sia degli avvenimenti della logica sia  di mandare il comando ala grafica
-     */
-
 
     private OfflineGameScreen screen;
 
-   public OfflineGameManager(BreakGame game, OfflineGameScreen screen, int numeroPlayer) {
+    public OfflineGameManager(BreakGame game, OfflineGameScreen screen, int numeroPlayer) {
         this.numeroPlayer = numeroPlayer;
         this.game=game;
         this.screen=screen;
@@ -89,7 +85,7 @@ public class OfflineGameManager extends GameManager {
         gestoreLivelli=new GestoreLivelli("fileLivelli.txt");
         updateScene();
         updateLevel();
-       Hud hud = new Hud(players, game.getBatch());
+        Hud hud = new Hud(players, game.getBatch());
         gameHolder = players.get(0);
         bg = gestoreLivelli.getLivello(livelloCorrente - 1).getBackground();
     }
@@ -192,7 +188,7 @@ public class OfflineGameManager extends GameManager {
      * Questo metodo si occupa di controllare quando un giocatore ha perso, ed eventualmente eliminarlo della schermata,
      * se il giocatore era uno, fa terminare il gioco.
      *
-     * @param loser
+     * @param loser il giocatore che ha perso
      */
     protected void deletePlayer(Player loser) {
         if(players.get(0).equals(loser)) {

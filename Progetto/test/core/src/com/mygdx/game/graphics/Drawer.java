@@ -146,6 +146,13 @@ public class Drawer
         game.getBatch().draw(palla, palla.getPositionBall().x, palla.getPositionBall().y, palla.getWidth() * Info.getInstance().getBallresize(), palla.getHeight() * Info.getInstance().getBallresize());
 
     }
+
+    /**
+     * il metodo permette di disegnare sulla schermata di gioco passata per parametro la schermata di pausa quando
+     * necesario, con relativi bottoni.
+     * @param game l'oggetto schermata.
+     */
+
     public static void drawPauseScreen(BreakGame game) {
         Texture menuScreen=new Texture("menuscreen.jpg");
         ArrayList<Button> pauseButtons=ButtonCollection.getInstance().getPauseButtons();
@@ -158,6 +165,11 @@ public class Drawer
         }
         game.getBatch().end();
     }
+
+    /**
+     * il metodo permette di disegnare sulla schermata di gioco passata per parametro la classifica e relativi bottoni.
+     * @param game la schermata di gioco.
+     */
     public static void drawScoreScreen(BreakGame game) {
         Database db=new Database();
         Texture menuScreen=new Texture("menuscreen.jpg");

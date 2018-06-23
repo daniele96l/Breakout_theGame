@@ -4,24 +4,23 @@ import java.io.*;
 import java.net.*;
 
 /**
- * @author  Cotogni, Mari, Oberti
- *
  * questa classe definisce il thread del server per ricevere i pacchetti dai diversi client
+ *
+ * @author Cotogni, Mari, Oberti
  */
 
 public class ServerThread extends Thread {
     private DatagramSocket socket;
     private InetAddress address;
     private int port;
-    private int key=0;
+    private int key = 0;
     private boolean deletable;
 
     public ServerThread(DatagramSocket socket, InetAddress address, int port) {
-
         this.socket = socket;
         this.address = address;
-        this.port=port;
-        deletable=false;
+        this.port = port;
+        deletable = false;
         socket.connect(address, port);
     }
 
@@ -33,8 +32,8 @@ public class ServerThread extends Thread {
     {
         while (true) {
             try {
-                byte[] bytes=new byte[1024];
-                DatagramPacket packet=new DatagramPacket(bytes, bytes.length);
+                byte[] bytes = new byte[1024];
+                DatagramPacket packet = new DatagramPacket(bytes, bytes.length);
                 socket.receive(packet);
                 String line = new String(packet.getData(), 0, packet.getLength());
                 key=Integer.parseInt(line);
@@ -44,22 +43,14 @@ public class ServerThread extends Thread {
                 e.printStackTrace();
             }
         }
-
     }
 
     /**
-     *
      * @return un intero che rappresenta il tasto premuto dal giocatore
      */
     public int getKey() {
         return key;
     }
-
-    /**
-     *
-     * @return ritorna la socket
-     */
-
 
     public DatagramSocket getSocket() {
         return socket;

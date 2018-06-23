@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Il costruttore di questa classe contiene le variabili necessarie
- * al corretto funzionamento del gioco
+ * al corretto funzionamento del gioco.
  *
  * @author Cristian Regna, Alberto Schillaci, Daniele Ligato
  */
@@ -57,7 +57,7 @@ public class Info {
     }
 
     /**
-     * Metodo di implementazione del pattern Singleton
+     * Metodo di implementazione del pattern Singleton.
      *
      * @return istanza di info
      */
@@ -69,12 +69,6 @@ public class Info {
         return instance;
     }
 
-
-    /**
-     * Questo metodo restituisce la velocità del paddle di gioco
-     *
-     * @return velocità del paddle
-     */
     public int getVelPaddle() {
         return velPaddle;
     }

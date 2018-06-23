@@ -17,16 +17,16 @@ import com.mygdx.game.graphics.sprites.powerup.PowerUp;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Questa classe si occupa di gestire il gioco quando lo si sta usando in modalità Online, gestisce infatti
+ * come si dovrà comportare l'interfaccia a seconda degli avvenimenti, come il numero di giocatori, o le
+ * interazioni con i mattoncini.
+ *
+ * @author schillaci, regna
+ */
+
 public class OnlineGameManager extends GameManager {
 
-
-    /**
-     * @author  schillaci, regna
-     *
-     * Questa classe si occupa di gestire il gioco quando lo si sta usando in modalità Online, gestisce infatti
-     * come si dovrà comportare l'interfaccia a seconda degli avvenimenti, come il numero di giocatori, o le
-     * interazioni con i mattoncini
-     */
     private boolean creato;
     private Date datetmp;
     private Server server;
@@ -69,12 +69,15 @@ public class OnlineGameManager extends GameManager {
     }
 
     /**
-     * Si aggiorna 60 volte al secondo, e aggiorna le posizione degli oggetti
-     * Gestisce i movimenti del player
+     * Si aggiorna 60 volte al secondo e aggiorna le posizione degli oggetti.
+     * Gestisce i movimenti del player;
+     * invia le informazioni al server;
+     * gestisce le collisioni della pallina;
+     * controlla la durata dei power up;
+     * permette di capire se è stato superato il livello;
      *
-     * @see:writeMessage();
-     * @see:gestisciCollisioni();
-     * @see:checktimerpowerup(); Gestisce lo stato della partita
+     * @see GameManager per il "metodo gestiscicollisioni()"
+     *
      */
     public void render() {
         if (nextLevel) {//deve stare dentro render perchè deve essere controllato sempre
@@ -134,7 +137,7 @@ public class OnlineGameManager extends GameManager {
                 updateScene();
                 updateLevel();
             }
-            gameState=GameState.WAIT;
+            gameState = GameState.WAIT;
         }
 
         if (gameState == GameState.WAIT) {
@@ -150,6 +153,19 @@ public class OnlineGameManager extends GameManager {
             }
         }
     }
+
+    /**
+     * il metodo permette di inviare informazioni al server relative al gioco. In particolare con il seguente
+     * metodo si costruisce un messaggio composto da diverse parti separate da "\t".
+     * Se il numero di giocatori ancora in gioco è pari a 0, il messaggio da inviare è "empty".
+     * Se ciò non accade, il metodo costruisce il messaggio inserendo le informazioni relative a:
+     * - posizione della palla;
+     * - posizione dei paddle;
+     * - nome dei giocatori, punteggio e vite;
+     * - posizione dei mattoncini;
+     * - info sui power Up.
+     *
+     */
 
     private void writeMessage() {
 
@@ -200,10 +216,25 @@ public class OnlineGameManager extends GameManager {
         }
     }
 
+    /**
+     * il metodo permette di fare un check sulla durata temporale passata per parametro.
+     *
+     * @param durata parametro di confronto
+     * @param datetmp tempo di inizio in millisecondi per poter fare il confronto
+     * @return un boolean che vale true se l'intevallo di tempo tra datetmp passato per parametro e l'istante in cui
+     * viene invocato il metodo è maggiore della durata temporale in millisecondi passata per parametro; vale
+     * false in caso contrario.
+     */
     private boolean checktimer(int durata, Date datetmp) {
         Date date2 = new Date();
         return date2.getTime() - datetmp.getTime() > durata;
     }
+
+    /**
+     * il metodo permette di eliminare il giocatore che ha perso tutte le vite.
+     *
+     * @param loser il giocatore in questione
+     */
 
     @Override
     protected void deletePlayer(Player loser) {

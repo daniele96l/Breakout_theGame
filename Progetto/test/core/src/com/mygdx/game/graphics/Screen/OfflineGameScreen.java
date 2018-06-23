@@ -7,9 +7,11 @@ import com.mygdx.game.logic.Resizer;
 import com.mygdx.game.help.GameState;
 
 /**
- * @author Ligato, Schillaci, Regna
  *
  * Questa classe gestisce la logica della partita quando si sta giocando offline
+ *
+ * @author Ligato, Schillaci, Regna
+ *
  */
 public class OfflineGameScreen implements Screen {
 
@@ -33,6 +35,7 @@ public class OfflineGameScreen implements Screen {
      * e controlla lo stato corrente del gioco.
      *
      * @param delta è l'itervallo di temp che intercorre tra una chiamata e l'altra di questo metodo.
+     *
      */
 
     @Override
@@ -43,35 +46,25 @@ public class OfflineGameScreen implements Screen {
     /**
      * Si occupa di ridimensionare la finestra
      *
-     * @param width
-     * @param height
+     * @param width larghezza
+     * @param height altezza
      */
     @Override
     public void resize(int width, int height) {
-
         resizer.toResize(width,height);
-
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() {}
 
     public static void setPlayerName(String playerName) {
         OfflineGameManager.setPlayerName(playerName);

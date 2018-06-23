@@ -23,15 +23,6 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
-/*
-* DA FARE:
-*
-* Polimorfismo nella parsemessage()
-*
-*
-*
-* */
-
 /**
  * La classe si occupa di gestire la schermata della modalita di gioco "multiplayer online"
  *
@@ -89,10 +80,6 @@ public class MultiplayerGameScreen implements Screen {
         resizer = new Resizer();
     }
 
-    @Override
-    public void show() {
-
-    }
 
     /**
      * disegna le parti grafiche dello scenario 60 volte al secondo facendo un controllo
@@ -124,7 +111,10 @@ public class MultiplayerGameScreen implements Screen {
 
     /**
      * il metodo permette di estrarre dal messaggio le informazioni necessarie per assegnare un valore alle variabili
-     * che rappresentano gli elementi dello scenario che vengono disegnati.
+     * che rappresentano gli elementi dello scenario che vengono disegnati. In particolare la posizione della palla,
+     * il numero di giocatori ancora in vita, il numero dei mattoncini non ancora distrutti. Se però il messaggio
+     * che arriva dal server è troppo piccolo, allora ciò scatena l'iterruzione del thread e della musica di
+     * sottofondo, non chè la visualizzazione della schermata di LoseGame.
      *
      * @param message è il messaggio che arriva dal server
      */
@@ -136,11 +126,9 @@ public class MultiplayerGameScreen implements Screen {
             musicGame.stop();
             game.setScreen(new LoseGameScreen(game));
         } else {
-            String[] lines = message.split("\t"); //Separa le righe
-
+            String[] lines = message.split("\t");
             palla.getPositionBall().x = Float.parseFloat(lines[0].split(" ")[0]);
             palla.getPositionBall().y = Float.parseFloat(lines[0].split(" ")[1]);
-
             numeroPlayer = lines[1].split(" ").length;
             paddles.removeAll(paddles);
             if (numeroPlayer > 0) {
@@ -157,7 +145,6 @@ public class MultiplayerGameScreen implements Screen {
                 playerNames.removeAll(playerNames);
                 lives.removeAll(lives);
                 scores.removeAll(scores);
-
                 for (i = 3; i < numeroPlayer + 3; i++) {
                     playerNames.add(lines[i].split(" ")[0]);
                     scores.add(lines[i].split(" ")[1]);
@@ -165,10 +152,8 @@ public class MultiplayerGameScreen implements Screen {
 
                 }
 
-
                 int numeroBricks = bricks.size();
                 bricks.removeAll(bricks);
-
                 while (i < lines.length - 1) {
                     try {
                         bricks.add(SpriteFactory.getInstance().getBrick(lines[i].split(" ")[2], (int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
@@ -184,9 +169,7 @@ public class MultiplayerGameScreen implements Screen {
                 }
 
                 ArrayList<PowerUp> tmpPowerUp = (ArrayList<PowerUp>) powerUps.clone();
-
                 powerUps.removeAll(powerUps);
-
                 while (i < lines.length - 1) {
                     try {
                         powerUps.add(SpriteFactory.getInstance().getPowerUp(lines[i].split(" ")[2], (int) Float.parseFloat(lines[i].split(" ")[0]), (int) Float.parseFloat(lines[i].split(" ")[1])));
@@ -211,37 +194,32 @@ public class MultiplayerGameScreen implements Screen {
                     }
                 }
 
-
                 bg = new Texture(lines[i]);
                 i++;
-
-
             }
         }
     }
 
     /**
+     * il metodo fa un primo check sul messaggio. Se questo non è vuoto, vengono estratte le informazioni dello scenario
+     * con il metodo "parseMessage".
      *
      * @param m è il messaggio
      *
-     * il metodo fa un primo check sul messaggio. Se questo non è vuoto, vengono estratte le informazioni dello scenario
-     * con il metodo "parseMessage".
      */
     private void controlMessage(String m) {
         if (!m.equals("")) {
             parseMessage(m);
-
             boolean found = false;
             for (String name : playerNames) {
                 if (name.equals(playerName)) {
                     found = true;
                 }
             }
+
             if (!found) {
                 game.setScreen(new LoseGameScreen(game));
             }
-
-
             game.getBatch().draw(bg, 0, 0);
         }
     }
@@ -257,8 +235,7 @@ public class MultiplayerGameScreen implements Screen {
         DatagramPacket packet = new DatagramPacket(b, b.length, address, serverPort);
         try {
             datagramSocket.send(packet);
-        } catch (IOException e) {
-        }
+        } catch (IOException e) {}
     }
 
     /**
@@ -268,35 +245,23 @@ public class MultiplayerGameScreen implements Screen {
      * @param height altezza della finestra
      *
      */
-
     @Override
     public void resize(int width, int height) {
-
-
         resizer.toResize(height, width);
-
-    }
-
-
-    @Override
-    public void pause() {
-
     }
 
     @Override
-    public void resume() {
-
-    }
+    public void show() {}
 
     @Override
-    public void hide() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void dispose() {
+    public void resume() {}
 
-    }
+    @Override
+    public void hide() {}
 
-
+    @Override
+    public void dispose() {}
 }
