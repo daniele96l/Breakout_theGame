@@ -1,5 +1,6 @@
 package com.mygdx.game.databasemanagement;
 
+import com.mygdx.game.databasemanagement.DAOinterface.DaoDB;
 import com.mygdx.game.databasemanagement.Enum.DropType;
 
 import java.sql.*;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  * @author Curcio
  */
 
-public class Database {
+public class Database implements DaoDB {
     private ArrayList<String> listaGiocatori;
 
     public Database() {
@@ -26,7 +27,7 @@ public class Database {
      * da stampare i primi dieci nella sezione "score". Le tuple vengono lette direttamente in ordine decrescente di punteggio.
      * Sono gestite le com.mygdx.game.eccezioni: SQLException e ClassNotFoundException.
      */
-    private void start() {
+    public void start() {
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
@@ -66,7 +67,7 @@ public class Database {
      * @param sb: StringBuilder
      */
 
-    private void check(StringBuilder sb) {
+    public void check(StringBuilder sb) {
         if (listaGiocatori.size() < 10) {
             if (listaGiocatori.size() == 0) {
                 sb.append("NO SCORE");
