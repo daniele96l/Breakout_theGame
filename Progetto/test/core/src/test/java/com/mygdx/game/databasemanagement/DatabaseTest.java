@@ -16,30 +16,19 @@ class DatabaseTest {
         assertEquals("Inserito",database.modify(""+(int)(Math.random()*1000),"Test",500,DropType.INSERT,TableType.OFFLINE));
     }
     @Test
-    void modifyOnline()
+    void modifyOffline1()
     {
-        assertEquals("Inserito",database.modify(""+(int)(Math.random()*1000),"Test",50,DropType.INSERT,TableType.ONLINE));
+        assertEquals("Inserito",database.modify(""+(int)(Math.random()*1000),"Test1",1000,DropType.INSERT,TableType.OFFLINE));
     }
     @Test
     void printTableOffline()
     {
-        assertEquals("Test              500\n\n",database.printTable(TableType.OFFLINE));
+        assertEquals("Test              500\n\nTest1              1000\n\n",database.printTable(TableType.OFFLINE));
     }
-
     @Test
     void modifyOfflineDelete()
     {
         assertEquals("Eliminato",database.modify(""+(int)(Math.random()*1000),"Test",50,DropType.DROP_PLAYER,TableType.OFFLINE));
-    }
-    @Test
-    void modifyOnlineDelete()
-    {
-        assertEquals("Eliminato",database.modify(""+(int)(Math.random()*1000),"Test",50,DropType.DROP_PLAYER,TableType.ONLINE));
-    }
-    @Test
-    void modifyOnlineDeleteAll()
-    {
-        assertEquals("Eliminati",database.modify(""+(int)(Math.random()*1000),"Test",50,DropType.DROP_ALL,TableType.ONLINE));
     }
     @Test
     void modifyOfflineDeleteAll()
