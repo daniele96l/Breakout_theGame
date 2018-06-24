@@ -16,14 +16,9 @@ class DatabaseTest {
         assertEquals("Inserito",database.modify(""+(int)(Math.random()*1000),"Test",500,DropType.INSERT,TableType.OFFLINE));
     }
     @Test
-    void modifyOffline1()
-    {
-        assertEquals("Inserito",database.modify(""+(int)(Math.random()*1000),"Test1",1000,DropType.INSERT,TableType.OFFLINE));
-    }
-    @Test
     void printTableOffline()
     {
-        assertEquals("Test              500\n\nTest1              1000\n\n",database.printTable(TableType.OFFLINE));
+        assertEquals("Test              500\n\n",database.printTable(TableType.OFFLINE));
     }
     @Test
     void modifyOfflineDelete()
