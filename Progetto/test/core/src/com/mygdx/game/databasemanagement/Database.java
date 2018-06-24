@@ -1,7 +1,7 @@
 package com.mygdx.game.databasemanagement;
 
 import com.mygdx.game.databasemanagement.Enum.DropType;
-import com.mygdx.game.databasemanagement.Enum.TableType;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -14,12 +14,10 @@ import java.util.ArrayList;
  */
 
 public class Database {
-    private ArrayList<String> listaGiocatoriOff;
-    private ArrayList<String> listaGiocatoriOn;
+    private ArrayList<String> listaGiocatori;
 
     public Database() {
-        listaGiocatoriOff = new ArrayList<String>();
-        listaGiocatoriOn = new ArrayList<String>();
+        listaGiocatori = new ArrayList<String>();
     }
 
     /**
@@ -27,32 +25,19 @@ public class Database {
      * creata la connessione ed eseguita la query. Successivamente i record letti verranno aggiunti ad un ArrayList in modo
      * da stampare i primi dieci nella sezione "score". Le tuple vengono lette direttamente in ordine decrescente di punteggio.
      * Sono gestite le com.mygdx.game.eccezioni: SQLException e ClassNotFoundException.
-     *
-     * @param tableType é un enum che serve a distinguere quali record, ONLINE o OFFLINE, si vogliono leggere.
      */
-    private void start(TableType tableType) {
+    private void start() {
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
-            //The main path is asse
+            //The main path is in assets
             String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
-            switch (tableType) {
-                case ONLINE:
-                    String queryO = "SELECT * FROM ONLINE ORDER BY POINTS DESC";
-                    ResultSet rsO = stmt.executeQuery(queryO);
-                    while (rsO.next()) {
-                        listaGiocatoriOn.add(rsO.getString("NICKNAME") + "  " + rsO.getString("POINTS") + "\n\n");
-                    }
-                    break;
-                case OFFLINE:
-                    String query = "SELECT * FROM GAMES ORDER BY POINTS DESC";
-                    ResultSet rs = stmt.executeQuery(query);
-                    while (rs.next()) {
-                        listaGiocatoriOff.add(rs.getString("NICKNAME") + "              " + rs.getString("POINTS") + "\n\n");
-                    }
-                    break;
+            String query = "SELECT * FROM GAMES ORDER BY POINTS DESC";
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                listaGiocatori.add(rs.getString("NICKNAME") + "              " + rs.getString("POINTS") + "\n\n");
             }
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
@@ -67,42 +52,32 @@ public class Database {
      * dimensione dell'ArrayList è maggiore di 10 memorizzo nella variabile che verrà visualizzata nella sezione score
      * solo i primi 10.
      *
-     * @return sOff: è la stringa che contiene o i nicknames in ordine di punteggio o il messaggio di errore nel caso in cui
+     * @return s: è la stringa che contiene o i nicknames in ordine di punteggio o il messaggio di errore nel caso in cui
      *               l'ArrayList risultasse vuoto.
      */
-    public String printTable (TableType tableType) {
-        start(tableType);
-        StringBuilder sOff = new StringBuilder();
-        StringBuilder sOn = new StringBuilder();
-
-        if (tableType.equals(TableType.OFFLINE)) {
-            check(sOff);
-            return sOff.toString();
-        }
-        if (tableType.equals(TableType.ONLINE)) {
-            check(sOn);
-            return sOn.toString();
-        }
-        return null;
+    public String printTable () {
+        start();
+        StringBuilder s = new StringBuilder();
+        check(s);
+        return s.toString();
     }
 
     /**
-     *
-     * @param sb: StringBuilder da utilizzare
+     * @param sb: StringBuilder
      */
 
     private void check(StringBuilder sb) {
-        if (listaGiocatoriOff.size() < 10) {
-            if (listaGiocatoriOff.size() == 0) {
+        if (listaGiocatori.size() < 10) {
+            if (listaGiocatori.size() == 0) {
                 sb.append("NO SCORE");
             } else {
-                for (int i = 0; i < listaGiocatoriOff.size(); i++) {
-                    sb.append(listaGiocatoriOff.get(i));
+                for (int i = 0; i < listaGiocatori.size(); i++) {
+                    sb.append(listaGiocatori.get(i));
                 }
             }
         } else {
             for (int i = 0; i < 10; i++) {
-                sb.append(listaGiocatoriOff.get(i));
+                sb.append(listaGiocatori.get(i));
             }
         }
     }
@@ -117,60 +92,34 @@ public class Database {
      * @param points: punteggio del giocatore in questione
      * @param type: parametro che serve a scegliere il tipo di operazione da eseguire
      */
-    public String modify(String id, String name, int points, DropType type, TableType tableType) {
+    public String modify(String id, String name, int points, DropType type) {
         String query;
         try {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
             String url = "jdbc:sqlite:DB.sqlite";
             Connection conn = DriverManager.getConnection(url);
-            if (tableType.equals(TableType.OFFLINE)) {
-                switch (type) {
-                    case INSERT:
-                        PreparedStatement stmt = conn.prepareStatement("INSERT INTO GAMES VALUES (?, ?, ?)");
-                        stmt.setString(1, id);
-                        stmt.setString(2, name);
-                        stmt.setInt(3, points);
-                        stmt.executeUpdate();
-                        conn.close();
-                        return "Inserito";
-                    case DROP_PLAYER:
-                        Statement stm = conn.createStatement();
-                        query = "DELETE FROM GAMES WHERE NICKNAME = '" + name + "'";
-                        stm.executeUpdate(query);
-                        conn.close();
-                        return "Eliminato";
-                    case DROP_ALL:
-                        Statement st = conn.createStatement();
-                        query = "DELETE FROM GAMES";
-                        st.executeUpdate(query);
-                        conn.close();
-                        return "Eliminati";
-                }
-            }
-            if (tableType.equals(TableType.ONLINE)) {
-                switch (type) {
-                    case INSERT:
-                        PreparedStatement stmt = conn.prepareStatement("INSERT INTO ONLINE VALUES (?, ?, ?)");
-                        stmt.setString(1, id);
-                        stmt.setString(2, name);
-                        stmt.setInt(3, points);
-                        stmt.executeUpdate();
-                        conn.close();
-                        return "Inserito";
-                    case DROP_PLAYER:
-                        Statement stm = conn.createStatement();
-                        query = "DELETE FROM ONLINE WHERE NICKNAME = '" + name + "'";
-                        stm.executeUpdate(query);
-                        conn.close();
-                        return "Eliminato";
-                    case DROP_ALL:
-                        Statement st = conn.createStatement();
-                        query = "DELETE FROM ONLINE";
-                        st.executeUpdate(query);
-                        conn.close();
-                        return "Eliminati";
-                }
+            switch (type) {
+                case INSERT:
+                    PreparedStatement stmt = conn.prepareStatement("INSERT INTO GAMES VALUES (?, ?, ?)");
+                    stmt.setString(1, id);
+                    stmt.setString(2, name);
+                    stmt.setInt(3, points);
+                    stmt.executeUpdate();
+                    conn.close();
+                    return "Inserito";
+                case DROP_PLAYER:
+                    Statement stm = conn.createStatement();
+                    query = "DELETE FROM GAMES WHERE NICKNAME = '" + name + "'";
+                    stm.executeUpdate(query);
+                    conn.close();
+                    return "Eliminato";
+                case DROP_ALL:
+                    Statement st = conn.createStatement();
+                    query = "DELETE FROM GAMES";
+                    st.executeUpdate(query);
+                    conn.close();
+                    return "Eliminati";
             }
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
@@ -180,11 +129,7 @@ public class Database {
         return "Error";
     }
 
-    public ArrayList<String> getListaGiocatoriOff() {
-        return listaGiocatoriOff;
-    }
-
-    public ArrayList<String> getListaGiocatoriOn() {
-        return listaGiocatoriOn;
+    public ArrayList<String> getListaGiocatori() {
+        return listaGiocatori;
     }
 }

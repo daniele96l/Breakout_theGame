@@ -23,7 +23,6 @@
 package com.mygdx.game.graphics;
 
 import com.mygdx.game.databasemanagement.Database;
-import com.mygdx.game.databasemanagement.Enum.TableType;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -179,7 +178,7 @@ public class Drawer
         bitmapFont.getData().setScale(1.6f);
         game.getBatch().begin();
         game.getBatch().draw(menuScreen, 0, 0);
-        bitmapFont.draw(game.getBatch(), db.printTable(TableType.OFFLINE), 500, 704);
+        bitmapFont.draw(game.getBatch(), db.printTable(), 500, 704);
         for(Button b:scoreButtons) {
             game.getBatch().draw(b, b.getX(), b.getY(), b.getWidth(), b.getHeight());
         }
