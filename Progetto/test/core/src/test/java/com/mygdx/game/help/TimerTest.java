@@ -6,7 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ *La classe permette il testing della classe Timer attraverso l'uso del framework Junit
+ *
+ * @author Cotogni
+ *
+ */
 class TimerTest {
     @Test
     public void checkTimerTestTrue()
