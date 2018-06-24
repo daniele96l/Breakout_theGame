@@ -133,7 +133,7 @@ public class Database {
                         stmt.setInt(3, points);
                         stmt.executeUpdate();
                         conn.close();
-                        return "Insert";
+                        return "Inserito";
                     case DROP_PLAYER:
                         Statement stm = conn.createStatement();
                         query = "DELETE FROM GAMES WHERE NICKNAME = '" + name + "'";
@@ -178,5 +178,13 @@ public class Database {
             System.err.println(cnfe.getMessage());
         }
         return "Error";
+    }
+
+    public ArrayList<String> getListaGiocatoriOff() {
+        return listaGiocatoriOff;
+    }
+
+    public ArrayList<String> getListaGiocatoriOn() {
+        return listaGiocatoriOn;
     }
 }
