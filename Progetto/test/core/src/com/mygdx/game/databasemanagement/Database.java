@@ -1,6 +1,6 @@
 package com.mygdx.game.databasemanagement;
 
-import com.mygdx.game.databasemanagement.DAOinterface.DaoDB;
+import com.mygdx.game.databasemanagement.DAOinterface.DefaultDBInterface;
 import com.mygdx.game.databasemanagement.Enum.DropType;
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,9 +13,8 @@ import java.util.ArrayList;
  * @author Curcio
  */
 
-public class Database implements DaoDB {
+public class Database implements DefaultDBInterface {
     private ArrayList<String> listaGiocatori;
-    private FilesDB f;
 
     public Database() {
         listaGiocatori = new ArrayList<String>();
@@ -28,7 +27,7 @@ public class Database implements DaoDB {
      * Sono gestite le com.mygdx.game.eccezioni: SQLException e ClassNotFoundException.
      */
     public void start() {
-        Connection conn = null;
+        Connection conn;
         try {
             conn = ConnectionSQL.createConnection();
             Statement stmt = conn.createStatement();

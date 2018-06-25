@@ -11,6 +11,7 @@ import java.sql.SQLException;
  */
 
 public class ConnectionSQL {
+
     /**
      * Metodo che crea la connessione al database attraverso il driver JDBC
      *

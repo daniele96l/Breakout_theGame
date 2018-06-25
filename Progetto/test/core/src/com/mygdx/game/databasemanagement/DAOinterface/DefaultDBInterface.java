@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author Curcio
  */
 
-public interface DaoDB extends RawInt {
+public interface DefaultDBInterface extends RawInt {
     void start();
     String printTable ();
     void check(StringBuilder sb);

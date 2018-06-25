@@ -1,5 +1,11 @@
 package com.mygdx.game.databasemanagement;
 
+/**
+ * La classe serve per contenere e trattare i dati del db
+ *
+ * @author Curcio
+ */
+
 public class FilesDB {
     private String id, nicknames;
     private int points;
