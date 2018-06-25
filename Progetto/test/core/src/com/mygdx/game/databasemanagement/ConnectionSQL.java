@@ -11,9 +11,6 @@ import java.sql.SQLException;
  */
 
 public class ConnectionSQL {
-    final static String pss = "gggiavisti";
-
-
     /**
      * Metodo che crea la connessione al database attraverso il driver JDBC
      *
@@ -25,7 +22,7 @@ public class ConnectionSQL {
             String driver = "org.sqlite.JDBC";
             Class.forName(driver);
             String url = "jdbc:sqlite:DB.sqlite";
-            conn = DriverManager.getConnection(url,"root", pss);
+            conn = DriverManager.getConnection(url);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

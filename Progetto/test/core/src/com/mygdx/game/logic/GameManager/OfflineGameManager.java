@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.mygdx.game.BreakGame;
+import com.mygdx.game.databasemanagement.FilesDB;
 import com.mygdx.game.graphics.Drawer;
 import com.mygdx.game.logic.Player.CommandPlayer;
 import com.mygdx.game.logic.Levels.GestoreLivelli;
@@ -154,7 +155,7 @@ public class OfflineGameManager extends GameManager {
             if (isFinished) {
                 livelloCorrente = 1;
                 isFinished = false;
-                db.modify(""+(int)(Math.random()*1000), playerName, players.get(0).getScore(), DropType.INSERT);
+                db.modify(new FilesDB("(int)(Math.random()*1000)", playerName, players.get(0).getScore()), DropType.INSERT);
                 updateScene();
                 updateLevel();
                 game.setScreen(new FinishScreen(game));
@@ -191,7 +192,7 @@ public class OfflineGameManager extends GameManager {
      */
     protected void deletePlayer(Player loser) {
         if(players.get(0).equals(loser)) {
-            db.modify(""+(int)(Math.random()*1000), playerName, players.get(0).getScore(), DropType.INSERT);
+            db.modify(new FilesDB("(int)(Math.random()*1000)", playerName, players.get(0).getScore()), DropType.INSERT);
             gameState=GameState.GAME_OVER;
         }
         else {

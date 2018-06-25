@@ -1,6 +1,8 @@
 package com.mygdx.game.databasemanagement.DAOinterface;
 
 import com.mygdx.game.databasemanagement.Enum.DropType;
+import com.mygdx.game.databasemanagement.FilesDB;
+
 import java.util.ArrayList;
 
 /**
@@ -9,10 +11,10 @@ import java.util.ArrayList;
  * @author Curcio
  */
 
-public interface DaoDB {
+public interface DaoDB extends RawInt {
     void start();
     String printTable ();
     void check(StringBuilder sb);
-    String modify(String id, String name, int points, DropType type);
+    String modify(FilesDB f, DropType type);
     ArrayList<String> getListaGiocatori();
 }

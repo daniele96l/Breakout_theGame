@@ -1,11 +1,10 @@
 package com.mygdx.game.help;
 
-import org.junit.Test;
-
+import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Date;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.Assert.assertEquals;
 /**
  *La classe permette il testing della classe Timer attraverso l'uso del framework Junit
  *

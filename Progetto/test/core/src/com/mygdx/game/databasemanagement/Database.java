@@ -2,7 +2,6 @@ package com.mygdx.game.databasemanagement;
 
 import com.mygdx.game.databasemanagement.DAOinterface.DaoDB;
 import com.mygdx.game.databasemanagement.Enum.DropType;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 
 public class Database implements DaoDB {
     private ArrayList<String> listaGiocatori;
+    private FilesDB f;
 
     public Database() {
         listaGiocatori = new ArrayList<String>();
@@ -81,13 +81,10 @@ public class Database implements DaoDB {
      * Metodo che dopo aver caricato il driver e creata la connessione permette di inserire o eliminare tuple o coppie di
      * tuple.
      *
-     * @param id: numero randomico compreso tra 0 e 1000 generato nella classe "offlinegamescreen" che serve a identificare
-     *            univocamnete le varie partite giocate.
-     * @param name: nome del giocatore
-     * @param points: punteggio del giocatore in questione
+     * @param f: oggetto che contiene i dati da memorizzare(id, nicknames, point)
      * @param type: parametro che serve a scegliere il tipo di operazione da eseguire
      */
-    public String modify(String id, String name, int points, DropType type) {
+    public String modify(FilesDB f, DropType type) {
         String query;
         try {
             String driver = "org.sqlite.JDBC";
@@ -97,15 +94,15 @@ public class Database implements DaoDB {
             switch (type) {
                 case INSERT:
                     PreparedStatement stmt = conn.prepareStatement("INSERT INTO GAMES VALUES (?, ?, ?)");
-                    stmt.setString(1, id);
-                    stmt.setString(2, name);
-                    stmt.setInt(3, points);
+                    stmt.setString(1, f.getId());
+                    stmt.setString(2, f.getNicknames());
+                    stmt.setInt(3, f.getPoints());
                     stmt.executeUpdate();
                     conn.close();
                     return "Inserito";
                 case DROP_PLAYER:
                     Statement stm = conn.createStatement();
-                    query = "DELETE FROM GAMES WHERE NICKNAME = '" + name + "'";
+                    query = "DELETE FROM GAMES WHERE NICKNAME = '" + f.getNicknames() + "'";
                     stm.executeUpdate(query);
                     conn.close();
                     return "Eliminato";

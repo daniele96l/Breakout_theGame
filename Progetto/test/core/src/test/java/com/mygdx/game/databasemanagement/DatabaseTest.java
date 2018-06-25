@@ -1,10 +1,8 @@
 package com.mygdx.game.databasemanagement;
 
 import com.mygdx.game.databasemanagement.Enum.DropType;
-
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  *La classe permette il testing del database attraverso l'uso del  framework Junit
@@ -17,7 +15,7 @@ public class DatabaseTest {
     @Test
     public void modifyOffline()
     {
-        assertEquals("Inserito",database.modify(""+(int)(Math.random()*1000),"Test",500,DropType.INSERT));
+        assertEquals("Inserito",database.modify(new FilesDB("" + (int)(Math.random()*1000), "Test", 500), DropType.INSERT));
     }
     @Test
     public void printTableOffline()
@@ -27,12 +25,12 @@ public class DatabaseTest {
     @Test
     public void modifyOfflineDelete()
     {
-        assertEquals("Eliminato",database.modify(""+(int)(Math.random()*1000),"Test",500,DropType.DROP_PLAYER));
+        assertEquals("Eliminato",database.modify(new FilesDB("" + (int)(Math.random()*1000), "Test", 500), DropType.DROP_PLAYER));
     }
     @Test
     public void modifyOfflineDeleteAll()
     {
-        assertEquals("Eliminati",database.modify(""+(int)(Math.random()*1000),"Test",500,DropType.DROP_ALL));
+        assertEquals("Eliminati",database.modify(new FilesDB("" + (int)(Math.random()*1000), "Test", 500), DropType.DROP_ALL));
     }
 
 

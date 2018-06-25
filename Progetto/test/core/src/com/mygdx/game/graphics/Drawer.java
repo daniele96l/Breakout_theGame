@@ -170,8 +170,8 @@ public class Drawer
      * @param game la schermata di gioco.
      */
     public static void drawScoreScreen(BreakGame game) {
-        Database db=new Database();
-        Texture menuScreen=new Texture("menuscreen.jpg");
+        Database db = new Database();
+        Texture menuScreen = new Texture("menuscreen.jpg");
         ArrayList<Button> scoreButtons=ButtonCollection.getInstance().getScoreButtons();
         BitmapFont bitmapFont = new BitmapFont();
         bitmapFont.setColor(Color.WHITE);
