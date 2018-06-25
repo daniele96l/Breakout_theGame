@@ -239,8 +239,12 @@ public class OnlineGameManager extends GameManager {
     @Override
     protected void deletePlayer(Player loser) {
         int index=players.indexOf(loser);
+        server.getThreadsIn().get(index).setDeletable(true);
         players.remove(loser);
         paddles.remove(index);
         numeroPlayer--;
+        if(numeroPlayer >1) {
+        gameHolder = players.get(0);
+        }
     }
 }

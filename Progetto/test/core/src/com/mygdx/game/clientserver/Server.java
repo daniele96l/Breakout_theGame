@@ -140,4 +140,8 @@ public class Server extends Game {
             }
         }
     }
+
+    public ArrayList<ServerThread> getThreadsIn() {
+        return threadsIn;
+    }
 }

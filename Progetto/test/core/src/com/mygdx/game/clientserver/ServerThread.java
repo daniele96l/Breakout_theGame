@@ -64,6 +64,10 @@ public class ServerThread extends Thread {
         return port;
     }
 
+    public void setDeletable(boolean deletable) {
+        this.deletable = deletable;
+    }
+
     public boolean isDeletable() {
         return deletable;
     }
