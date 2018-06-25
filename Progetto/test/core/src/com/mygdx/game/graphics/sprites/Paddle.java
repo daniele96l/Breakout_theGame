@@ -58,6 +58,10 @@ public class Paddle extends Sprite{
         return bounds;
     }
 
+    public void setGiocatore(int giocatore) {
+        this.giocatore = giocatore;
+    }
+
     public int getGiocatore() {
         return giocatore;
     }

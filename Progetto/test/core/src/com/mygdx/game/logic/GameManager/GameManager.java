@@ -110,7 +110,10 @@ abstract class GameManager {
 
     void updateScene() {
         palla.setDefaultState();
+        int j = 1;
         for(Paddle paddle:paddles) {
+            paddle.setGiocatore(j);
+            j++;
             paddle.setDefaultState(numeroPlayer);
         }
         commandPlayers=new ArrayList<CommandPlayer>();

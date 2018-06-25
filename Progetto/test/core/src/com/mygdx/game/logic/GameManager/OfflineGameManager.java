@@ -200,6 +200,9 @@ public class OfflineGameManager extends GameManager {
             players.remove(loser);
             paddles.remove(index);
             numeroPlayer--;
+            if(numeroPlayer > 1) {
+                gameHolder = players.get(0);
+            }
         }
     }
 
