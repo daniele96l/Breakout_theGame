@@ -45,6 +45,7 @@ public class SpriteFactory {
      * @return la tipologia di power up corrispondente a quella passata per parametro, se questa passa il check
      * @throws IllegalPowerUp se non viene passato nessuno dei check, oppure se inizialmente la stringa era vuota.
      */
+
     public PowerUp getPowerUp(String powerUp, int posX, int posY) throws IllegalPowerUp {
         if(powerUp==null) {
             throw new IllegalPowerUp();
