@@ -15,10 +15,10 @@ import java.util.ArrayList;
  */
 
 public class Database implements DaoDB {
-    private ArrayList listaGiocatori;
+    private ArrayList<String> listaGiocatori;
 
     public Database() {
-        listaGiocatori = new ArrayList ();
+        listaGiocatori = new ArrayList<String>();
     }
 
     /**
@@ -61,7 +61,6 @@ public class Database implements DaoDB {
     /**
      * @param sb: StringBuilder
      */
-
     public void check(StringBuilder sb) {
         if (listaGiocatori.size() < 10) {
             if (listaGiocatori.size() == 0) {
