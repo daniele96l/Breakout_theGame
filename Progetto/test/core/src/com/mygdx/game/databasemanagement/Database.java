@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- * Classe che implementa la gestione del database precedentemente creato. Il DBMS è sqlite. Questa classe mostra solo 3
+ * Classe che implementa la gestione del database precedentemente creato. Il DBMS è SQLite. Questa classe mostra solo 3
  * metodi: 2 per stampare i nicknames nella sezione score del gioco e il restante che serve per inserire o rimuovere tuple
  * o coppie di tuple dal database.
  *
@@ -15,10 +15,10 @@ import java.util.ArrayList;
  */
 
 public class Database implements DaoDB {
-    private ArrayList<String> listaGiocatori;
+    private ArrayList listaGiocatori;
 
     public Database() {
-        listaGiocatori = new ArrayList<String>();
+        listaGiocatori = new ArrayList ();
     }
 
     /**
@@ -28,12 +28,9 @@ public class Database implements DaoDB {
      * Sono gestite le com.mygdx.game.eccezioni: SQLException e ClassNotFoundException.
      */
     public void start() {
+        Connection conn = null;
         try {
-            String driver = "org.sqlite.JDBC";
-            Class.forName(driver);
-            //The main path is in assets
-            String url = "jdbc:sqlite:DB.sqlite";
-            Connection conn = DriverManager.getConnection(url);
+            conn = ConnectionSQL.createConnection();
             Statement stmt = conn.createStatement();
             String query = "SELECT * FROM GAMES ORDER BY POINTS DESC";
             ResultSet rs = stmt.executeQuery(query);
@@ -42,8 +39,6 @@ public class Database implements DaoDB {
             }
         } catch (SQLException sqle) {
             System.err.println(sqle.getMessage());
-        } catch (ClassNotFoundException cnfe) {
-            System.err.println(cnfe.getMessage());
         }
     }
 
